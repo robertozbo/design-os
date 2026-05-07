@@ -40,9 +40,9 @@
 2. **Onboarding** — setup do consultório, convite da secretária, primeira agenda, aceite LGPD do médico/clínica
 3. **Agenda** — calendário compartilhado médico/secretária; presencial + teleconsulta no mesmo calendário; bloqueios, encaixes; paciente vê apenas as próprias consultas
 4. **Pacientes** — cadastro, busca, vínculo, convite app, histórico (escopos diferentes pra médico/secretária)
-5. **Consulta** — tela de atendimento com **escriba IA** (transcrição → SOAP estruturado → médico revisa e assina); fluxo único pra presencial e teleconsulta
+5. **Consulta** — tela de atendimento com **escriba IA** (transcrição → SOAP estruturado → médico revisa e assina); fluxo único pra presencial e teleconsulta. **"Assinar" no V1 = click-to-attest** (registra `assinadoEm` + `assinadoPor`); assinatura digital ICP-Brasil/A3 fica V2 (decisão pendente, ver §5)
 6. **Prontuário** — anamnese estruturada (template endócrino — queixa, HMA, antecedentes, medicações em uso, exame físico), evolução (texto SOAP), timeline cronológica, exportação PDF
-7. **Exames** — paciente envia laudo PDF + imagem (JPG/DICOM); médico vê viewer com **IA de apoio à interpretação** (resumo do laudo, comparação histórica, cruzamento com queixa); valores numéricos digitados ou sugeridos pra HbA1c, TSH, glicemia, T4, etc.
+7. **Exames** — paciente envia laudo PDF + imagem (JPG/DICOM); médico vê viewer com **IA de apoio à interpretação** (resumo do laudo, comparação histórica, cruzamento com queixa); valores numéricos digitados ou sugeridos pra HbA1c, TSH, glicemia, T4, etc. **DICOM viewer no V1 = armazenamento + download/abrir externamente**; viewer embutido (Cornerstone.js, windowing, multi-frame) fica V2
 8. **Prescrição** — integração com **Memed** (prescrição com validade ICP-Brasil); paciente recebe no app
 9. **Diário & Medicação (paciente)** — registro de peso, glicemia caseira, pressão; medicação ativa derivada de prescrições; lembretes de remédio
 10. **Mensagens** — **dois canais separados**: admin (paciente↔secretária — confirmação, cobrança, agendamento) e clínico (paciente↔médico — sem SLA). Secretária só enxerga admin.
@@ -114,6 +114,21 @@
 - **Funcionário** — secretária (cargo, permissões — fixas no V1)
 - **Paciente** — dados pessoais (nome, CPF, contato), convênio (texto livre)
 
+**RBAC fixo da secretária V1** (read = ✅, write = ✏️, sem acesso = ❌):
+
+| Entidade | Médico | Secretária | Paciente (próprios dados) |
+|---|---|---|---|
+| Paciente (dados pessoais/contato/convênio) | ✏️ | ✏️ | ✏️ |
+| Agendamento | ✏️ | ✏️ | ✅ + ✏️ (autoatendimento limitado) |
+| Consulta, Anamnese, Evolução | ✏️ | ❌ | ❌ |
+| Exame (laudo, imagem, valores) | ✏️ | ❌ | ✏️ (uploads) |
+| Prescrição (Memed) | ✏️ | ❌ | ✅ |
+| Mensagem `canal: 'admin'` | ✅ | ✏️ | ✏️ |
+| Mensagem `canal: 'clinico'` | ✏️ | ❌ | ✏️ |
+| Pagamento | ✅ | ✏️ | ✅ |
+| Diário & Medição | ✅ (do seu paciente) | ❌ | ✏️ |
+| AuditLog | ✅ (autoria) | ❌ | ❌ |
+
 ### 3.2 Vínculo (chave LGPD/silos)
 
 - **VínculoPacienteProfissional** — junção paciente↔profissional. Os silos entre verticais Nymos vivem aqui. Toda Consulta/Anamnese/Exame/Prescrição é do **vínculo**, não do paciente diretamente.
@@ -129,8 +144,8 @@
 
 ### 3.4 Paciente longitudinal
 
-- **Medição** — peso, glicemia caseira, pressão (do diário do paciente), com timestamp e fonte
-- **MedicaçãoAtiva** — derivada de prescrições + ajustes manuais
+- **Medição** — peso, glicemia caseira, pressão (do diário do paciente), com timestamp e fonte. **Não se confunde com Exame**: glicemia caseira (`Medição`) e HbA1c laboratorial (`Exame`) vivem em entidades separadas e não são reconciliadas no V1; cabe ao médico interpretá-las juntas no prontuário.
+- **MedicaçãoAtiva** — derivada de `Prescrição` (Memed é source-of-truth). Ajustes manuais do médico criam **novo registro** de `Prescrição` ou anotação na evolução; **não há merge mutável** de prescrições no V1.
 - **Lembrete** — medicação a tomar, horário, recorrência, status (cumprido/perdido)
 
 ### 3.5 Comunicação & operacional
@@ -186,7 +201,7 @@ Bottom-nav: Início, Agenda, Diário, Mensagens, Perfil.
 
 Após aprovação deste spec, opções de continuação:
 
-1. **Gerar artefatos Design OS** em `product-clinico/`:
+1. **Gerar artefatos Design OS** em `product-clinico/` (segue convenção multi-produto Design OS — já existem `product/` para Nutri, `product-personal/`, `product-psicologo/`):
    - `product-overview.md`
    - `product-roadmap.md` (12 sections)
    - `data-shape/data-shape.md`
