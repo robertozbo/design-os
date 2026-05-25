@@ -333,6 +333,15 @@ function SubescalasBarTable({ subescalas }: { subescalas: SubescalaResultado[] }
   return (
     <div className="ring-1 ring-slate-200 rounded-lg overflow-hidden">
       <table className="w-full">
+        <thead>
+          <tr className="bg-slate-100 text-[9px] uppercase tracking-[0.12em] font-bold text-slate-500">
+            <th scope="col" className="text-right px-3 py-1.5 w-[32%]">Subescala</th>
+            <th scope="col" className="text-left px-3 py-1.5 w-[48%]">Distribuição</th>
+            <th scope="col" className="text-center px-3 py-1.5 w-[20%]" title="Score COPSOQ oficial 0-100 vs valor de referência Brasil">
+              Score / Ref BR
+            </th>
+          </tr>
+        </thead>
         <tbody>
           {subescalas.map((s, idx) => (
             <tr
@@ -341,21 +350,80 @@ function SubescalasBarTable({ subescalas }: { subescalas: SubescalaResultado[] }
             >
               <th
                 scope="row"
-                className="text-right text-[11px] font-medium text-slate-700 px-3 py-1.5 align-middle w-[40%] whitespace-nowrap"
+                className="text-right text-[11px] font-medium text-slate-700 px-3 py-1.5 align-middle whitespace-nowrap"
               >
                 {s.nome}
               </th>
-              <td className="py-1.5 pr-3 w-[60%]">
+              <td className="py-1.5 pr-3">
                 <StackedBar
                   saudavel={s.percentSaudavel}
                   atencao={s.percentAtencao}
                   risco={s.percentRisco}
                 />
               </td>
+              <td className="py-1.5 px-3 text-center">
+                <ScoreOficial
+                  score={s.scoreOficial}
+                  referencia={s.valorReferenciaBR}
+                  polaridade={s.polaridade}
+                />
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <p className="px-3 py-1.5 text-[9px] text-slate-500 italic bg-slate-50 border-t border-slate-200 leading-snug">
+        Score 0-100 calculado conforme manual oficial COPSOQ-II (média ponderada Likert). Comparação
+        com valor de referência populacional Brasil (UFPE, 2017). ↑ = score acima da referência · ↓
+        = score abaixo. Cor (vermelho/verde/amarelo) indica se é pior, melhor ou neutro vs
+        referência conforme polaridade da subescala.
+      </p>
+    </div>
+  )
+}
+
+function ScoreOficial({
+  score,
+  referencia,
+  polaridade,
+}: {
+  score?: number
+  referencia?: number
+  polaridade?: 'positiva' | 'negativa'
+}) {
+  if (score === undefined || referencia === undefined || !polaridade) {
+    return <span className="text-[10px] text-slate-400">—</span>
+  }
+
+  const delta = score - referencia
+  const absDelta = Math.abs(delta)
+  // Seta segue a direção do delta (↑ = score maior, ↓ = score menor)
+  const seta = delta > 2 ? '↑' : delta < -2 ? '↓' : '•'
+  // Cor indica bom/ruim baseado na polaridade:
+  // negativa (alto=ruim): delta+ é ruim · positiva (alto=bom): delta+ é bom
+  const pior = polaridade === 'negativa' ? delta > 5 : delta < -5
+  const melhor = polaridade === 'negativa' ? delta < -5 : delta > 5
+  const corScore = pior
+    ? 'text-rose-700'
+    : melhor
+      ? 'text-emerald-700'
+      : 'text-amber-700'
+
+  return (
+    <div className="inline-flex flex-col items-center gap-0.5">
+      <div className="flex items-baseline gap-1">
+        <span className={`text-[13px] font-bold tabular-nums font-mono ${corScore}`}>{score}</span>
+        <span className={`text-[10px] font-bold ${corScore}`}>{seta}</span>
+      </div>
+      <span className="text-[9px] text-slate-500 tabular-nums font-mono">
+        ref {referencia}
+        {absDelta > 0 && (
+          <span className={`ml-1 ${corScore}`}>
+            ({delta > 0 ? '+' : ''}
+            {delta})
+          </span>
+        )}
+      </span>
     </div>
   )
 }
