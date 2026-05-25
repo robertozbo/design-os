@@ -1,0 +1,11 @@
+// Barrel export — todos os tipos vindos do backend
+export * from './metric'
+export * from './device'
+export * from './user'
+export * from './diet'
+export * from './dashboard'
+export * from './activity'
+export * from './goal'
+export * from './nutrition'
+export * from './ai-chat'
+export * from './workout'

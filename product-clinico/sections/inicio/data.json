@@ -1,0 +1,218 @@
+{
+  "_meta": {
+    "models": {
+      "profissional": "Médico dono do consultório (Dr. Pedro Lima). Usado no hero e no avatar.",
+      "saudacao": "Saudação contextual baseada na hora do dia + frase com info útil.",
+      "kpi": "Métrica de período (consultas realizadas, pacientes ativos, faturamento, adesão) com delta vs período anterior.",
+      "proximaConsulta": "Próxima consulta do dia destacada no topo, com countdown em minutos.",
+      "agendaItem": "Item da agenda de hoje (consulta) com paciente, modalidade, status, ações.",
+      "pacienteAtencao": "Paciente que precisa de atenção com tipo de pendência (exame novo, mensagem, retorno atrasado, adesão crítica)."
+    },
+    "relationships": [
+      "Profissional tem agenda do dia (lista de AgendaItem)",
+      "ProximaConsulta é o primeiro AgendaItem futuro/atual da agenda",
+      "PacienteAtencao agrupa tipos diferentes de pendências em uma lista priorizada",
+      "KPIs são agregados de período (semana atual)"
+    ]
+  },
+  "profissional": {
+    "id": "prof-pedro",
+    "nome": "Dr. Pedro Lima",
+    "primeiroNome": "Pedro",
+    "iniciais": "PL",
+    "especialidade": "Endocrinologia",
+    "crm": "CRM 123456-SP"
+  },
+  "saudacao": {
+    "periodo": "manha",
+    "texto": "Bom dia, Dr. Pedro 👋",
+    "frase": "Você tem 8 consultas hoje, 3 já confirmadas e 3 pendentes."
+  },
+  "kpis": [
+    {
+      "id": "consultas",
+      "label": "Consultas (semana)",
+      "valor": "32",
+      "delta": "+4",
+      "deltaPositivo": true,
+      "historico": [28, 30, 32, 35, 28, 30, 32]
+    },
+    {
+      "id": "pacientes-app",
+      "label": "Pacientes no app",
+      "valor": "84%",
+      "delta": "+6%",
+      "deltaPositivo": true,
+      "historico": [72, 76, 78, 80, 82, 83, 84]
+    },
+    {
+      "id": "faturamento",
+      "label": "Faturamento (semana)",
+      "valor": "R$ 12.140",
+      "delta": "+R$ 1.520",
+      "deltaPositivo": true,
+      "historico": [9800, 10400, 11000, 12140, 9600, 10800, 12140]
+    },
+    {
+      "id": "adesao",
+      "label": "Adesão média (30d)",
+      "valor": "87%",
+      "delta": "-2%",
+      "deltaPositivo": false,
+      "historico": [89, 90, 88, 87, 89, 88, 87]
+    }
+  ],
+  "proximaConsulta": {
+    "agendamentoId": "agd-006",
+    "pacienteId": "pct-001",
+    "pacienteNome": "Maria Silva Andrade",
+    "iniciais": "MA",
+    "iniciaEm": "2026-05-07T14:30:00-03:00",
+    "horaLabel": "14:30",
+    "modalidade": "presencial",
+    "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+    "observacao": "Retorno — ajuste Levotiroxina",
+    "minutosAteInicio": 200,
+    "podeIniciar": false
+  },
+  "agendaHoje": [
+    {
+      "id": "agd-007",
+      "horaLabel": "08:00",
+      "iniciaEm": "2026-05-07T08:00:00-03:00",
+      "pacienteId": "pct-006",
+      "pacienteNome": "João Ricardo Mello",
+      "iniciais": "JM",
+      "condicoesCronicas": ["DM2", "Dislipidemia"],
+      "modalidade": "presencial",
+      "status": "realizado",
+      "observacao": "",
+      "valor": 380,
+      "duracaoMin": 45
+    },
+    {
+      "id": "agd-008",
+      "horaLabel": "09:00",
+      "iniciaEm": "2026-05-07T09:00:00-03:00",
+      "pacienteId": "pct-007",
+      "pacienteNome": "Lucas Pereira",
+      "iniciais": "LP",
+      "condicoesCronicas": ["Hipogonadismo"],
+      "modalidade": "presencial",
+      "status": "realizado",
+      "observacao": "",
+      "valor": 380,
+      "duracaoMin": 45
+    },
+    {
+      "id": "agd-009",
+      "horaLabel": "10:00",
+      "iniciaEm": "2026-05-07T10:00:00-03:00",
+      "pacienteId": "pct-008",
+      "pacienteNome": "Sofia Andrade",
+      "iniciais": "SA",
+      "condicoesCronicas": [],
+      "modalidade": "tele",
+      "status": "pendente",
+      "observacao": "Encaixe — primeira consulta",
+      "valor": 280,
+      "duracaoMin": 30,
+      "isEncaixe": true
+    },
+    {
+      "id": "agd-006",
+      "horaLabel": "14:30",
+      "iniciaEm": "2026-05-07T14:30:00-03:00",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+      "modalidade": "presencial",
+      "status": "confirmado",
+      "observacao": "Retorno — ajuste Levotiroxina",
+      "valor": 380,
+      "duracaoMin": 45
+    },
+    {
+      "id": "agd-010",
+      "horaLabel": "16:00",
+      "iniciaEm": "2026-05-07T16:00:00-03:00",
+      "pacienteId": "pct-009",
+      "pacienteNome": "Rita Vasconcelos",
+      "iniciais": "RV",
+      "condicoesCronicas": ["Obesidade grau II"],
+      "modalidade": "presencial",
+      "status": "pendente",
+      "observacao": "",
+      "valor": 380,
+      "duracaoMin": 45
+    },
+    {
+      "id": "agd-014",
+      "horaLabel": "17:00",
+      "iniciaEm": "2026-05-07T17:00:00-03:00",
+      "pacienteId": "pct-013",
+      "pacienteNome": "Mateus Oliveira",
+      "iniciais": "MO",
+      "condicoesCronicas": ["DM2"],
+      "modalidade": "tele",
+      "status": "confirmado",
+      "observacao": "",
+      "valor": 280,
+      "duracaoMin": 30
+    }
+  ],
+  "pacientesAtencao": [
+    {
+      "id": "atc-001",
+      "tipo": "exame-novo",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "contexto": "TSH novo — valor 6,4 mUI/L (acima do limite)",
+      "criadoHa": "há 2h",
+      "prioridade": "alta"
+    },
+    {
+      "id": "atc-002",
+      "tipo": "mensagem-clinica",
+      "pacienteId": "pct-002",
+      "pacienteNome": "Paula Mendes",
+      "iniciais": "PM",
+      "contexto": "Pergunta sobre efeito colateral da Metformina",
+      "criadoHa": "há 5h",
+      "prioridade": "media"
+    },
+    {
+      "id": "atc-003",
+      "tipo": "retorno-atrasado",
+      "pacienteId": "pct-005",
+      "pacienteNome": "Beatriz Souza",
+      "iniciais": "BS",
+      "contexto": "Sem retorno há 5 meses (sugerido em 3)",
+      "criadoHa": "há 2 sem",
+      "prioridade": "media"
+    },
+    {
+      "id": "atc-004",
+      "tipo": "adesao-critica",
+      "pacienteId": "pct-011",
+      "pacienteNome": "Caio Bernardes",
+      "iniciais": "CB",
+      "contexto": "Adesão 42% nos últimos 30d (Metformina)",
+      "criadoHa": "há 3 dias",
+      "prioridade": "alta"
+    },
+    {
+      "id": "atc-005",
+      "tipo": "exame-novo",
+      "pacienteId": "pct-010",
+      "pacienteNome": "Gustavo Henrique",
+      "iniciais": "GH",
+      "contexto": "Perfil tireoidiano completo enviado",
+      "criadoHa": "ontem",
+      "prioridade": "media"
+    }
+  ],
+  "agora": "2026-05-07T11:10:00-03:00"
+}

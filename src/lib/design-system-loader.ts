@@ -32,6 +32,7 @@ export function loadColorTokens(): ColorTokens | null {
     primary: colors.primary,
     secondary: colors.secondary,
     neutral: colors.neutral,
+    ...(colors.accent ? { accent: colors.accent } : {}),
   }
 }
 

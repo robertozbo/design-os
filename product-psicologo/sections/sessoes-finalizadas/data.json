@@ -1,0 +1,244 @@
+{
+  "stats": {
+    "hoje": 3,
+    "semana": 14,
+    "altoRisco": 2,
+    "comAdendos": 5
+  },
+  "pacientesDisponiveis": [
+    {
+      "id": "p-001",
+      "nomeCompleto": "Antonio Carlos Silva",
+      "inicial": "A",
+      "fotoUrl": null,
+      "idade": 34
+    },
+    {
+      "id": "p-002",
+      "nomeCompleto": "Beatriz Mendes Oliveira",
+      "inicial": "B",
+      "fotoUrl": null,
+      "idade": 28
+    },
+    {
+      "id": "p-003",
+      "nomeCompleto": "Carlos Eduardo Ribeiro",
+      "inicial": "C",
+      "fotoUrl": null,
+      "idade": 41
+    },
+    {
+      "id": "p-004",
+      "nomeCompleto": "Daniela Fonseca",
+      "inicial": "D",
+      "fotoUrl": null,
+      "idade": 23
+    },
+    {
+      "id": "p-005",
+      "nomeCompleto": "Eduardo Pinheiro Almeida",
+      "inicial": "E",
+      "fotoUrl": null,
+      "idade": 52
+    }
+  ],
+  "sessoes": [
+    {
+      "id": "s-001",
+      "paciente": {
+        "id": "p-001",
+        "nomeCompleto": "Antonio Carlos Silva",
+        "inicial": "A",
+        "fotoUrl": null,
+        "idade": 34
+      },
+      "appointmentId": "appt-001",
+      "planoNome": "TCC ansiedade — 12 sessões",
+      "modo": "soap",
+      "resumo": "Paciente relata melhora significativa do sono após introdução de mindfulness. Reduziu episódios de ataque de pânico de 4x→1x na semana.",
+      "tecnicas": ["mindfulness", "exposicao-gradual", "registro-pensamentos"],
+      "risco": 1,
+      "homeworkPrescrito": true,
+      "iniciadaEm": "2026-05-23T10:00:00",
+      "finalizadaEm": "2026-05-23T10:55:00",
+      "duracaoMin": 55,
+      "adendos": [
+        {
+          "id": "a-001",
+          "criadoEm": "2026-05-23T11:20:00",
+          "preview": "Correção: paciente confirmou no chat que está tomando sertralina 50mg (omitido na sessão)"
+        }
+      ]
+    },
+    {
+      "id": "s-002",
+      "paciente": {
+        "id": "p-003",
+        "nomeCompleto": "Carlos Eduardo Ribeiro",
+        "inicial": "C",
+        "fotoUrl": null,
+        "idade": 41
+      },
+      "appointmentId": "appt-002",
+      "planoNome": "Avaliação inicial",
+      "modo": "soap",
+      "resumo": "Primeira consulta. Queixa: insônia há 3 meses, irritabilidade, conflito conjugal recente. Aplicar PHQ-9 + GAD-7 na próxima.",
+      "tecnicas": ["acolhimento", "anamnese"],
+      "risco": 2,
+      "homeworkPrescrito": false,
+      "iniciadaEm": "2026-05-23T09:00:00",
+      "finalizadaEm": "2026-05-23T09:50:00",
+      "duracaoMin": 50,
+      "adendos": []
+    },
+    {
+      "id": "s-003",
+      "paciente": {
+        "id": "p-002",
+        "nomeCompleto": "Beatriz Mendes Oliveira",
+        "inicial": "B",
+        "fotoUrl": null,
+        "idade": 28
+      },
+      "appointmentId": null,
+      "planoNome": "ACT — luto complicado",
+      "modo": "dap",
+      "resumo": "Paciente trouxe foto da mãe pra sessão. Trabalho de aceitação iniciado. Choro espontâneo no meio — bom sinal terapêutico.",
+      "tecnicas": ["aceitacao", "defusao-cognitiva"],
+      "risco": 1,
+      "homeworkPrescrito": true,
+      "iniciadaEm": "2026-05-23T08:00:00",
+      "finalizadaEm": "2026-05-23T08:50:00",
+      "duracaoMin": 50,
+      "adendos": []
+    },
+    {
+      "id": "s-004",
+      "paciente": {
+        "id": "p-005",
+        "nomeCompleto": "Eduardo Pinheiro Almeida",
+        "inicial": "E",
+        "fotoUrl": null,
+        "idade": 52
+      },
+      "appointmentId": "appt-004",
+      "planoNome": "TCC depressão moderada — 16 sessões",
+      "modo": "soap",
+      "resumo": "Ideação suicida passiva mencionada. Plano de segurança revisado e ativado. Contato com psiquiatra agendado. Próxima sessão antecipada.",
+      "tecnicas": ["plano-seguranca", "reestruturacao-cognitiva"],
+      "risco": 3,
+      "homeworkPrescrito": true,
+      "iniciadaEm": "2026-05-22T15:00:00",
+      "finalizadaEm": "2026-05-22T16:10:00",
+      "duracaoMin": 70,
+      "adendos": [
+        {
+          "id": "a-002",
+          "criadoEm": "2026-05-22T17:00:00",
+          "preview": "Contato com psiquiatra Dra. Marina confirmado para amanhã 10h. Paciente notificado."
+        },
+        {
+          "id": "a-003",
+          "criadoEm": "2026-05-23T09:15:00",
+          "preview": "Paciente respondeu mensagem de monitoramento esta manhã, reportou noite estável."
+        }
+      ]
+    },
+    {
+      "id": "s-005",
+      "paciente": {
+        "id": "p-004",
+        "nomeCompleto": "Daniela Fonseca",
+        "inicial": "D",
+        "fotoUrl": null,
+        "idade": 23
+      },
+      "appointmentId": "appt-005",
+      "planoNome": "Mindfulness — 8 sessões",
+      "modo": "livre",
+      "resumo": "Sessão de revisão de progresso. Paciente compartilhou jornal de gratidão. Engajamento alto, evolução clara em 4 semanas.",
+      "tecnicas": ["mindfulness", "gratidao"],
+      "risco": 0,
+      "homeworkPrescrito": true,
+      "iniciadaEm": "2026-05-22T11:00:00",
+      "finalizadaEm": "2026-05-22T11:45:00",
+      "duracaoMin": 45,
+      "adendos": []
+    },
+    {
+      "id": "s-006",
+      "paciente": {
+        "id": "p-001",
+        "nomeCompleto": "Antonio Carlos Silva",
+        "inicial": "A",
+        "fotoUrl": null,
+        "idade": 34
+      },
+      "appointmentId": "appt-006",
+      "planoNome": "TCC ansiedade — 12 sessões",
+      "modo": "soap",
+      "resumo": "Exposição in-vivo programada para próxima semana (apresentação no trabalho). Hierarquia revisada, ansiedade antecipatória trabalhada.",
+      "tecnicas": ["exposicao-gradual", "reestruturacao-cognitiva"],
+      "risco": 1,
+      "homeworkPrescrito": true,
+      "iniciadaEm": "2026-05-20T10:00:00",
+      "finalizadaEm": "2026-05-20T10:55:00",
+      "duracaoMin": 55,
+      "adendos": []
+    },
+    {
+      "id": "s-007",
+      "paciente": {
+        "id": "p-003",
+        "nomeCompleto": "Carlos Eduardo Ribeiro",
+        "inicial": "C",
+        "fotoUrl": null,
+        "idade": 41
+      },
+      "appointmentId": null,
+      "planoNome": "Avaliação inicial",
+      "modo": "dap",
+      "resumo": "Resultado PHQ-9: 14 (moderada). GAD-7: 11 (moderada). Hipótese: episódio depressivo moderado com componente ansioso. Iniciar plano.",
+      "tecnicas": ["aplicacao-phq9", "aplicacao-gad7", "psicoeducacao"],
+      "risco": 2,
+      "homeworkPrescrito": true,
+      "iniciadaEm": "2026-05-19T09:00:00",
+      "finalizadaEm": "2026-05-19T09:55:00",
+      "duracaoMin": 55,
+      "adendos": [
+        {
+          "id": "a-004",
+          "criadoEm": "2026-05-19T14:00:00",
+          "preview": "Plano TCC depressão moderada iniciado e enviado pro paciente via app."
+        }
+      ]
+    },
+    {
+      "id": "s-008",
+      "paciente": {
+        "id": "p-002",
+        "nomeCompleto": "Beatriz Mendes Oliveira",
+        "inicial": "B",
+        "fotoUrl": null,
+        "idade": 28
+      },
+      "appointmentId": "appt-008",
+      "planoNome": "ACT — luto complicado",
+      "modo": "soap",
+      "resumo": "Paciente faltou (no-show). Tentativa de contato sem resposta. Reagendado pra próxima semana após mensagem do filho da paciente.",
+      "tecnicas": [],
+      "risco": 2,
+      "homeworkPrescrito": false,
+      "iniciadaEm": "2026-05-18T14:00:00",
+      "finalizadaEm": "2026-05-18T14:10:00",
+      "duracaoMin": 10,
+      "adendos": [
+        {
+          "id": "a-005",
+          "criadoEm": "2026-05-19T08:30:00",
+          "preview": "Filho confirmou estado emocional intenso após data simbólica (aniversário da mãe falecida)."
+        }
+      ]
+    }
+  ]
+}

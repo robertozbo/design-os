@@ -1,0 +1,303 @@
+{
+  "_meta": {
+    "models": {
+      "consulta": "A sessão de atendimento atual em andamento ou finalizada. Tem estado (pré-consulta, gravando, encerrada, assinada), modalidade (presencial/tele), tempo decorrido, e referencia anamnese, transcrição, SOAP e ações pós-consulta.",
+      "paciente": "Identificação resumida do paciente em atendimento, com idade, condições crônicas relevantes e data da última consulta. Mostrada no header e no painel de contexto.",
+      "anamneseEntrada": "Resposta dada pelo paciente ao formulário de anamnese pré-consulta enviado pelo app 24h antes. Pré-preenche a aba Anamnese.",
+      "soapBloco": "Um dos 4 blocos da evolução SOAP (Subjective, Objective, Assessment, Plan). Tem texto, indicador se foi gerado por IA, e diff de edição.",
+      "medicacaoAtiva": "Medicação que o paciente está usando (derivada de prescrição Memed). Mostrada no painel de contexto.",
+      "exameRecente": "Exame laboratorial recente do paciente, com valores-chave de biomarkers e sparkline de tendência. Top 3 mostrados no painel de contexto.",
+      "biomarker": "Valor numérico individual extraído de um exame (HbA1c, TSH, glicemia, etc.) com unidade, faixa de referência e histórico pra tendência.",
+      "evolucaoAnterior": "Evolução resumida de uma consulta passada, com data e plano em 1-2 linhas. Top 3 mostradas no painel de contexto.",
+      "transcricaoTrecho": "Trecho de texto bruto transcrito do áudio da consulta em tempo real, com timestamp.",
+      "acaoPosConsulta": "Ação opcional ao fechar a consulta: agendar retorno, enviar resumo pro paciente, ou cobrar."
+    },
+    "relationships": [
+      "Uma Consulta pertence a um Paciente",
+      "Uma Consulta tem uma AnamneseEntrada (pré-preenchida pelo paciente) e produz SOAPBlocos (estruturados pela IA + revisados pelo médico)",
+      "Uma Consulta acumula TranscricaoTrechos durante a gravação",
+      "O Paciente tem MedicacaoAtiva (lista), ExameRecente (lista com Biomarkers) e EvolucaoAnterior (histórico) — mostrados no painel de contexto",
+      "Ao fechar, o médico escolhe AcaoPosConsulta (até 3) que disparam efeitos (novo agendamento, mensagem clínica, link de cobrança)"
+    ]
+  },
+  "consulta": {
+    "id": "cns-2026-05-07-001",
+    "pacienteId": "pct-001",
+    "agendamentoId": "agd-2026-05-07-1430",
+    "modalidade": "presencial",
+    "estado": "gravando",
+    "iniciadaEm": "2026-05-07T14:30:00-03:00",
+    "tempoDecorridoSeg": 754,
+    "gravacaoStatus": "gravando",
+    "tabAtiva": "soap",
+    "termoGravacaoAceito": true,
+    "modeloIA": "claude-opus-4-7",
+    "assinadaEm": null,
+    "assinadaPor": null
+  },
+  "paciente": {
+    "id": "pct-001",
+    "nome": "Maria Silva Andrade",
+    "idade": 45,
+    "genero": "feminino",
+    "condicoesCronicas": [
+      "Diabetes Mellitus tipo 2",
+      "Hipotireoidismo subclínico"
+    ],
+    "ultimaConsultaEm": "2026-02-10",
+    "telefone": "+5511987654321",
+    "convenio": "Particular"
+  },
+  "anamneseEntrada": {
+    "preenchidaEm": "2026-05-06T20:14:00-03:00",
+    "preenchidaPor": "paciente",
+    "campos": {
+      "queixaPrincipal": "Cansaço persistente há 6 semanas e ganho de 3kg sem mudança alimentar.",
+      "sintomas": [
+        "Sonolência diurna",
+        "Sensação de frio mesmo em dias quentes",
+        "Constipação intermitente"
+      ],
+      "medicacaoAtual": "Metformina 1g 2x ao dia, Levotiroxina 50mcg em jejum",
+      "duvidas": "Posso aumentar a dose da Levotiroxina por conta própria? Tenho viagem semana que vem."
+    }
+  },
+  "soapBlocos": [
+    {
+      "tipo": "S",
+      "rotulo": "Subjective",
+      "texto": "Paciente refere cansaço progressivo há 6 semanas, com sonolência diurna e intolerância ao frio. Relata ganho ponderal de 3kg no período sem mudança alimentar. Constipação intermitente. Sem alteração na medicação habitual nos últimos 3 meses.",
+      "geradoPorIA": true,
+      "editadoPeloMedico": false
+    },
+    {
+      "tipo": "O",
+      "rotulo": "Objective",
+      "texto": "PA 128x82 mmHg, FC 62 bpm, peso 78,4 kg (anterior 75,2 kg em 10/02), IMC 29,1. Tireoide palpável, sem nódulos. Pele seca. Sem edema de MMII.",
+      "geradoPorIA": true,
+      "editadoPeloMedico": true
+    },
+    {
+      "tipo": "A",
+      "rotulo": "Assessment",
+      "texto": "Hipotireoidismo subclínico em provável progressão para hipotireoidismo manifesto — sintomas + ganho ponderal. DM2 estável (HbA1c 6,8% no exame mais recente). Necessário reavaliar TSH e ajustar dose de Levotiroxina.",
+      "geradoPorIA": true,
+      "editadoPeloMedico": false
+    },
+    {
+      "tipo": "P",
+      "rotulo": "Plan",
+      "texto": "1) Solicitar TSH e T4 livre. 2) Aumentar Levotiroxina pra 75 mcg em jejum, reavaliar em 6 semanas. 3) Manter Metformina. 4) Orientado a NÃO ajustar dose por conta própria. 5) Retorno em 6 semanas com novo TSH em mãos.",
+      "geradoPorIA": true,
+      "editadoPeloMedico": false
+    }
+  ],
+  "transcricaoTrechos": [
+    {
+      "ts": "00:00:12",
+      "fala": "medico",
+      "texto": "Boa tarde Maria, como você está se sentindo desde a última consulta?"
+    },
+    {
+      "ts": "00:00:18",
+      "fala": "paciente",
+      "texto": "Doutor, tô meio cansada, sabe? Faz umas 6 semanas. E ganhei uns 3 quilos sem comer nada diferente."
+    },
+    {
+      "ts": "00:00:34",
+      "fala": "medico",
+      "texto": "Entendi. Está sentindo mais frio? Sonolência durante o dia?"
+    },
+    {
+      "ts": "00:00:41",
+      "fala": "paciente",
+      "texto": "Bastante. Mesmo nos dias quentes eu tô gelada. E à tarde dá uma sonolência terrível."
+    },
+    {
+      "ts": "00:01:02",
+      "fala": "medico",
+      "texto": "Como tá o intestino? Tá funcionando direito?"
+    },
+    {
+      "ts": "00:01:08",
+      "fala": "paciente",
+      "texto": "Travado. Vai e vem, mas mais travado."
+    },
+    {
+      "ts": "00:01:25",
+      "fala": "medico",
+      "texto": "Vou pedir um TSH novo e ajustar a Levotiroxina. Provavelmente o quadro precisa de dose maior."
+    }
+  ],
+  "medicacaoAtiva": [
+    {
+      "id": "med-001",
+      "nome": "Metformina",
+      "dose": "1 g",
+      "posologia": "2x ao dia, após almoço e jantar",
+      "prescricaoId": "prc-2025-11-10-001",
+      "adesaoUltimos7Dias": 0.93,
+      "iniciadaEm": "2024-03-15"
+    },
+    {
+      "id": "med-002",
+      "nome": "Levotiroxina",
+      "dose": "50 mcg",
+      "posologia": "1x ao dia, em jejum, 30 min antes do café",
+      "prescricaoId": "prc-2025-11-10-002",
+      "adesaoUltimos7Dias": 0.86,
+      "iniciadaEm": "2023-08-22"
+    },
+    {
+      "id": "med-003",
+      "nome": "Vitamina D3",
+      "dose": "7000 UI",
+      "posologia": "1x por semana",
+      "prescricaoId": "prc-2025-11-10-003",
+      "adesaoUltimos7Dias": null,
+      "iniciadaEm": "2025-08-10"
+    }
+  ],
+  "examesRecentes": [
+    {
+      "id": "exm-001",
+      "tipo": "Perfil tireoidiano",
+      "laboratorio": "Fleury",
+      "dataColeta": "2026-04-22",
+      "biomarkers": [
+        {
+          "nome": "TSH",
+          "valor": 6.4,
+          "unidade": "mUI/L",
+          "faixaReferencia": "0,4 - 4,5",
+          "alertNivel": "alto",
+          "historico": [
+            3.8,
+            4.1,
+            4.7,
+            5.2,
+            6.4
+          ]
+        },
+        {
+          "nome": "T4 Livre",
+          "valor": 0.9,
+          "unidade": "ng/dL",
+          "faixaReferencia": "0,8 - 1,8",
+          "alertNivel": "normal",
+          "historico": [
+            1.2,
+            1.1,
+            1.0,
+            0.95,
+            0.9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exm-002",
+      "tipo": "Hemoglobina glicada",
+      "laboratorio": "Fleury",
+      "dataColeta": "2026-04-22",
+      "biomarkers": [
+        {
+          "nome": "HbA1c",
+          "valor": 6.8,
+          "unidade": "%",
+          "faixaReferencia": "< 7,0 (meta paciente DM2)",
+          "alertNivel": "normal",
+          "historico": [
+            7.3,
+            7.1,
+            7.0,
+            6.9,
+            6.8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exm-003",
+      "tipo": "Vitamina D",
+      "laboratorio": "Sabin",
+      "dataColeta": "2026-03-15",
+      "biomarkers": [
+        {
+          "nome": "25-hidroxivitamina D",
+          "valor": 38,
+          "unidade": "ng/mL",
+          "faixaReferencia": "30 - 100",
+          "alertNivel": "normal",
+          "historico": [
+            22,
+            28,
+            33,
+            36,
+            38
+          ]
+        }
+      ]
+    }
+  ],
+  "imagensRecentes": [
+    {
+      "id": "img-maria-usg-tireoide",
+      "tipo": "USG tireoide com Doppler",
+      "modalidade": "usg",
+      "laboratorio": "Fleury",
+      "dataColeta": "2026-05-04",
+      "mockVisual": "tireoide-long",
+      "destaqueAchado": "Nódulo TI-RADS 3 LD · 8 × 6 × 5 mm (cresceu 1mm em 11m)",
+      "significancia": "atencao"
+    },
+    {
+      "id": "img-maria-rxtorax-rotina",
+      "tipo": "Raio-X de tórax (rotina)",
+      "modalidade": "raio-x",
+      "laboratorio": "CDB",
+      "dataColeta": "2026-02-08",
+      "mockVisual": "torax-pa",
+      "destaqueAchado": "Sem alterações grosseiras",
+      "significancia": "normal"
+    }
+  ],
+  "evolucoesAnteriores": [
+    {
+      "id": "evo-2026-02-10",
+      "data": "2026-02-10",
+      "planoResumo": "Manutenção da Metformina e Levotiroxina; reavaliar TSH em 3 meses; orientar pesagem semanal."
+    },
+    {
+      "id": "evo-2025-11-10",
+      "data": "2025-11-10",
+      "planoResumo": "Renovação de receitas (Metformina, Levotiroxina, Vit D); reforço de adesão à dieta com nutricionista."
+    },
+    {
+      "id": "evo-2025-08-10",
+      "data": "2025-08-10",
+      "planoResumo": "Iniciada suplementação Vit D 7000UI/sem; solicitada vitamina D em 30 dias."
+    }
+  ],
+  "acoesPosConsulta": [
+    {
+      "id": "ret",
+      "rotulo": "Agendar retorno",
+      "habilitada": true,
+      "sugestao": "6 semanas (com novo TSH)",
+      "dataSugerida": "2026-06-18"
+    },
+    {
+      "id": "resumo",
+      "rotulo": "Enviar resumo pro paciente",
+      "habilitada": true,
+      "preview": "Resumo da consulta de hoje: ajuste de Levotiroxina pra 75 mcg, novo TSH em 6 semanas, Metformina mantida. Não ajuste dose por conta própria."
+    },
+    {
+      "id": "cobranca",
+      "rotulo": "Cobrar (não pago)",
+      "habilitada": false,
+      "motivo": "Consulta já foi paga via PIX em 06/05"
+    }
+  ]
+}

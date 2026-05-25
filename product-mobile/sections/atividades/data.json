@@ -1,0 +1,305 @@
+{
+  "_meta": {
+    "models": {
+      "AtividadeViewModel": "Combina ActivityResponse do backend (Activity + activityType + category) com campos UI: ícone, cor, badge de origem, formatação de hora/duração.",
+      "ActivityResponse": "Backend row com activityType.category aninhado. activityType tem points por bucket de duração e caloriesPerMinute do catálogo.",
+      "AtividadesStats": "Agregados calculados sobre atividades visíveis no período: count, kcal, minutos, pontos.",
+      "ActivitySource": "Campo proposto pra backend evoluir: 'manual' | 'apple_health' | 'health_connect' | 'google_fit'. Hoje pode ser inferido de deviceId."
+    },
+    "relationships": [
+      "categoria UI é mapeada de activity.activityType.category.name (lowercase)",
+      "stats agrega tudo no período corrente",
+      "sourceLabel é humanizado da combinação source + Device.deviceSubtype quando aplicável"
+    ]
+  },
+
+  "periodos": [
+    { "id": "hoje", "label": "Hoje" },
+    { "id": "7d", "label": "7 dias" },
+    { "id": "30d", "label": "30 dias" }
+  ],
+
+  "categoriasFiltro": [
+    { "id": "todas", "label": "Todas", "count": 5 },
+    { "id": "cardio", "label": "Cardio", "count": 3 },
+    { "id": "forca", "label": "Força", "count": 1 },
+    { "id": "flexibilidade", "label": "Flexibilidade", "count": 1 },
+    { "id": "esportes", "label": "Esportes", "count": 0 },
+    { "id": "outros", "label": "Outros", "count": 0 }
+  ],
+
+  "stats": {
+    "quantidade": 5,
+    "kcalTotal": 1240,
+    "minutosTotal": 175,
+    "pontosTotal": 86
+  },
+
+  "atividades": [
+    {
+      "activity": {
+        "id": "act-1",
+        "userId": "u-1",
+        "activityTypeId": "at-corrida",
+        "durationMinutes": 45,
+        "actualMinutes": 47,
+        "points": 22,
+        "caloriesBurned": 412,
+        "performedAt": "2026-05-04T07:15:00.000Z",
+        "source": "apple_health",
+        "deviceId": "dev-1",
+        "notes": null,
+        "imageUrl": null,
+        "createdAt": "2026-05-04T08:30:00.000Z",
+        "updatedAt": "2026-05-04T08:30:00.000Z",
+        "deletedAt": null,
+        "version": 1,
+        "activityType": {
+          "id": "at-corrida",
+          "categoryId": "cat-cardio",
+          "name": "Corrida",
+          "description": "Corrida ao ar livre ou esteira",
+          "points30min": 14,
+          "points45min": 22,
+          "points60min": 30,
+          "points80min": 42,
+          "points120min": 64,
+          "caloriesPerMinute": 8.8,
+          "isActive": true,
+          "sortOrder": 1,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z",
+          "category": {
+            "id": "cat-cardio",
+            "name": "Cardio",
+            "description": "Atividades aeróbicas",
+            "isActive": true,
+            "sortOrder": 1,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "categoria": "cardio",
+      "iconeNome": "Flame",
+      "iconeCor": "rose-300",
+      "iconeBg": "bg-rose-500/15",
+      "source": "apple_health",
+      "sourceLabel": "Apple Watch",
+      "horarioFormatado": "07:15",
+      "duracaoFormatada": "47 min"
+    },
+    {
+      "activity": {
+        "id": "act-2",
+        "userId": "u-1",
+        "activityTypeId": "at-musculacao",
+        "durationMinutes": 60,
+        "actualMinutes": 60,
+        "points": 18,
+        "caloriesBurned": 380,
+        "performedAt": "2026-05-04T18:00:00.000Z",
+        "source": "manual",
+        "deviceId": null,
+        "notes": "Treino A · superior",
+        "imageUrl": null,
+        "createdAt": "2026-05-04T19:30:00.000Z",
+        "updatedAt": "2026-05-04T19:30:00.000Z",
+        "deletedAt": null,
+        "version": 1,
+        "activityType": {
+          "id": "at-musculacao",
+          "categoryId": "cat-forca",
+          "name": "Musculação",
+          "description": "Treino de força",
+          "points30min": 10,
+          "points45min": 14,
+          "points60min": 18,
+          "points80min": 24,
+          "points120min": 36,
+          "caloriesPerMinute": 6.3,
+          "isActive": true,
+          "sortOrder": 1,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z",
+          "category": {
+            "id": "cat-forca",
+            "name": "Força",
+            "description": "Treino de resistência",
+            "isActive": true,
+            "sortOrder": 2,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "categoria": "forca",
+      "iconeNome": "Dumbbell",
+      "iconeCor": "amber-300",
+      "iconeBg": "bg-amber-500/15",
+      "source": "manual",
+      "sourceLabel": "Manual",
+      "horarioFormatado": "18:00",
+      "duracaoFormatada": "60 min"
+    },
+    {
+      "activity": {
+        "id": "act-3",
+        "userId": "u-1",
+        "activityTypeId": "at-yoga",
+        "durationMinutes": 30,
+        "actualMinutes": 32,
+        "points": 8,
+        "caloriesBurned": 110,
+        "performedAt": "2026-05-03T20:15:00.000Z",
+        "source": "apple_health",
+        "deviceId": "dev-1",
+        "notes": null,
+        "imageUrl": null,
+        "createdAt": "2026-05-03T21:00:00.000Z",
+        "updatedAt": "2026-05-03T21:00:00.000Z",
+        "deletedAt": null,
+        "version": 1,
+        "activityType": {
+          "id": "at-yoga",
+          "categoryId": "cat-flex",
+          "name": "Yoga",
+          "description": "Yoga / alongamento",
+          "points30min": 8,
+          "points45min": 12,
+          "points60min": 16,
+          "points80min": 22,
+          "points120min": 32,
+          "caloriesPerMinute": 3.5,
+          "isActive": true,
+          "sortOrder": 1,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z",
+          "category": {
+            "id": "cat-flex",
+            "name": "Flexibilidade",
+            "description": "Yoga, alongamento, mobilidade",
+            "isActive": true,
+            "sortOrder": 3,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "categoria": "flexibilidade",
+      "iconeNome": "Activity",
+      "iconeCor": "violet-300",
+      "iconeBg": "bg-violet-500/15",
+      "source": "apple_health",
+      "sourceLabel": "Apple Watch",
+      "horarioFormatado": "20:15 · ontem",
+      "duracaoFormatada": "32 min"
+    },
+    {
+      "activity": {
+        "id": "act-4",
+        "userId": "u-1",
+        "activityTypeId": "at-caminhada",
+        "durationMinutes": 30,
+        "actualMinutes": 28,
+        "points": 6,
+        "caloriesBurned": 130,
+        "performedAt": "2026-05-03T12:30:00.000Z",
+        "source": "apple_health",
+        "deviceId": "dev-1",
+        "notes": null,
+        "imageUrl": null,
+        "createdAt": "2026-05-03T13:00:00.000Z",
+        "updatedAt": "2026-05-03T13:00:00.000Z",
+        "deletedAt": null,
+        "version": 1,
+        "activityType": {
+          "id": "at-caminhada",
+          "categoryId": "cat-cardio",
+          "name": "Caminhada",
+          "description": "Caminhada leve a moderada",
+          "points30min": 6,
+          "points45min": 9,
+          "points60min": 12,
+          "points80min": 16,
+          "points120min": 24,
+          "caloriesPerMinute": 4.5,
+          "isActive": true,
+          "sortOrder": 2,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z",
+          "category": {
+            "id": "cat-cardio",
+            "name": "Cardio",
+            "description": "Atividades aeróbicas",
+            "isActive": true,
+            "sortOrder": 1,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "categoria": "cardio",
+      "iconeNome": "Footprints",
+      "iconeCor": "rose-300",
+      "iconeBg": "bg-rose-500/15",
+      "source": "apple_health",
+      "sourceLabel": "Apple Watch",
+      "horarioFormatado": "12:30 · ontem",
+      "duracaoFormatada": "28 min"
+    },
+    {
+      "activity": {
+        "id": "act-5",
+        "userId": "u-1",
+        "activityTypeId": "at-bike",
+        "durationMinutes": 60,
+        "actualMinutes": 58,
+        "points": 32,
+        "caloriesBurned": 420,
+        "performedAt": "2026-05-02T08:00:00.000Z",
+        "source": "apple_health",
+        "deviceId": "dev-1",
+        "notes": null,
+        "imageUrl": null,
+        "createdAt": "2026-05-02T09:00:00.000Z",
+        "updatedAt": "2026-05-02T09:00:00.000Z",
+        "deletedAt": null,
+        "version": 1,
+        "activityType": {
+          "id": "at-bike",
+          "categoryId": "cat-cardio",
+          "name": "Ciclismo",
+          "description": "Bike de rua ou indoor",
+          "points30min": 16,
+          "points45min": 24,
+          "points60min": 32,
+          "points80min": 44,
+          "points120min": 66,
+          "caloriesPerMinute": 7.2,
+          "isActive": true,
+          "sortOrder": 3,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z",
+          "category": {
+            "id": "cat-cardio",
+            "name": "Cardio",
+            "description": "Atividades aeróbicas",
+            "isActive": true,
+            "sortOrder": 1,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "categoria": "cardio",
+      "iconeNome": "Bike",
+      "iconeCor": "rose-300",
+      "iconeBg": "bg-rose-500/15",
+      "source": "apple_health",
+      "sourceLabel": "Apple Watch",
+      "horarioFormatado": "08:00 · 02/05",
+      "duracaoFormatada": "58 min"
+    }
+  ]
+}

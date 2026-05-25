@@ -1,0 +1,179 @@
+{
+  "_meta": {
+    "models": {
+      "ObjetivoViewModel": "Combina Goal do backend (goals table) com MetricTypeInfo (catálogo) + UI: ícone, cor, visual (ring/bar), progressPct calculado, tempoLabel humanizado, sugestaoIA opcional.",
+      "Goal": "Meta backend: metricTypeId + initialValue → currentValue → targetValue + startDate/endDate + status.",
+      "ObjetivosStats": "Agregados sobre todas as metas do user: ativos, progresso médio, concluídos, cancelados."
+    },
+    "relationships": [
+      "objetivo.goal aponta pro Goal row",
+      "objetivo.tipo é o MetricTypeInfo associado",
+      "progressPct é computado: (initialValue - currentValue) / (initialValue - targetValue) * 100 (descrescente) ou (currentValue - initialValue) / (targetValue - initialValue) * 100 (crescente)",
+      "tone deriva de progressPct: 0-30 cold, 30-70 warm, 70-99 hot, 100+ done, vencido sem atingir = late"
+    ]
+  },
+
+  "stats": {
+    "ativos": 4,
+    "progressoMedio": 58,
+    "concluidos": 2,
+    "cancelados": 1
+  },
+
+  "filtros": [
+    { "id": "active", "label": "Ativos", "count": 4 },
+    { "id": "completed", "label": "Concluídos", "count": 2 },
+    { "id": "cancelled", "label": "Cancelados", "count": 1 }
+  ],
+
+  "objetivos": [
+    {
+      "goal": {
+        "id": "goal-1",
+        "userId": "u-1",
+        "metricTypeId": "mt-weight",
+        "description": "Atingir 79 kg até as férias",
+        "initialValue": 86.4,
+        "currentValue": 83.4,
+        "targetValue": 79.0,
+        "startDate": "2026-04-01T00:00:00.000Z",
+        "endDate": "2026-06-15T00:00:00.000Z",
+        "status": "active"
+      },
+      "tipo": {
+        "id": "mt-weight",
+        "value": "weight",
+        "label": "Peso",
+        "description": "Peso corporal",
+        "unit": "kg",
+        "dataType": "number",
+        "compositeFields": null,
+        "normalMin": "60",
+        "normalMax": "90",
+        "points": 5,
+        "isActive": true,
+        "sortOrder": 1
+      },
+      "iconeNome": "Scale",
+      "iconeCor": "teal-300",
+      "iconeBg": "bg-teal-500/15",
+      "visual": "ring",
+      "isAscending": false,
+      "progressPct": 41,
+      "tone": "warm",
+      "tempoLabel": "Faltam 42 dias",
+      "sugestaoIA": "Mantenha o déficit calórico moderado e cardio 3×/semana"
+    },
+    {
+      "goal": {
+        "id": "goal-2",
+        "userId": "u-1",
+        "metricTypeId": "mt-bf",
+        "description": "Reduzir gordura corporal pra 10%",
+        "initialValue": 14.0,
+        "currentValue": 12.0,
+        "targetValue": 10.0,
+        "startDate": "2026-03-15T00:00:00.000Z",
+        "endDate": "2026-07-01T00:00:00.000Z",
+        "status": "active"
+      },
+      "tipo": {
+        "id": "mt-bf",
+        "value": "body_fat_percentage",
+        "label": "% Gordura",
+        "description": "Percentual de gordura corporal",
+        "unit": "%",
+        "dataType": "number",
+        "compositeFields": null,
+        "normalMin": "10",
+        "normalMax": "20",
+        "points": 5,
+        "isActive": true,
+        "sortOrder": 3
+      },
+      "iconeNome": "Activity",
+      "iconeCor": "amber-300",
+      "iconeBg": "bg-amber-500/15",
+      "visual": "ring",
+      "isAscending": false,
+      "progressPct": 50,
+      "tone": "warm",
+      "tempoLabel": "Faltam 58 dias",
+      "sugestaoIA": "Adicione 2 sessões de musculação por semana"
+    },
+    {
+      "goal": {
+        "id": "goal-3",
+        "userId": "u-1",
+        "metricTypeId": "mt-steps",
+        "description": "Manter 8.000 passos por dia",
+        "initialValue": 4500,
+        "currentValue": 6230,
+        "targetValue": 8000,
+        "startDate": "2026-04-15T00:00:00.000Z",
+        "endDate": "2026-06-30T00:00:00.000Z",
+        "status": "active"
+      },
+      "tipo": {
+        "id": "mt-steps",
+        "value": "daily_steps",
+        "label": "Passos diários",
+        "description": "Passos diários",
+        "unit": "",
+        "dataType": "number",
+        "compositeFields": null,
+        "normalMin": "8000",
+        "normalMax": null,
+        "points": 2,
+        "isActive": true,
+        "sortOrder": 20
+      },
+      "iconeNome": "Footprints",
+      "iconeCor": "sky-300",
+      "iconeBg": "bg-sky-500/15",
+      "visual": "bar",
+      "isAscending": true,
+      "progressPct": 49,
+      "tone": "warm",
+      "tempoLabel": "Faltam 57 dias",
+      "sugestaoIA": "Caminhe 20 min após o almoço pra fechar a meta"
+    },
+    {
+      "goal": {
+        "id": "goal-4",
+        "userId": "u-1",
+        "metricTypeId": "mt-sh",
+        "description": "Dormir 8h por noite",
+        "initialValue": 6.5,
+        "currentValue": 8.0,
+        "targetValue": 8.0,
+        "startDate": "2026-04-01T00:00:00.000Z",
+        "endDate": "2026-05-31T00:00:00.000Z",
+        "status": "active"
+      },
+      "tipo": {
+        "id": "mt-sh",
+        "value": "sleep_hours",
+        "label": "Horas de sono",
+        "description": "Tempo total de sono",
+        "unit": "h",
+        "dataType": "number",
+        "compositeFields": null,
+        "normalMin": "7",
+        "normalMax": "9",
+        "points": 3,
+        "isActive": true,
+        "sortOrder": 30
+      },
+      "iconeNome": "Moon",
+      "iconeCor": "violet-300",
+      "iconeBg": "bg-violet-500/15",
+      "visual": "bar",
+      "isAscending": true,
+      "progressPct": 100,
+      "tone": "done",
+      "tempoLabel": "Meta atingida",
+      "sugestaoIA": null
+    }
+  ]
+}

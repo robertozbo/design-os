@@ -1,0 +1,660 @@
+{
+  "_meta": {
+    "models": {
+      "avaliacao": "Sessão de avaliação física datada de um aluno. Pode incluir antropometria e/ou funcional. Status: rascunho ou finalizada.",
+      "antropometria": "Bloco de medidas corporais — peso/altura/IMC, circunferências, dobras cutâneas (com cálculo de % gordura via Pollock), bioimpedância e fotos.",
+      "funcional": "Bloco de testes de performance — 1RM (Brzycki), FMS (Functional Movement Screen), flexibilidade, cardio (Cooper/Astrand) e resistência local.",
+      "deltaMetrica": "Comparativo entre o valor atual e o anterior de uma métrica, usado nos cards e no modal de comparação."
+    },
+    "relationships": [
+      "Avaliação pertence a um Aluno",
+      "Avaliação tem zero ou um bloco Antropometria e zero ou um bloco Funcional",
+      "Antropometria.dobras tem percentualGorduraPollock calculado das 7 dobras",
+      "Funcional.rm.{exercicio} tem estimadoKg calculado pela fórmula Brzycki",
+      "Avaliação.deltasResumo é calculado vs avaliação anterior do mesmo aluno"
+    ]
+  },
+  "tipos": [
+    { "id": "todas", "label": "Todas", "count": 8 },
+    { "id": "antropometria", "label": "Antropometria", "count": 7 },
+    { "id": "funcional", "label": "Funcional", "count": 6 },
+    { "id": "completas", "label": "Completas", "count": 5 }
+  ],
+  "periodos": [
+    { "id": "30d", "label": "Últimos 30 dias" },
+    { "id": "90d", "label": "Últimos 90 dias" },
+    { "id": "ano", "label": "Último ano" },
+    { "id": "todas", "label": "Todas" }
+  ],
+  "sortOptions": [
+    { "id": "recentes", "label": "Mais recentes" },
+    { "id": "antigas", "label": "Mais antigas" },
+    { "id": "por-aluno", "label": "Por aluno" }
+  ],
+  "selected": {
+    "tipo": "todas",
+    "periodo": "90d",
+    "sort": "recentes"
+  },
+  "stats": {
+    "total": 8,
+    "antropometria": 7,
+    "funcional": 6,
+    "completas": 5,
+    "alunosAvaliados": 5
+  },
+  "alunosPicker": [
+    {
+      "id": "alu-001",
+      "nome": "João Silva",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6",
+      "temNutri": true,
+      "ultimaAvaliacaoData": "2026-05-01"
+    },
+    {
+      "id": "alu-002",
+      "nome": "Maria Costa",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899",
+      "temNutri": true,
+      "ultimaAvaliacaoData": "2026-05-04"
+    },
+    {
+      "id": "alu-003",
+      "nome": "Carlos Mendes",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos+Mendes&backgroundColor=8b5cf6",
+      "temNutri": false,
+      "ultimaAvaliacaoData": "2026-04-20"
+    },
+    {
+      "id": "alu-004",
+      "nome": "Ana Oliveira",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Ana+Oliveira&backgroundColor=f59e0b",
+      "temNutri": false,
+      "ultimaAvaliacaoData": "2026-04-22"
+    },
+    {
+      "id": "alu-005",
+      "nome": "Pedro Santos",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Pedro+Santos&backgroundColor=06b6d4",
+      "temNutri": false,
+      "ultimaAvaliacaoData": "2026-05-03"
+    },
+    {
+      "id": "alu-006",
+      "nome": "Beatriz Almeida",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Beatriz+Almeida&backgroundColor=d946ef",
+      "temNutri": false,
+      "ultimaAvaliacaoData": null
+    },
+    {
+      "id": "alu-008",
+      "nome": "Júlia Ferreira",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Julia+Ferreira&backgroundColor=84cc16",
+      "temNutri": true,
+      "ultimaAvaliacaoData": "2026-02-17"
+    },
+    {
+      "id": "alu-011",
+      "nome": "Luiza Mendes",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Luiza+Mendes&backgroundColor=10b981",
+      "temNutri": false,
+      "ultimaAvaliacaoData": "2026-03-10"
+    }
+  ],
+  "emptyStates": {
+    "noAvaliacoes": {
+      "title": "Nenhuma avaliação registrada",
+      "description": "Comece uma avaliação para acompanhar a evolução do seu aluno.",
+      "primaryCta": "Nova avaliação"
+    },
+    "noResults": {
+      "title": "Nenhuma avaliação encontrada",
+      "description": "Tente ajustar os filtros ou criar uma nova avaliação.",
+      "primaryCta": "Nova avaliação"
+    }
+  },
+  "avaliacoes": [
+    {
+      "id": "av-008",
+      "alunoId": "alu-001",
+      "aluno": {
+        "id": "alu-001",
+        "nome": "João Silva",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6",
+        "temNutri": true
+      },
+      "data": "2026-05-01",
+      "status": "finalizada",
+      "observacoes": "Evolução excelente — ganhou ~3kg de massa magra em 2 meses mantendo % gordura baixo. Próxima avaliação em 30 dias.",
+      "compartilhadaComNutri": true,
+      "antropometria": {
+        "pesoKg": 81.0,
+        "estaturaCm": 178,
+        "imc": 25.6,
+        "circunferencias": {
+          "cintura": 82,
+          "quadril": 96,
+          "braco": 36,
+          "coxa": 58,
+          "panturrilha": 38,
+          "abdomen": 84
+        },
+        "dobras": {
+          "peitoral": 6,
+          "axilarMedia": 8,
+          "triciptal": 9,
+          "subescapular": 11,
+          "abdominal": 14,
+          "suprailiaca": 10,
+          "coxa": 12,
+          "percentualGorduraPollock": 16.0
+        },
+        "bioimpedancia": {
+          "pesoKg": 81.2,
+          "percentualGordura": 16.5,
+          "massaMagraKg": 67.8,
+          "percentualAgua": 60.4
+        },
+        "fotos": {
+          "frontalUrl": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80",
+          "lateralUrl": "https://images.unsplash.com/photo-1571019613568-e1d11ee07f93?w=400&q=80",
+          "posteriorUrl": "https://images.unsplash.com/photo-1571019613714-bf2a30bb1e0c?w=400&q=80"
+        }
+      },
+      "funcional": {
+        "rm": {
+          "supino": { "pesoTesteKg": 60, "repsTeste": 5, "estimadoKg": 67, "formula": "brzycki" },
+          "squat": { "pesoTesteKg": 80, "repsTeste": 5, "estimadoKg": 90, "formula": "brzycki" },
+          "deadlift": { "pesoTesteKg": 100, "repsTeste": 5, "estimadoKg": 112, "formula": "brzycki" }
+        },
+        "fms": {
+          "deepSquat": 3,
+          "hurdleStep": 2,
+          "inLineLunge": 3,
+          "shoulderMobility": 2,
+          "activeStraightLegRaise": 3,
+          "trunkStabilityPushup": 3,
+          "rotaryStability": 2,
+          "totalScore": 18
+        },
+        "flexibilidade": {
+          "sitAndReachCm": 24,
+          "shoulderMobilityCm": 4,
+          "schoberCm": 5
+        },
+        "cardio": {
+          "protocolo": "cooper",
+          "metricaPrincipal": 2400,
+          "vo2Estimado": 48,
+          "fcMedia": 168,
+          "fcRecuperacao": 124
+        },
+        "resistenciaLocal": {
+          "flexoesMax": 38,
+          "abdominaisMin": 42,
+          "pranchaTempoSegundos": 90
+        }
+      },
+      "deltasResumo": [
+        { "nome": "Peso", "anterior": 79.5, "atual": 81.0, "delta": 1.5, "positivoQuandoBaixa": false },
+        { "nome": "% Gordura", "anterior": 17.2, "atual": 16.0, "delta": -1.2, "positivoQuandoBaixa": true },
+        { "nome": "Supino 1RM", "anterior": 62, "atual": 67, "delta": 5, "positivoQuandoBaixa": false },
+        { "nome": "FMS", "anterior": 16, "atual": 18, "delta": 2, "positivoQuandoBaixa": false }
+      ]
+    },
+    {
+      "id": "av-007",
+      "alunoId": "alu-001",
+      "aluno": {
+        "id": "alu-001",
+        "nome": "João Silva",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6",
+        "temNutri": true
+      },
+      "data": "2026-04-01",
+      "status": "finalizada",
+      "observacoes": "Manteve consistência. Ganho de força no supino notável.",
+      "compartilhadaComNutri": true,
+      "antropometria": {
+        "pesoKg": 79.5,
+        "estaturaCm": 178,
+        "imc": 25.1,
+        "circunferencias": {
+          "cintura": 84,
+          "quadril": 96,
+          "braco": 35,
+          "coxa": 57,
+          "panturrilha": 37,
+          "abdomen": 86
+        },
+        "dobras": {
+          "peitoral": 7,
+          "axilarMedia": 9,
+          "triciptal": 10,
+          "subescapular": 12,
+          "abdominal": 16,
+          "suprailiaca": 11,
+          "coxa": 13,
+          "percentualGorduraPollock": 17.2
+        },
+        "bioimpedancia": {
+          "pesoKg": 79.6,
+          "percentualGordura": 17.5,
+          "massaMagraKg": 65.6,
+          "percentualAgua": 59.8
+        },
+        "fotos": {
+          "frontalUrl": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=80",
+          "lateralUrl": null,
+          "posteriorUrl": null
+        }
+      },
+      "funcional": {
+        "rm": {
+          "supino": { "pesoTesteKg": 55, "repsTeste": 5, "estimadoKg": 62, "formula": "brzycki" },
+          "squat": { "pesoTesteKg": 75, "repsTeste": 5, "estimadoKg": 84, "formula": "brzycki" },
+          "deadlift": { "pesoTesteKg": 95, "repsTeste": 5, "estimadoKg": 107, "formula": "brzycki" }
+        },
+        "fms": {
+          "deepSquat": 2,
+          "hurdleStep": 2,
+          "inLineLunge": 3,
+          "shoulderMobility": 2,
+          "activeStraightLegRaise": 2,
+          "trunkStabilityPushup": 3,
+          "rotaryStability": 2,
+          "totalScore": 16
+        },
+        "flexibilidade": null,
+        "cardio": {
+          "protocolo": "cooper",
+          "metricaPrincipal": 2200,
+          "vo2Estimado": 44,
+          "fcMedia": 172,
+          "fcRecuperacao": 130
+        },
+        "resistenciaLocal": {
+          "flexoesMax": 32,
+          "abdominaisMin": 38,
+          "pranchaTempoSegundos": 75
+        }
+      }
+    },
+    {
+      "id": "av-006",
+      "alunoId": "alu-001",
+      "aluno": {
+        "id": "alu-001",
+        "nome": "João Silva",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6",
+        "temNutri": true
+      },
+      "data": "2026-03-01",
+      "status": "finalizada",
+      "observacoes": "Avaliação inicial. Aluno volta de pausa de 6 meses, força reduzida vs histórico.",
+      "compartilhadaComNutri": true,
+      "antropometria": {
+        "pesoKg": 78.0,
+        "estaturaCm": 178,
+        "imc": 24.6,
+        "circunferencias": {
+          "cintura": 86,
+          "quadril": 97,
+          "braco": 34,
+          "coxa": 56,
+          "panturrilha": 37,
+          "abdomen": 88
+        },
+        "dobras": {
+          "peitoral": 8,
+          "axilarMedia": 10,
+          "triciptal": 11,
+          "subescapular": 13,
+          "abdominal": 18,
+          "suprailiaca": 13,
+          "coxa": 14,
+          "percentualGorduraPollock": 18.5
+        },
+        "bioimpedancia": null,
+        "fotos": {
+          "frontalUrl": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80",
+          "lateralUrl": null,
+          "posteriorUrl": null
+        }
+      },
+      "funcional": {
+        "rm": {
+          "supino": { "pesoTesteKg": 50, "repsTeste": 6, "estimadoKg": 60, "formula": "brzycki" },
+          "squat": { "pesoTesteKg": 70, "repsTeste": 6, "estimadoKg": 84, "formula": "brzycki" },
+          "deadlift": { "pesoTesteKg": 90, "repsTeste": 5, "estimadoKg": 101, "formula": "brzycki" }
+        },
+        "fms": {
+          "deepSquat": 2,
+          "hurdleStep": 2,
+          "inLineLunge": 2,
+          "shoulderMobility": 2,
+          "activeStraightLegRaise": 2,
+          "trunkStabilityPushup": 2,
+          "rotaryStability": 2,
+          "totalScore": 14
+        },
+        "flexibilidade": {
+          "sitAndReachCm": 18,
+          "shoulderMobilityCm": 8,
+          "schoberCm": 4
+        },
+        "cardio": null,
+        "resistenciaLocal": {
+          "flexoesMax": 25,
+          "abdominaisMin": 32,
+          "pranchaTempoSegundos": 60
+        }
+      }
+    },
+    {
+      "id": "av-005",
+      "alunoId": "alu-002",
+      "aluno": {
+        "id": "alu-002",
+        "nome": "Maria Costa",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899",
+        "temNutri": true
+      },
+      "data": "2026-05-04",
+      "status": "finalizada",
+      "observacoes": "Perda de 5kg em 90 dias com adesão razoável (67%). Recomendado revisar plano alimentar com nutri pra sustentar perda.",
+      "compartilhadaComNutri": true,
+      "antropometria": {
+        "pesoKg": 67.0,
+        "estaturaCm": 165,
+        "imc": 24.6,
+        "circunferencias": {
+          "cintura": 78,
+          "quadril": 98,
+          "braco": 28,
+          "coxa": 56,
+          "panturrilha": 35,
+          "abdomen": 80
+        },
+        "dobras": {
+          "peitoral": 12,
+          "axilarMedia": 14,
+          "triciptal": 18,
+          "subescapular": 16,
+          "abdominal": 22,
+          "suprailiaca": 18,
+          "coxa": 24,
+          "percentualGorduraPollock": 27.0
+        },
+        "bioimpedancia": {
+          "pesoKg": 67.2,
+          "percentualGordura": 28.0,
+          "massaMagraKg": 48.4,
+          "percentualAgua": 55.0
+        },
+        "fotos": {
+          "frontalUrl": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&q=80",
+          "lateralUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80",
+          "posteriorUrl": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80"
+        }
+      },
+      "funcional": {
+        "rm": {
+          "supino": null,
+          "squat": { "pesoTesteKg": 30, "repsTeste": 8, "estimadoKg": 38, "formula": "brzycki" },
+          "deadlift": null
+        },
+        "fms": null,
+        "flexibilidade": {
+          "sitAndReachCm": 28,
+          "shoulderMobilityCm": 2,
+          "schoberCm": 6
+        },
+        "cardio": {
+          "protocolo": "cooper",
+          "metricaPrincipal": 2100,
+          "vo2Estimado": 38,
+          "fcMedia": 165,
+          "fcRecuperacao": 122
+        },
+        "resistenciaLocal": {
+          "flexoesMax": 18,
+          "abdominaisMin": 28,
+          "pranchaTempoSegundos": 50
+        }
+      },
+      "deltasResumo": [
+        { "nome": "Peso", "anterior": 72.0, "atual": 67.0, "delta": -5.0, "positivoQuandoBaixa": true },
+        { "nome": "% Gordura", "anterior": 32.0, "atual": 27.0, "delta": -5.0, "positivoQuandoBaixa": true },
+        { "nome": "Cintura", "anterior": 84, "atual": 78, "delta": -6, "positivoQuandoBaixa": true },
+        { "nome": "VO2", "anterior": 32, "atual": 38, "delta": 6, "positivoQuandoBaixa": false }
+      ]
+    },
+    {
+      "id": "av-004",
+      "alunoId": "alu-002",
+      "aluno": {
+        "id": "alu-002",
+        "nome": "Maria Costa",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899",
+        "temNutri": true
+      },
+      "data": "2026-02-15",
+      "status": "finalizada",
+      "observacoes": "Avaliação inicial. Sedentária há 3 anos. Iniciando emagrecimento com nutri também.",
+      "compartilhadaComNutri": true,
+      "antropometria": {
+        "pesoKg": 72.0,
+        "estaturaCm": 165,
+        "imc": 26.4,
+        "circunferencias": {
+          "cintura": 84,
+          "quadril": 102,
+          "braco": 30,
+          "coxa": 60,
+          "panturrilha": 36,
+          "abdomen": 88
+        },
+        "dobras": {
+          "peitoral": 16,
+          "axilarMedia": 18,
+          "triciptal": 22,
+          "subescapular": 20,
+          "abdominal": 28,
+          "suprailiaca": 24,
+          "coxa": 30,
+          "percentualGorduraPollock": 32.0
+        },
+        "bioimpedancia": null,
+        "fotos": {
+          "frontalUrl": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80",
+          "lateralUrl": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&q=80",
+          "posteriorUrl": null
+        }
+      },
+      "funcional": {
+        "rm": { "supino": null, "squat": null, "deadlift": null },
+        "fms": null,
+        "flexibilidade": {
+          "sitAndReachCm": 22,
+          "shoulderMobilityCm": 6,
+          "schoberCm": 5
+        },
+        "cardio": {
+          "protocolo": "cooper",
+          "metricaPrincipal": 1800,
+          "vo2Estimado": 32,
+          "fcMedia": 178,
+          "fcRecuperacao": 145
+        },
+        "resistenciaLocal": {
+          "flexoesMax": 8,
+          "abdominaisMin": 18,
+          "pranchaTempoSegundos": 25
+        }
+      }
+    },
+    {
+      "id": "av-003",
+      "alunoId": "alu-003",
+      "aluno": {
+        "id": "alu-003",
+        "nome": "Carlos Mendes",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos+Mendes&backgroundColor=8b5cf6",
+        "temNutri": false
+      },
+      "data": "2026-04-20",
+      "status": "finalizada",
+      "observacoes": "Atleta de força. Foco em RM e FMS — antropometria simplificada (não é objetivo).",
+      "compartilhadaComNutri": false,
+      "antropometria": {
+        "pesoKg": 92.0,
+        "estaturaCm": 184,
+        "imc": 27.2,
+        "circunferencias": {
+          "cintura": 88,
+          "quadril": 104,
+          "braco": 42,
+          "coxa": 65,
+          "panturrilha": 41,
+          "abdomen": 90
+        },
+        "dobras": {
+          "peitoral": null,
+          "axilarMedia": null,
+          "triciptal": null,
+          "subescapular": null,
+          "abdominal": null,
+          "suprailiaca": null,
+          "coxa": null,
+          "percentualGorduraPollock": null
+        },
+        "bioimpedancia": null,
+        "fotos": { "frontalUrl": null, "lateralUrl": null, "posteriorUrl": null }
+      },
+      "funcional": {
+        "rm": {
+          "supino": { "pesoTesteKg": 110, "repsTeste": 3, "estimadoKg": 121, "formula": "brzycki" },
+          "squat": { "pesoTesteKg": 145, "repsTeste": 3, "estimadoKg": 159, "formula": "brzycki" },
+          "deadlift": { "pesoTesteKg": 180, "repsTeste": 3, "estimadoKg": 198, "formula": "brzycki" }
+        },
+        "fms": {
+          "deepSquat": 3,
+          "hurdleStep": 3,
+          "inLineLunge": 3,
+          "shoulderMobility": 3,
+          "activeStraightLegRaise": 3,
+          "trunkStabilityPushup": 3,
+          "rotaryStability": 2,
+          "totalScore": 20
+        },
+        "flexibilidade": {
+          "sitAndReachCm": 20,
+          "shoulderMobilityCm": 3,
+          "schoberCm": 6
+        },
+        "cardio": null,
+        "resistenciaLocal": null
+      }
+    },
+    {
+      "id": "av-002",
+      "alunoId": "alu-004",
+      "aluno": {
+        "id": "alu-004",
+        "nome": "Ana Oliveira",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Ana+Oliveira&backgroundColor=f59e0b",
+        "temNutri": false
+      },
+      "data": "2026-04-22",
+      "status": "finalizada",
+      "observacoes": "Pós-fisio. Avaliação leve focada em mobilidade do ombro e baseline pra retorno ao treino.",
+      "compartilhadaComNutri": false,
+      "antropometria": {
+        "pesoKg": 58.0,
+        "estaturaCm": 162,
+        "imc": 22.1,
+        "circunferencias": {
+          "cintura": 70,
+          "quadril": 92,
+          "braco": 26,
+          "coxa": 52,
+          "panturrilha": 33,
+          "abdomen": 72
+        },
+        "dobras": {
+          "peitoral": null,
+          "axilarMedia": null,
+          "triciptal": null,
+          "subescapular": null,
+          "abdominal": null,
+          "suprailiaca": null,
+          "coxa": null,
+          "percentualGorduraPollock": null
+        },
+        "bioimpedancia": null,
+        "fotos": { "frontalUrl": null, "lateralUrl": null, "posteriorUrl": null }
+      },
+      "funcional": {
+        "rm": { "supino": null, "squat": null, "deadlift": null },
+        "fms": {
+          "deepSquat": 2,
+          "hurdleStep": 2,
+          "inLineLunge": 2,
+          "shoulderMobility": 1,
+          "activeStraightLegRaise": 2,
+          "trunkStabilityPushup": 1,
+          "rotaryStability": 1,
+          "totalScore": 11
+        },
+        "flexibilidade": {
+          "sitAndReachCm": 26,
+          "shoulderMobilityCm": 12,
+          "schoberCm": 4
+        },
+        "cardio": null,
+        "resistenciaLocal": null
+      }
+    },
+    {
+      "id": "av-001",
+      "alunoId": "alu-005",
+      "aluno": {
+        "id": "alu-005",
+        "nome": "Pedro Santos",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Pedro+Santos&backgroundColor=06b6d4",
+        "temNutri": false
+      },
+      "data": "2026-05-03",
+      "status": "rascunho",
+      "observacoes": "Aluno novo. Ainda preciso confirmar valores das dobras e completar testes funcionais na próxima sessão.",
+      "compartilhadaComNutri": false,
+      "antropometria": {
+        "pesoKg": 75.0,
+        "estaturaCm": 175,
+        "imc": 24.5,
+        "circunferencias": {
+          "cintura": 82,
+          "quadril": 95,
+          "braco": 32,
+          "coxa": 55,
+          "panturrilha": 37,
+          "abdomen": 84
+        },
+        "dobras": {
+          "peitoral": null,
+          "axilarMedia": null,
+          "triciptal": null,
+          "subescapular": null,
+          "abdominal": null,
+          "suprailiaca": null,
+          "coxa": null,
+          "percentualGorduraPollock": null
+        },
+        "bioimpedancia": null,
+        "fotos": { "frontalUrl": null, "lateralUrl": null, "posteriorUrl": null }
+      },
+      "funcional": null
+    }
+  ]
+}

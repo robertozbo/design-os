@@ -1,0 +1,251 @@
+{
+  "_meta": {
+    "models": {
+      "convite": "Convite enviado pelo personal pra um aluno baixar o app Nymos e vincular conta. Carrega snapshot dos dados (nome/contato no momento do envio), canal usado, status, datas de envio/aceite/expiração e link único quando aplicável.",
+      "indicacoesKpis": "Métricas agregadas: total enviados, aceitos no mês com delta, taxa de conversão, tempo médio até aceitar.",
+      "alunoSemApp": "Aluno cadastrado mas sem app vinculado — opção pro selector do modal de novo convite."
+    },
+    "relationships": [
+      "Convite (status='aceito') referencia um Aluno pelo alunoId",
+      "Convite carrega contato em snapshot — não muda se aluno editar dados depois",
+      "Aceitos no mês cruza com a tela Início (KPI 'Indicações')"
+    ]
+  },
+  "tabs": [
+    { "id": "pendentes", "label": "Pendentes", "count": 3 },
+    { "id": "aceitos", "label": "Aceitos", "count": 7 },
+    { "id": "expirados", "label": "Expirados", "count": 1 },
+    { "id": "cancelados", "label": "Cancelados", "count": 1 }
+  ],
+  "canais": [
+    { "id": "todos", "label": "Todos os canais", "count": 12 },
+    { "id": "link", "label": "Link", "count": 5 },
+    { "id": "qr", "label": "QR code", "count": 3 },
+    { "id": "email", "label": "Email", "count": 2 },
+    { "id": "sms-whatsapp", "label": "SMS/WhatsApp", "count": 2 }
+  ],
+  "sortOptions": [
+    { "id": "recentes", "label": "Mais recentes" },
+    { "id": "antigos", "label": "Mais antigos" },
+    { "id": "expira-em-breve", "label": "Expira em breve" },
+    { "id": "status", "label": "Por status" }
+  ],
+  "selected": {
+    "tab": "pendentes",
+    "canal": "todos",
+    "sort": "recentes"
+  },
+  "kpis": {
+    "totalEnviados": 12,
+    "aceitosNoMes": 3,
+    "deltaAceitosMes": 1,
+    "taxaConversaoPercentual": 70,
+    "tempoMedioAceiteDias": 4
+  },
+  "emptyStates": {
+    "pendentes": {
+      "title": "Nenhum convite pendente",
+      "description": "Convide um novo aluno pra começar a acompanhamento via app.",
+      "primaryCta": "Novo convite"
+    },
+    "aceitos": {
+      "title": "Ainda nenhum convite aceito",
+      "description": "Quando alunos aceitarem o convite e vincularem o app, aparecem aqui."
+    },
+    "expirados": {
+      "title": "Nada por aqui 👌",
+      "description": "Convites expiram após 30 dias sem ação."
+    },
+    "cancelados": {
+      "title": "Nada por aqui",
+      "description": "Convites cancelados manualmente aparecem nesta lista."
+    },
+    "noResults": {
+      "title": "Nenhum convite encontrado",
+      "description": "Tente ajustar os filtros ou buscar por outro nome.",
+      "primaryCta": "Novo convite"
+    }
+  },
+  "alunosSemApp": [
+    {
+      "id": "alu-novo-001",
+      "nome": "Tiago Moreira",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Tiago+Moreira&backgroundColor=14b8a6",
+      "email": "tiago.moreira@email.com",
+      "telefone": "(11) 95123-4567"
+    },
+    {
+      "id": "alu-novo-002",
+      "nome": "Renata Faria",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Renata+Faria&backgroundColor=ec4899",
+      "email": "renata.faria@email.com",
+      "telefone": "(11) 96234-5678"
+    },
+    {
+      "id": "alu-novo-003",
+      "nome": "Eduardo Castilho",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Eduardo+Castilho&backgroundColor=8b5cf6",
+      "email": "eduardo.castilho@email.com",
+      "telefone": "(11) 97345-6789"
+    }
+  ],
+  "planoPersonal": "plus",
+  "convites": [
+    {
+      "id": "conv-001",
+      "nome": "Lucas Pereira",
+      "contato": "lucas.pereira@email.com",
+      "canal": "link",
+      "status": "pendente",
+      "mensagem": "Lucas, segue o link pra você baixar o app e a gente conseguir acompanhar tua evolução. Qualquer dúvida me avisa!",
+      "linkUnico": "https://nymos.app/i/p/aBcD1234eFgH",
+      "enviadoEm": "2026-04-29",
+      "expiraEm": "2026-05-29",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Lucas+Pereira&backgroundColor=06b6d4"
+    },
+    {
+      "id": "conv-002",
+      "nome": "Sofia Andrade",
+      "contato": "(11) 98765-2222",
+      "canal": "sms-whatsapp",
+      "status": "pendente",
+      "mensagem": "",
+      "enviadoEm": "2026-05-04",
+      "expiraEm": "2026-06-03",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Sofia+Andrade&backgroundColor=f59e0b"
+    },
+    {
+      "id": "conv-003",
+      "nome": "Diana Romano",
+      "contato": "diana.romano@email.com",
+      "canal": "email",
+      "status": "pendente",
+      "mensagem": "Bem-vinda, Diana! Esse é o app que vamos usar. Avisa se precisar de ajuda.",
+      "enviadoEm": "2026-04-15",
+      "expiraEm": "2026-05-15",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Diana+Romano&backgroundColor=fb923c"
+    },
+    {
+      "id": "conv-004",
+      "nome": "Júlia Ferreira",
+      "contato": "julia.ferreira@email.com",
+      "canal": "email",
+      "status": "aceito",
+      "mensagem": "",
+      "enviadoEm": "2026-05-02",
+      "aceitoEm": "2026-05-04",
+      "diasAteAceitar": 2,
+      "expiraEm": "2026-06-01",
+      "alunoId": "alu-008",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Julia+Ferreira&backgroundColor=84cc16"
+    },
+    {
+      "id": "conv-005",
+      "nome": "Pedro Santos",
+      "contato": "(11) 99988-7766",
+      "canal": "qr",
+      "status": "aceito",
+      "mensagem": "",
+      "enviadoEm": "2026-05-04",
+      "aceitoEm": "2026-05-04",
+      "diasAteAceitar": 0,
+      "expiraEm": "2026-06-03",
+      "alunoId": "alu-005",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Pedro+Santos&backgroundColor=06b6d4"
+    },
+    {
+      "id": "conv-006",
+      "nome": "Beatriz Almeida",
+      "contato": "beatriz.almeida@email.com",
+      "canal": "link",
+      "status": "aceito",
+      "mensagem": "Bia, prazer em te receber 🙌",
+      "enviadoEm": "2026-04-25",
+      "aceitoEm": "2026-04-25",
+      "diasAteAceitar": 0,
+      "expiraEm": "2026-05-25",
+      "alunoId": "alu-006",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Beatriz+Almeida&backgroundColor=d946ef"
+    },
+    {
+      "id": "conv-007",
+      "nome": "Ana Oliveira",
+      "contato": "ana.oliveira@email.com",
+      "canal": "link",
+      "status": "aceito",
+      "mensagem": "",
+      "enviadoEm": "2026-04-15",
+      "aceitoEm": "2026-04-16",
+      "diasAteAceitar": 1,
+      "expiraEm": "2026-05-15",
+      "alunoId": "alu-004",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Ana+Oliveira&backgroundColor=f59e0b"
+    },
+    {
+      "id": "conv-008",
+      "nome": "Maria Costa",
+      "contato": "maria.costa@email.com",
+      "canal": "qr",
+      "status": "aceito",
+      "mensagem": "",
+      "enviadoEm": "2026-02-15",
+      "aceitoEm": "2026-02-22",
+      "diasAteAceitar": 7,
+      "expiraEm": "2026-03-17",
+      "alunoId": "alu-002",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899"
+    },
+    {
+      "id": "conv-009",
+      "nome": "João Silva",
+      "contato": "(11) 97777-8888",
+      "canal": "sms-whatsapp",
+      "status": "aceito",
+      "mensagem": "",
+      "enviadoEm": "2025-11-12",
+      "aceitoEm": "2025-11-14",
+      "diasAteAceitar": 2,
+      "expiraEm": "2025-12-12",
+      "alunoId": "alu-001",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6"
+    },
+    {
+      "id": "conv-010",
+      "nome": "Carlos Mendes",
+      "contato": "carlos.mendes@email.com",
+      "canal": "link",
+      "status": "aceito",
+      "mensagem": "",
+      "enviadoEm": "2025-09-01",
+      "aceitoEm": "2025-09-03",
+      "diasAteAceitar": 2,
+      "expiraEm": "2025-10-01",
+      "alunoId": "alu-003",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos+Mendes&backgroundColor=8b5cf6"
+    },
+    {
+      "id": "conv-011",
+      "nome": "Henrique Costa",
+      "contato": "henrique.costa@email.com",
+      "canal": "email",
+      "status": "expirado",
+      "mensagem": "Oi Henrique, esse é o app que vamos usar pro acompanhamento.",
+      "enviadoEm": "2026-02-10",
+      "expiraEm": "2026-03-12",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Henrique+Costa&backgroundColor=64748b"
+    },
+    {
+      "id": "conv-012",
+      "nome": "Caio Vieira",
+      "contato": "caio.vieira@email.com",
+      "canal": "qr",
+      "status": "cancelado",
+      "mensagem": "",
+      "enviadoEm": "2026-04-20",
+      "expiraEm": "2026-05-20",
+      "canceladoEm": "2026-05-04",
+      "motivoCancelamento": "Aluno desistiu antes da primeira sessão",
+      "alunoAvatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Caio+Vieira&backgroundColor=64748b"
+    }
+  ]
+}

@@ -1,0 +1,848 @@
+{
+  "_meta": {
+    "models": {
+      "plano": "Plano de treino composto por múltiplos treinos (A/B/C…). Pode estar como template (não vinculado a aluno), atribuído (vinculado a um aluno específico, ativo) ou arquivado.",
+      "treino": "Um treino dentro do plano (ex: Treino A · Peito e Tríceps). Tem nome, letra, e lista de exercícios prescritos.",
+      "exercicioPrescrito": "Exercício dentro de um treino, com prescrição completa: séries, descanso, observações. Referencia um Exercise da biblioteca.",
+      "seriePrescricao": "Uma série prescrita: número, modo (reps ou tempo), reps/tempo, carga em kg, RPE alvo.",
+      "agendaSemanal": "Mapa de dia da semana → letra do treino. Define quando o aluno faz cada treino.",
+      "sessaoExecutada": "Sessão executada pelo aluno com carga real, RPE percebido, status (completa/parcial/pulada), duração e comentário.",
+      "adesaoStats": "Estatísticas de adesão de um plano atribuído: percentual, streak, sessões feitas vs totais, RPE médio."
+    },
+    "relationships": [
+      "Plano tem muitos Treinos (A, B, C...)",
+      "Treino tem muitos ExercicioPrescrito",
+      "ExercicioPrescrito tem muitas SeriePrescricao",
+      "Plano (atribuído) tem um AlunoResumo + AdesaoStats + array de SessaoExecutada (no detalhe)",
+      "AgendaSemanal mapeia dia → letra de Treino"
+    ]
+  },
+  "tabs": [
+    { "id": "templates", "label": "Templates", "count": 4 },
+    { "id": "atribuidos", "label": "Atribuídos", "count": 4 },
+    { "id": "arquivados", "label": "Arquivados", "count": 2 }
+  ],
+  "objetivos": [
+    { "id": "todos", "label": "Todos os objetivos", "count": 10 },
+    { "id": "hipertrofia", "label": "Hipertrofia", "count": 4 },
+    { "id": "emagrecimento", "label": "Emagrecimento", "count": 2 },
+    { "id": "performance", "label": "Performance", "count": 2 },
+    { "id": "reabilitacao", "label": "Reabilitação", "count": 1 },
+    { "id": "geral", "label": "Geral", "count": 1 }
+  ],
+  "duracoes": [
+    { "id": "4", "label": "4 semanas" },
+    { "id": "8", "label": "8 semanas" },
+    { "id": "12", "label": "12 semanas" },
+    { "id": "indeterminado", "label": "Indeterminado" }
+  ],
+  "selected": {
+    "tab": "atribuidos",
+    "objetivo": "todos"
+  },
+  "alunosDisponiveis": [
+    {
+      "id": "alu-005",
+      "nome": "Pedro Santos",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Pedro+Santos&backgroundColor=06b6d4",
+      "hasPlanoAtivo": false,
+      "ultimaAtividade": "Cadastrado há 3 dias"
+    },
+    {
+      "id": "alu-006",
+      "nome": "Beatriz Almeida",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Beatriz+Almeida&backgroundColor=d946ef",
+      "hasPlanoAtivo": false,
+      "ultimaAtividade": "Sem plano ativo · 12 sessões histórico"
+    },
+    {
+      "id": "alu-007",
+      "nome": "Rafael Lima",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Rafael+Lima&backgroundColor=f97316",
+      "hasPlanoAtivo": false,
+      "ultimaAtividade": "Concluiu plano anterior em 28/abr"
+    },
+    {
+      "id": "alu-008",
+      "nome": "Júlia Ferreira",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Julia+Ferreira&backgroundColor=84cc16",
+      "hasPlanoAtivo": false,
+      "ultimaAtividade": "Cadastrada hoje"
+    },
+    {
+      "id": "alu-001",
+      "nome": "João Silva",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6",
+      "hasPlanoAtivo": true,
+      "planoAtivoNome": "Hipertrofia ABC · Iniciante",
+      "ultimaAtividade": "Treinou ontem · 92% adesão"
+    },
+    {
+      "id": "alu-002",
+      "nome": "Maria Costa",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899",
+      "hasPlanoAtivo": true,
+      "planoAtivoNome": "Emagrecimento Full-body 3x",
+      "ultimaAtividade": "67% adesão · 3 puladas"
+    },
+    {
+      "id": "alu-003",
+      "nome": "Carlos Mendes",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos+Mendes&backgroundColor=8b5cf6",
+      "hasPlanoAtivo": true,
+      "planoAtivoNome": "Performance · Força máxima 5x5",
+      "ultimaAtividade": "Treinou hoje · streak 22"
+    },
+    {
+      "id": "alu-004",
+      "nome": "Ana Oliveira",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Ana+Oliveira&backgroundColor=f59e0b",
+      "hasPlanoAtivo": true,
+      "planoAtivoNome": "Reabilitação ombro · Pós-fisio",
+      "ultimaAtividade": "78% adesão · alerta dor ombro"
+    }
+  ],
+  "emptyStates": {
+    "templates": {
+      "title": "Crie seu primeiro template",
+      "description": "Templates aceleram a prescrição — monte uma vez e aplique em vários alunos.",
+      "primaryCta": "Novo plano"
+    },
+    "atribuidos": {
+      "title": "Nenhum plano atribuído ainda",
+      "description": "Aplique um template em um aluno para começar a acompanhar a execução.",
+      "primaryCta": "Ver templates"
+    },
+    "arquivados": {
+      "title": "Nenhum plano arquivado",
+      "description": "Planos que você arquivar aparecem aqui."
+    },
+    "noResults": {
+      "title": "Nenhum plano encontrado",
+      "description": "Tente ajustar os filtros ou criar um novo plano.",
+      "primaryCta": "Novo plano"
+    }
+  },
+  "planos": [
+    {
+      "id": "tpl-001",
+      "nome": "Hipertrofia ABC · Iniciante",
+      "objetivo": "hipertrofia",
+      "descricao": "Divisão clássica ABC para iniciantes — peito/tríceps, costas/bíceps, pernas. 3x por semana.",
+      "status": "template",
+      "permitirAjusteCarga": true,
+      "duracaoPadrao": "8",
+      "aplicadoEmAlunosCount": 7,
+      "agendaPadrao": {
+        "seg": "A",
+        "ter": null,
+        "qua": "B",
+        "qui": null,
+        "sex": "C",
+        "sab": null,
+        "dom": null
+      },
+      "treinos": [
+        {
+          "id": "t-001-a",
+          "letra": "A",
+          "nome": "Peito e Tríceps",
+          "exercicios": [
+            {
+              "exercicioId": "ex-001",
+              "exercicioNome": "Supino reto com barra",
+              "grupoMuscular": "Peito",
+              "thumbUrl": "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?w=200&q=80",
+              "descansoSegundos": 90,
+              "observacoes": "Foco em controle excêntrico (3s descida)",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 12, "cargaKg": 40, "rpeAlvo": 6 },
+                { "numero": 2, "modo": "reps", "reps": 10, "cargaKg": 50, "rpeAlvo": 7 },
+                { "numero": 3, "modo": "reps", "reps": 8, "cargaKg": 55, "rpeAlvo": 8 }
+              ]
+            },
+            {
+              "exercicioId": "ex-002",
+              "exercicioNome": "Supino inclinado com halteres",
+              "grupoMuscular": "Peito",
+              "thumbUrl": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=200&q=80",
+              "descansoSegundos": 75,
+              "observacoes": "",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 10, "cargaKg": 16, "rpeAlvo": 7 },
+                { "numero": 2, "modo": "reps", "reps": 10, "cargaKg": 16, "rpeAlvo": 7 },
+                { "numero": 3, "modo": "reps", "reps": 10, "cargaKg": 16, "rpeAlvo": 7 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "t-001-b",
+          "letra": "B",
+          "nome": "Costas e Bíceps",
+          "exercicios": [
+            {
+              "exercicioId": "ex-008",
+              "exercicioNome": "Remada curvada com barra",
+              "grupoMuscular": "Costas",
+              "thumbUrl": "https://images.unsplash.com/photo-1583500178690-f7fd39bcd4be?w=200&q=80",
+              "descansoSegundos": 90,
+              "observacoes": "Manter lombar neutra durante todo movimento",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 10, "cargaKg": 35, "rpeAlvo": 7 },
+                { "numero": 2, "modo": "reps", "reps": 10, "cargaKg": 35, "rpeAlvo": 7 },
+                { "numero": 3, "modo": "reps", "reps": 10, "cargaKg": 35, "rpeAlvo": 8 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "t-001-c",
+          "letra": "C",
+          "nome": "Pernas",
+          "exercicios": [
+            {
+              "exercicioId": "ex-005",
+              "exercicioNome": "Agachamento goblet com kettlebell",
+              "grupoMuscular": "Pernas",
+              "thumbUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&q=80",
+              "descansoSegundos": 90,
+              "observacoes": "Progressão pra agachamento livre",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 12, "cargaKg": 16, "rpeAlvo": 7 },
+                { "numero": 2, "modo": "reps", "reps": 12, "cargaKg": 16, "rpeAlvo": 7 },
+                { "numero": 3, "modo": "reps", "reps": 12, "cargaKg": 20, "rpeAlvo": 8 }
+              ]
+            },
+            {
+              "exercicioId": "ex-009",
+              "exercicioNome": "Prancha frontal",
+              "grupoMuscular": "Core",
+              "thumbUrl": "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=200&q=80",
+              "descansoSegundos": 60,
+              "observacoes": "Manter alinhamento ombro-quadril-calcanhar",
+              "series": [
+                { "numero": 1, "modo": "tempo", "tempoSegundos": 30, "cargaKg": null, "rpeAlvo": null },
+                { "numero": 2, "modo": "tempo", "tempoSegundos": 30, "cargaKg": null, "rpeAlvo": null },
+                { "numero": 3, "modo": "tempo", "tempoSegundos": 45, "cargaKg": null, "rpeAlvo": null }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tpl-002",
+      "nome": "Emagrecimento Full-body 3x",
+      "objetivo": "emagrecimento",
+      "descricao": "Full-body de 3x por semana com foco em gasto calórico — exercícios compostos + cardio intervalado.",
+      "status": "template",
+      "permitirAjusteCarga": true,
+      "duracaoPadrao": "12",
+      "aplicadoEmAlunosCount": 12,
+      "agendaPadrao": {
+        "seg": "A",
+        "ter": null,
+        "qua": "A",
+        "qui": null,
+        "sex": "A",
+        "sab": null,
+        "dom": null
+      },
+      "treinos": [
+        {
+          "id": "t-002-a",
+          "letra": "A",
+          "nome": "Full-body",
+          "exercicios": [
+            {
+              "exercicioId": "ex-004",
+              "exercicioNome": "Agachamento livre",
+              "grupoMuscular": "Pernas",
+              "thumbUrl": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=200&q=80",
+              "descansoSegundos": 60,
+              "observacoes": "",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 15, "cargaKg": 30, "rpeAlvo": 7 },
+                { "numero": 2, "modo": "reps", "reps": 15, "cargaKg": 30, "rpeAlvo": 8 },
+                { "numero": 3, "modo": "reps", "reps": 15, "cargaKg": 30, "rpeAlvo": 8 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tpl-003",
+      "nome": "Performance · Força máxima 5x5",
+      "objetivo": "performance",
+      "descricao": "Programa clássico de força para alunos avançados — 5 séries x 5 reps com cargas pesadas. Requer base de pelo menos 6 meses.",
+      "status": "template",
+      "permitirAjusteCarga": false,
+      "duracaoPadrao": "12",
+      "aplicadoEmAlunosCount": 2,
+      "agendaPadrao": {
+        "seg": "A",
+        "ter": null,
+        "qua": "B",
+        "qui": null,
+        "sex": "A",
+        "sab": null,
+        "dom": null
+      },
+      "treinos": [
+        {
+          "id": "t-003-a",
+          "letra": "A",
+          "nome": "Squat-foco",
+          "exercicios": [
+            {
+              "exercicioId": "ex-004",
+              "exercicioNome": "Agachamento livre",
+              "grupoMuscular": "Pernas",
+              "thumbUrl": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=200&q=80",
+              "descansoSegundos": 180,
+              "observacoes": "5x5 @ 80% 1RM. Sem ajuste de carga sem aprovação.",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 5, "cargaKg": 100, "rpeAlvo": 8 },
+                { "numero": 2, "modo": "reps", "reps": 5, "cargaKg": 100, "rpeAlvo": 8 },
+                { "numero": 3, "modo": "reps", "reps": 5, "cargaKg": 100, "rpeAlvo": 9 },
+                { "numero": 4, "modo": "reps", "reps": 5, "cargaKg": 100, "rpeAlvo": 9 },
+                { "numero": 5, "modo": "reps", "reps": 5, "cargaKg": 100, "rpeAlvo": 9 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "t-003-b",
+          "letra": "B",
+          "nome": "Deadlift-foco",
+          "exercicios": [
+            {
+              "exercicioId": "ex-006",
+              "exercicioNome": "Levantamento terra convencional",
+              "grupoMuscular": "Posteriores",
+              "thumbUrl": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&q=80",
+              "descansoSegundos": 240,
+              "observacoes": "Interromper série se lombar arredondar",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 5, "cargaKg": 120, "rpeAlvo": 8 },
+                { "numero": 2, "modo": "reps", "reps": 5, "cargaKg": 120, "rpeAlvo": 8 },
+                { "numero": 3, "modo": "reps", "reps": 5, "cargaKg": 120, "rpeAlvo": 9 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tpl-004",
+      "nome": "Reabilitação ombro · Pós-fisio",
+      "objetivo": "reabilitacao",
+      "descricao": "Volta gradual ao treino após alta da fisio. Foco em mobilidade e fortalecimento de manguito rotador.",
+      "status": "template",
+      "permitirAjusteCarga": false,
+      "duracaoPadrao": "4",
+      "aplicadoEmAlunosCount": 1,
+      "agendaPadrao": {
+        "seg": "A",
+        "ter": null,
+        "qua": "A",
+        "qui": null,
+        "sex": "A",
+        "sab": null,
+        "dom": null
+      },
+      "treinos": [
+        {
+          "id": "t-004-a",
+          "letra": "A",
+          "nome": "Ombro · Mobilidade e ativação",
+          "exercicios": []
+        }
+      ]
+    },
+    {
+      "id": "atr-001",
+      "nome": "Hipertrofia ABC · Iniciante",
+      "objetivo": "hipertrofia",
+      "descricao": "Aplicado a partir do template de mesmo nome — ajustes de carga conforme João evolui.",
+      "status": "atribuido",
+      "permitirAjusteCarga": true,
+      "duracaoPadrao": "8",
+      "duracaoSemanas": 8,
+      "dataInicio": "2026-04-08",
+      "aluno": {
+        "id": "alu-001",
+        "nome": "João Silva",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6"
+      },
+      "agendaPadrao": {
+        "seg": "A",
+        "ter": null,
+        "qua": "B",
+        "qui": null,
+        "sex": "C",
+        "sab": null,
+        "dom": null
+      },
+      "treinos": [
+        {
+          "id": "t-atr1-a",
+          "letra": "A",
+          "nome": "Peito e Tríceps",
+          "exercicios": [
+            {
+              "exercicioId": "ex-001",
+              "exercicioNome": "Supino reto com barra",
+              "grupoMuscular": "Peito",
+              "thumbUrl": "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?w=200&q=80",
+              "descansoSegundos": 90,
+              "observacoes": "Foco em controle excêntrico (3s descida)",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 12, "cargaKg": 40, "rpeAlvo": 6 },
+                { "numero": 2, "modo": "reps", "reps": 10, "cargaKg": 50, "rpeAlvo": 7 },
+                { "numero": 3, "modo": "reps", "reps": 8, "cargaKg": 55, "rpeAlvo": 8 }
+              ]
+            },
+            {
+              "exercicioId": "ex-002",
+              "exercicioNome": "Supino inclinado com halteres",
+              "grupoMuscular": "Peito",
+              "thumbUrl": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=200&q=80",
+              "descansoSegundos": 75,
+              "observacoes": "",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 10, "cargaKg": 16, "rpeAlvo": 7 },
+                { "numero": 2, "modo": "reps", "reps": 10, "cargaKg": 16, "rpeAlvo": 7 },
+                { "numero": 3, "modo": "reps", "reps": 10, "cargaKg": 16, "rpeAlvo": 7 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "t-atr1-b",
+          "letra": "B",
+          "nome": "Costas e Bíceps",
+          "exercicios": [
+            {
+              "exercicioId": "ex-008",
+              "exercicioNome": "Remada curvada com barra",
+              "grupoMuscular": "Costas",
+              "thumbUrl": "https://images.unsplash.com/photo-1583500178690-f7fd39bcd4be?w=200&q=80",
+              "descansoSegundos": 90,
+              "observacoes": "Manter lombar neutra",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 10, "cargaKg": 35, "rpeAlvo": 7 },
+                { "numero": 2, "modo": "reps", "reps": 10, "cargaKg": 35, "rpeAlvo": 7 },
+                { "numero": 3, "modo": "reps", "reps": 10, "cargaKg": 35, "rpeAlvo": 8 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "t-atr1-c",
+          "letra": "C",
+          "nome": "Pernas",
+          "exercicios": [
+            {
+              "exercicioId": "ex-005",
+              "exercicioNome": "Agachamento goblet com kettlebell",
+              "grupoMuscular": "Pernas",
+              "thumbUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&q=80",
+              "descansoSegundos": 90,
+              "observacoes": "Progressão pra agachamento livre",
+              "series": [
+                { "numero": 1, "modo": "reps", "reps": 12, "cargaKg": 16, "rpeAlvo": 7 },
+                { "numero": 2, "modo": "reps", "reps": 12, "cargaKg": 16, "rpeAlvo": 7 },
+                { "numero": 3, "modo": "reps", "reps": 12, "cargaKg": 20, "rpeAlvo": 8 }
+              ]
+            },
+            {
+              "exercicioId": "ex-009",
+              "exercicioNome": "Prancha frontal",
+              "grupoMuscular": "Core",
+              "thumbUrl": "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=200&q=80",
+              "descansoSegundos": 60,
+              "observacoes": "Manter alinhamento",
+              "series": [
+                { "numero": 1, "modo": "tempo", "tempoSegundos": 30, "cargaKg": null, "rpeAlvo": null },
+                { "numero": 2, "modo": "tempo", "tempoSegundos": 30, "cargaKg": null, "rpeAlvo": null },
+                { "numero": 3, "modo": "tempo", "tempoSegundos": 45, "cargaKg": null, "rpeAlvo": null }
+              ]
+            }
+          ]
+        }
+      ],
+      "proximaSessao": {
+        "data": "2026-05-08",
+        "treinoLetra": "C",
+        "treinoNome": "Pernas"
+      },
+      "adesao": {
+        "percentual": 92,
+        "streak": 8,
+        "sessoesFeitas": 11,
+        "sessoesTotais": 12,
+        "rpeMedio": 7.4
+      },
+      "alertas": [],
+      "historicoSemanas": [
+        { "semana": "S1", "inicioISO": "2026-03-16", "percentual": 100, "feitas": 3, "totais": 3 },
+        { "semana": "S2", "inicioISO": "2026-03-23", "percentual": 100, "feitas": 3, "totais": 3 },
+        { "semana": "S3", "inicioISO": "2026-03-30", "percentual": 67, "feitas": 2, "totais": 3 },
+        { "semana": "S4", "inicioISO": "2026-04-06", "percentual": 100, "feitas": 3, "totais": 3 },
+        { "semana": "S5", "inicioISO": "2026-04-13", "percentual": 67, "feitas": 2, "totais": 3 },
+        { "semana": "S6", "inicioISO": "2026-04-20", "percentual": 100, "feitas": 3, "totais": 3 },
+        { "semana": "S7", "inicioISO": "2026-04-27", "percentual": 100, "feitas": 3, "totais": 3 },
+        { "semana": "S8", "inicioISO": "2026-05-04", "percentual": 100, "feitas": 1, "totais": 1 }
+      ],
+      "sessoesExecutadas": [
+        {
+          "id": "s-001",
+          "data": "2026-05-04",
+          "treinoLetra": "A",
+          "treinoNome": "Peito e Tríceps",
+          "status": "completa",
+          "duracaoMinutos": 58,
+          "rpeMedio": 7.7,
+          "comentarioAluno": "Subi 5kg no supino — saiu firme!",
+          "exercicios": [
+            {
+              "exercicioId": "ex-001",
+              "exercicioNome": "Supino reto com barra",
+              "series": [
+                { "numero": 1, "repsReal": 12, "cargaRealKg": 45, "rpePercebido": 6 },
+                { "numero": 2, "repsReal": 10, "cargaRealKg": 55, "rpePercebido": 7 },
+                { "numero": 3, "repsReal": 8, "cargaRealKg": 60, "rpePercebido": 9 }
+              ]
+            },
+            {
+              "exercicioId": "ex-002",
+              "exercicioNome": "Supino inclinado com halteres",
+              "series": [
+                { "numero": 1, "repsReal": 10, "cargaRealKg": 18, "rpePercebido": 7 },
+                { "numero": 2, "repsReal": 10, "cargaRealKg": 18, "rpePercebido": 7 },
+                { "numero": 3, "repsReal": 9, "cargaRealKg": 18, "rpePercebido": 8 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s-002",
+          "data": "2026-05-01",
+          "treinoLetra": "C",
+          "treinoNome": "Pernas",
+          "status": "completa",
+          "duracaoMinutos": 52,
+          "rpeMedio": 7.5,
+          "comentarioAluno": "",
+          "exercicios": [
+            {
+              "exercicioId": "ex-005",
+              "exercicioNome": "Agachamento goblet com kettlebell",
+              "series": [
+                { "numero": 1, "repsReal": 12, "cargaRealKg": 20, "rpePercebido": 7 },
+                { "numero": 2, "repsReal": 12, "cargaRealKg": 20, "rpePercebido": 7 },
+                { "numero": 3, "repsReal": 12, "cargaRealKg": 24, "rpePercebido": 8 }
+              ]
+            },
+            {
+              "exercicioId": "ex-009",
+              "exercicioNome": "Prancha frontal",
+              "series": [
+                { "numero": 1, "tempoRealSegundos": 35, "cargaRealKg": null, "rpePercebido": null },
+                { "numero": 2, "tempoRealSegundos": 32, "cargaRealKg": null, "rpePercebido": null },
+                { "numero": 3, "tempoRealSegundos": 50, "cargaRealKg": null, "rpePercebido": null }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s-003",
+          "data": "2026-04-29",
+          "treinoLetra": "B",
+          "treinoNome": "Costas e Bíceps",
+          "status": "completa",
+          "duracaoMinutos": 47,
+          "rpeMedio": 7.3,
+          "comentarioAluno": "",
+          "exercicios": [
+            {
+              "exercicioId": "ex-008",
+              "exercicioNome": "Remada curvada com barra",
+              "series": [
+                { "numero": 1, "repsReal": 10, "cargaRealKg": 40, "rpePercebido": 7 },
+                { "numero": 2, "repsReal": 10, "cargaRealKg": 40, "rpePercebido": 7 },
+                { "numero": 3, "repsReal": 9, "cargaRealKg": 40, "rpePercebido": 8 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s-004",
+          "data": "2026-04-27",
+          "treinoLetra": "A",
+          "treinoNome": "Peito e Tríceps",
+          "status": "parcial",
+          "duracaoMinutos": 35,
+          "rpeMedio": 7.0,
+          "comentarioAluno": "Tive que sair antes — só fiz supino reto.",
+          "exercicios": [
+            {
+              "exercicioId": "ex-001",
+              "exercicioNome": "Supino reto com barra",
+              "series": [
+                { "numero": 1, "repsReal": 12, "cargaRealKg": 42, "rpePercebido": 6 },
+                { "numero": 2, "repsReal": 10, "cargaRealKg": 52, "rpePercebido": 7 },
+                { "numero": 3, "repsReal": 8, "cargaRealKg": 57, "rpePercebido": 8 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s-005",
+          "data": "2026-04-24",
+          "treinoLetra": "C",
+          "treinoNome": "Pernas",
+          "status": "completa",
+          "duracaoMinutos": 50,
+          "rpeMedio": 7.6,
+          "comentarioAluno": "",
+          "exercicios": [
+            {
+              "exercicioId": "ex-005",
+              "exercicioNome": "Agachamento goblet com kettlebell",
+              "series": [
+                { "numero": 1, "repsReal": 12, "cargaRealKg": 18, "rpePercebido": 7 },
+                { "numero": 2, "repsReal": 12, "cargaRealKg": 18, "rpePercebido": 7 },
+                { "numero": 3, "repsReal": 12, "cargaRealKg": 22, "rpePercebido": 8 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s-006",
+          "data": "2026-04-22",
+          "treinoLetra": "B",
+          "treinoNome": "Costas e Bíceps",
+          "status": "completa",
+          "duracaoMinutos": 45,
+          "rpeMedio": 7.0,
+          "comentarioAluno": "",
+          "exercicios": [
+            {
+              "exercicioId": "ex-008",
+              "exercicioNome": "Remada curvada com barra",
+              "series": [
+                { "numero": 1, "repsReal": 10, "cargaRealKg": 38, "rpePercebido": 7 },
+                { "numero": 2, "repsReal": 10, "cargaRealKg": 38, "rpePercebido": 7 },
+                { "numero": 3, "repsReal": 10, "cargaRealKg": 38, "rpePercebido": 8 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s-007",
+          "data": "2026-04-20",
+          "treinoLetra": "A",
+          "treinoNome": "Peito e Tríceps",
+          "status": "completa",
+          "duracaoMinutos": 56,
+          "rpeMedio": 7.5,
+          "comentarioAluno": "Ombro doeu um pouco no inclinado, baixei pra 14kg.",
+          "exercicios": [
+            {
+              "exercicioId": "ex-001",
+              "exercicioNome": "Supino reto com barra",
+              "series": [
+                { "numero": 1, "repsReal": 12, "cargaRealKg": 42, "rpePercebido": 7 },
+                { "numero": 2, "repsReal": 10, "cargaRealKg": 50, "rpePercebido": 7 },
+                { "numero": 3, "repsReal": 8, "cargaRealKg": 55, "rpePercebido": 8 }
+              ]
+            },
+            {
+              "exercicioId": "ex-002",
+              "exercicioNome": "Supino inclinado com halteres",
+              "series": [
+                { "numero": 1, "repsReal": 10, "cargaRealKg": 14, "rpePercebido": 6 },
+                { "numero": 2, "repsReal": 10, "cargaRealKg": 14, "rpePercebido": 7 },
+                { "numero": 3, "repsReal": 10, "cargaRealKg": 14, "rpePercebido": 7 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s-008",
+          "data": "2026-04-13",
+          "treinoLetra": "A",
+          "treinoNome": "Peito e Tríceps",
+          "status": "pulada",
+          "duracaoMinutos": null,
+          "rpeMedio": null,
+          "comentarioAluno": "Avisei: viagem a trabalho.",
+          "exercicios": []
+        }
+      ]
+    },
+    {
+      "id": "atr-002",
+      "nome": "Emagrecimento Full-body 3x",
+      "objetivo": "emagrecimento",
+      "descricao": "Aplicado a partir do template de mesmo nome.",
+      "status": "atribuido",
+      "permitirAjusteCarga": true,
+      "duracaoPadrao": "12",
+      "duracaoSemanas": 12,
+      "dataInicio": "2026-03-02",
+      "aluno": {
+        "id": "alu-002",
+        "nome": "Maria Costa",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899"
+      },
+      "agendaPadrao": {
+        "seg": "A",
+        "ter": null,
+        "qua": "A",
+        "qui": null,
+        "sex": "A",
+        "sab": null,
+        "dom": null
+      },
+      "treinos": [],
+      "proximaSessao": {
+        "data": "2026-05-08",
+        "treinoLetra": "A",
+        "treinoNome": "Full-body"
+      },
+      "adesao": {
+        "percentual": 67,
+        "streak": 2,
+        "sessoesFeitas": 18,
+        "sessoesTotais": 27,
+        "rpeMedio": 6.8
+      },
+      "alertas": ["3 sessões puladas nas últimas 2 semanas"]
+    },
+    {
+      "id": "atr-003",
+      "nome": "Performance · Força máxima 5x5",
+      "objetivo": "performance",
+      "descricao": "Aplicado a partir do template de mesmo nome.",
+      "status": "atribuido",
+      "permitirAjusteCarga": false,
+      "duracaoPadrao": "12",
+      "duracaoSemanas": 12,
+      "dataInicio": "2026-03-15",
+      "aluno": {
+        "id": "alu-003",
+        "nome": "Carlos Mendes",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos+Mendes&backgroundColor=8b5cf6"
+      },
+      "agendaPadrao": {
+        "seg": "A",
+        "ter": null,
+        "qua": "B",
+        "qui": null,
+        "sex": "A",
+        "sab": null,
+        "dom": null
+      },
+      "treinos": [],
+      "proximaSessao": {
+        "data": "2026-05-09",
+        "treinoLetra": "A",
+        "treinoNome": "Squat-foco"
+      },
+      "adesao": {
+        "percentual": 100,
+        "streak": 22,
+        "sessoesFeitas": 22,
+        "sessoesTotais": 22,
+        "rpeMedio": 8.6
+      },
+      "alertas": []
+    },
+    {
+      "id": "atr-004",
+      "nome": "Reabilitação ombro · Pós-fisio",
+      "objetivo": "reabilitacao",
+      "descricao": "Aplicado a partir do template de mesmo nome.",
+      "status": "atribuido",
+      "permitirAjusteCarga": false,
+      "duracaoPadrao": "4",
+      "duracaoSemanas": 4,
+      "dataInicio": "2026-04-22",
+      "aluno": {
+        "id": "alu-004",
+        "nome": "Ana Oliveira",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Ana+Oliveira&backgroundColor=f59e0b"
+      },
+      "agendaPadrao": {
+        "seg": "A",
+        "ter": null,
+        "qua": "A",
+        "qui": null,
+        "sex": "A",
+        "sab": null,
+        "dom": null
+      },
+      "treinos": [],
+      "proximaSessao": {
+        "data": "2026-05-08",
+        "treinoLetra": "A",
+        "treinoNome": "Ombro · Mobilidade e ativação"
+      },
+      "adesao": {
+        "percentual": 78,
+        "streak": 3,
+        "sessoesFeitas": 7,
+        "sessoesTotais": 9,
+        "rpeMedio": 5.2
+      },
+      "alertas": ["Comentário recente: dor leve no movimento de elevação lateral — revisar"]
+    },
+    {
+      "id": "arq-001",
+      "nome": "Hipertrofia 4x · Avançado",
+      "objetivo": "hipertrofia",
+      "descricao": "Plano de 4 dias com divisão A/B/C/D — peito, costas, ombros, pernas.",
+      "status": "arquivado",
+      "permitirAjusteCarga": true,
+      "duracaoPadrao": "8",
+      "aplicadoEmAlunosCount": 0,
+      "arquivadoEm": "2026-02-14",
+      "agendaPadrao": {
+        "seg": "A",
+        "ter": "B",
+        "qua": null,
+        "qui": "C",
+        "sex": "D",
+        "sab": null,
+        "dom": null
+      },
+      "treinos": []
+    },
+    {
+      "id": "arq-002",
+      "nome": "Geral · Manutenção 2x/semana",
+      "objetivo": "geral",
+      "descricao": "Plano leve para manutenção da forma — alunos com pouca disponibilidade.",
+      "status": "arquivado",
+      "permitirAjusteCarga": true,
+      "duracaoPadrao": "indeterminado",
+      "aplicadoEmAlunosCount": 3,
+      "arquivadoEm": "2026-01-30",
+      "agendaPadrao": {
+        "seg": "A",
+        "ter": null,
+        "qua": null,
+        "qui": "A",
+        "sex": null,
+        "sab": null,
+        "dom": null
+      },
+      "treinos": []
+    }
+  ]
+}

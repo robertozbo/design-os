@@ -1,0 +1,168 @@
+{
+  "_meta": {
+    "models": {
+      "DashboardData": "Visão diária do psicólogo — sessões hoje, alertas, KPIs da carteira."
+    }
+  },
+  "saudacao": "Bom dia",
+  "nomeProfissional": "Dra. Marina Silva",
+  "fotoUrl": null,
+  "inicialProfissional": "M",
+  "proximaSessao": null,
+  "sessoesHoje": [
+    {
+      "id": "sess-1",
+      "paciente": {
+        "id": "p-roberto",
+        "nomeCompleto": "Roberto Zboralski",
+        "inicial": "R",
+        "fotoUrl": null,
+        "idade": 35,
+        "scoreAtual": { "instrumento": "PHQ-9", "valor": 8, "severidade": "leve" }
+      },
+      "inicioEm": "2026-05-05T09:00:00",
+      "duracaoMin": 50,
+      "modalidade": "online",
+      "status": "agendada",
+      "inicioRelativo": "em 23 min",
+      "numeroNoPlano": "8/12",
+      "ehProxima": true
+    },
+    {
+      "id": "sess-2",
+      "paciente": {
+        "id": "p-julia",
+        "nomeCompleto": "Júlia Mendes",
+        "inicial": "J",
+        "fotoUrl": null,
+        "idade": 29,
+        "scoreAtual": { "instrumento": "GAD-7", "valor": 12, "severidade": "moderada" }
+      },
+      "inicioEm": "2026-05-05T10:30:00",
+      "duracaoMin": 50,
+      "modalidade": "presencial",
+      "status": "agendada",
+      "inicioRelativo": "em 1h 53min",
+      "numeroNoPlano": "3/16"
+    },
+    {
+      "id": "sess-3",
+      "paciente": {
+        "id": "p-pedro",
+        "nomeCompleto": "Pedro Santos",
+        "inicial": "P",
+        "fotoUrl": null,
+        "idade": 42,
+        "scoreAtual": { "instrumento": "PHQ-9", "valor": 17, "severidade": "moderada_severa" }
+      },
+      "inicioEm": "2026-05-05T14:00:00",
+      "duracaoMin": 50,
+      "modalidade": "online",
+      "status": "agendada",
+      "inicioRelativo": "em 5h 23min",
+      "numeroNoPlano": "5/12"
+    },
+    {
+      "id": "sess-4",
+      "paciente": {
+        "id": "p-ana",
+        "nomeCompleto": "Ana Costa",
+        "inicial": "A",
+        "fotoUrl": null,
+        "idade": 38,
+        "scoreAtual": { "instrumento": "PHQ-9", "valor": 4, "severidade": "minima" }
+      },
+      "inicioEm": "2026-05-05T15:30:00",
+      "duracaoMin": 50,
+      "modalidade": "presencial",
+      "status": "agendada",
+      "inicioRelativo": "em 6h 53min",
+      "numeroNoPlano": "12/12"
+    },
+    {
+      "id": "sess-5",
+      "paciente": {
+        "id": "p-lucas",
+        "nomeCompleto": "Lucas Oliveira",
+        "inicial": "L",
+        "fotoUrl": null,
+        "idade": 31,
+        "scoreAtual": { "instrumento": "GAD-7", "valor": 9, "severidade": "leve" }
+      },
+      "inicioEm": "2026-05-05T17:00:00",
+      "duracaoMin": 50,
+      "modalidade": "online",
+      "status": "agendada",
+      "inicioRelativo": "em 8h 23min",
+      "numeroNoPlano": "6/10"
+    }
+  ],
+  "alertas": [
+    {
+      "id": "a-1",
+      "paciente": {
+        "id": "p-pedro",
+        "nomeCompleto": "Pedro Santos",
+        "inicial": "P",
+        "fotoUrl": null,
+        "idade": 42,
+        "scoreAtual": { "instrumento": "PHQ-9", "valor": 17, "severidade": "moderada_severa" }
+      },
+      "tipo": "agravamento_phq",
+      "severidade": "critica",
+      "mensagem": "PHQ-9 subiu de 8 → 17 em 2 sessões. Considerar avaliação psiquiátrica.",
+      "detectadoEm": "há 2h"
+    },
+    {
+      "id": "a-2",
+      "paciente": {
+        "id": "p-marcelo",
+        "nomeCompleto": "Marcelo Pereira",
+        "inicial": "M",
+        "fotoUrl": null,
+        "idade": 27,
+        "scoreAtual": null
+      },
+      "tipo": "faltas_consecutivas",
+      "severidade": "alta",
+      "mensagem": "Faltou nas últimas 2 sessões consecutivas. Risco de abandono terapêutico.",
+      "detectadoEm": "ontem"
+    },
+    {
+      "id": "a-3",
+      "paciente": {
+        "id": "p-fernanda",
+        "nomeCompleto": "Fernanda Lima",
+        "inicial": "F",
+        "fotoUrl": null,
+        "idade": 33,
+        "scoreAtual": { "instrumento": "GAD-7", "valor": 18, "severidade": "severa" }
+      },
+      "tipo": "agravamento_gad",
+      "severidade": "alta",
+      "mensagem": "GAD-7 em faixa severa (18). Pico nos últimos 7 dias.",
+      "detectadoEm": "há 4h"
+    },
+    {
+      "id": "a-4",
+      "paciente": {
+        "id": "p-julia",
+        "nomeCompleto": "Júlia Mendes",
+        "inicial": "J",
+        "fotoUrl": null,
+        "idade": 29,
+        "scoreAtual": { "instrumento": "GAD-7", "valor": 12, "severidade": "moderada" }
+      },
+      "tipo": "mensagem_urgente",
+      "severidade": "media",
+      "mensagem": "Enviou mensagem fora do horário marcando como urgente.",
+      "detectadoEm": "há 30min"
+    }
+  ],
+  "kpis": [
+    { "label": "Pacientes ativos", "valor": "24", "delta": "+2", "direcao": "subiu", "cor": "teal" },
+    { "label": "Sessões no mês", "valor": "87", "delta": "+12", "direcao": "subiu", "cor": "sky" },
+    { "label": "Evolução média", "valor": "−2.4", "delta": "PHQ-9 vs base", "direcao": "desceu", "cor": "emerald" },
+    { "label": "Adesão", "valor": "92%", "delta": "+3 pp", "direcao": "subiu", "cor": "violet" }
+  ]
+}

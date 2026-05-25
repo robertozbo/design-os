@@ -21,3 +21,35 @@ dist/
 # Logs
 *.log
 npm-debug.log*
+
+# Design OS prototype work — Builder template legacy (master mix)
+# Tracked products live in product-mobile/, product-personal/, product-psicologo/, product-clinico/
+product/
+
+# Prototype section components — Builder template legacy
+# Tracked sections live in src/sections-mobile/, src/sections-personal/, etc.
+
+# Generated exports (regenerated via /export-product)
+product-plan-mobile/
+product-plan-nutri/
+product-plan-paciente/
+product-plan-personal/
+product-plan-psychology/
+product-plan-sst/
+product-plan-sst-nr1/
+product-plan-mobile.zip
+product-plan-nutri.zip
+product-plan-paciente.zip
+product-plan-personal.zip
+product-plan-psychology.zip
+product-plan-sst.zip
+product-plan-sst-nr1.zip
+
+# Playwright testing artifacts
+.playwright-mcp/
+
+# Root-level screenshots from manual testing (not versioned)
+/*.png
+
+# Claude Code task lock
+.claude/scheduled_tasks.lock

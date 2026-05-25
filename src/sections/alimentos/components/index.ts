@@ -1,0 +1,6 @@
+export { AlimentosList } from './AlimentosList'
+export { AlimentoCard } from './AlimentoCard'
+export { AlimentosFiltersBar } from './AlimentosFiltersBar'
+export { CategoryChips } from './CategoryChips'
+export { AlimentoDrawer } from './AlimentoDrawer'
+export { DeleteConfirmModal } from './DeleteConfirmModal'

@@ -1,0 +1,302 @@
+{
+  "_meta": {
+    "models": {
+      "agendamento": "Slot agendado pra um paciente. Tem data/hora, duração, modalidade, status, valor, e flag se é encaixe.",
+      "bloqueio": "Faixa de tempo bloqueada na agenda (almoço, evento, viagem). Não permite agendamento sobreposto.",
+      "pacienteResumo": "Identificação compacta de paciente pra autocomplete e cards de pendentes/próximas.",
+      "pendente": "Consulta com status='pendente' que aguarda confirmação. Mostrada no painel lateral pra ação rápida da secretária.",
+      "proximaConsulta": "Card de detalhe das 3 próximas consultas (mostra paciente + condições + horário + modalidade).",
+      "filtroAtivo": "Estado atual dos filtros aplicados: arrays de status, modalidades e pacienteIds selecionados.",
+      "visaoAtual": "Estado da visão do calendário: 'dia' | 'semana' | 'mes' + data foco.",
+      "diaSemana": "Cabeçalho de dia da semana mostrado no grid (com label, número e flag se é hoje)."
+    },
+    "relationships": [
+      "Cada Agendamento referencia um PacienteResumo (pacienteId) e fica em uma posição do grid (data/hora)",
+      "Bloqueio existe no mesmo eixo de tempo do grid mas não tem paciente",
+      "Pendente é uma view derivada de Agendamento com status='pendente'",
+      "ProximaConsulta é uma view ordenada cronologicamente das 3 consultas mais próximas",
+      "FiltroAtivo + VisaoAtual controlam o que é renderizado no grid"
+    ]
+  },
+  "visaoAtual": {
+    "tipo": "semana",
+    "dataFoco": "2026-05-07",
+    "labelPeriodo": "Maio · 4–10 · 2026"
+  },
+  "diasSemana": [
+    { "label": "Seg", "numero": 4, "iso": "2026-05-04", "ehHoje": false },
+    { "label": "Ter", "numero": 5, "iso": "2026-05-05", "ehHoje": false },
+    { "label": "Qua", "numero": 6, "iso": "2026-05-06", "ehHoje": false },
+    { "label": "Qui", "numero": 7, "iso": "2026-05-07", "ehHoje": true },
+    { "label": "Sex", "numero": 8, "iso": "2026-05-08", "ehHoje": false },
+    { "label": "Sáb", "numero": 9, "iso": "2026-05-09", "ehHoje": false },
+    { "label": "Dom", "numero": 10, "iso": "2026-05-10", "ehHoje": false }
+  ],
+  "agendamentos": [
+    {
+      "id": "agd-001",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciaEm": "2026-05-04T08:00:00-03:00",
+      "duracaoMin": 45,
+      "modalidade": "presencial",
+      "status": "realizado",
+      "valor": 380,
+      "isEncaixe": false,
+      "observacao": ""
+    },
+    {
+      "id": "agd-002",
+      "pacienteId": "pct-002",
+      "pacienteNome": "Paula Mendes",
+      "iniciaEm": "2026-05-04T09:00:00-03:00",
+      "duracaoMin": 45,
+      "modalidade": "presencial",
+      "status": "realizado",
+      "valor": 380,
+      "isEncaixe": false,
+      "observacao": ""
+    },
+    {
+      "id": "agd-003",
+      "pacienteId": "pct-003",
+      "pacienteNome": "Carlos Tavares",
+      "iniciaEm": "2026-05-04T11:00:00-03:00",
+      "duracaoMin": 30,
+      "modalidade": "tele",
+      "status": "realizado",
+      "valor": 280,
+      "isEncaixe": false,
+      "observacao": "Renovação Levotiroxina"
+    },
+    {
+      "id": "agd-004",
+      "pacienteId": "pct-004",
+      "pacienteNome": "Ana Beatriz Lima",
+      "iniciaEm": "2026-05-05T09:00:00-03:00",
+      "duracaoMin": 45,
+      "modalidade": "presencial",
+      "status": "realizado",
+      "valor": 380,
+      "isEncaixe": false,
+      "observacao": ""
+    },
+    {
+      "id": "agd-005",
+      "pacienteId": "pct-005",
+      "pacienteNome": "Beatriz Souza",
+      "iniciaEm": "2026-05-05T10:00:00-03:00",
+      "duracaoMin": 60,
+      "modalidade": "presencial",
+      "status": "cancelado",
+      "valor": 380,
+      "isEncaixe": false,
+      "observacao": "Paciente remarcou pra próxima semana"
+    },
+    {
+      "id": "agd-006",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciaEm": "2026-05-07T14:30:00-03:00",
+      "duracaoMin": 45,
+      "modalidade": "presencial",
+      "status": "confirmado",
+      "valor": 380,
+      "isEncaixe": false,
+      "observacao": "Retorno — ajuste Levotiroxina"
+    },
+    {
+      "id": "agd-007",
+      "pacienteId": "pct-006",
+      "pacienteNome": "João Ricardo Mello",
+      "iniciaEm": "2026-05-07T08:00:00-03:00",
+      "duracaoMin": 45,
+      "modalidade": "presencial",
+      "status": "realizado",
+      "valor": 380,
+      "isEncaixe": false,
+      "observacao": ""
+    },
+    {
+      "id": "agd-008",
+      "pacienteId": "pct-007",
+      "pacienteNome": "Lucas Pereira",
+      "iniciaEm": "2026-05-07T09:00:00-03:00",
+      "duracaoMin": 45,
+      "modalidade": "presencial",
+      "status": "confirmado",
+      "valor": 380,
+      "isEncaixe": false,
+      "observacao": ""
+    },
+    {
+      "id": "agd-009",
+      "pacienteId": "pct-008",
+      "pacienteNome": "Sofia Andrade",
+      "iniciaEm": "2026-05-07T10:00:00-03:00",
+      "duracaoMin": 30,
+      "modalidade": "tele",
+      "status": "pendente",
+      "valor": 280,
+      "isEncaixe": true,
+      "observacao": "Encaixe — primeira consulta"
+    },
+    {
+      "id": "agd-010",
+      "pacienteId": "pct-009",
+      "pacienteNome": "Rita Vasconcelos",
+      "iniciaEm": "2026-05-07T16:00:00-03:00",
+      "duracaoMin": 45,
+      "modalidade": "presencial",
+      "status": "pendente",
+      "valor": 380,
+      "isEncaixe": false,
+      "observacao": ""
+    },
+    {
+      "id": "agd-011",
+      "pacienteId": "pct-010",
+      "pacienteNome": "Gustavo Henrique",
+      "iniciaEm": "2026-05-08T11:00:00-03:00",
+      "duracaoMin": 30,
+      "modalidade": "tele",
+      "status": "confirmado",
+      "valor": 280,
+      "isEncaixe": false,
+      "observacao": ""
+    },
+    {
+      "id": "agd-012",
+      "pacienteId": "pct-011",
+      "pacienteNome": "Caio Bernardes",
+      "iniciaEm": "2026-05-08T15:00:00-03:00",
+      "duracaoMin": 45,
+      "modalidade": "presencial",
+      "status": "pendente",
+      "valor": 380,
+      "isEncaixe": false,
+      "observacao": ""
+    },
+    {
+      "id": "agd-013",
+      "pacienteId": "pct-012",
+      "pacienteNome": "Helena Drummond",
+      "iniciaEm": "2026-05-08T17:00:00-03:00",
+      "duracaoMin": 45,
+      "modalidade": "presencial",
+      "status": "faltou",
+      "valor": 380,
+      "isEncaixe": false,
+      "observacao": "Não compareceu — taxa aplicada"
+    }
+  ],
+  "bloqueios": [
+    {
+      "id": "blq-001",
+      "iniciaEm": "2026-05-06T09:00:00-03:00",
+      "duracaoMin": 120,
+      "label": "Congresso SBEM",
+      "recorrente": false
+    },
+    {
+      "id": "blq-002",
+      "iniciaEm": "2026-05-04T12:00:00-03:00",
+      "duracaoMin": 60,
+      "label": "Almoço",
+      "recorrente": true
+    },
+    {
+      "id": "blq-003",
+      "iniciaEm": "2026-05-05T12:00:00-03:00",
+      "duracaoMin": 60,
+      "label": "Almoço",
+      "recorrente": true
+    },
+    {
+      "id": "blq-004",
+      "iniciaEm": "2026-05-07T12:00:00-03:00",
+      "duracaoMin": 60,
+      "label": "Almoço",
+      "recorrente": true
+    },
+    {
+      "id": "blq-005",
+      "iniciaEm": "2026-05-08T12:00:00-03:00",
+      "duracaoMin": 60,
+      "label": "Almoço",
+      "recorrente": true
+    }
+  ],
+  "pendentes": [
+    {
+      "agendamentoId": "agd-009",
+      "pacienteId": "pct-008",
+      "pacienteNome": "Sofia Andrade",
+      "iniciaEm": "2026-05-07T10:00:00-03:00",
+      "modalidade": "tele",
+      "isEncaixe": true,
+      "observacao": "Primeira consulta — paciente nova"
+    },
+    {
+      "agendamentoId": "agd-010",
+      "pacienteId": "pct-009",
+      "pacienteNome": "Rita Vasconcelos",
+      "iniciaEm": "2026-05-07T16:00:00-03:00",
+      "modalidade": "presencial",
+      "isEncaixe": false,
+      "observacao": ""
+    },
+    {
+      "agendamentoId": "agd-012",
+      "pacienteId": "pct-011",
+      "pacienteNome": "Caio Bernardes",
+      "iniciaEm": "2026-05-08T15:00:00-03:00",
+      "modalidade": "presencial",
+      "isEncaixe": false,
+      "observacao": ""
+    }
+  ],
+  "proximas": [
+    {
+      "agendamentoId": "agd-006",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+      "iniciaEm": "2026-05-07T14:30:00-03:00",
+      "modalidade": "presencial",
+      "minutosAteInicio": 90
+    },
+    {
+      "agendamentoId": "agd-010",
+      "pacienteId": "pct-009",
+      "pacienteNome": "Rita Vasconcelos",
+      "condicoesCronicas": ["Obesidade grau II"],
+      "iniciaEm": "2026-05-07T16:00:00-03:00",
+      "modalidade": "presencial",
+      "minutosAteInicio": 180
+    },
+    {
+      "agendamentoId": "agd-011",
+      "pacienteId": "pct-010",
+      "pacienteNome": "Gustavo Henrique",
+      "condicoesCronicas": ["Tireoidite Hashimoto"],
+      "iniciaEm": "2026-05-08T11:00:00-03:00",
+      "modalidade": "tele",
+      "minutosAteInicio": 1170
+    }
+  ],
+  "filtroAtivo": {
+    "status": [],
+    "modalidades": [],
+    "pacienteIds": []
+  },
+  "pacientesAutocomplete": [
+    { "id": "pct-001", "nome": "Maria Silva Andrade", "ultimaConsulta": "2026-02-10" },
+    { "id": "pct-002", "nome": "Paula Mendes", "ultimaConsulta": "2026-04-22" },
+    { "id": "pct-003", "nome": "Carlos Tavares", "ultimaConsulta": "2026-04-15" },
+    { "id": "pct-004", "nome": "Ana Beatriz Lima", "ultimaConsulta": "2026-03-30" },
+    { "id": "pct-005", "nome": "Beatriz Souza", "ultimaConsulta": "2025-12-08" },
+    { "id": "pct-008", "nome": "Sofia Andrade", "ultimaConsulta": null },
+    { "id": "pct-009", "nome": "Rita Vasconcelos", "ultimaConsulta": "2026-01-20" }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "_meta": {
+    "models": {
+      "MaisData": "Hub do menu Mais — perfil resumido + plano + atalhos agrupados.",
+      "PlanoStatus": "Status da assinatura do usuário (free/plus/pro)."
+    }
+  },
+  "user": {
+    "id": "u-1",
+    "email": "roberto@nymos.com",
+    "name": "Roberto Zboralski",
+    "image": null,
+    "role": "patient",
+    "createdAt": "2025-12-09T00:00:00Z",
+    "updatedAt": "2026-05-04T00:00:00Z"
+  },
+  "primeiroNome": "Roberto",
+  "avatarInicial": "R",
+  "fotoUrl": null,
+  "plano": {
+    "tier": "plus",
+    "label": "Plus",
+    "renovaEm": "2026-06-04",
+    "precoMensal": "R$ 49,90/mês"
+  },
+  "podeUpgrade": true,
+  "grupos": [
+    {
+      "id": "saude",
+      "label": "Saúde",
+      "itens": [
+        {
+          "id": "minha-saude",
+          "label": "Minha Saúde",
+          "iconeNome": "heart",
+          "cor": "rose",
+          "subtitulo": "Score 78 · há 30d",
+          "rota": "/mobile/sections/minha-saude"
+        },
+        {
+          "id": "receitas",
+          "label": "Receitas",
+          "iconeNome": "chef-hat",
+          "cor": "emerald",
+          "subtitulo": "Inspirações alinhadas ao seu plano",
+          "rota": "/receitas"
+        },
+        {
+          "id": "exames",
+          "label": "Histórico de exames",
+          "iconeNome": "file-text",
+          "cor": "sky",
+          "rota": "/exames"
+        }
+      ]
+    },
+    {
+      "id": "conta",
+      "label": "Conta",
+      "itens": [
+        {
+          "id": "perfil",
+          "label": "Perfil",
+          "iconeNome": "user",
+          "cor": "teal",
+          "subtitulo": "Dados pessoais e medidas",
+          "rota": "/mobile/sections/perfil"
+        },
+        {
+          "id": "profissionais",
+          "label": "Profissionais",
+          "iconeNome": "users",
+          "cor": "emerald",
+          "subtitulo": "2 vinculados · 1 convite pendente",
+          "badge": "1",
+          "rota": "/mobile/sections/profissionais"
+        },
+        {
+          "id": "plano",
+          "label": "Plano e assinatura",
+          "iconeNome": "credit-card",
+          "cor": "violet",
+          "subtitulo": "Plus · renova 04/06",
+          "rota": "/plano"
+        },
+        {
+          "id": "configuracoes",
+          "label": "Configurações",
+          "iconeNome": "settings",
+          "cor": "violet",
+          "subtitulo": "Tema, idioma, notificações",
+          "rota": "/mobile/sections/configuracoes"
+        }
+      ]
+    },
+    {
+      "id": "suporte",
+      "label": "Suporte",
+      "itens": [
+        {
+          "id": "faq",
+          "label": "Perguntas frequentes",
+          "iconeNome": "help-circle",
+          "cor": "sky",
+          "rota": "/faq"
+        },
+        {
+          "id": "contato",
+          "label": "Falar com suporte",
+          "iconeNome": "message-circle",
+          "cor": "teal",
+          "rota": "/suporte"
+        },
+        {
+          "id": "avaliar",
+          "label": "Avaliar o app",
+          "iconeNome": "star",
+          "cor": "amber",
+          "rota": "/avaliar"
+        }
+      ]
+    }
+  ]
+}

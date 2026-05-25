@@ -1,0 +1,149 @@
+{
+  "_meta": {
+    "models": {
+      "saudacao": "Saudação contextual baseada na hora do dia + dica vinda do plano (ex: 'Bom dia, Maria 👋' + 'Lembre de pesar antes do café').",
+      "paciente": "Identificação resumida da paciente (Maria) — usada no header e na saudação.",
+      "proximaConsulta": "Card de próxima consulta destacado no topo do feed. Inclui contagem regressiva pra decidir se mostra CTA 'Entrar na sala'.",
+      "lembreteMedicacao": "Lembrete de medicação a tomar no dia. Tem nome, dose, horário programado e status.",
+      "acaoRapida": "Atalho clicável (registrar peso, registrar glicemia, enviar exame, ver receitas).",
+      "profissionalVinculado": "Profissional Nymos com vínculo ativo com a paciente. Inclui resumo de pendências (próxima consulta, mensagens, plano).",
+      "profissionalPlaceholder": "Sugestão de vertical Nymos não vinculada (ex: nutricionista). Antecipa V2 sem cruzar dados.",
+      "alertaTopo": "Banner sutil no topo do feed (mensagem nova, exame pedido, etc.)."
+    },
+    "relationships": [
+      "Saudacao referencia o Paciente",
+      "ProximaConsulta referencia ProfissionalVinculado",
+      "LembreteMedicacao deriva da Prescrição ativa do profissional vinculado",
+      "AcaoRapida não tem dependência — são atalhos universais",
+      "ProfissionalVinculado tem 0..N pendências (mensagens, plano, próxima consulta)",
+      "ProfissionalPlaceholder não tem vínculo, é só CTA aspiracional"
+    ]
+  },
+  "paciente": {
+    "id": "pct-001",
+    "nome": "Maria",
+    "nomeCompleto": "Maria Silva Andrade",
+    "iniciais": "MA",
+    "notificacoesNaoLidas": 1
+  },
+  "saudacao": {
+    "periodo": "manha",
+    "texto": "Bom dia, Maria 👋",
+    "dica": "Lembre de pesar antes do café — ajuda o Dr. Pedro a ver sua tendência."
+  },
+  "alertaTopo": {
+    "id": "alt-msg-001",
+    "tipo": "mensagem",
+    "label": "Dr. Pedro respondeu sua pergunta sobre a Levotiroxina",
+    "ctaLabel": "Ver",
+    "ctaHref": "/mensagens"
+  },
+  "proximaConsulta": {
+    "agendamentoId": "agd-006",
+    "data": "2026-05-07",
+    "hora": "14:30",
+    "modalidade": "presencial",
+    "medicoNome": "Dr. Pedro Lima",
+    "medicoEspecialidade": "Endocrinologia",
+    "observacao": "Retorno — ajuste de Levotiroxina",
+    "minutosAteInicio": 200,
+    "ehHoje": true,
+    "podeEntrarSala": false
+  },
+  "lembretesMedicacaoHoje": [
+    {
+      "id": "lmb-001",
+      "medicacao": "Levotiroxina",
+      "dose": "50 mcg",
+      "horario": "07:00",
+      "instrucao": "Em jejum, 30 min antes do café",
+      "status": "cumprido",
+      "cumpridoEm": "2026-05-07T07:14:00-03:00"
+    },
+    {
+      "id": "lmb-002",
+      "medicacao": "Metformina",
+      "dose": "1 g",
+      "horario": "12:00",
+      "instrucao": "Após o almoço",
+      "status": "pendente",
+      "cumpridoEm": null
+    },
+    {
+      "id": "lmb-003",
+      "medicacao": "Metformina",
+      "dose": "1 g",
+      "horario": "19:00",
+      "instrucao": "Após o jantar",
+      "status": "pendente",
+      "cumpridoEm": null
+    },
+    {
+      "id": "lmb-004",
+      "medicacao": "Vitamina D3",
+      "dose": "7000 UI",
+      "horario": "10:00",
+      "instrucao": "Dose semanal",
+      "status": "atrasado",
+      "cumpridoEm": null
+    }
+  ],
+  "acoesRapidas": [
+    {
+      "id": "peso",
+      "label": "Registrar peso",
+      "icone": "scale",
+      "valorAtual": "78,4 kg",
+      "ultimoRegistro": "2 dias"
+    },
+    {
+      "id": "glicemia",
+      "label": "Registrar glicemia",
+      "icone": "droplet",
+      "valorAtual": null,
+      "ultimoRegistro": "ontem"
+    },
+    {
+      "id": "exame",
+      "label": "Enviar exame",
+      "icone": "camera",
+      "valorAtual": null,
+      "ultimoRegistro": "abr/22"
+    },
+    {
+      "id": "receita",
+      "label": "Ver receitas",
+      "icone": "file-text",
+      "valorAtual": "3 ativas",
+      "ultimoRegistro": null
+    }
+  ],
+  "profissionaisVinculados": [
+    {
+      "id": "prof-pedro",
+      "nome": "Dr. Pedro Lima",
+      "especialidade": "Endocrinologia",
+      "iniciais": "PL",
+      "vinculadoEm": "2024-03-15",
+      "pendencias": {
+        "proximaConsultaTexto": "Hoje, 14:30 · presencial",
+        "mensagensNaoLidas": 1,
+        "planoAtivoLabel": "Plano de manejo DM2 + Hipo"
+      }
+    }
+  ],
+  "profissionaisPlaceholder": [
+    {
+      "verticalId": "nutri",
+      "verticalLabel": "Nutricionista",
+      "ctaLabel": "Buscar nutricionista",
+      "explicacao": "Você ainda não tem nutricionista vinculado. Adicione um pra acompanhar dieta e adesão alimentar — dados ficam separados do médico (LGPD)."
+    },
+    {
+      "verticalId": "psicologo",
+      "verticalLabel": "Psicólogo",
+      "ctaLabel": "Buscar psicólogo",
+      "explicacao": "Atendimento psicológico Nymos chegará em breve."
+    }
+  ]
+}

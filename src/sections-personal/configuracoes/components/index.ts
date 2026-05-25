@@ -1,0 +1,7 @@
+export { ConfiguracoesPage } from './ConfiguracoesPage'
+export { PerfilPanel, Panel, Field, Input } from './PerfilPanel'
+export { AgendaPanel } from './AgendaPanel'
+export { PlanoPanel } from './PlanoPanel'
+export { NotificacoesPanel } from './NotificacoesPanel'
+export { IntegracoesPanel } from './IntegracoesPanel'
+export { DadosPanel } from './DadosPanel'

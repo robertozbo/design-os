@@ -1,0 +1,572 @@
+{
+  "_meta": {
+    "models": {
+      "aluno": "Pessoa atendida pelo personal. Tem dados pessoais, vínculo (data início), status (em-plano/pausado/sem-plano/arquivado), objetivo e indicadores cruzados de outras seções (plano atual, adesão, riscos, mensagens não lidas).",
+      "planoAtualResumo": "Resumo do plano de treino ativo do aluno (apenas se em-plano ou pausado). Referencia plano em sections/treinos.",
+      "adesaoStats": "Estatísticas de adesão do plano atual: percentual, sessões feitas/totais, streak.",
+      "planoHistorico": "Plano anterior do aluno (arquivado). Carrega adesão final e motivo de troca.",
+      "avaliacaoResumo": "Resumo de avaliação do aluno (referencia avaliações em sections/avaliacoes). Carrega métricas-chave para a aba Avaliações da ficha.",
+      "mensagemAluno": "Mensagem da conversa entre personal e aluno (apenas para ficha).",
+      "anotacaoPrivada": "Nota privada que só o personal vê (não compartilhada com aluno). Apenas para ficha."
+    },
+    "relationships": [
+      "Aluno tem zero ou um PlanoAtualResumo (referencia Plano em treinos)",
+      "Aluno tem zero ou um AdesaoStats (apenas se em-plano)",
+      "Aluno tem zero ou mais PlanoHistorico (planos anteriores)",
+      "Aluno tem zero ou mais AvaliacaoResumo (referencia Avaliação)",
+      "Aluno tem zero ou mais Mensagens e AnotacoesPrivadas (apenas para ficha do showcase)",
+      "Aluno carrega array de CriterioRisco (cruza com Início)"
+    ]
+  },
+  "tabs": [
+    { "id": "em-plano", "label": "Em plano", "count": 6 },
+    { "id": "pausados", "label": "Pausados", "count": 1 },
+    { "id": "sem-plano", "label": "Sem plano", "count": 3 },
+    { "id": "em-risco", "label": "Em risco", "count": 4 },
+    { "id": "arquivados", "label": "Arquivados", "count": 2 }
+  ],
+  "objetivos": [
+    { "id": "todos", "label": "Todos os objetivos", "count": 12 },
+    { "id": "hipertrofia", "label": "Hipertrofia", "count": 3 },
+    { "id": "emagrecimento", "label": "Emagrecimento", "count": 3 },
+    { "id": "performance", "label": "Performance", "count": 2 },
+    { "id": "reabilitacao", "label": "Reabilitação", "count": 1 },
+    { "id": "geral", "label": "Geral", "count": 3 }
+  ],
+  "sortOptions": [
+    { "id": "nome-asc", "label": "Nome (A-Z)" },
+    { "id": "recentes", "label": "Mais recentes" },
+    { "id": "adesao-desc", "label": "Maior adesão" },
+    { "id": "adesao-asc", "label": "Menor adesão" },
+    { "id": "ultima-sessao", "label": "Última sessão" }
+  ],
+  "selected": {
+    "tab": "em-plano",
+    "objetivo": "todos",
+    "sort": "nome-asc"
+  },
+  "kpis": {
+    "totalAtivo": 10,
+    "emPlano": 6,
+    "emRisco": 4,
+    "novosNoMes": 3,
+    "deltaNovosMes": 2
+  },
+  "emptyStates": {
+    "emPlano": {
+      "title": "Ainda sem alunos com plano",
+      "description": "Aplique um template em alunos sem plano para começar a acompanhar."
+    },
+    "pausados": {
+      "title": "Nenhum aluno pausado",
+      "description": "Pausados aparecem aqui — fica fácil de retomar quando voltarem."
+    },
+    "semPlano": {
+      "title": "Tudo atribuído",
+      "description": "Sem alunos esperando — bom trabalho. Pode convidar mais quando quiser.",
+      "primaryCta": "Convidar novo aluno"
+    },
+    "emRisco": {
+      "title": "Tudo sob controle 👌",
+      "description": "Nenhum aluno com sinal de alerta no momento."
+    },
+    "arquivados": {
+      "title": "Sem alunos arquivados ainda",
+      "description": "Alunos arquivados ficam aqui pra consulta e reativação."
+    },
+    "noResults": {
+      "title": "Nenhum aluno encontrado",
+      "description": "Tente ajustar os filtros ou buscar por outro nome."
+    }
+  },
+  "alunos": [
+    {
+      "id": "alu-004",
+      "nome": "Ana Oliveira",
+      "email": "ana.oliveira@email.com",
+      "telefone": "(11) 98765-4321",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Ana+Oliveira&backgroundColor=f59e0b",
+      "status": "em-plano",
+      "objetivo": "reabilitacao",
+      "inicioVinculoData": "2026-04-15",
+      "vinculadoApp": true,
+      "temNutri": false,
+      "ultimaSessaoData": "2026-05-04",
+      "ultimaAvaliacaoData": "2026-04-22",
+      "mensagensNaoLidas": 0,
+      "observacoesIniciais": "Pós-fisio de ombro — retorno gradual",
+      "riscos": ["dor"],
+      "alertasMotivos": ["Comentário recente: dor leve no movimento de elevação lateral"],
+      "planoAtual": {
+        "id": "atr-004",
+        "nome": "Reabilitação ombro · Pós-fisio",
+        "objetivo": "reabilitacao",
+        "inicioData": "2026-04-22",
+        "duracaoSemanas": 4
+      },
+      "adesao": {
+        "percentual": 78,
+        "sessoesFeitas": 7,
+        "sessoesTotais": 9,
+        "streak": 3
+      },
+      "proximaSessao": {
+        "data": "2026-05-08",
+        "treinoLetra": "A",
+        "treinoNome": "Ombro · Mobilidade e ativação"
+      }
+    },
+    {
+      "id": "alu-006",
+      "nome": "Beatriz Almeida",
+      "email": "beatriz.almeida@email.com",
+      "telefone": "(11) 99876-1234",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Beatriz+Almeida&backgroundColor=d946ef",
+      "status": "sem-plano",
+      "objetivo": "geral",
+      "inicioVinculoData": "2026-04-25",
+      "vinculadoApp": true,
+      "temNutri": false,
+      "ultimaSessaoData": null,
+      "ultimaAvaliacaoData": null,
+      "mensagensNaoLidas": 1,
+      "observacoesIniciais": "Já treinou antes, voltando depois de pausa de 1 ano",
+      "riscos": [],
+      "alertasMotivos": []
+    },
+    {
+      "id": "alu-003",
+      "nome": "Carlos Mendes",
+      "email": "carlos.mendes@email.com",
+      "telefone": "(11) 91234-5678",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos+Mendes&backgroundColor=8b5cf6",
+      "status": "em-plano",
+      "objetivo": "performance",
+      "inicioVinculoData": "2025-09-01",
+      "vinculadoApp": true,
+      "temNutri": false,
+      "ultimaSessaoData": "2026-05-07",
+      "ultimaAvaliacaoData": "2026-04-20",
+      "mensagensNaoLidas": 0,
+      "observacoesIniciais": "Atleta amador de powerlifting — meta competição em 6 meses",
+      "riscos": [],
+      "alertasMotivos": [],
+      "planoAtual": {
+        "id": "atr-003",
+        "nome": "Performance · Força máxima 5x5",
+        "objetivo": "performance",
+        "inicioData": "2026-03-15",
+        "duracaoSemanas": 12
+      },
+      "adesao": {
+        "percentual": 100,
+        "sessoesFeitas": 22,
+        "sessoesTotais": 22,
+        "streak": 22
+      },
+      "proximaSessao": {
+        "data": "2026-05-09",
+        "treinoLetra": "A",
+        "treinoNome": "Squat-foco"
+      }
+    },
+    {
+      "id": "alu-010",
+      "nome": "Felipe Lopes",
+      "email": "felipe.lopes@email.com",
+      "telefone": "(11) 93456-7890",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Felipe+Lopes&backgroundColor=64748b",
+      "status": "arquivado",
+      "objetivo": "geral",
+      "inicioVinculoData": "2025-06-10",
+      "vinculadoApp": false,
+      "temNutri": false,
+      "ultimaSessaoData": "2026-02-08",
+      "ultimaAvaliacaoData": "2025-12-02",
+      "mensagensNaoLidas": 0,
+      "observacoesIniciais": "",
+      "riscos": [],
+      "alertasMotivos": [],
+      "arquivadoEm": "2026-02-15",
+      "motivoArquivo": "Cancelou — falta de tempo"
+    },
+    {
+      "id": "alu-001",
+      "nome": "João Silva",
+      "email": "joao.silva@email.com",
+      "telefone": "(11) 97777-8888",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6",
+      "status": "em-plano",
+      "objetivo": "hipertrofia",
+      "inicioVinculoData": "2025-11-12",
+      "vinculadoApp": true,
+      "temNutri": true,
+      "ultimaSessaoData": "2026-05-07",
+      "ultimaAvaliacaoData": "2026-05-01",
+      "mensagensNaoLidas": 2,
+      "observacoesIniciais": "Voltou depois de pausa de 6 meses (problemas pessoais). Foco em recuperar massa magra.",
+      "riscos": [],
+      "alertasMotivos": [],
+      "planoAtual": {
+        "id": "atr-001",
+        "nome": "Hipertrofia ABC · Iniciante",
+        "objetivo": "hipertrofia",
+        "inicioData": "2026-04-08",
+        "duracaoSemanas": 8
+      },
+      "adesao": {
+        "percentual": 92,
+        "sessoesFeitas": 11,
+        "sessoesTotais": 12,
+        "streak": 8
+      },
+      "proximaSessao": {
+        "data": "2026-05-08",
+        "treinoLetra": "C",
+        "treinoNome": "Pernas"
+      },
+      "planosAnteriores": [
+        {
+          "id": "tpl-old-001",
+          "nome": "Hipertrofia 4x · Avançado",
+          "objetivo": "hipertrofia",
+          "inicioData": "2025-11-15",
+          "fimData": "2026-01-30",
+          "adesaoFinal": 71,
+          "motivoTroca": "Voltou após pausa — reduzimos volume pra recuperar consistência"
+        }
+      ],
+      "avaliacoes": [
+        {
+          "id": "av-008",
+          "data": "2026-05-01",
+          "pesoKg": 81.0,
+          "percentualGordura": 16.0,
+          "fmsScore": 18,
+          "rmSupino": 67,
+          "rmSquat": 90,
+          "rmDeadlift": 112,
+          "massaMagraKg": 67.8
+        },
+        {
+          "id": "av-007",
+          "data": "2026-04-01",
+          "pesoKg": 79.5,
+          "percentualGordura": 17.2,
+          "fmsScore": 16,
+          "rmSupino": 62,
+          "rmSquat": 84,
+          "rmDeadlift": 107,
+          "massaMagraKg": 65.6
+        },
+        {
+          "id": "av-006",
+          "data": "2026-03-01",
+          "pesoKg": 78.0,
+          "percentualGordura": 18.5,
+          "fmsScore": 14,
+          "rmSupino": 60,
+          "rmSquat": 84,
+          "rmDeadlift": 101,
+          "massaMagraKg": 63.6
+        }
+      ],
+      "metaPrincipal": {
+        "titulo": "Atingir 70kg de massa magra",
+        "tom": "hipertrofia",
+        "valorInicial": 63.6,
+        "valorAtual": 67.8,
+        "valorAlvo": 70.0,
+        "unidade": "kg",
+        "direcao": "atingir",
+        "percentualAtingido": 66,
+        "prazoData": "2026-08-01",
+        "diasRestantes": 86
+      },
+      "proximaAvaliacaoData": "2026-06-01",
+      "planoPersonal": "plus",
+      "historicoSemanas": [
+        { "semana": "S1", "percentual": 100 },
+        { "semana": "S2", "percentual": 100 },
+        { "semana": "S3", "percentual": 67 },
+        { "semana": "S4", "percentual": 100 },
+        { "semana": "S5", "percentual": 67 },
+        { "semana": "S6", "percentual": 100 },
+        { "semana": "S7", "percentual": 100 },
+        { "semana": "S8", "percentual": 100 }
+      ],
+      "mensagens": [
+        {
+          "id": "m-001",
+          "autor": "personal",
+          "texto": "Bom treino hoje! Subiu 5kg no supino, parabéns 💪",
+          "timestamp": "2026-05-04T11:42:00",
+          "lida": true
+        },
+        {
+          "id": "m-002",
+          "autor": "aluno",
+          "texto": "Valeu! Já tô achando 60kg leve pra próxima",
+          "timestamp": "2026-05-04T12:15:00",
+          "lida": true
+        },
+        {
+          "id": "m-003",
+          "autor": "personal",
+          "texto": "Boa! Próxima semana subo a prescrição. Continua mantendo a consistência.",
+          "timestamp": "2026-05-04T12:30:00",
+          "lida": true
+        },
+        {
+          "id": "m-004",
+          "autor": "aluno",
+          "texto": "Pode ser que eu falte amanhã, tenho uma reunião no horário do treino",
+          "timestamp": "2026-05-06T18:22:00",
+          "lida": false
+        },
+        {
+          "id": "m-005",
+          "autor": "aluno",
+          "texto": "Posso fazer no sábado de manhã?",
+          "timestamp": "2026-05-06T18:23:00",
+          "lida": false
+        }
+      ],
+      "anotacoesPrivadas": [
+        {
+          "id": "ap-001",
+          "texto": "Aluno disciplinado, responde bem a aumento de carga. Pode acelerar progressão.",
+          "criadoEm": "2026-04-15T10:00:00"
+        },
+        {
+          "id": "ap-002",
+          "texto": "Mencionou que esposa tá grávida (não comentar diretamente). Pode afetar consistência nos próximos meses.",
+          "criadoEm": "2026-04-28T14:20:00"
+        }
+      ],
+      "atividadeRecente": [
+        {
+          "id": "ev-1",
+          "tipo": "sessao-completa",
+          "descricao": "Concluiu Treino A · 58min · subiu 5kg no supino",
+          "timestamp": "há 3 dias"
+        },
+        {
+          "id": "ev-2",
+          "tipo": "avaliacao-completa",
+          "descricao": "Completou avaliação — %G de 17.2% → 16.0%",
+          "timestamp": "há 6 dias"
+        },
+        {
+          "id": "ev-3",
+          "tipo": "sessao-completa",
+          "descricao": "Concluiu Treino C · 52min · RPE 7.5",
+          "timestamp": "há 6 dias"
+        },
+        {
+          "id": "ev-4",
+          "tipo": "sessao-completa",
+          "descricao": "Concluiu Treino B · 47min",
+          "timestamp": "há 8 dias"
+        },
+        {
+          "id": "ev-5",
+          "tipo": "mensagem",
+          "descricao": "Enviou mensagem sobre reagendamento",
+          "timestamp": "há 10 dias"
+        }
+      ]
+    },
+    {
+      "id": "alu-008",
+      "nome": "Júlia Ferreira",
+      "email": "julia.ferreira@email.com",
+      "telefone": "(11) 95678-9012",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Julia+Ferreira&backgroundColor=84cc16",
+      "status": "sem-plano",
+      "objetivo": "emagrecimento",
+      "inicioVinculoData": "2026-02-17",
+      "vinculadoApp": true,
+      "temNutri": true,
+      "ultimaSessaoData": "2026-03-20",
+      "ultimaAvaliacaoData": "2026-02-17",
+      "mensagensNaoLidas": 0,
+      "observacoesIniciais": "Voltou depois da Páscoa, plano antigo expirou — precisa nova avaliação primeiro",
+      "riscos": ["reavaliacao-atrasada"],
+      "alertasMotivos": ["Reavaliação atrasada — última há 79 dias (alvo: 60)"]
+    },
+    {
+      "id": "alu-011",
+      "nome": "Luiza Mendes",
+      "email": "luiza.mendes@email.com",
+      "telefone": "(11) 92345-6789",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Luiza+Mendes&backgroundColor=10b981",
+      "status": "em-plano",
+      "objetivo": "geral",
+      "inicioVinculoData": "2025-04-22",
+      "vinculadoApp": true,
+      "temNutri": false,
+      "ultimaSessaoData": "2026-05-06",
+      "ultimaAvaliacaoData": "2026-03-10",
+      "mensagensNaoLidas": 0,
+      "observacoesIniciais": "Aluna fiel há mais de 1 ano. Foco em consistência e qualidade de vida.",
+      "riscos": [],
+      "alertasMotivos": [],
+      "planoAtual": {
+        "id": "tpl-aluna-luiza",
+        "nome": "Manutenção 3x · personalizado",
+        "objetivo": "geral",
+        "inicioData": "2026-03-12",
+        "duracaoSemanas": null
+      },
+      "adesao": {
+        "percentual": 95,
+        "sessoesFeitas": 24,
+        "sessoesTotais": 25,
+        "streak": 12
+      },
+      "proximaSessao": {
+        "data": "2026-05-08",
+        "treinoLetra": "B",
+        "treinoNome": "Push"
+      }
+    },
+    {
+      "id": "alu-009",
+      "nome": "Marina Santos",
+      "email": "marina.santos@email.com",
+      "telefone": "(11) 98765-1111",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Marina+Santos&backgroundColor=fb923c",
+      "status": "pausado",
+      "objetivo": "emagrecimento",
+      "inicioVinculoData": "2025-08-14",
+      "vinculadoApp": true,
+      "temNutri": true,
+      "ultimaSessaoData": "2026-04-12",
+      "ultimaAvaliacaoData": "2026-04-08",
+      "mensagensNaoLidas": 0,
+      "observacoesIniciais": "Pausou por viagem internacional de 2 meses. Volta em julho.",
+      "riscos": [],
+      "alertasMotivos": [],
+      "planoAtual": {
+        "id": "tpl-paused-marina",
+        "nome": "Emagrecimento Full-body 3x",
+        "objetivo": "emagrecimento",
+        "inicioData": "2026-02-10",
+        "duracaoSemanas": 12
+      },
+      "pausadoEm": "2026-04-15",
+      "motivoPausa": "Viagem internacional · retorno previsto em julho/2026"
+    },
+    {
+      "id": "alu-002",
+      "nome": "Maria Costa",
+      "email": "maria.costa@email.com",
+      "telefone": "(11) 96543-2109",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899",
+      "status": "em-plano",
+      "objetivo": "emagrecimento",
+      "inicioVinculoData": "2026-02-15",
+      "vinculadoApp": true,
+      "temNutri": true,
+      "ultimaSessaoData": "2026-05-03",
+      "ultimaAvaliacaoData": "2026-05-04",
+      "mensagensNaoLidas": 1,
+      "observacoesIniciais": "Sedentária há 3 anos. Iniciou com nutri também — abordagem integrada.",
+      "riscos": ["adesao-baixa"],
+      "alertasMotivos": ["Adesão de 67% nas últimas 4 semanas — caiu de 85% no mês anterior"],
+      "planoAtual": {
+        "id": "atr-002",
+        "nome": "Emagrecimento Full-body 3x",
+        "objetivo": "emagrecimento",
+        "inicioData": "2026-03-02",
+        "duracaoSemanas": 12
+      },
+      "adesao": {
+        "percentual": 67,
+        "sessoesFeitas": 18,
+        "sessoesTotais": 27,
+        "streak": 2
+      },
+      "proximaSessao": {
+        "data": "2026-05-08",
+        "treinoLetra": "A",
+        "treinoNome": "Full-body"
+      }
+    },
+    {
+      "id": "alu-005",
+      "nome": "Pedro Santos",
+      "email": "pedro.santos@email.com",
+      "telefone": "(11) 99988-7766",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Pedro+Santos&backgroundColor=06b6d4",
+      "status": "sem-plano",
+      "objetivo": "hipertrofia",
+      "inicioVinculoData": "2026-05-04",
+      "vinculadoApp": true,
+      "temNutri": false,
+      "ultimaSessaoData": "2026-05-06",
+      "ultimaAvaliacaoData": "2026-05-03",
+      "mensagensNaoLidas": 1,
+      "observacoesIniciais": "Aluno novo. Primeira consulta foi essa semana — avaliação em rascunho.",
+      "riscos": [],
+      "alertasMotivos": []
+    },
+    {
+      "id": "alu-007",
+      "nome": "Rafael Lima",
+      "email": "rafael.lima@email.com",
+      "telefone": "(11) 92222-3333",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Rafael+Lima&backgroundColor=f97316",
+      "status": "em-plano",
+      "objetivo": "geral",
+      "inicioVinculoData": "2025-12-08",
+      "vinculadoApp": true,
+      "temNutri": false,
+      "ultimaSessaoData": "2026-04-27",
+      "ultimaAvaliacaoData": "2026-03-14",
+      "mensagensNaoLidas": 0,
+      "observacoesIniciais": "Plano online — atende remoto. Sumiu sem aviso.",
+      "riscos": ["sem-sessao"],
+      "alertasMotivos": ["Sem sessão registrada há 9 dias · agendado pra hoje 19h"],
+      "planoAtual": {
+        "id": "tpl-rafael",
+        "nome": "Geral · Manutenção 3x online",
+        "objetivo": "geral",
+        "inicioData": "2026-01-15",
+        "duracaoSemanas": null
+      },
+      "adesao": {
+        "percentual": 54,
+        "sessoesFeitas": 14,
+        "sessoesTotais": 26,
+        "streak": 0
+      },
+      "proximaSessao": {
+        "data": "2026-05-07",
+        "treinoLetra": "C",
+        "treinoNome": "Pernas"
+      }
+    },
+    {
+      "id": "alu-012",
+      "nome": "Gustavo Reis",
+      "email": "gustavo.reis@email.com",
+      "telefone": "(11) 94567-1230",
+      "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Gustavo+Reis&backgroundColor=64748b",
+      "status": "arquivado",
+      "objetivo": "hipertrofia",
+      "inicioVinculoData": "2024-08-20",
+      "vinculadoApp": false,
+      "temNutri": false,
+      "ultimaSessaoData": "2025-11-30",
+      "ultimaAvaliacaoData": "2025-09-15",
+      "mensagensNaoLidas": 0,
+      "observacoesIniciais": "",
+      "riscos": [],
+      "alertasMotivos": [],
+      "arquivadoEm": "2025-12-10",
+      "motivoArquivo": "Mudou de cidade — segue treinando lá com personal local"
+    }
+  ]
+}

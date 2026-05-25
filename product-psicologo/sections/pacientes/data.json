@@ -1,0 +1,187 @@
+{
+  "_meta": {
+    "models": {
+      "Paciente": "Paciente do psicólogo com status, score, plano e próxima sessão.",
+      "KpiCarteira": "Indicador agregado da carteira."
+    }
+  },
+  "kpis": [
+    { "label": "Total de pacientes", "valor": "24", "delta": "+2 mês", "cor": "teal" },
+    { "label": "Em tratamento", "valor": "19", "cor": "sky" },
+    { "label": "Em alerta", "valor": "3", "delta": "alto risco", "cor": "rose" },
+    { "label": "Adesão média", "valor": "92%", "delta": "+3 pp", "cor": "emerald" }
+  ],
+  "pacientes": [
+    {
+      "id": "p-pedro",
+      "nomeCompleto": "Pedro Santos",
+      "inicial": "P",
+      "fotoUrl": null,
+      "idade": 42,
+      "genero": "masculino",
+      "status": "em_tratamento",
+      "altoRisco": true,
+      "scoreAtual": {
+        "instrumento": "PHQ-9",
+        "valor": 17,
+        "severidade": "moderada_severa",
+        "aplicadoEm": "2026-05-03"
+      },
+      "plano": { "nome": "TCC para Depressão", "sessaoAtual": 5, "totalSessoes": 12 },
+      "proximaSessao": { "inicioEm": "2026-05-05T14:00:00", "modalidade": "online" },
+      "ultimaInteracao": "ontem"
+    },
+    {
+      "id": "p-fernanda",
+      "nomeCompleto": "Fernanda Lima",
+      "inicial": "F",
+      "fotoUrl": null,
+      "idade": 33,
+      "genero": "feminino",
+      "status": "em_tratamento",
+      "altoRisco": true,
+      "scoreAtual": {
+        "instrumento": "GAD-7",
+        "valor": 18,
+        "severidade": "severa",
+        "aplicadoEm": "2026-05-04"
+      },
+      "plano": { "nome": "ACT para Ansiedade", "sessaoAtual": 3, "totalSessoes": 16 },
+      "proximaSessao": { "inicioEm": "2026-05-06T11:00:00", "modalidade": "presencial" },
+      "ultimaInteracao": "há 4h"
+    },
+    {
+      "id": "p-roberto",
+      "nomeCompleto": "Roberto Zboralski",
+      "inicial": "R",
+      "fotoUrl": null,
+      "idade": 35,
+      "genero": "masculino",
+      "status": "em_tratamento",
+      "altoRisco": false,
+      "scoreAtual": {
+        "instrumento": "PHQ-9",
+        "valor": 8,
+        "severidade": "leve",
+        "aplicadoEm": "2026-05-01"
+      },
+      "plano": { "nome": "Mindfulness Based", "sessaoAtual": 8, "totalSessoes": 12 },
+      "proximaSessao": { "inicioEm": "2026-05-05T09:00:00", "modalidade": "online" },
+      "ultimaInteracao": "ontem"
+    },
+    {
+      "id": "p-julia",
+      "nomeCompleto": "Júlia Mendes",
+      "inicial": "J",
+      "fotoUrl": null,
+      "idade": 29,
+      "genero": "feminino",
+      "status": "em_tratamento",
+      "altoRisco": false,
+      "scoreAtual": {
+        "instrumento": "GAD-7",
+        "valor": 12,
+        "severidade": "moderada",
+        "aplicadoEm": "2026-04-28"
+      },
+      "plano": { "nome": "TCC para Ansiedade", "sessaoAtual": 3, "totalSessoes": 16 },
+      "proximaSessao": { "inicioEm": "2026-05-05T10:30:00", "modalidade": "presencial" },
+      "ultimaInteracao": "há 30min"
+    },
+    {
+      "id": "p-marcelo",
+      "nomeCompleto": "Marcelo Pereira",
+      "inicial": "M",
+      "fotoUrl": null,
+      "idade": 27,
+      "genero": "masculino",
+      "status": "em_pausa",
+      "altoRisco": true,
+      "scoreAtual": {
+        "instrumento": "PHQ-9",
+        "valor": 14,
+        "severidade": "moderada",
+        "aplicadoEm": "2026-04-15"
+      },
+      "plano": null,
+      "proximaSessao": null,
+      "ultimaInteracao": "há 3 sem"
+    },
+    {
+      "id": "p-lucas",
+      "nomeCompleto": "Lucas Oliveira",
+      "inicial": "L",
+      "fotoUrl": null,
+      "idade": 31,
+      "genero": "masculino",
+      "status": "em_tratamento",
+      "altoRisco": false,
+      "scoreAtual": {
+        "instrumento": "GAD-7",
+        "valor": 9,
+        "severidade": "leve",
+        "aplicadoEm": "2026-04-30"
+      },
+      "plano": { "nome": "TCC + Exposição", "sessaoAtual": 6, "totalSessoes": 10 },
+      "proximaSessao": { "inicioEm": "2026-05-05T17:00:00", "modalidade": "online" },
+      "ultimaInteracao": "há 2d"
+    },
+    {
+      "id": "p-ana",
+      "nomeCompleto": "Ana Costa",
+      "inicial": "A",
+      "fotoUrl": null,
+      "idade": 38,
+      "genero": "feminino",
+      "status": "em_tratamento",
+      "altoRisco": false,
+      "scoreAtual": {
+        "instrumento": "PHQ-9",
+        "valor": 4,
+        "severidade": "minima",
+        "aplicadoEm": "2026-04-29"
+      },
+      "plano": { "nome": "Manutenção", "sessaoAtual": 12, "totalSessoes": 12 },
+      "proximaSessao": { "inicioEm": "2026-05-05T15:30:00", "modalidade": "presencial" },
+      "ultimaInteracao": "ontem"
+    },
+    {
+      "id": "p-carla",
+      "nomeCompleto": "Carla Souza",
+      "inicial": "C",
+      "fotoUrl": null,
+      "idade": 45,
+      "genero": "feminino",
+      "status": "alta",
+      "altoRisco": false,
+      "scoreAtual": {
+        "instrumento": "PHQ-9",
+        "valor": 2,
+        "severidade": "minima",
+        "aplicadoEm": "2026-04-10"
+      },
+      "plano": { "nome": "TCC concluída", "sessaoAtual": 16, "totalSessoes": 16 },
+      "proximaSessao": null,
+      "ultimaInteracao": "há 3 sem"
+    },
+    {
+      "id": "p-rodrigo",
+      "nomeCompleto": "Rodrigo Alves",
+      "inicial": "R",
+      "fotoUrl": null,
+      "idade": 39,
+      "genero": "masculino",
+      "status": "em_tratamento",
+      "altoRisco": false,
+      "scoreAtual": {
+        "instrumento": "DASS-21",
+        "valor": 22,
+        "severidade": "moderada",
+        "aplicadoEm": "2026-04-26"
+      },
+      "plano": { "nome": "ACT", "sessaoAtual": 4, "totalSessoes": 12 },
+      "proximaSessao": { "inicioEm": "2026-05-07T16:00:00", "modalidade": "online" },
+      "ultimaInteracao": "há 5d"
+    }
+  ]
+}

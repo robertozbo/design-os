@@ -1,0 +1,383 @@
+{
+  "_meta": {
+    "models": {
+      "prescricaoListItem": "Linha da lista global de prescrições. Resumo do paciente, medicações principais, validade, status e origem.",
+      "prescricaoDetalhe": "Versão expandida quando o drawer é aberto. Inclui todos os itens, contexto da consulta, histórico de renovações e dados de cancelamento se aplicável.",
+      "itemPrescricao": "Um item dentro de uma prescrição (medicamento). Tem nome comercial, princípio ativo, dose, posologia, duração e observação opcional.",
+      "filtroLista": "Estado dos filtros aplicados (busca, status selecionados, período).",
+      "kpis": "Indicadores no topo da lista — totais por status e quantos precisam de renovação.",
+      "pacienteSelector": "Paciente disponível pra seletor de Nova prescrição (busca por nome ou CPF).",
+      "renovacaoHistorico": "Item do histórico de renovações de uma prescrição (data, médico, prescrição resultante)."
+    },
+    "relationships": [
+      "PrescricaoListItem é o que aparece na lista; PrescricaoDetalhe é a versão expandida do drawer",
+      "PrescricaoDetalhe contém array de ItemPrescricao + RenovacaoHistorico",
+      "FiltroLista controla quais PrescricaoListItem são renderizados",
+      "Quando origem='consulta', PrescricaoDetalhe.consultaId aponta pra Consulta vinculada (cross-section)",
+      "Quando origem='renovacao_sem_consulta', PrescricaoDetalhe.renovacaoDe aponta pra prescrição anterior",
+      "PacienteSelector é usado no fluxo + Nova prescrição (busca antes de abrir Memed)"
+    ]
+  },
+  "filtroAtivo": {
+    "busca": "",
+    "status": ["ativa", "precisa_renovar"],
+    "periodo": "30d"
+  },
+  "kpis": {
+    "ativas": 12,
+    "precisaRenovar": 3,
+    "expiradas": 4,
+    "canceladasUlt30d": 1
+  },
+  "prescricoesLista": [
+    {
+      "id": "rx-002",
+      "pacienteId": "pct-002",
+      "pacienteNome": "João Carlos Mendes",
+      "iniciais": "JM",
+      "condicoesCronicas": ["Obesidade", "DM2", "Dislipidemia"],
+      "medicamentosResumo": [
+        { "nome": "Semaglutida", "classe": "antidiabetico-glp1" },
+        { "nome": "Metformina", "classe": "antidiabetico" }
+      ],
+      "totalItens": 3,
+      "dataEmissao": "2026-04-15",
+      "validade": "2026-05-15",
+      "diasAteVencer": 6,
+      "status": "ativa",
+      "precisaRenovar": true,
+      "origem": "consulta"
+    },
+    {
+      "id": "rx-010",
+      "pacienteId": "pct-004",
+      "pacienteNome": "Pedro Henrique Souza",
+      "iniciais": "PS",
+      "condicoesCronicas": ["DM1"],
+      "medicamentosResumo": [
+        { "nome": "Lancetas glicemia (100un)", "classe": "insumo" }
+      ],
+      "totalItens": 1,
+      "dataEmissao": "2026-04-15",
+      "validade": "2026-05-15",
+      "diasAteVencer": 6,
+      "status": "ativa",
+      "precisaRenovar": true,
+      "origem": "prescricao_avulsa"
+    },
+    {
+      "id": "rx-001",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+      "medicamentosResumo": [
+        { "nome": "Levotiroxina", "classe": "hormonio-tireoidiano" },
+        { "nome": "Metformina", "classe": "antidiabetico" }
+      ],
+      "totalItens": 3,
+      "dataEmissao": "2026-04-22",
+      "validade": "2026-05-22",
+      "diasAteVencer": 13,
+      "status": "ativa",
+      "precisaRenovar": true,
+      "origem": "consulta"
+    },
+    {
+      "id": "rx-009",
+      "pacienteId": "pct-003",
+      "pacienteNome": "Ana Paula Ferreira",
+      "iniciais": "AF",
+      "condicoesCronicas": ["Hipotireoidismo"],
+      "medicamentosResumo": [
+        { "nome": "Levotiroxina", "classe": "hormonio-tireoidiano" },
+        { "nome": "Vitamina D", "classe": "suplemento" }
+      ],
+      "totalItens": 2,
+      "dataEmissao": "2026-05-08",
+      "validade": "2026-06-07",
+      "diasAteVencer": 29,
+      "status": "ativa",
+      "precisaRenovar": false,
+      "origem": "consulta"
+    },
+    {
+      "id": "rx-008",
+      "pacienteId": "pct-002",
+      "pacienteNome": "João Carlos Mendes",
+      "iniciais": "JM",
+      "condicoesCronicas": ["Obesidade", "DM2", "Dislipidemia"],
+      "medicamentosResumo": [
+        { "nome": "Sinvastatina", "classe": "hipolipemiante" }
+      ],
+      "totalItens": 1,
+      "dataEmissao": "2026-05-08",
+      "validade": "2026-06-07",
+      "diasAteVencer": 29,
+      "status": "ativa",
+      "precisaRenovar": false,
+      "origem": "renovacao_sem_consulta"
+    },
+    {
+      "id": "rx-007",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+      "medicamentosResumo": [
+        { "nome": "Tiras Accu-Chek (90un)", "classe": "insumo" }
+      ],
+      "totalItens": 1,
+      "dataEmissao": "2026-05-06",
+      "validade": "2026-06-05",
+      "diasAteVencer": 27,
+      "status": "ativa",
+      "precisaRenovar": false,
+      "origem": "prescricao_avulsa"
+    },
+    {
+      "id": "rx-004",
+      "pacienteId": "pct-004",
+      "pacienteNome": "Pedro Henrique Souza",
+      "iniciais": "PS",
+      "condicoesCronicas": ["DM1"],
+      "medicamentosResumo": [
+        { "nome": "Insulina Glargina", "classe": "insulina-basal" },
+        { "nome": "Insulina Lispro", "classe": "insulina-rapida" }
+      ],
+      "totalItens": 2,
+      "dataEmissao": "2026-04-28",
+      "validade": "2026-05-28",
+      "diasAteVencer": 19,
+      "status": "ativa",
+      "precisaRenovar": false,
+      "origem": "consulta"
+    },
+    {
+      "id": "rx-003",
+      "pacienteId": "pct-003",
+      "pacienteNome": "Ana Paula Ferreira",
+      "iniciais": "AF",
+      "condicoesCronicas": ["Hipotireoidismo"],
+      "medicamentosResumo": [
+        { "nome": "Levotiroxina", "classe": "hormonio-tireoidiano" }
+      ],
+      "totalItens": 1,
+      "dataEmissao": "2026-04-01",
+      "validade": "2026-05-01",
+      "diasAteVencer": -8,
+      "status": "expirada",
+      "precisaRenovar": false,
+      "origem": "renovacao_sem_consulta"
+    },
+    {
+      "id": "rx-005",
+      "pacienteId": "pct-005",
+      "pacienteNome": "Beatriz Costa Lima",
+      "iniciais": "BL",
+      "condicoesCronicas": ["Síndrome metabólica", "Obesidade"],
+      "medicamentosResumo": [
+        { "nome": "Liraglutida", "classe": "antidiabetico-glp1" },
+        { "nome": "Metformina", "classe": "antidiabetico" }
+      ],
+      "totalItens": 2,
+      "dataEmissao": "2026-03-10",
+      "validade": "2026-04-09",
+      "diasAteVencer": -30,
+      "status": "expirada",
+      "precisaRenovar": false,
+      "origem": "consulta"
+    },
+    {
+      "id": "rx-006",
+      "pacienteId": "pct-006",
+      "pacienteNome": "Roberto Almeida",
+      "iniciais": "RA",
+      "condicoesCronicas": ["Hipertireoidismo (Doença de Graves)"],
+      "medicamentosResumo": [
+        { "nome": "Metimazol", "classe": "antitireoidiano" },
+        { "nome": "Propranolol", "classe": "beta-bloqueador" }
+      ],
+      "totalItens": 2,
+      "dataEmissao": "2026-04-25",
+      "validade": "2026-05-25",
+      "diasAteVencer": 16,
+      "status": "cancelada",
+      "precisaRenovar": false,
+      "origem": "consulta"
+    }
+  ],
+  "prescricoesDetalhes": {
+    "rx-002": {
+      "id": "rx-002",
+      "memedId": "memed-2026041501",
+      "memedPdfUrl": "https://memed.com.br/r/memed-2026041501.pdf",
+      "pacienteId": "pct-002",
+      "pacienteNome": "João Carlos Mendes",
+      "iniciais": "JM",
+      "condicoesCronicas": ["Obesidade", "DM2", "Dislipidemia"],
+      "status": "ativa",
+      "origem": "consulta",
+      "consultaId": "cns-jm-20260415",
+      "consultaData": "2026-04-15",
+      "renovacaoDe": null,
+      "numeroRenovacoes": 2,
+      "historicoRenovacoes": [
+        {
+          "id": "rx-002-r1",
+          "dataEmissao": "2026-02-12",
+          "medicoNome": "Dr. Pedro Lima",
+          "tipo": "consulta"
+        },
+        {
+          "id": "rx-002-r2",
+          "dataEmissao": "2026-03-14",
+          "medicoNome": "Dr. Pedro Lima",
+          "tipo": "renovacao_sem_consulta"
+        }
+      ],
+      "dataEmissao": "2026-04-15",
+      "validade": "2026-05-15",
+      "diasAteVencer": 6,
+      "observacaoGeral": "Reforçar dieta hipocalórica e atividade física moderada 5x/semana. Retorno em 30 dias com peso e HbA1c.",
+      "itens": [
+        {
+          "id": "item-rx002-1",
+          "medicamento": "Ozempic (Semaglutida)",
+          "principioAtivo": "Semaglutida 1mg/dose",
+          "dose": "1mg subcutâneo",
+          "posologia": "1x por semana, sempre no mesmo dia",
+          "duracaoDias": 30,
+          "observacao": "Aplicar em coxa, abdome ou braço. Alternar local."
+        },
+        {
+          "id": "item-rx002-2",
+          "medicamento": "Glifage XR",
+          "principioAtivo": "Cloridrato de Metformina 1000mg",
+          "dose": "1g",
+          "posologia": "1 comprimido após almoço e jantar",
+          "duracaoDias": 30,
+          "observacao": null
+        },
+        {
+          "id": "item-rx002-3",
+          "medicamento": "Sinvastatina",
+          "principioAtivo": "Sinvastatina 20mg",
+          "dose": "20mg",
+          "posologia": "1 comprimido à noite",
+          "duracaoDias": 30,
+          "observacao": "Suspender se dor muscular intensa."
+        }
+      ]
+    },
+    "rx-001": {
+      "id": "rx-001",
+      "memedId": "memed-2026042201",
+      "memedPdfUrl": "https://memed.com.br/r/memed-2026042201.pdf",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+      "status": "ativa",
+      "origem": "consulta",
+      "consultaId": "cns-ma-20260422",
+      "consultaData": "2026-04-22",
+      "renovacaoDe": null,
+      "numeroRenovacoes": 5,
+      "historicoRenovacoes": [
+        { "id": "rx-001-r1", "dataEmissao": "2025-11-20", "medicoNome": "Dr. Pedro Lima", "tipo": "consulta" },
+        { "id": "rx-001-r2", "dataEmissao": "2025-12-18", "medicoNome": "Dr. Pedro Lima", "tipo": "renovacao_sem_consulta" },
+        { "id": "rx-001-r3", "dataEmissao": "2026-01-19", "medicoNome": "Dr. Pedro Lima", "tipo": "renovacao_sem_consulta" },
+        { "id": "rx-001-r4", "dataEmissao": "2026-02-21", "medicoNome": "Dr. Pedro Lima", "tipo": "consulta" },
+        { "id": "rx-001-r5", "dataEmissao": "2026-03-22", "medicoNome": "Dr. Pedro Lima", "tipo": "renovacao_sem_consulta" }
+      ],
+      "dataEmissao": "2026-04-22",
+      "validade": "2026-05-22",
+      "diasAteVencer": 13,
+      "observacaoGeral": null,
+      "itens": [
+        {
+          "id": "item-rx001-1",
+          "medicamento": "Puran T4",
+          "principioAtivo": "Levotiroxina sódica 50mcg",
+          "dose": "50mcg",
+          "posologia": "1 comprimido em jejum, 30 minutos antes do café",
+          "duracaoDias": 30,
+          "observacao": "Não tomar com café, leite ou suplemento de cálcio/ferro."
+        },
+        {
+          "id": "item-rx001-2",
+          "medicamento": "Glifage",
+          "principioAtivo": "Cloridrato de Metformina 850mg",
+          "dose": "850mg",
+          "posologia": "1 comprimido após almoço e jantar",
+          "duracaoDias": 30,
+          "observacao": null
+        },
+        {
+          "id": "item-rx001-3",
+          "medicamento": "Depura D3",
+          "principioAtivo": "Colecalciferol 5000UI",
+          "dose": "5000UI",
+          "posologia": "1 cápsula por semana, com refeição gordurosa",
+          "duracaoDias": 30,
+          "observacao": "Manter dosagem até nova avaliação de 25-OH-Vitamina D."
+        }
+      ]
+    },
+    "rx-006": {
+      "id": "rx-006",
+      "memedId": "memed-2026042503",
+      "memedPdfUrl": "https://memed.com.br/r/memed-2026042503.pdf",
+      "pacienteId": "pct-006",
+      "pacienteNome": "Roberto Almeida",
+      "iniciais": "RA",
+      "condicoesCronicas": ["Hipertireoidismo (Doença de Graves)"],
+      "status": "cancelada",
+      "origem": "consulta",
+      "consultaId": "cns-ra-20260425",
+      "consultaData": "2026-04-25",
+      "renovacaoDe": null,
+      "numeroRenovacoes": 0,
+      "historicoRenovacoes": [],
+      "dataEmissao": "2026-04-25",
+      "validade": "2026-05-25",
+      "diasAteVencer": 16,
+      "observacaoGeral": "Paciente em primeira linha de tratamento de Graves. Solicitado TSH/T4 livre em 30 dias e função hepática.",
+      "canceladaEm": "2026-04-26T14:30:00-03:00",
+      "canceladaPor": "Dr. Pedro Lima",
+      "motivoCancelamentoCategoria": "reacao_adversa",
+      "justificativaCancelamento": "Paciente apresentou exantema cutâneo difuso 24h após início do Metimazol. Suspendendo medicação e trocando pra Propiltiouracil em consulta presencial agendada pra 27/04.",
+      "itens": [
+        {
+          "id": "item-rx006-1",
+          "medicamento": "Tapazol",
+          "principioAtivo": "Metimazol 10mg",
+          "dose": "10mg",
+          "posologia": "1 comprimido a cada 8 horas",
+          "duracaoDias": 30,
+          "observacao": "Retornar imediatamente se febre, dor de garganta ou rash cutâneo."
+        },
+        {
+          "id": "item-rx006-2",
+          "medicamento": "Inderal",
+          "principioAtivo": "Propranolol 40mg",
+          "dose": "40mg",
+          "posologia": "1 comprimido a cada 12 horas",
+          "duracaoDias": 30,
+          "observacao": "Suspender gradualmente."
+        }
+      ]
+    }
+  },
+  "pacientesParaNovaPrescricao": [
+    { "id": "pct-001", "nome": "Maria Silva Andrade", "iniciais": "MA", "condicoesCronicas": ["DM2", "Hipotireoidismo"], "ultimaConsulta": "2026-04-22" },
+    { "id": "pct-002", "nome": "João Carlos Mendes", "iniciais": "JM", "condicoesCronicas": ["Obesidade", "DM2"], "ultimaConsulta": "2026-04-15" },
+    { "id": "pct-003", "nome": "Ana Paula Ferreira", "iniciais": "AF", "condicoesCronicas": ["Hipotireoidismo"], "ultimaConsulta": "2026-05-08" },
+    { "id": "pct-004", "nome": "Pedro Henrique Souza", "iniciais": "PS", "condicoesCronicas": ["DM1"], "ultimaConsulta": "2026-04-28" },
+    { "id": "pct-005", "nome": "Beatriz Costa Lima", "iniciais": "BL", "condicoesCronicas": ["Síndrome metabólica"], "ultimaConsulta": "2026-03-10" },
+    { "id": "pct-006", "nome": "Roberto Almeida", "iniciais": "RA", "condicoesCronicas": ["Hipertireoidismo"], "ultimaConsulta": "2026-04-25" },
+    { "id": "pct-007", "nome": "Carla Mendes Vieira", "iniciais": "CV", "condicoesCronicas": ["Pré-diabetes"], "ultimaConsulta": "2026-04-30" },
+    { "id": "pct-008", "nome": "Eduardo Tanaka", "iniciais": "ET", "condicoesCronicas": ["Hipogonadismo masculino"], "ultimaConsulta": "2026-05-02" }
+  ]
+}

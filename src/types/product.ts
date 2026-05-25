@@ -23,10 +23,11 @@ export interface ProductOverview {
 // =============================================================================
 
 export interface Section {
-  id: string // slug derived from title
+  id: string
   title: string
   description: string
   order: number
+  group?: string
 }
 
 export interface ProductRoadmap {
@@ -55,6 +56,7 @@ export interface ColorTokens {
   primary: string
   secondary: string
   neutral: string
+  accent?: string
 }
 
 export interface TypographyTokens {

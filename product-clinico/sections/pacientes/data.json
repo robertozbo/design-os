@@ -1,0 +1,495 @@
+{
+  "_meta": {
+    "models": {
+      "pacienteListItem": "Item resumido do paciente na lista. Tem dados administrativos + indicadores clínicos básicos pra cards/tabela.",
+      "pacienteDetalhe": "Versão completa do paciente quando aberto na tela de detalhe. Inclui anamnese resumida e arrays de atendimentos, exames, prescrições.",
+      "atendimento": "Consulta passada do paciente, com plano resumido e indicador se evolução foi assistida por IA.",
+      "exameHistorico": "Exame com biomarkers e sparkline de tendência (reusa shape da seção Exames).",
+      "biomarker": "Valor numérico de um exame com unidade, faixa de referência e histórico.",
+      "prescricaoHistorico": "Prescrição Memed passada com lista de medicações.",
+      "medicacaoAtiva": "Medicação atualmente em uso pelo paciente (derivada da prescrição mais recente + ajustes).",
+      "alerta": "Alerta clínico/operacional sobre o paciente (exame pendente, mensagem nova, retorno atrasado).",
+      "adesaoMedicamento": "Métrica de adesão de uma medicação específica nos últimos 30 dias (% cumprida).",
+      "filtroLista": "Estado dos filtros aplicados na lista (status do app, convênio, condição, busca textual)."
+    },
+    "relationships": [
+      "PacienteListItem é o resumo mostrado na Lista; PacienteDetalhe é a versão completa carregada ao clicar",
+      "Atendimento, ExameHistorico, PrescricaoHistorico pertencem a um PacienteDetalhe e formam suas tabs",
+      "MedicacaoAtiva é derivada de PrescricaoHistorico mais recentes",
+      "AdesaoMedicamento referencia uma MedicacaoAtiva pelo nome",
+      "Alerta é gerado pelo sistema com base em prazos, status, leituras pendentes"
+    ]
+  },
+  "filtroAtivo": {
+    "busca": "",
+    "statusApp": [],
+    "convenios": [],
+    "condicoes": []
+  },
+  "pacientesLista": [
+    {
+      "id": "pct-001",
+      "nome": "Maria Silva Andrade",
+      "idade": 45,
+      "genero": "feminino",
+      "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Hipotireoidismo"],
+      "convenio": "Particular",
+      "ultimaConsultaEm": "2026-02-10",
+      "proximaConsultaEm": "2026-05-07",
+      "statusApp": "vinculado",
+      "vinculadoEm": "2024-03-15"
+    },
+    {
+      "id": "pct-002",
+      "nome": "Paula Mendes",
+      "idade": 38,
+      "genero": "feminino",
+      "condicoesCronicas": ["SOP", "Pré-diabetes"],
+      "convenio": "Unimed",
+      "ultimaConsultaEm": "2026-04-22",
+      "proximaConsultaEm": null,
+      "statusApp": "vinculado",
+      "vinculadoEm": "2025-09-04"
+    },
+    {
+      "id": "pct-003",
+      "nome": "Carlos Tavares",
+      "idade": 52,
+      "genero": "masculino",
+      "condicoesCronicas": ["Diabetes Mellitus tipo 2"],
+      "convenio": "Bradesco Saúde",
+      "ultimaConsultaEm": "2026-04-15",
+      "proximaConsultaEm": "2026-06-15",
+      "statusApp": "vinculado",
+      "vinculadoEm": "2025-11-20"
+    },
+    {
+      "id": "pct-004",
+      "nome": "Ana Beatriz Lima",
+      "idade": 29,
+      "genero": "feminino",
+      "condicoesCronicas": ["Tireoidite Hashimoto"],
+      "convenio": "Particular",
+      "ultimaConsultaEm": "2026-03-30",
+      "proximaConsultaEm": null,
+      "statusApp": "convite-pendente",
+      "convidadoEm": "2026-04-28"
+    },
+    {
+      "id": "pct-005",
+      "nome": "Beatriz Souza",
+      "idade": 41,
+      "genero": "feminino",
+      "condicoesCronicas": ["Obesidade grau II", "Hipertensão"],
+      "convenio": "Amil",
+      "ultimaConsultaEm": "2025-12-08",
+      "proximaConsultaEm": "2026-05-15",
+      "statusApp": "nao-convidado"
+    },
+    {
+      "id": "pct-006",
+      "nome": "João Ricardo Mello",
+      "idade": 60,
+      "genero": "masculino",
+      "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Dislipidemia"],
+      "convenio": "Unimed",
+      "ultimaConsultaEm": "2026-05-07",
+      "proximaConsultaEm": null,
+      "statusApp": "vinculado",
+      "vinculadoEm": "2024-08-12"
+    },
+    {
+      "id": "pct-007",
+      "nome": "Lucas Pereira",
+      "idade": 33,
+      "genero": "masculino",
+      "condicoesCronicas": ["Hipogonadismo"],
+      "convenio": "Particular",
+      "ultimaConsultaEm": "2026-05-07",
+      "proximaConsultaEm": "2026-08-07",
+      "statusApp": "vinculado",
+      "vinculadoEm": "2025-04-10"
+    },
+    {
+      "id": "pct-008",
+      "nome": "Sofia Andrade",
+      "idade": 27,
+      "genero": "feminino",
+      "condicoesCronicas": [],
+      "convenio": "Particular",
+      "ultimaConsultaEm": null,
+      "proximaConsultaEm": "2026-05-07",
+      "statusApp": "convite-pendente",
+      "convidadoEm": "2026-05-06"
+    },
+    {
+      "id": "pct-009",
+      "nome": "Rita Vasconcelos",
+      "idade": 49,
+      "genero": "feminino",
+      "condicoesCronicas": ["Obesidade grau II"],
+      "convenio": "Particular",
+      "ultimaConsultaEm": "2026-01-20",
+      "proximaConsultaEm": "2026-05-07",
+      "statusApp": "nao-convidado"
+    },
+    {
+      "id": "pct-010",
+      "nome": "Gustavo Henrique",
+      "idade": 36,
+      "genero": "masculino",
+      "condicoesCronicas": ["Tireoidite Hashimoto"],
+      "convenio": "Bradesco Saúde",
+      "ultimaConsultaEm": "2026-02-22",
+      "proximaConsultaEm": "2026-05-08",
+      "statusApp": "vinculado",
+      "vinculadoEm": "2024-11-30"
+    },
+    {
+      "id": "pct-011",
+      "nome": "Caio Bernardes",
+      "idade": 44,
+      "genero": "masculino",
+      "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Obesidade grau I"],
+      "convenio": "Unimed",
+      "ultimaConsultaEm": "2025-11-05",
+      "proximaConsultaEm": "2026-05-08",
+      "statusApp": "convite-pendente",
+      "convidadoEm": "2026-04-30"
+    },
+    {
+      "id": "pct-012",
+      "nome": "Helena Drummond",
+      "idade": 58,
+      "genero": "feminino",
+      "condicoesCronicas": ["Osteoporose", "Hipotireoidismo"],
+      "convenio": "Amil",
+      "ultimaConsultaEm": "2025-10-14",
+      "proximaConsultaEm": null,
+      "statusApp": "nao-convidado"
+    }
+  ],
+  "pacienteDetalhe": {
+    "id": "pct-001",
+    "nome": "Maria Silva Andrade",
+    "idade": 45,
+    "dataNascimento": "1980-08-12",
+    "genero": "feminino",
+    "telefone": "+55 11 98765-4321",
+    "email": "maria.andrade@email.com",
+    "endereco": "São Paulo, SP",
+    "cpf": "***.456.***-89",
+    "convenio": "Particular",
+    "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Hipotireoidismo subclínico"],
+    "statusApp": "vinculado",
+    "vinculadoEm": "2024-03-15",
+    "ultimaConsultaEm": "2026-02-10",
+    "proximaConsulta": {
+      "agendamentoId": "agd-006",
+      "iniciaEm": "2026-05-07T14:30:00-03:00",
+      "modalidade": "presencial",
+      "observacao": "Retorno — ajuste Levotiroxina"
+    },
+    "atendimentos": [
+      {
+        "id": "atd-2026-02-10",
+        "data": "2026-02-10",
+        "modalidade": "presencial",
+        "medico": "Dr. Pedro Lima",
+        "planoResumo": "Manutenção de Metformina e Levotiroxina; reavaliar TSH em 3 meses; orientar pesagem semanal.",
+        "geradoPorIA": false
+      },
+      {
+        "id": "atd-2025-11-10",
+        "data": "2025-11-10",
+        "modalidade": "tele",
+        "medico": "Dr. Pedro Lima",
+        "planoResumo": "Renovação de receitas (Metformina, Levotiroxina, Vit D); reforço de adesão à dieta com nutricionista.",
+        "geradoPorIA": false
+      },
+      {
+        "id": "atd-2025-08-10",
+        "data": "2025-08-10",
+        "modalidade": "presencial",
+        "medico": "Dr. Pedro Lima",
+        "planoResumo": "Iniciada suplementação Vit D 7000UI/sem; solicitada vitamina D em 30 dias.",
+        "geradoPorIA": false
+      },
+      {
+        "id": "atd-2025-05-10",
+        "data": "2025-05-10",
+        "modalidade": "presencial",
+        "medico": "Dr. Pedro Lima",
+        "planoResumo": "Aumentada Metformina pra 1g 2x/dia. HbA1c 7,3 — meta < 7. Solicitada bioquímica completa.",
+        "geradoPorIA": false
+      },
+      {
+        "id": "atd-2024-12-15",
+        "data": "2024-12-15",
+        "modalidade": "presencial",
+        "medico": "Dr. Pedro Lima",
+        "planoResumo": "Diagnóstico inicial DM2; iniciada Metformina 500mg 1x/dia; orientação alimentar; encaminhada nutricionista.",
+        "geradoPorIA": false
+      }
+    ],
+    "examesRecentes": [
+      {
+        "id": "exm-001",
+        "tipo": "Perfil tireoidiano",
+        "laboratorio": "Fleury",
+        "dataColeta": "2026-04-22",
+        "biomarkers": [
+          {
+            "nome": "TSH",
+            "valor": 6.4,
+            "unidade": "mUI/L",
+            "faixaReferencia": "0,4 - 4,5",
+            "alertNivel": "alto",
+            "historico": [3.8, 4.1, 4.7, 5.2, 6.4]
+          },
+          {
+            "nome": "T4 Livre",
+            "valor": 0.9,
+            "unidade": "ng/dL",
+            "faixaReferencia": "0,8 - 1,8",
+            "alertNivel": "normal",
+            "historico": [1.2, 1.1, 1.0, 0.95, 0.9]
+          }
+        ]
+      },
+      {
+        "id": "exm-002",
+        "tipo": "Hemoglobina glicada",
+        "laboratorio": "Fleury",
+        "dataColeta": "2026-04-22",
+        "biomarkers": [
+          {
+            "nome": "HbA1c",
+            "valor": 6.8,
+            "unidade": "%",
+            "faixaReferencia": "< 7,0 (meta DM2)",
+            "alertNivel": "normal",
+            "historico": [7.3, 7.1, 7.0, 6.9, 6.8]
+          }
+        ]
+      },
+      {
+        "id": "exm-003",
+        "tipo": "Vitamina D",
+        "laboratorio": "Sabin",
+        "dataColeta": "2026-03-15",
+        "biomarkers": [
+          {
+            "nome": "25-hidroxivitamina D",
+            "valor": 38,
+            "unidade": "ng/mL",
+            "faixaReferencia": "30 - 100",
+            "alertNivel": "normal",
+            "historico": [22, 28, 33, 36, 38]
+          }
+        ]
+      },
+      {
+        "id": "exm-004",
+        "tipo": "Bioquímica completa",
+        "laboratorio": "Fleury",
+        "dataColeta": "2025-11-08",
+        "biomarkers": [
+          {
+            "nome": "Glicemia jejum",
+            "valor": 118,
+            "unidade": "mg/dL",
+            "faixaReferencia": "70 - 99",
+            "alertNivel": "alto",
+            "historico": [142, 134, 128, 122, 118]
+          },
+          {
+            "nome": "Colesterol total",
+            "valor": 196,
+            "unidade": "mg/dL",
+            "faixaReferencia": "< 200",
+            "alertNivel": "normal",
+            "historico": [218, 210, 204, 200, 196]
+          }
+        ]
+      }
+    ],
+    "prescricoes": [
+      {
+        "id": "prc-2025-11-10-001",
+        "data": "2025-11-10",
+        "medicacoes": [
+          { "nome": "Metformina", "dose": "1g", "posologia": "2x ao dia, após almoço e jantar" },
+          { "nome": "Levotiroxina", "dose": "50mcg", "posologia": "1x ao dia, em jejum" },
+          { "nome": "Vitamina D3", "dose": "7000UI", "posologia": "1x por semana" }
+        ],
+        "validade": "2026-05-10",
+        "status": "ativa",
+        "memedId": "mmd-x7j2"
+      },
+      {
+        "id": "prc-2025-05-10-001",
+        "data": "2025-05-10",
+        "medicacoes": [
+          { "nome": "Metformina", "dose": "1g", "posologia": "2x ao dia" },
+          { "nome": "Levotiroxina", "dose": "50mcg", "posologia": "1x ao dia em jejum" }
+        ],
+        "validade": "2025-11-10",
+        "status": "expirada",
+        "memedId": "mmd-r3k9"
+      },
+      {
+        "id": "prc-2024-12-15-001",
+        "data": "2024-12-15",
+        "medicacoes": [
+          { "nome": "Metformina", "dose": "500mg", "posologia": "1x ao dia, após o jantar" }
+        ],
+        "validade": "2025-06-15",
+        "status": "expirada",
+        "memedId": "mmd-q1f4"
+      }
+    ],
+    "medicacaoAtiva": [
+      {
+        "nome": "Metformina",
+        "dose": "1g",
+        "posologia": "2x ao dia",
+        "iniciadaEm": "2024-03-15"
+      },
+      {
+        "nome": "Levotiroxina",
+        "dose": "50mcg",
+        "posologia": "1x ao dia, em jejum",
+        "iniciadaEm": "2023-08-22"
+      },
+      {
+        "nome": "Vitamina D3",
+        "dose": "7000UI",
+        "posologia": "1x por semana",
+        "iniciadaEm": "2025-08-10"
+      },
+      {
+        "nome": "Ozempic",
+        "dose": "0,5mg",
+        "posologia": "1x por semana, sexta 09h",
+        "iniciadaEm": "2026-02-12"
+      }
+    ],
+    "adesao30Dias": [
+      { "medicacao": "Metformina", "percentCumprido": 0.93 },
+      { "medicacao": "Levotiroxina", "percentCumprido": 0.86 },
+      { "medicacao": "Vitamina D3", "percentCumprido": 1.0 },
+      { "medicacao": "Ozempic", "percentCumprido": 1.0 }
+    ],
+    "adesaoMedicaoDiario30Dias": 0.78,
+    "alertas": [
+      {
+        "id": "alt-001",
+        "tipo": "exame-pendente",
+        "label": "Novo TSH solicitado em 22/04 ainda não enviado",
+        "criadoEm": "2026-05-01"
+      },
+      {
+        "id": "alt-002",
+        "tipo": "mensagem-nao-lida",
+        "label": "1 mensagem não lida (canal clínico)",
+        "criadoEm": "2026-05-06"
+      }
+    ]
+  },
+  "atendimentosDetalhes": {
+    "atd-2026-02-10": {
+      "id": "atd-2026-02-10",
+      "data": "2026-02-10",
+      "modalidade": "presencial",
+      "medico": "Dr. Pedro Lima",
+      "planoResumo": "Manutenção de Metformina e Levotiroxina; reavaliar TSH em 3 meses; orientar pesagem semanal.",
+      "geradoPorIA": true,
+      "inicioEm": "2026-02-10T14:30:00-03:00",
+      "fimEm": "2026-02-10T15:08:00-03:00",
+      "duracaoMin": 38,
+      "assinadoEm": "2026-02-10T15:12:00-03:00",
+      "modeloIA": "claude-opus-4-7",
+      "versaoIA": "@2026-01",
+      "anamneseResumo": {
+        "queixaPrincipal": "Cansaço progressivo nas últimas 6 semanas",
+        "sintomas": ["Sonolência diurna", "Intolerância ao frio", "Ganho de peso 3kg em 6m"],
+        "medicacaoNoDia": "Tomei Metformina e Levotiroxina pela manhã (jejum)",
+        "duvidasPaciente": "Posso aumentar a dose da Levotiroxina por conta?"
+      },
+      "soap": {
+        "subjective": "Paciente refere cansaço progressivo há 6 semanas, com sonolência diurna e intolerância ao frio. Ganho ponderal de 3kg no período. Sem mudança alimentar significativa. Mantém Metformina 850mg 2x/dia e Levotiroxina 50mcg em jejum (boa adesão pelo app). Nega palpitações ou dor torácica.",
+        "objective": "PA 128×82 mmHg · FC 62 bpm · peso 78,4 kg (anterior 75,2 em 10/11/2025) · IMC 29,1. Tireoide palpável, sem nódulos. Pele seca. Sem edema de MMII. HbA1c 6,8% (out/2025). TSH 6,4 mUI/L (jan/2026, anterior 5,2).",
+        "assessment": "Hipotireoidismo subclínico em provável progressão para hipotireoidismo manifesto — sintomas + ganho ponderal + TSH em ascensão. DM2 estável (HbA1c 6,8%). Necessário reavaliar TSH e ajustar dose de Levotiroxina.",
+        "plan": "1) Solicitar TSH e T4 livre em 6 semanas. 2) Aumentar Levotiroxina pra 75 mcg em jejum, reavaliar em 6 sem. 3) Manter Metformina 850mg 2x/dia. 4) Orientado a NÃO ajustar dose por conta própria. 5) Retorno em 6 semanas com novo TSH em mãos. 6) Reforço de pesagem semanal pelo app."
+      },
+      "prescricoesEmitidas": [
+        {
+          "id": "rx-atd-2026-02-10",
+          "memedId": "memed-2026021001",
+          "medicacoes": [
+            { "nome": "Puran T4 (Levotiroxina)", "dose": "75mcg", "posologia": "1 comp em jejum, 30 min antes do café" },
+            { "nome": "Glifage (Metformina)", "dose": "850mg", "posologia": "1 comp após almoço e jantar" }
+          ]
+        }
+      ],
+      "examesSolicitados": ["TSH", "T4 livre"],
+      "imagensAnalisadas": [
+        {
+          "id": "img-usg-tireoide-maria-2026-03",
+          "tipo": "USG de tireoide com Doppler",
+          "modalidade": "usg",
+          "laboratorio": "Fleury",
+          "dataColeta": "2026-03-04",
+          "modeloIA": "GPT-4o-medical",
+          "comentarioMedico": "Concordo com a IA. Conduta: aumentar Levotiroxina pra 75mcg/dia, reavaliar TSH em 6 semanas. Acompanhar nódulo TI-RADS 3 em LD em 12 meses (crescimento <2mm/ano compatível com benignidade).",
+          "seriesAnalisadas": 4,
+          "salvoEm": "2026-03-10T15:14:00-03:00"
+        }
+      ],
+      "acoesRealizadas": ["agendar-retorno", "enviar-resumo"],
+      "retornoSugerido": "2026-03-24"
+    },
+    "atd-2025-11-10": {
+      "id": "atd-2025-11-10",
+      "data": "2025-11-10",
+      "modalidade": "tele",
+      "medico": "Dr. Pedro Lima",
+      "planoResumo": "Renovação de receitas (Metformina, Levotiroxina, Vit D); reforço de adesão à dieta com nutricionista.",
+      "geradoPorIA": false,
+      "inicioEm": "2025-11-10T16:00:00-03:00",
+      "fimEm": "2025-11-10T16:22:00-03:00",
+      "duracaoMin": 22,
+      "assinadoEm": "2025-11-10T16:25:00-03:00",
+      "modeloIA": null,
+      "versaoIA": null,
+      "anamneseResumo": {
+        "queixaPrincipal": "Renovação de receitas — sem queixas novas",
+        "sintomas": [],
+        "medicacaoNoDia": "Tomei tudo conforme prescrição",
+        "duvidasPaciente": "Posso parar a Vit D?"
+      },
+      "soap": {
+        "subjective": "Paciente em teleconsulta de retorno pra renovação de receitas. Sem queixas. Adesão boa pelo app (>90% nos últimos 30d).",
+        "objective": "Sem exame físico (teleconsulta). Refere peso estável (75 kg), pressão 122×80 (medida em casa).",
+        "assessment": "Quadro estável. Mantém DM2 controlado e hipotireoidismo subclínico em vigilância. Vit D anterior 22 ng/mL (deficiente).",
+        "plan": "1) Renovar Metformina, Levotiroxina e Vit D 7000UI/sem. 2) Manter dieta com nutricionista (encaminhamento Nymos Nutri). 3) Retorno em 3 meses presencial."
+      },
+      "prescricoesEmitidas": [
+        {
+          "id": "rx-atd-2025-11-10",
+          "memedId": "memed-2025111002",
+          "medicacoes": [
+            { "nome": "Glifage", "dose": "850mg", "posologia": "1 comp 2x ao dia" },
+            { "nome": "Puran T4", "dose": "50mcg", "posologia": "1 comp em jejum" },
+            { "nome": "Depura D3", "dose": "7000UI", "posologia": "1 cápsula por semana" }
+          ]
+        }
+      ],
+      "examesSolicitados": [],
+      "imagensAnalisadas": [],
+      "acoesRealizadas": ["agendar-retorno", "enviar-resumo"],
+      "retornoSugerido": "2026-02-10"
+    }
+  }
+}

@@ -1,0 +1,834 @@
+{
+  "_meta": {
+    "models": {
+      "MinhaSaudeData": "Estado completo da seção Minha Saúde — score atual, snapshots históricos, freshness gate, projeção corporal.",
+      "DimensionScore": "Score 0-100 por dimensão (composição, metabólico, cardio, atividade, sono, nutrição, mental) com métricas-chave + benchmarks oficiais.",
+      "DimensionMetric.referenciaPorIdadeSexo": "Faixas oficiais estratificadas por faixa etária × sexo (ex: ACSM body fat por década). App escolhe faixa pelo perfil do usuário; faixaReferencia (string) fica como fallback de display.",
+      "Snapshot": "Análise armazenada num momento. Congela score + dimensões + fotos + análise IA + idades + consentimento + base de dados usada.",
+      "SnapshotIdades": "real (cronológica) / corporal (bioimpedância) / visualEstimada (fotos) / visualProjetada (após meta). Visuais sempre apresentadas como estimativa subjetiva.",
+      "SnapshotConsentimento": "Aceite LGPD com versão do termo e escopo (analise_visual, projecao_ia, armazenamento, export_profissional). Obrigatório quando há fotos.",
+      "FreshnessGate": "Regra anti-custo IA: bloqueia geração se não houve dados novos significativos desde a última análise.",
+      "ProjecaoCorporal": "Imagem gerada por IA mostrando 'como ficaria' atingindo a meta, baseada nas fotos atuais.",
+      "ProjecaoMeta": "Input estruturado pra IA: peso, %gordura, massa muscular, idade corporal, regiões priorizadas, prazo. Substitui texto livre.",
+      "ProjecaoPromptConfig": "Configuração do gerador de imagem (modelo nano-banana etc) + lista do que preservar das fotos originais + disclaimer educativo."
+    },
+    "relationships": [
+      "MinhaSaudeData contém estado atual (live) + snapshots (congelados)",
+      "Snapshot referencia bioimpedanciaId, exameIds, fotosId via SnapshotBase",
+      "FreshnessGate é avaliada contra o último snapshot.geradoEm + NovosDados desde então",
+      "ProjecaoCorporal usa basePhotos do estado atual + meta estruturada + prompt config pra gerar resultado via Nano Banana",
+      "DimensionMetric.referenciaPorIdadeSexo é resolvida em runtime usando idade+sexo do perfil do usuário"
+    ]
+  },
+  "hero": {
+    "scoreAtual": 78,
+    "tendencia": "melhorando",
+    "microStatus": [
+      { "dimensaoId": "composicao", "label": "Composição", "status": "bom" },
+      { "dimensaoId": "atividade", "label": "Atividade", "status": "otimo" },
+      { "dimensaoId": "sono", "label": "Sono", "status": "atencao" }
+    ],
+    "ultimaAnaliseEm": "2026-04-04"
+  },
+  "estadoAtual": {
+    "scoreGeral": 78,
+    "atualizadoEm": "2026-05-04",
+    "idades": {
+      "real": 35,
+      "corporal": 38,
+      "visualEstimada": { "min": 33, "max": 36 }
+    },
+    "dimensoes": [
+      {
+        "id": "composicao",
+        "label": "Composição Corporal",
+        "score": 82,
+        "status": "bom",
+        "sufficiency": "suficiente",
+        "metrics": [
+          {
+            "label": "% Gordura",
+            "valor": "18,5",
+            "unidade": "%",
+            "faixaReferencia": "14–19% (saudável, homem 35a)",
+            "referenciaPorIdadeSexo": {
+              "18-29": {
+                "homem":  { "texto": "13–17% (bom)", "min": 13, "max": 17, "rotulo": "bom" },
+                "mulher": { "texto": "17–22% (bom)", "min": 17, "max": 22, "rotulo": "bom" }
+              },
+              "30-39": {
+                "homem":  { "texto": "14–19% (bom)", "min": 14, "max": 19, "rotulo": "bom" },
+                "mulher": { "texto": "18–23% (bom)", "min": 18, "max": 23, "rotulo": "bom" }
+              },
+              "40-49": {
+                "homem":  { "texto": "16–21% (bom)", "min": 16, "max": 21, "rotulo": "bom" },
+                "mulher": { "texto": "20–25% (bom)", "min": 20, "max": 25, "rotulo": "bom" }
+              },
+              "50-59": {
+                "homem":  { "texto": "17–23% (bom)", "min": 17, "max": 23, "rotulo": "bom" },
+                "mulher": { "texto": "22–27% (bom)", "min": 22, "max": 27, "rotulo": "bom" }
+              },
+              "60-69": {
+                "homem":  { "texto": "18–23% (bom)", "min": 18, "max": 23, "rotulo": "bom" },
+                "mulher": { "texto": "22–27% (bom)", "min": 22, "max": 27, "rotulo": "bom" }
+              },
+              "70+": {
+                "homem":  { "texto": "18–24% (bom)", "min": 18, "max": 24, "rotulo": "bom" },
+                "mulher": { "texto": "22–28% (bom)", "min": 22, "max": 28, "rotulo": "bom" }
+              }
+            },
+            "fonteReferencia": "ACSM",
+            "status": "bom",
+            "direcao": "desceu",
+            "delta": "−0,4 pp",
+            "subirEhBom": false,
+            "historico": [
+              { "data": "2026-01-05", "valor": "22,1", "valorNumerico": 22.1 },
+              { "data": "2026-02-15", "valor": "20,3", "valorNumerico": 20.3 },
+              { "data": "2026-03-12", "valor": "19,2", "valorNumerico": 19.2 },
+              { "data": "2026-04-02", "valor": "18,9", "valorNumerico": 18.9 },
+              { "data": "2026-05-04", "valor": "18,5", "valorNumerico": 18.5 }
+            ]
+          },
+          {
+            "label": "IMC",
+            "valor": "23,8",
+            "unidade": "kg/m²",
+            "faixaReferencia": "18,5–24,9 (eutrófico)",
+            "fonteReferencia": "OMS",
+            "status": "otimo",
+            "direcao": "desceu",
+            "delta": "−0,3",
+            "subirEhBom": false,
+            "historico": [
+              { "data": "2026-01-05", "valor": "25,2", "valorNumerico": 25.2 },
+              { "data": "2026-02-15", "valor": "24,7", "valorNumerico": 24.7 },
+              { "data": "2026-03-12", "valor": "24,3", "valorNumerico": 24.3 },
+              { "data": "2026-04-02", "valor": "24,1", "valorNumerico": 24.1 },
+              { "data": "2026-05-04", "valor": "23,8", "valorNumerico": 23.8 }
+            ]
+          },
+          {
+            "label": "Massa Muscular",
+            "valor": "62,3",
+            "unidade": "kg",
+            "faixaReferencia": "SMI ≥7,0 kg/m² (homem) / ≥5,5 kg/m² (mulher) — EWGSOP2",
+            "referenciaPorIdadeSexo": {
+              "30-39": {
+                "homem":  { "texto": "SMI ≥7,0 kg/m²", "min": 7.0, "rotulo": "saudável" },
+                "mulher": { "texto": "SMI ≥5,5 kg/m²", "min": 5.5, "rotulo": "saudável" }
+              },
+              "60-69": {
+                "homem":  { "texto": "SMI ≥7,0 kg/m² (rastreio sarcopenia)", "min": 7.0, "rotulo": "saudável" },
+                "mulher": { "texto": "SMI ≥5,5 kg/m² (rastreio sarcopenia)", "min": 5.5, "rotulo": "saudável" }
+              }
+            },
+            "fonteReferencia": "EWGSOP2",
+            "status": "otimo",
+            "direcao": "subiu",
+            "delta": "+0,4 kg",
+            "subirEhBom": true,
+            "historico": [
+              { "data": "2026-01-05", "valor": "59,8", "valorNumerico": 59.8 },
+              { "data": "2026-02-15", "valor": "60,4", "valorNumerico": 60.4 },
+              { "data": "2026-03-12", "valor": "61,2", "valorNumerico": 61.2 },
+              { "data": "2026-04-02", "valor": "61,9", "valorNumerico": 61.9 },
+              { "data": "2026-05-04", "valor": "62,3", "valorNumerico": 62.3 }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "metabolico",
+        "label": "Metabólico",
+        "score": 75,
+        "status": "bom",
+        "sufficiency": "suficiente",
+        "metrics": [
+          {
+            "label": "Glicemia jejum",
+            "valor": "92",
+            "unidade": "mg/dL",
+            "faixaReferencia": "70–99 (normal)",
+            "fonteReferencia": "ADA / SBD",
+            "status": "otimo",
+            "direcao": "desceu",
+            "delta": "−6",
+            "subirEhBom": false,
+            "historico": [
+              { "data": "2026-01-04", "valor": "98", "valorNumerico": 98 },
+              { "data": "2026-02-10", "valor": "95", "valorNumerico": 95 },
+              { "data": "2026-03-28", "valor": "98", "valorNumerico": 98 },
+              { "data": "2026-04-30", "valor": "92", "valorNumerico": 92 }
+            ]
+          },
+          {
+            "label": "Hemoglobina glicada",
+            "valor": "5,4",
+            "unidade": "%",
+            "faixaReferencia": "<5,7 (normal)",
+            "fonteReferencia": "ADA",
+            "status": "otimo",
+            "direcao": "manteve",
+            "delta": "0",
+            "subirEhBom": false,
+            "historico": [
+              { "data": "2026-01-04", "valor": "5,5", "valorNumerico": 5.5 },
+              { "data": "2026-03-28", "valor": "5,4", "valorNumerico": 5.4 },
+              { "data": "2026-04-30", "valor": "5,4", "valorNumerico": 5.4 }
+            ]
+          },
+          {
+            "label": "Triglicérides",
+            "valor": "120",
+            "unidade": "mg/dL",
+            "faixaReferencia": "<150 (desejável)",
+            "fonteReferencia": "SBC",
+            "status": "bom",
+            "direcao": "desceu",
+            "delta": "−28",
+            "subirEhBom": false,
+            "historico": [
+              { "data": "2026-01-04", "valor": "148", "valorNumerico": 148 },
+              { "data": "2026-02-10", "valor": "138", "valorNumerico": 138 },
+              { "data": "2026-03-28", "valor": "125", "valorNumerico": 125 },
+              { "data": "2026-04-30", "valor": "120", "valorNumerico": 120 }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cardiovascular",
+        "label": "Cardiovascular",
+        "score": 80,
+        "status": "bom",
+        "sufficiency": "suficiente",
+        "metrics": [
+          {
+            "label": "Pressão arterial",
+            "valor": "118/76",
+            "unidade": "mmHg",
+            "faixaReferencia": "<120/80 (ótima)",
+            "fonteReferencia": "SBC / AHA",
+            "status": "otimo",
+            "direcao": "desceu",
+            "delta": "−2/−1",
+            "subirEhBom": false,
+            "historico": [
+              { "data": "2026-01-08", "valor": "128/84", "valorNumerico": 128 },
+              { "data": "2026-02-18", "valor": "124/80", "valorNumerico": 124 },
+              { "data": "2026-04-04", "valor": "120/77", "valorNumerico": 120 },
+              { "data": "2026-05-03", "valor": "118/76", "valorNumerico": 118 }
+            ]
+          },
+          {
+            "label": "Colesterol LDL",
+            "valor": "108",
+            "unidade": "mg/dL",
+            "faixaReferencia": "<100 (baixo risco)",
+            "fonteReferencia": "SBC",
+            "status": "atencao",
+            "direcao": "desceu",
+            "delta": "−12",
+            "subirEhBom": false,
+            "historico": [
+              { "data": "2026-01-04", "valor": "132", "valorNumerico": 132 },
+              { "data": "2026-02-10", "valor": "120", "valorNumerico": 120 },
+              { "data": "2026-04-30", "valor": "108", "valorNumerico": 108 }
+            ]
+          },
+          {
+            "label": "FC repouso",
+            "valor": "62",
+            "unidade": "bpm",
+            "faixaReferencia": "60–80 (saudável)",
+            "fonteReferencia": "ACSM",
+            "status": "otimo",
+            "direcao": "desceu",
+            "delta": "−4",
+            "subirEhBom": false,
+            "historico": [
+              { "data": "2026-01-08", "valor": "72", "valorNumerico": 72 },
+              { "data": "2026-02-18", "valor": "68", "valorNumerico": 68 },
+              { "data": "2026-04-04", "valor": "66", "valorNumerico": 66 },
+              { "data": "2026-05-03", "valor": "62", "valorNumerico": 62 }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "atividade",
+        "label": "Atividade Física",
+        "score": 88,
+        "status": "otimo",
+        "sufficiency": "suficiente",
+        "metrics": [
+          {
+            "label": "Minutos moderados/sem",
+            "valor": "210",
+            "unidade": "min",
+            "faixaReferencia": "≥150 (recomendado)",
+            "fonteReferencia": "WHO",
+            "status": "otimo",
+            "direcao": "subiu",
+            "delta": "+15 min",
+            "subirEhBom": true,
+            "historico": [
+              { "data": "2026-01-04", "valor": "85", "valorNumerico": 85 },
+              { "data": "2026-02-15", "valor": "132", "valorNumerico": 132 },
+              { "data": "2026-03-12", "valor": "175", "valorNumerico": 175 },
+              { "data": "2026-04-02", "valor": "195", "valorNumerico": 195 },
+              { "data": "2026-05-01", "valor": "210", "valorNumerico": 210 }
+            ]
+          },
+          {
+            "label": "Passos/dia",
+            "valor": "9.420",
+            "unidade": "passos",
+            "faixaReferencia": "8.000–10.000 (<60a) / 6.000–8.000 (60+)",
+            "referenciaPorIdadeSexo": {
+              "18-29": { "unissex": { "texto": "8.000–10.000", "min": 8000, "max": 10000, "rotulo": "alvo" } },
+              "30-39": { "unissex": { "texto": "8.000–10.000", "min": 8000, "max": 10000, "rotulo": "alvo" } },
+              "40-49": { "unissex": { "texto": "8.000–10.000", "min": 8000, "max": 10000, "rotulo": "alvo" } },
+              "50-59": { "unissex": { "texto": "8.000–10.000", "min": 8000, "max": 10000, "rotulo": "alvo" } },
+              "60-69": { "unissex": { "texto": "6.000–8.000",  "min": 6000, "max": 8000,  "rotulo": "alvo (60+)" } },
+              "70+":   { "unissex": { "texto": "6.000–8.000",  "min": 6000, "max": 8000,  "rotulo": "alvo (70+)" } }
+            },
+            "fonteReferencia": "JAMA Intern Med (Paluch 2022)",
+            "status": "otimo",
+            "direcao": "subiu",
+            "delta": "+520",
+            "subirEhBom": true,
+            "historico": [
+              { "data": "2026-01-04", "valor": "5.200", "valorNumerico": 5200 },
+              { "data": "2026-02-15", "valor": "6.800", "valorNumerico": 6800 },
+              { "data": "2026-03-12", "valor": "8.100", "valorNumerico": 8100 },
+              { "data": "2026-04-02", "valor": "8.900", "valorNumerico": 8900 },
+              { "data": "2026-05-01", "valor": "9.420", "valorNumerico": 9420 }
+            ]
+          },
+          {
+            "label": "VO2 estimado",
+            "valor": "44",
+            "unidade": "ml/kg/min",
+            "faixaReferencia": "39–44 (bom, homem 35a)",
+            "referenciaPorIdadeSexo": {
+              "18-29": {
+                "homem":  { "texto": "43–48 (bom)", "min": 43, "max": 48, "rotulo": "bom" },
+                "mulher": { "texto": "36–40 (bom)", "min": 36, "max": 40, "rotulo": "bom" }
+              },
+              "30-39": {
+                "homem":  { "texto": "39–44 (bom)", "min": 39, "max": 44, "rotulo": "bom" },
+                "mulher": { "texto": "32–37 (bom)", "min": 32, "max": 37, "rotulo": "bom" }
+              },
+              "40-49": {
+                "homem":  { "texto": "36–41 (bom)", "min": 36, "max": 41, "rotulo": "bom" },
+                "mulher": { "texto": "29–34 (bom)", "min": 29, "max": 34, "rotulo": "bom" }
+              },
+              "50-59": {
+                "homem":  { "texto": "33–37 (bom)", "min": 33, "max": 37, "rotulo": "bom" },
+                "mulher": { "texto": "26–29 (bom)", "min": 26, "max": 29, "rotulo": "bom" }
+              },
+              "60-69": {
+                "homem":  { "texto": "29–33 (bom)", "min": 29, "max": 33, "rotulo": "bom" },
+                "mulher": { "texto": "23–26 (bom)", "min": 23, "max": 26, "rotulo": "bom" }
+              },
+              "70+": {
+                "homem":  { "texto": "26–30 (bom)", "min": 26, "max": 30, "rotulo": "bom" },
+                "mulher": { "texto": "21–25 (bom)", "min": 21, "max": 25, "rotulo": "bom" }
+              }
+            },
+            "fonteReferencia": "ACSM",
+            "status": "bom",
+            "direcao": "subiu",
+            "delta": "+1",
+            "subirEhBom": true,
+            "historico": [
+              { "data": "2026-01-04", "valor": "38", "valorNumerico": 38 },
+              { "data": "2026-02-15", "valor": "40", "valorNumerico": 40 },
+              { "data": "2026-03-12", "valor": "42", "valorNumerico": 42 },
+              { "data": "2026-04-02", "valor": "43", "valorNumerico": 43 },
+              { "data": "2026-05-01", "valor": "44", "valorNumerico": 44 }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sono",
+        "label": "Sono",
+        "score": 62,
+        "status": "atencao",
+        "sufficiency": "parcial",
+        "metrics": [
+          {
+            "label": "Duração média",
+            "valor": "6h 24min",
+            "faixaReferencia": "7–9h (adultos)",
+            "referenciaPorIdadeSexo": {
+              "18-29": { "unissex": { "texto": "7–9h", "min": 7, "max": 9, "rotulo": "recomendado" } },
+              "30-39": { "unissex": { "texto": "7–9h", "min": 7, "max": 9, "rotulo": "recomendado" } },
+              "40-49": { "unissex": { "texto": "7–9h", "min": 7, "max": 9, "rotulo": "recomendado" } },
+              "50-59": { "unissex": { "texto": "7–9h", "min": 7, "max": 9, "rotulo": "recomendado" } },
+              "60-69": { "unissex": { "texto": "7–8h", "min": 7, "max": 8, "rotulo": "recomendado" } },
+              "70+":   { "unissex": { "texto": "7–8h", "min": 7, "max": 8, "rotulo": "recomendado" } }
+            },
+            "fonteReferencia": "NSF / AASM",
+            "status": "atencao",
+            "direcao": "subiu",
+            "delta": "+12 min",
+            "subirEhBom": true,
+            "historico": [
+              { "data": "2026-01-08", "valor": "5h 48min", "valorNumerico": 5.8 },
+              { "data": "2026-02-18", "valor": "6h 02min", "valorNumerico": 6.03 },
+              { "data": "2026-03-12", "valor": "6h 08min", "valorNumerico": 6.13 },
+              { "data": "2026-04-04", "valor": "6h 12min", "valorNumerico": 6.2 },
+              { "data": "2026-05-03", "valor": "6h 24min", "valorNumerico": 6.4 }
+            ]
+          },
+          {
+            "label": "Eficiência",
+            "valor": "84",
+            "unidade": "%",
+            "faixaReferencia": "≥85% (boa)",
+            "fonteReferencia": "AASM",
+            "status": "atencao",
+            "direcao": "subiu",
+            "delta": "+2 pp",
+            "subirEhBom": true,
+            "historico": [
+              { "data": "2026-01-08", "valor": "78", "valorNumerico": 78 },
+              { "data": "2026-02-18", "valor": "80", "valorNumerico": 80 },
+              { "data": "2026-04-04", "valor": "82", "valorNumerico": 82 },
+              { "data": "2026-05-03", "valor": "84", "valorNumerico": 84 }
+            ]
+          }
+        ],
+        "faltam": [
+          "Fases REM/profundo (precisa de smartwatch ativo)"
+        ]
+      },
+      {
+        "id": "nutricao",
+        "label": "Nutrição",
+        "score": 70,
+        "status": "bom",
+        "sufficiency": "parcial",
+        "metrics": [
+          {
+            "label": "Calorias médias",
+            "valor": "2.180",
+            "unidade": "kcal",
+            "faixaReferencia": "Meta plano: 2.200",
+            "fonteReferencia": "Nutricionista",
+            "status": "otimo",
+            "historico": [
+              { "data": "2026-01-15", "valor": "2.420", "valorNumerico": 2420 },
+              { "data": "2026-02-15", "valor": "2.310", "valorNumerico": 2310 },
+              { "data": "2026-03-15", "valor": "2.250", "valorNumerico": 2250 },
+              { "data": "2026-04-15", "valor": "2.220", "valorNumerico": 2220 },
+              { "data": "2026-05-03", "valor": "2.180", "valorNumerico": 2180 }
+            ]
+          },
+          {
+            "label": "Proteína/kg",
+            "valor": "1,4",
+            "unidade": "g/kg",
+            "faixaReferencia": "1,2–2,0 (ativo) / 1,2–1,6 (60+)",
+            "referenciaPorIdadeSexo": {
+              "18-29": { "unissex": { "texto": "1,2–2,0 g/kg (ativo)", "min": 1.2, "max": 2.0, "rotulo": "ativo" } },
+              "30-39": { "unissex": { "texto": "1,2–2,0 g/kg (ativo)", "min": 1.2, "max": 2.0, "rotulo": "ativo" } },
+              "40-49": { "unissex": { "texto": "1,2–2,0 g/kg (ativo)", "min": 1.2, "max": 2.0, "rotulo": "ativo" } },
+              "50-59": { "unissex": { "texto": "1,2–2,0 g/kg (ativo)", "min": 1.2, "max": 2.0, "rotulo": "ativo" } },
+              "60-69": { "unissex": { "texto": "1,2–1,6 g/kg (prevenir sarcopenia)", "min": 1.2, "max": 1.6, "rotulo": "prevenir sarcopenia" } },
+              "70+":   { "unissex": { "texto": "1,2–1,6 g/kg (prevenir sarcopenia)", "min": 1.2, "max": 1.6, "rotulo": "prevenir sarcopenia" } }
+            },
+            "fonteReferencia": "ISSN / PROT-AGE",
+            "status": "bom",
+            "direcao": "subiu",
+            "delta": "+0,1",
+            "subirEhBom": true,
+            "historico": [
+              { "data": "2026-01-15", "valor": "0,9", "valorNumerico": 0.9 },
+              { "data": "2026-02-15", "valor": "1,1", "valorNumerico": 1.1 },
+              { "data": "2026-03-15", "valor": "1,2", "valorNumerico": 1.2 },
+              { "data": "2026-04-15", "valor": "1,3", "valorNumerico": 1.3 },
+              { "data": "2026-05-03", "valor": "1,4", "valorNumerico": 1.4 }
+            ]
+          },
+          {
+            "label": "Adesão ao plano",
+            "valor": "72",
+            "unidade": "%",
+            "faixaReferencia": "≥80% (alvo)",
+            "fonteReferencia": "Nutricionista",
+            "status": "atencao",
+            "direcao": "subiu",
+            "delta": "+4 pp",
+            "subirEhBom": true,
+            "historico": [
+              { "data": "2026-01-15", "valor": "50", "valorNumerico": 50 },
+              { "data": "2026-02-15", "valor": "60", "valorNumerico": 60 },
+              { "data": "2026-03-15", "valor": "65", "valorNumerico": 65 },
+              { "data": "2026-04-15", "valor": "68", "valorNumerico": 68 },
+              { "data": "2026-05-03", "valor": "72", "valorNumerico": 72 }
+            ]
+          }
+        ],
+        "faltam": [
+          "3 dias da última semana sem registro"
+        ]
+      },
+      {
+        "id": "mental",
+        "label": "Saúde Mental",
+        "score": null,
+        "status": "sem_dados",
+        "sufficiency": "insuficiente",
+        "metrics": [],
+        "faltam": [
+          "Diário de humor",
+          "Avaliação de estresse",
+          "Avaliação de qualidade de vida (PSS-10)"
+        ]
+      }
+    ]
+  },
+  "snapshots": [
+    {
+      "id": "snap-2026-04-04",
+      "geradoEm": "2026-04-04",
+      "scoreGeral": 74,
+      "deltaScore": 5,
+      "resumoIA": "Boa evolução em atividade física e composição corporal. Sono ainda abaixo do ideal — média de 6h12 vs recomendação 7–9h. LDL próximo do limite, manter dieta atual.",
+      "destaques": [
+        "% gordura caiu 1,2 pontos vs análise anterior",
+        "Minutos de atividade subiu 28% (165 → 212)",
+        "FC repouso melhorou (66 → 62 bpm)"
+      ],
+      "idades": {
+        "real": 35,
+        "corporal": 38,
+        "visualEstimada": { "min": 33, "max": 36 },
+        "visualProjetada": { "min": 30, "max": 33 }
+      },
+      "fotos": {
+        "frontal": "/fotos/2026-04-04/frontal.jpg",
+        "posterior": "/fotos/2026-04-04/posterior.jpg",
+        "lateralEsquerda": "/fotos/2026-04-04/lat-esq.jpg",
+        "lateralDireita": "/fotos/2026-04-04/lat-dir.jpg"
+      },
+      "consentimento": {
+        "aceitoEm": "2026-04-04T08:12:00-03:00",
+        "versaoTermo": "v1.0",
+        "escopo": ["analise_visual", "projecao_ia", "armazenamento"]
+      },
+      "baseadoEm": {
+        "bioimpedanciaId": "bio-2026-04-02",
+        "exameIds": ["exam-2026-03-28"],
+        "fotosId": "fotos-2026-04-04",
+        "janelaMetricas": { "de": "2026-03-05", "ate": "2026-04-04" }
+      },
+      "dimensoes": []
+    },
+    {
+      "id": "snap-2026-02-18",
+      "geradoEm": "2026-02-18",
+      "scoreGeral": 69,
+      "deltaScore": 4,
+      "resumoIA": "Início da jornada de mudança de hábitos. Composição corporal saiu de sobrepeso (IMC 25,2) pra eutrófico (24,1). Atividade ainda inconsistente.",
+      "destaques": [
+        "IMC saiu de 25,2 pra 24,1",
+        "Adesão nutricional 65% (subiu de 50%)"
+      ],
+      "fotos": {
+        "frontal": "/fotos/2026-02-18/frontal.jpg",
+        "posterior": "/fotos/2026-02-18/posterior.jpg",
+        "lateralEsquerda": "/fotos/2026-02-18/lat-esq.jpg",
+        "lateralDireita": "/fotos/2026-02-18/lat-dir.jpg"
+      },
+      "baseadoEm": {
+        "bioimpedanciaId": "bio-2026-02-15",
+        "exameIds": ["exam-2026-02-10"],
+        "fotosId": "fotos-2026-02-18",
+        "janelaMetricas": { "de": "2026-01-20", "ate": "2026-02-18" }
+      },
+      "dimensoes": []
+    },
+    {
+      "id": "snap-2026-01-08",
+      "geradoEm": "2026-01-08",
+      "scoreGeral": 65,
+      "deltaScore": null,
+      "resumoIA": "Análise inicial. Composição corporal em sobrepeso leve (IMC 25,2, % gordura 22,1). Sono insuficiente (5h48). Pressão limítrofe (128/84). Bom ponto de partida pra mudanças graduais.",
+      "destaques": [
+        "Análise inicial — baseline",
+        "% gordura: 22,1%",
+        "IMC: 25,2 (sobrepeso leve)",
+        "Sono médio: 5h48"
+      ],
+      "fotos": {
+        "frontal": "/fotos/2026-01-08/frontal.jpg",
+        "posterior": "/fotos/2026-01-08/posterior.jpg",
+        "lateralEsquerda": "/fotos/2026-01-08/lat-esq.jpg",
+        "lateralDireita": "/fotos/2026-01-08/lat-dir.jpg"
+      },
+      "baseadoEm": {
+        "bioimpedanciaId": "bio-2026-01-05",
+        "exameIds": ["exam-2026-01-04"],
+        "fotosId": "fotos-2026-01-08",
+        "janelaMetricas": { "de": "2025-12-09", "ate": "2026-01-08" }
+      },
+      "dimensoes": []
+    }
+  ],
+  "freshness": {
+    "status": "elegivel",
+    "ultimaAnaliseEm": "2026-04-04",
+    "diasDesdeUltima": 30,
+    "cooldownDias": 30,
+    "novosDados": {
+      "bioimpedancias": 1,
+      "exames": 0,
+      "fotosCorporais": 1,
+      "temNovidadeRelevante": true
+    },
+    "mensagem": "Pronto pra nova análise — 1 bioimpedância e 1 set de fotos novos desde 04/04, e cooldown de 30 dias atingido."
+  },
+  "comparacaoDefault": {
+    "snapshotInicial": {
+      "id": "snap-2026-01-08",
+      "geradoEm": "2026-01-08",
+      "scoreGeral": 65,
+      "deltaScore": null,
+      "resumoIA": "Análise inicial.",
+      "destaques": [],
+      "fotos": {
+        "frontal": "/fotos/2026-01-08/frontal.jpg",
+        "posterior": "/fotos/2026-01-08/posterior.jpg",
+        "lateralEsquerda": "/fotos/2026-01-08/lat-esq.jpg",
+        "lateralDireita": "/fotos/2026-01-08/lat-dir.jpg"
+      },
+      "baseadoEm": {
+        "exameIds": [],
+        "janelaMetricas": { "de": "2025-12-09", "ate": "2026-01-08" }
+      },
+      "dimensoes": []
+    },
+    "snapshotFinal": {
+      "id": "snap-2026-04-04",
+      "geradoEm": "2026-04-04",
+      "scoreGeral": 74,
+      "deltaScore": 5,
+      "resumoIA": "Boa evolução.",
+      "destaques": [],
+      "fotos": {
+        "frontal": "/fotos/2026-04-04/frontal.jpg",
+        "posterior": "/fotos/2026-04-04/posterior.jpg",
+        "lateralEsquerda": "/fotos/2026-04-04/lat-esq.jpg",
+        "lateralDireita": "/fotos/2026-04-04/lat-dir.jpg"
+      },
+      "baseadoEm": {
+        "exameIds": [],
+        "janelaMetricas": { "de": "2026-03-05", "ate": "2026-04-04" }
+      },
+      "dimensoes": []
+    },
+    "scoreDelta": 9,
+    "dimensoes": [
+      {
+        "dimensaoId": "composicao",
+        "label": "Composição Corporal",
+        "scoreInicial": 60,
+        "scoreFinal": 82,
+        "delta": 22,
+        "direcao": "subiu",
+        "metricas": [
+          { "label": "% Gordura", "valorInicial": "22,1%", "valorFinal": "18,5%", "delta": "−3,6 pp" },
+          { "label": "IMC", "valorInicial": "25,2", "valorFinal": "23,8", "delta": "−1,4" },
+          { "label": "Massa Muscular", "valorInicial": "59,8 kg", "valorFinal": "62,3 kg", "delta": "+2,5 kg" }
+        ]
+      },
+      {
+        "dimensaoId": "metabolico",
+        "label": "Metabólico",
+        "scoreInicial": 68,
+        "scoreFinal": 75,
+        "delta": 7,
+        "direcao": "subiu",
+        "metricas": [
+          { "label": "Glicemia jejum", "valorInicial": "98 mg/dL", "valorFinal": "92 mg/dL", "delta": "−6" },
+          { "label": "Triglicérides", "valorInicial": "148 mg/dL", "valorFinal": "120 mg/dL", "delta": "−28" }
+        ]
+      },
+      {
+        "dimensaoId": "cardiovascular",
+        "label": "Cardiovascular",
+        "scoreInicial": 70,
+        "scoreFinal": 80,
+        "delta": 10,
+        "direcao": "subiu",
+        "metricas": [
+          { "label": "Pressão", "valorInicial": "128/84", "valorFinal": "118/76", "delta": "−10/−8" },
+          { "label": "FC repouso", "valorInicial": "72 bpm", "valorFinal": "62 bpm", "delta": "−10 bpm" }
+        ]
+      },
+      {
+        "dimensaoId": "atividade",
+        "label": "Atividade Física",
+        "scoreInicial": 55,
+        "scoreFinal": 88,
+        "delta": 33,
+        "direcao": "subiu",
+        "metricas": [
+          { "label": "Min moderados/sem", "valorInicial": "85", "valorFinal": "210", "delta": "+125" },
+          { "label": "Passos/dia", "valorInicial": "5.200", "valorFinal": "9.420", "delta": "+4.220" }
+        ]
+      },
+      {
+        "dimensaoId": "sono",
+        "label": "Sono",
+        "scoreInicial": 48,
+        "scoreFinal": 62,
+        "delta": 14,
+        "direcao": "subiu",
+        "metricas": [
+          { "label": "Duração", "valorInicial": "5h 48m", "valorFinal": "6h 24m", "delta": "+36 min" },
+          { "label": "Eficiência", "valorInicial": "78%", "valorFinal": "84%", "delta": "+6 pp" }
+        ]
+      },
+      {
+        "dimensaoId": "nutricao",
+        "label": "Nutrição",
+        "scoreInicial": 58,
+        "scoreFinal": 70,
+        "delta": 12,
+        "direcao": "subiu",
+        "metricas": [
+          { "label": "Adesão ao plano", "valorInicial": "50%", "valorFinal": "72%", "delta": "+22 pp" }
+        ]
+      },
+      {
+        "dimensaoId": "mental",
+        "label": "Saúde Mental",
+        "scoreInicial": null,
+        "scoreFinal": null,
+        "delta": null,
+        "direcao": "sem_dados",
+        "metricas": []
+      }
+    ]
+  },
+  "evolucao": [
+    {
+      "dimensaoId": "composicao",
+      "label": "Composição Corporal",
+      "scoreAtual": 82,
+      "deltaTotal": 22,
+      "statusAtual": "bom",
+      "pontos": [
+        { "data": "2026-01-08", "score": 60 },
+        { "data": "2026-02-18", "score": 72 },
+        { "data": "2026-04-04", "score": 78 },
+        { "data": "2026-05-04", "score": 82 }
+      ]
+    },
+    {
+      "dimensaoId": "metabolico",
+      "label": "Metabólico",
+      "scoreAtual": 75,
+      "deltaTotal": 7,
+      "statusAtual": "bom",
+      "pontos": [
+        { "data": "2026-01-08", "score": 68 },
+        { "data": "2026-02-18", "score": 70 },
+        { "data": "2026-04-04", "score": 73 },
+        { "data": "2026-05-04", "score": 75 }
+      ]
+    },
+    {
+      "dimensaoId": "cardiovascular",
+      "label": "Cardiovascular",
+      "scoreAtual": 80,
+      "deltaTotal": 10,
+      "statusAtual": "bom",
+      "pontos": [
+        { "data": "2026-01-08", "score": 70 },
+        { "data": "2026-02-18", "score": 74 },
+        { "data": "2026-04-04", "score": 78 },
+        { "data": "2026-05-04", "score": 80 }
+      ]
+    },
+    {
+      "dimensaoId": "atividade",
+      "label": "Atividade Física",
+      "scoreAtual": 88,
+      "deltaTotal": 33,
+      "statusAtual": "otimo",
+      "pontos": [
+        { "data": "2026-01-08", "score": 55 },
+        { "data": "2026-02-18", "score": 68 },
+        { "data": "2026-04-04", "score": 82 },
+        { "data": "2026-05-04", "score": 88 }
+      ]
+    },
+    {
+      "dimensaoId": "sono",
+      "label": "Sono",
+      "scoreAtual": 62,
+      "deltaTotal": 14,
+      "statusAtual": "atencao",
+      "pontos": [
+        { "data": "2026-01-08", "score": 48 },
+        { "data": "2026-02-18", "score": 54 },
+        { "data": "2026-04-04", "score": 58 },
+        { "data": "2026-05-04", "score": 62 }
+      ]
+    },
+    {
+      "dimensaoId": "nutricao",
+      "label": "Nutrição",
+      "scoreAtual": 70,
+      "deltaTotal": 12,
+      "statusAtual": "bom",
+      "pontos": [
+        { "data": "2026-01-08", "score": 58 },
+        { "data": "2026-02-18", "score": 65 },
+        { "data": "2026-04-04", "score": 68 },
+        { "data": "2026-05-04", "score": 70 }
+      ]
+    },
+    {
+      "dimensaoId": "mental",
+      "label": "Saúde Mental",
+      "scoreAtual": null,
+      "deltaTotal": null,
+      "statusAtual": "sem_dados",
+      "pontos": [
+        { "data": "2026-01-08", "score": null },
+        { "data": "2026-02-18", "score": null },
+        { "data": "2026-04-04", "score": null },
+        { "data": "2026-05-04", "score": null }
+      ]
+    }
+  ],
+  "projecao": {
+    "status": "nao_solicitada",
+    "metaTexto": "Atingir 16% de gordura mantendo massa muscular",
+    "meta": {
+      "peso": { "atual": 78.5, "alvoMin": 75.0, "alvoMax": 76.0 },
+      "gorduraPercent": { "atual": 18.5, "alvoMin": 14, "alvoMax": 16 },
+      "massaGordura": { "atual": 14.5, "alvoMin": 10.5, "alvoMax": 12.2 },
+      "massaMuscular": { "atual": 62.3, "estrategia": "manter" },
+      "idadeCorporal": { "atual": 38, "alvoMin": 33, "alvoMax": 35 },
+      "regioesPrioritarias": ["abdomen", "flancos", "cintura"],
+      "prazoMeses": 4
+    },
+    "prompt": {
+      "modelo": "nano-banana",
+      "preservar": ["identidade", "proporcoes", "iluminacao", "fundo", "roupa", "pose", "enquadramento"],
+      "disclaimerEducativo": "Imagem é estimativa visual educativa, não promessa de resultado. Aparência real depende de fatores individuais.",
+      "promptTexto": "Mesma pessoa, mesma pose, mesma iluminação e fundo. Reduzir gordura abdominal e flancos compatível com queda de 18,5% → 15% de gordura corporal mantendo massa muscular. Cintura levemente mais marcada. Sem alterações em rosto, identidade ou proporções ósseas. Manter roupa esportiva e enquadramento corpo inteiro."
+    },
+    "mensagem": "Toque em \"Gerar projeção\" pra IA criar uma imagem de como ficaria atingindo sua meta."
+  }
+}

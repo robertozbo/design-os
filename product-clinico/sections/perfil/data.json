@@ -1,0 +1,106 @@
+{
+  "_meta": {
+    "models": {
+      "perfil": "Perfil completo do médico endocrinologista: identidade pessoal, registros profissionais (CRM + RQE), assinatura digital configurada e histórico agregado de atuação no consultório.",
+      "identidade": "Bloco de identidade pessoal: nome, especialidade, papel, foto, contatos (e-mail e telefone), idioma preferido, fuso horário.",
+      "registroProfissional": "Registro junto a conselho profissional (CRM/RQE/Outro). Pode ter múltiplos registros — um deles marcado como primário, usado por padrão nas prescrições e prontuários.",
+      "assinaturaDigital": "Assinatura digital usada nos prontuários e relatórios médicos: imagem manuscrita carregada pelo médico + hash SHA-256 de identificação gerado automaticamente. Opcionalmente complementada por certificado ICP-Brasil (CFM 2.299/2021).",
+      "historicoAtuacao": "Métricas agregadas da atuação do médico: pacientes ativos, consultas realizadas, prescrições emitidas, anos de prática, e lista de especializações declaradas."
+    },
+    "relationships": [
+      "Médico tem 1 Perfil.",
+      "Perfil tem 1 Identidade, N RegistrosProfissionais (com 1 primário), 1 AssinaturaDigital e 1 HistoricoAtuacao agregado.",
+      "RegistroProfissional referencia conselho externo (CRM, RQE) com número e validade própria.",
+      "AssinaturaDigital é referenciada pelos Prontuários, Evoluções SOAP e Prescrições assinados pelo médico."
+    ]
+  },
+  "perfil": {
+    "id": "med-001",
+    "identidade": {
+      "nome": "Pedro Lima",
+      "tratamento": "Dr.",
+      "cargo": "Endocrinologista",
+      "papel": "endocrinologista",
+      "foto": null,
+      "iniciais": "PL",
+      "emailCorporativo": "pedro.lima@nymos-clinico.com.br",
+      "telefone": "+55 11 98421-3047",
+      "idiomaPreferido": "pt",
+      "fusoHorario": "America/Sao_Paulo"
+    },
+    "registrosProfissionais": [
+      {
+        "id": "reg-001",
+        "tipo": "CRM",
+        "numero": "123456",
+        "conselho": "CRM",
+        "uf": "SP",
+        "dataEmissao": "2012-03-12",
+        "dataValidade": "2027-03-12",
+        "primario": true
+      },
+      {
+        "id": "reg-002",
+        "tipo": "RQE",
+        "numero": "29874",
+        "conselho": "RQE",
+        "uf": "SP",
+        "dataEmissao": "2016-08-22",
+        "dataValidade": "2027-08-22",
+        "primario": false
+      },
+      {
+        "id": "reg-003",
+        "tipo": "Outro",
+        "numero": "SBEM 1247",
+        "conselho": "SBEM",
+        "uf": "BR",
+        "dataEmissao": "2018-05-14",
+        "dataValidade": "2026-05-14",
+        "primario": false
+      }
+    ],
+    "assinaturaDigital": {
+      "imagemUrl": "/perfil/med-001/assinatura.png",
+      "imagemUploadedEm": "2025-09-04T11:24:00-03:00",
+      "hashSha256": "8a2f4c91e7b6d0f3a5e8c2b9d1f4a7e0b3c6d9a2f5e8b1d4a7c0e3f6b9d2a5e8",
+      "icpBrasilHabilitado": false,
+      "icpCertificadoNome": null
+    },
+    "historicoAtuacao": {
+      "empregadoresAtivos": 142,
+      "avaliacoesPublicadas": 380,
+      "relatoriosGerados": 612,
+      "anosDePratica": 14,
+      "especializacoes": [
+        "Diabetes Mellitus tipo 2",
+        "Tireoide (hipo/hiper)",
+        "Obesidade e síndrome metabólica",
+        "SOP (Síndrome dos Ovários Policísticos)"
+      ]
+    }
+  },
+  "papelOpcoes": [
+    { "value": "endocrinologista", "label": "Endocrinologista" },
+    { "value": "clinico_geral", "label": "Clínico(a) Geral" },
+    { "value": "cardiologista", "label": "Cardiologista" },
+    { "value": "outro", "label": "Outra especialidade" }
+  ],
+  "tipoRegistroOpcoes": [
+    { "value": "CRM", "label": "CRM — Conselho Regional de Medicina" },
+    { "value": "RQE", "label": "RQE — Registro de Qualificação de Especialista" },
+    { "value": "CRMV", "label": "CRMV — Veterinária" },
+    { "value": "Outro", "label": "Outro registro (SBEM, ABRAN, etc.)" }
+  ],
+  "ufOpcoes": [
+    "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO", "BR"
+  ],
+  "fusoHorarioOpcoes": [
+    "America/Sao_Paulo",
+    "America/Manaus",
+    "America/Belem",
+    "America/Recife",
+    "America/Fortaleza",
+    "America/Cuiaba"
+  ]
+}

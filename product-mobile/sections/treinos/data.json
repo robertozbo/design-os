@@ -1,0 +1,293 @@
+{
+  "_meta": {
+    "models": {
+      "TreinosData": "Estado completo da seção Treinos — plano ativo do Personal + lista de sessões + treino de hoje + histórico + stats + treinos próprios (aluno).",
+      "SessaoUI": "View-model de uma sessão (A-G) com cor por muscle group, grupos principais, duração estimada e calorias.",
+      "ExercicioUI": "View-model de exercício dentro de sessão com resumo de séries formatado e ícone do muscle group.",
+      "ExecucaoUI": "Log de treino executado com tempo relativo formatado e rating em estrelas.",
+      "AgendaDia": "Mapeamento dia-da-semana → letra da sessão (null = descanso).",
+      "TreinoProprio": "Treino criado pelo próprio aluno (não vinculado ao Personal)."
+    },
+    "relationships": [
+      "TreinosData.workout é WorkoutWithSessions criado pelo Personal vinculado",
+      "Cada SessaoUI.session é WorkoutSessionWithExercises com SessionExerciseWithDetails[]",
+      "ExercicioUI.sessionExercise referencia exercise (catálogo global) + muscleGroup",
+      "sessaoDeHoje é computada matching agendaSemanal[diaSemanaHoje].letra → sessoes",
+      "Tab 'meu-personal' mostra workouts onde createdByType='professional'; tab 'meus-treinos' mostra TreinoProprio[]"
+    ]
+  },
+
+  "abaAtiva": "meu-personal",
+  "diaSemanaHoje": "wednesday",
+  "pesoUsuarioKg": 78.4,
+  "pesoMedidoEm": "2026-05-04",
+
+  "workout": {
+    "id": "wkt-personal-rafa-2026-05",
+    "userId": "u-1",
+    "createdByType": "professional",
+    "professionalId": "prof-rafa",
+    "goalId": "goal-hipertrofia",
+    "name": "ABC · Peito · Costas · Cardio",
+    "description": "Plano de 3 sessões com 1 exercício por dia · objetivo hipertrofia",
+    "status": "active",
+    "notes": null,
+    "createdAt": "2026-05-01T10:00:00Z",
+    "updatedAt": "2026-05-13T08:30:00Z",
+    "sessions": [],
+    "goal": { "id": "goal-hipertrofia", "name": "Hipertrofia", "description": null, "icon": "dumbbell", "sortOrder": 1, "isActive": true },
+    "professional": { "id": "prof-rafa", "userId": "u-rafa", "fullName": "Rafa Costa" }
+  },
+
+  "sessoes": [
+    {
+      "letra": "A",
+      "cor": "teal",
+      "gruposPrincipais": ["Peito"],
+      "duracaoEstimadaMin": 8,
+      "caloriasEstimadas": 65,
+      "diaSemanaLabel": "Seg, Qua",
+      "ehHoje": true,
+      "ultimaExecucaoEm": "2026-05-11",
+      "session": {
+        "id": "sess-a",
+        "workoutId": "wkt-personal-rafa-2026-05",
+        "sessionLetter": "A",
+        "dayOfWeek": "wednesday",
+        "name": "Peito",
+        "description": "Foco peito · 1 exercício",
+        "sortOrder": 1,
+        "exercises": [
+          {
+            "id": "se-a-1",
+            "sessionId": "sess-a",
+            "exerciseId": "ex-crossover-alto",
+            "sets": 3,
+            "reps": 10,
+            "timeSeconds": null,
+            "restSeconds": 120,
+            "loadKg": 33,
+            "sortOrder": 1,
+            "notes": null,
+            "exercise": {
+              "id": "ex-crossover-alto",
+              "name": "Crossover alto",
+              "exerciseType": "reps",
+              "estimatedMet": 5.5,
+              "imageUrl": null,
+              "videoUrl": "https://example.com/v/crossover-alto",
+              "instructions": "Pegada firme nas polias altas. Trazer as mãos pra frente cruzando levemente no final do movimento. Controle excêntrico."
+            },
+            "muscleGroup": { "id": "mg-peito", "name": "Peito", "category": "upper_body" }
+          }
+        ]
+      }
+    },
+    {
+      "letra": "B",
+      "cor": "sky",
+      "gruposPrincipais": ["Costas"],
+      "duracaoEstimadaMin": 8,
+      "caloriasEstimadas": 62,
+      "diaSemanaLabel": "Ter, Qui",
+      "ehHoje": false,
+      "ultimaExecucaoEm": "2026-05-12",
+      "session": {
+        "id": "sess-b",
+        "workoutId": "wkt-personal-rafa-2026-05",
+        "sessionLetter": "B",
+        "dayOfWeek": "tuesday",
+        "name": "Costas",
+        "description": "Foco costas · 1 exercício",
+        "sortOrder": 2,
+        "exercises": [
+          {
+            "id": "se-b-1",
+            "sessionId": "sess-b",
+            "exerciseId": "ex-barra-fixa-assistida",
+            "sets": 3,
+            "reps": 10,
+            "timeSeconds": null,
+            "restSeconds": 120,
+            "loadKg": 32.5,
+            "sortOrder": 1,
+            "notes": null,
+            "exercise": {
+              "id": "ex-barra-fixa-assistida",
+              "name": "Barra fixa assistida",
+              "exerciseType": "reps",
+              "estimatedMet": 5.8,
+              "imageUrl": null,
+              "videoUrl": null,
+              "instructions": "Use a almofada de assistência regulada conforme necessidade. Suba até o queixo passar da barra. Controle a descida."
+            },
+            "muscleGroup": { "id": "mg-costas", "name": "Costas", "category": "upper_body" }
+          }
+        ]
+      }
+    },
+    {
+      "letra": "C",
+      "cor": "amber",
+      "gruposPrincipais": ["Cardio"],
+      "duracaoEstimadaMin": 8,
+      "caloriasEstimadas": 90,
+      "diaSemanaLabel": "Sex",
+      "ehHoje": false,
+      "ultimaExecucaoEm": null,
+      "session": {
+        "id": "sess-c",
+        "workoutId": "wkt-personal-rafa-2026-05",
+        "sessionLetter": "C",
+        "dayOfWeek": "friday",
+        "name": "Cardio",
+        "description": "Foco cardio · 1 exercício",
+        "sortOrder": 3,
+        "exercises": [
+          {
+            "id": "se-c-1",
+            "sessionId": "sess-c",
+            "exerciseId": "ex-afundo-com-salto",
+            "sets": 3,
+            "reps": 10,
+            "timeSeconds": null,
+            "restSeconds": 120,
+            "loadKg": 33,
+            "sortOrder": 1,
+            "notes": null,
+            "exercise": {
+              "id": "ex-afundo-com-salto",
+              "name": "Afundo com salto",
+              "exerciseType": "reps",
+              "estimatedMet": 8.0,
+              "imageUrl": null,
+              "videoUrl": null,
+              "instructions": "Posição de afundo, troque as pernas no ar com um salto explosivo. Aterrissa controlando o joelho."
+            },
+            "muscleGroup": { "id": "mg-cardio", "name": "Cardio", "category": "cardio" }
+          }
+        ]
+      }
+    }
+  ],
+
+  "sessaoDeHoje": {
+    "letra": "A",
+    "cor": "teal",
+    "gruposPrincipais": ["Peito"],
+    "duracaoEstimadaMin": 8,
+    "caloriasEstimadas": 65,
+    "diaSemanaLabel": "Hoje · Quarta",
+    "ehHoje": true,
+    "ultimaExecucaoEm": "2026-05-11",
+    "session": {
+      "id": "sess-a",
+      "workoutId": "wkt-personal-rafa-2026-05",
+      "sessionLetter": "A",
+      "dayOfWeek": "wednesday",
+      "name": "Peito",
+      "description": "Foco peito · 1 exercício",
+      "sortOrder": 1,
+      "exercises": [
+        {
+          "id": "se-a-1",
+          "sessionId": "sess-a",
+          "exerciseId": "ex-crossover-alto",
+          "sets": 3,
+          "reps": 10,
+          "timeSeconds": null,
+          "restSeconds": 120,
+          "loadKg": 33,
+          "sortOrder": 1,
+          "notes": null,
+          "exercise": {
+            "id": "ex-crossover-alto",
+            "name": "Crossover alto",
+            "exerciseType": "reps",
+            "estimatedMet": 5.5,
+            "imageUrl": null,
+            "videoUrl": "https://example.com/v/crossover-alto",
+            "instructions": "Pegada firme nas polias altas. Trazer as mãos pra frente cruzando levemente no final do movimento."
+          },
+          "muscleGroup": { "id": "mg-peito", "name": "Peito", "category": "upper_body" }
+        }
+      ]
+    }
+  },
+
+  "agendaSemanal": [
+    { "diaSemana": "monday", "diaCurto": "Seg", "letra": "A", "nome": "Peito" },
+    { "diaSemana": "tuesday", "diaCurto": "Ter", "letra": "B", "nome": "Costas" },
+    { "diaSemana": "wednesday", "diaCurto": "Qua", "letra": "A", "nome": "Peito" },
+    { "diaSemana": "thursday", "diaCurto": "Qui", "letra": "B", "nome": "Costas" },
+    { "diaSemana": "friday", "diaCurto": "Sex", "letra": "C", "nome": "Cardio" },
+    { "diaSemana": "saturday", "diaCurto": "Sáb", "letra": null, "nome": null },
+    { "diaSemana": "sunday", "diaCurto": "Dom", "letra": null, "nome": null }
+  ],
+
+  "historico": [
+    {
+      "cor": "sky",
+      "tempoRelativo": "ontem",
+      "ratingLabel": "★★★★☆",
+      "execucao": {
+        "id": "exec-1",
+        "userId": "u-1",
+        "sessionId": "sess-b",
+        "workoutId": "wkt-personal-rafa-2026-05",
+        "startedAt": "2026-05-12T18:30:00Z",
+        "completedAt": "2026-05-12T18:38:15Z",
+        "durationMinutes": 8,
+        "caloriesBurned": 60,
+        "rating": 4,
+        "notes": "Senti bem. Última série custou um pouco.",
+        "exerciseExecutions": [],
+        "session": { "id": "sess-b", "sessionLetter": "B", "name": "Costas" },
+        "workout": { "name": "ABC · Peito · Costas · Cardio" }
+      }
+    },
+    {
+      "cor": "teal",
+      "tempoRelativo": "há 3d",
+      "ratingLabel": "★★★★★",
+      "execucao": {
+        "id": "exec-2",
+        "userId": "u-1",
+        "sessionId": "sess-a",
+        "workoutId": "wkt-personal-rafa-2026-05",
+        "startedAt": "2026-05-11T07:00:00Z",
+        "completedAt": "2026-05-11T07:09:30Z",
+        "durationMinutes": 9,
+        "caloriesBurned": 68,
+        "rating": 5,
+        "notes": "",
+        "exerciseExecutions": [],
+        "session": { "id": "sess-a", "sessionLetter": "A", "name": "Peito" },
+        "workout": { "name": "ABC · Peito · Costas · Cardio" }
+      }
+    }
+  ],
+
+  "treinosProprios": [
+    {
+      "id": "user-wkt-1",
+      "nome": "Caminhada matinal",
+      "tipo": "Cardio livre",
+      "duracaoMin": 30,
+      "frequenciaLabel": "3x por semana",
+      "criadoEm": "2026-04-20"
+    }
+  ],
+
+  "stats": {
+    "totalMes": 6,
+    "frequenciaSemanalMedia": 2.3,
+    "duracaoMediaMin": 8,
+    "caloriasMediasPorTreino": 65,
+    "streakDias": 1,
+    "distribuicaoMusculos": [
+      { "categoria": "upper_body", "label": "Tronco", "count": 5, "pct": 83 },
+      { "categoria": "cardio", "label": "Cardio", "count": 1, "pct": 17 }
+    ]
+  }
+}

@@ -1,0 +1,246 @@
+{
+  "_meta": {
+    "description": "Biblioteca de instrumentos psicométricos validados + aplicações recentes da carteira."
+  },
+  "instrumentos": [
+    {
+      "id": "phq-9",
+      "nome": "PHQ-9",
+      "nomeCompleto": "Patient Health Questionnaire — 9 itens",
+      "autor": "Kroenke & Spitzer · 2001",
+      "dominio": "depressao",
+      "dimensoes": ["Humor", "Anedonia", "Sono", "Apetite", "Concentração", "Ideação suicida"],
+      "numItens": 9,
+      "tempoMin": 3,
+      "formatoResposta": "likert_4",
+      "rangeTotal": { "min": 0, "max": 27 },
+      "faixas": [
+        { "min": 0, "max": 4, "severidade": "minima", "label": "Mínima/sem depressão" },
+        { "min": 5, "max": 9, "severidade": "leve", "label": "Depressão leve" },
+        { "min": 10, "max": 14, "severidade": "moderada", "label": "Depressão moderada" },
+        { "min": 15, "max": 19, "severidade": "moderada_severa", "label": "Mod. severa" },
+        { "min": 20, "max": 27, "severidade": "severa", "label": "Severa" }
+      ],
+      "validacaoBR": true,
+      "faixaEtaria": "Adultos (18+)",
+      "descricao": "Padrão-ouro para rastreio de depressão. Item 9 avalia ideação suicida — atenção crítica.",
+      "totalAplicacoes": 47,
+      "ultimaAplicacao": "ontem",
+      "favorito": true
+    },
+    {
+      "id": "gad-7",
+      "nome": "GAD-7",
+      "nomeCompleto": "Generalized Anxiety Disorder — 7 itens",
+      "autor": "Spitzer · 2006",
+      "dominio": "ansiedade",
+      "dimensoes": ["Preocupação", "Inquietação", "Irritabilidade", "Tensão muscular"],
+      "numItens": 7,
+      "tempoMin": 3,
+      "formatoResposta": "likert_4",
+      "rangeTotal": { "min": 0, "max": 21 },
+      "faixas": [
+        { "min": 0, "max": 4, "severidade": "minima", "label": "Mínima ansiedade" },
+        { "min": 5, "max": 9, "severidade": "leve", "label": "Ansiedade leve" },
+        { "min": 10, "max": 14, "severidade": "moderada", "label": "Moderada" },
+        { "min": 15, "max": 21, "severidade": "severa", "label": "Severa" }
+      ],
+      "validacaoBR": true,
+      "faixaEtaria": "Adultos (18+)",
+      "descricao": "Triagem rápida de TAG e sintomas ansiosos. Forte correlação com PHQ-9 (dual screening).",
+      "totalAplicacoes": 38,
+      "ultimaAplicacao": "há 4h",
+      "favorito": true
+    },
+    {
+      "id": "bdi-ii",
+      "nome": "BDI-II",
+      "nomeCompleto": "Beck Depression Inventory II",
+      "autor": "Beck · 1996",
+      "dominio": "depressao",
+      "dimensoes": ["Sintomas afetivos", "Cognitivos", "Somáticos", "Suicidalidade"],
+      "numItens": 21,
+      "tempoMin": 10,
+      "formatoResposta": "multipla_escolha",
+      "rangeTotal": { "min": 0, "max": 63 },
+      "faixas": [
+        { "min": 0, "max": 13, "severidade": "minima", "label": "Mínima" },
+        { "min": 14, "max": 19, "severidade": "leve", "label": "Leve" },
+        { "min": 20, "max": 28, "severidade": "moderada", "label": "Moderada" },
+        { "min": 29, "max": 63, "severidade": "severa", "label": "Severa" }
+      ],
+      "validacaoBR": true,
+      "faixaEtaria": "13+ anos",
+      "descricao": "Mais detalhado que PHQ-9. Avalia gravidade e dimensões cognitivas/somáticas separadamente.",
+      "totalAplicacoes": 12,
+      "ultimaAplicacao": "há 3d",
+      "favorito": false
+    },
+    {
+      "id": "bai",
+      "nome": "BAI",
+      "nomeCompleto": "Beck Anxiety Inventory",
+      "autor": "Beck · 1988",
+      "dominio": "ansiedade",
+      "dimensoes": ["Sintomas somáticos", "Sintomas cognitivos"],
+      "numItens": 21,
+      "tempoMin": 10,
+      "formatoResposta": "likert_4",
+      "rangeTotal": { "min": 0, "max": 63 },
+      "faixas": [
+        { "min": 0, "max": 7, "severidade": "minima", "label": "Mínima" },
+        { "min": 8, "max": 15, "severidade": "leve", "label": "Leve" },
+        { "min": 16, "max": 25, "severidade": "moderada", "label": "Moderada" },
+        { "min": 26, "max": 63, "severidade": "severa", "label": "Severa" }
+      ],
+      "validacaoBR": true,
+      "faixaEtaria": "17+ anos",
+      "descricao": "Foco em sintomas somáticos da ansiedade. Bom para diferenciar ansiedade vs depressão.",
+      "totalAplicacoes": 8,
+      "ultimaAplicacao": "há 1 sem",
+      "favorito": false
+    },
+    {
+      "id": "dass-21",
+      "nome": "DASS-21",
+      "nomeCompleto": "Depression Anxiety Stress Scales — 21 itens",
+      "autor": "Lovibond · 1995",
+      "dominio": "stress",
+      "dimensoes": ["Depressão", "Ansiedade", "Stress"],
+      "numItens": 21,
+      "tempoMin": 7,
+      "formatoResposta": "likert_4",
+      "rangeTotal": { "min": 0, "max": 63 },
+      "faixas": [
+        { "min": 0, "max": 14, "severidade": "minima", "label": "Normal" },
+        { "min": 15, "max": 18, "severidade": "leve", "label": "Leve" },
+        { "min": 19, "max": 25, "severidade": "moderada", "label": "Moderada" },
+        { "min": 26, "max": 33, "severidade": "moderada_severa", "label": "Severa" },
+        { "min": 34, "max": 63, "severidade": "severa", "label": "Extremamente severa" }
+      ],
+      "validacaoBR": true,
+      "faixaEtaria": "Adultos",
+      "descricao": "3-em-1: depressão + ansiedade + stress em escalas separadas. Útil pra triagem geral.",
+      "totalAplicacoes": 5,
+      "ultimaAplicacao": "há 5d",
+      "favorito": false
+    },
+    {
+      "id": "moca",
+      "nome": "MoCA",
+      "nomeCompleto": "Montreal Cognitive Assessment",
+      "autor": "Nasreddine · 2005",
+      "dominio": "cognicao",
+      "dimensoes": ["Visuoespacial", "Executiva", "Nomeação", "Memória", "Atenção", "Linguagem", "Abstração", "Orientação"],
+      "numItens": 30,
+      "tempoMin": 10,
+      "formatoResposta": "multipla_escolha",
+      "rangeTotal": { "min": 0, "max": 30 },
+      "faixas": [
+        { "min": 26, "max": 30, "severidade": "minima", "label": "Cognição preservada" },
+        { "min": 18, "max": 25, "severidade": "leve", "label": "Comprometimento leve" },
+        { "min": 10, "max": 17, "severidade": "moderada", "label": "Moderado" },
+        { "min": 0, "max": 9, "severidade": "severa", "label": "Severo" }
+      ],
+      "validacaoBR": true,
+      "faixaEtaria": "55+ anos",
+      "descricao": "Triagem cognitiva sensível pra detectar comprometimento leve (anterior à demência).",
+      "totalAplicacoes": 3,
+      "ultimaAplicacao": "há 2 sem",
+      "favorito": false
+    },
+    {
+      "id": "asrs-18",
+      "nome": "ASRS-18",
+      "nomeCompleto": "Adult ADHD Self-Report Scale",
+      "autor": "Kessler · 2005 (OMS)",
+      "dominio": "tdah",
+      "dimensoes": ["Desatenção", "Hiperatividade/Impulsividade"],
+      "numItens": 18,
+      "tempoMin": 5,
+      "formatoResposta": "likert_5",
+      "rangeTotal": { "min": 0, "max": 72 },
+      "faixas": [
+        { "min": 0, "max": 16, "severidade": "minima", "label": "Pouco provável TDAH" },
+        { "min": 17, "max": 23, "severidade": "moderada", "label": "Provável TDAH" },
+        { "min": 24, "max": 72, "severidade": "severa", "label": "Altamente provável" }
+      ],
+      "validacaoBR": true,
+      "faixaEtaria": "18+ anos",
+      "descricao": "Triagem de TDAH em adultos. Os 6 primeiros itens (Parte A) já têm bom poder preditivo.",
+      "totalAplicacoes": 2,
+      "ultimaAplicacao": "há 3 sem",
+      "favorito": false
+    },
+    {
+      "id": "pss-10",
+      "nome": "PSS-10",
+      "nomeCompleto": "Perceived Stress Scale — 10 itens",
+      "autor": "Cohen · 1983",
+      "dominio": "stress",
+      "dimensoes": ["Stress percebido"],
+      "numItens": 10,
+      "tempoMin": 5,
+      "formatoResposta": "likert_5",
+      "rangeTotal": { "min": 0, "max": 40 },
+      "faixas": [
+        { "min": 0, "max": 13, "severidade": "minima", "label": "Stress baixo" },
+        { "min": 14, "max": 26, "severidade": "moderada", "label": "Moderado" },
+        { "min": 27, "max": 40, "severidade": "severa", "label": "Alto stress" }
+      ],
+      "validacaoBR": true,
+      "faixaEtaria": "Adultos",
+      "descricao": "Mede percepção subjetiva de stress nas últimas 4 semanas. Universal e curto.",
+      "totalAplicacoes": 7,
+      "ultimaAplicacao": "há 1 sem",
+      "favorito": false
+    }
+  ],
+  "aplicacoesRecentes": [
+    {
+      "id": "ap-1",
+      "instrumento": { "id": "gad-7", "nome": "GAD-7" },
+      "paciente": { "id": "p-fernanda", "nomeCompleto": "Fernanda Lima", "inicial": "F", "fotoUrl": null },
+      "valor": 18,
+      "severidade": "severa",
+      "delta": 4,
+      "aplicadoRelativo": "há 4h"
+    },
+    {
+      "id": "ap-2",
+      "instrumento": { "id": "phq-9", "nome": "PHQ-9" },
+      "paciente": { "id": "p-pedro", "nomeCompleto": "Pedro Santos", "inicial": "P", "fotoUrl": null },
+      "valor": 17,
+      "severidade": "moderada_severa",
+      "delta": 5,
+      "aplicadoRelativo": "ontem"
+    },
+    {
+      "id": "ap-3",
+      "instrumento": { "id": "phq-9", "nome": "PHQ-9" },
+      "paciente": { "id": "p-roberto", "nomeCompleto": "Roberto Zboralski", "inicial": "R", "fotoUrl": null },
+      "valor": 8,
+      "severidade": "leve",
+      "delta": -3,
+      "aplicadoRelativo": "ontem"
+    },
+    {
+      "id": "ap-4",
+      "instrumento": { "id": "gad-7", "nome": "GAD-7" },
+      "paciente": { "id": "p-julia", "nomeCompleto": "Júlia Mendes", "inicial": "J", "fotoUrl": null },
+      "valor": 12,
+      "severidade": "moderada",
+      "delta": -2,
+      "aplicadoRelativo": "há 2d"
+    },
+    {
+      "id": "ap-5",
+      "instrumento": { "id": "bdi-ii", "nome": "BDI-II" },
+      "paciente": { "id": "p-rodrigo", "nomeCompleto": "Rodrigo Alves", "inicial": "R", "fotoUrl": null },
+      "valor": 22,
+      "severidade": "moderada",
+      "delta": null,
+      "aplicadoRelativo": "há 3d"
+    }
+  ]
+}

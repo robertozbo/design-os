@@ -1,0 +1,32 @@
+{
+  "_meta": {
+    "models": {
+      "PerfilData": "Dados pessoais do paciente — idade/sexo/altura/peso usados pra benchmarks de saúde + lista de profissionais vinculados."
+    }
+  },
+  "user": {
+    "id": "u-1",
+    "email": "roberto@nymos.com",
+    "name": "Roberto Zboralski",
+    "image": null,
+    "role": "patient",
+    "createdAt": "2025-12-09T00:00:00Z",
+    "updatedAt": "2026-05-04T00:00:00Z"
+  },
+  "nomeCompleto": "Roberto Zboralski",
+  "dataNascimento": "1990-08-15",
+  "idade": 35,
+  "sexo": "masculino",
+  "alturaCm": 181,
+  "pesoAtualKg": 78.4,
+  "pesoMedidoEm": "2026-05-04",
+  "avatarInicial": "R",
+  "fotoUrl": null,
+  "profissionaisVinculados": 2,
+  "convitesPendentes": 1,
+  "contatoEmergencia": {
+    "nome": "Marina Zboralski",
+    "relacao": "Esposa",
+    "telefone": "+55 11 98765-4321"
+  }
+}

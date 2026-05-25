@@ -27,6 +27,7 @@ const colorMap: Record<string, { light: string; base: string; dark: string }> = 
   fuchsia: { light: '#f0abfc', base: '#d946ef', dark: '#c026d3' },
   pink: { light: '#f9a8d4', base: '#ec4899', dark: '#db2777' },
   rose: { light: '#fda4af', base: '#f43f5e', dark: '#e11d48' },
+  coral: { light: '#FFA08A', base: '#FF6A48', dark: '#E55A3C' },
   slate: { light: '#cbd5e1', base: '#64748b', dark: '#475569' },
   gray: { light: '#d1d5db', base: '#6b7280', dark: '#4b5563' },
   zinc: { light: '#d4d4d8', base: '#71717a', dark: '#52525b' },
@@ -105,7 +106,7 @@ export function DesignPage() {
                     <h4 className="text-sm font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-4">
                       Colors
                     </h4>
-                    <div className="grid grid-cols-3 gap-6">
+                    <div className={`grid gap-6 ${designSystem.colors.accent ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-3'}`}>
                       <ColorSwatch
                         label="Primary"
                         colorName={designSystem.colors.primary}
@@ -114,6 +115,12 @@ export function DesignPage() {
                         label="Secondary"
                         colorName={designSystem.colors.secondary}
                       />
+                      {designSystem.colors.accent && (
+                        <ColorSwatch
+                          label="Accent"
+                          colorName={designSystem.colors.accent}
+                        />
+                      )}
                       <ColorSwatch
                         label="Neutral"
                         colorName={designSystem.colors.neutral}

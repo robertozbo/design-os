@@ -1,0 +1,28 @@
+export { MinhaSaudePaciente } from './MinhaSaudePaciente'
+export { Hero } from './Hero'
+export { Tabs } from './Tabs'
+export { ScoreGauge } from './ScoreGauge'
+export { IdadesCard } from './IdadesCard'
+export { DimensionsCountCard } from './DimensionsCountCard'
+export { PeriodFilter } from './PeriodFilter'
+export { DimensionCard } from './DimensionCard'
+export { SerieChart } from './SerieChart'
+export { NarrativeCard } from './NarrativeCard'
+export { EmptyState } from './EmptyState'
+export { EstadoAtualTab } from './EstadoAtualTab'
+export { AnalisesTab } from './AnalisesTab'
+export { EvolucaoTab } from './EvolucaoTab'
+export { CompararTab } from './CompararTab'
+
+// Snapshot & comparison primitives (paridade com mobile)
+export { SnapshotRow } from './SnapshotRow'
+export { SnapshotPicker } from './SnapshotPicker'
+export { FreshnessCard } from './FreshnessCard'
+export { DiffRow } from './DiffRow'
+export { FotosCompare } from './FotosCompare'
+export { FotosTimeline } from './FotosTimeline'
+
+// Projeção Corporal (Nano Banana) + LGPD
+export { ConsentimentoModal } from './ConsentimentoModal'
+export { ProjecaoCard } from './ProjecaoCard'
+export { ProjecaoPromptModal } from './ProjecaoPromptModal'

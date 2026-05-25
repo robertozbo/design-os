@@ -1,0 +1,7 @@
+{
+  "_meta": {
+    "description": "Section Upgrade — checkout fullscreen do Stripe. Reaproveita data dos tiers de /plano."
+  },
+  "tierAlvo": "pro",
+  "ciclo": "monthly"
+}

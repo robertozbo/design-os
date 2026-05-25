@@ -7,6 +7,11 @@ import { SectionPage } from '@/components/SectionPage'
 import { ScreenDesignPage, ScreenDesignFullscreen } from '@/components/ScreenDesignPage'
 import { ShellDesignPage, ShellDesignFullscreen } from '@/components/ShellDesignPage'
 import { ExportPage } from '@/components/ExportPage'
+import { MobileSectionsPage, MobileSectionPage } from '@/components/MobilePage'
+import { PsicologoSectionsPage, PsicologoSectionPage } from '@/components/PsicologoPage'
+import { PersonalSectionsPage, PersonalSectionPage } from '@/components/PersonalPage'
+import { ClinicoSectionsPage, ClinicoSectionPage } from '@/components/ClinicoPage'
+import ClinicoShellPreview from '@/shell-clinico/ShellPreview'
 
 export const router = createBrowserRouter([
   {
@@ -48,5 +53,41 @@ export const router = createBrowserRouter([
   {
     path: '/export',
     element: <ExportPage />,
+  },
+  {
+    path: '/mobile',
+    element: <MobileSectionsPage />,
+  },
+  {
+    path: '/mobile/sections/:sectionId',
+    element: <MobileSectionPage />,
+  },
+  {
+    path: '/psicologo',
+    element: <PsicologoSectionsPage />,
+  },
+  {
+    path: '/psicologo/sections/:sectionId',
+    element: <PsicologoSectionPage />,
+  },
+  {
+    path: '/personal',
+    element: <PersonalSectionsPage />,
+  },
+  {
+    path: '/personal/sections/:sectionId',
+    element: <PersonalSectionPage />,
+  },
+  {
+    path: '/clinico',
+    element: <ClinicoSectionsPage />,
+  },
+  {
+    path: '/clinico/shell',
+    element: <ClinicoShellPreview />,
+  },
+  {
+    path: '/clinico/sections/:sectionId',
+    element: <ClinicoSectionPage />,
   },
 ])

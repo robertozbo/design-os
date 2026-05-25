@@ -1,0 +1,262 @@
+{
+  "_meta": {
+    "models": {
+      "consultaFinalizada": "Atendimento já assinado e fechado, listado pelo médico para revisar produção (hoje/semana/mês). Resumo do paciente, queixa, hipótese e contadores agregados."
+    },
+    "relationships": [
+      "Cada consultaFinalizada referencia um paciente via pacienteId",
+      "Click no item abre drawer read-only reusando AtendimentoDetalheDrawer (cross-section, em pacientes)"
+    ]
+  },
+  "filtroAtivoDefault": "hoje",
+  "consultasFinalizadas": [
+    {
+      "id": "fin-001",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "pacienteIniciais": "MA",
+      "modalidade": "presencial",
+      "inicioEm": "2026-05-07T08:00:00-03:00",
+      "fimEm": "2026-05-07T08:32:00-03:00",
+      "duracaoMin": 32,
+      "assinadoEm": "2026-05-07T08:35:00-03:00",
+      "queixaPrincipal": "Retorno DM2 — fadiga progressiva e ganho ponderal de 3 kg em 6 semanas",
+      "hipoteseDiagnostica": "Hipotireoidismo subclínico em progressão (TSH 6,4); DM2 estável (HbA1c 6,8%)",
+      "prescricoesCount": 2,
+      "examesSolicitadosCount": 2,
+      "imagensAnalisadasCount": 1,
+      "geradoPorIA": true,
+      "soap": {
+        "S": "Paciente refere início insidioso de cansaço progressivo há cerca de 6 semanas, associado a sonolência diurna mesmo com sono noturno preservado. Relata ganho ponderal de 3 kg no período, sem mudança no padrão alimentar. Apresenta intolerância ao frio e constipação intermitente. Nega palpitações ou queixas cardiovasculares.",
+        "O": "PA 128x82 mmHg · FC 62 bpm · FR 16 irpm · Tax 36,4°C. Peso 78,4 kg (↑3,2 kg vs. fev/26) · IMC 29,1 · CA 92 cm. Tireoide palpável, simetricamente aumentada, sem nódulos detectáveis. Pele seca, fria em extremidades. Reflexos osteotendinosos com fase de relaxamento prolongada. TSH 6,4 mUI/L (alto), HbA1c 6,8% (meta).",
+        "A": "1) Hipotireoidismo (E03.9) em progressão de subclínico → manifesto — provável. 2) DM2 sem complicações (E11.9) — confirmada, estável. 3) Hiperlipidemia (E78.5) — provável, aguardando perfil lipídico.",
+        "P": "1) Aumentar Levotiroxina de 50mcg → 75mcg em jejum. 2) Manter Metformina 1g 2x/dia. 3) Solicitar TSH + T4 livre em 6 semanas. 4) Solicitar perfil lipídico completo. 5) Orientar paciente a NÃO ajustar dose por conta própria. 6) Retorno em 6 semanas com exames em mãos."
+      },
+      "prescricoes": [
+        {
+          "id": "prc-fin001-001",
+          "medicacao": "Levotiroxina sódica 75 mcg",
+          "posologia": "1 comprimido em jejum, 30 min antes do café da manhã",
+          "via": "Oral",
+          "duracao": "Uso contínuo",
+          "validade": "2026-11-07",
+          "memedId": "mmd-x7j2"
+        },
+        {
+          "id": "prc-fin001-002",
+          "medicacao": "Metformina 1 g (cloridrato)",
+          "posologia": "1 comprimido após almoço e jantar (2x ao dia)",
+          "via": "Oral",
+          "duracao": "Uso contínuo",
+          "validade": "2026-11-07",
+          "memedId": "mmd-x7j3"
+        }
+      ]
+    },
+    {
+      "id": "fin-002",
+      "pacienteId": "pct-005",
+      "pacienteNome": "Beatriz Souza",
+      "pacienteIniciais": "BS",
+      "modalidade": "presencial",
+      "inicioEm": "2026-05-10T09:00:00-03:00",
+      "fimEm": "2026-05-10T09:25:00-03:00",
+      "duracaoMin": 25,
+      "assinadoEm": "2026-05-10T09:27:00-03:00",
+      "queixaPrincipal": "Avaliação de tremor e palpitação",
+      "hipoteseDiagnostica": "Hipertireoidismo (Graves) — solicitar TRAb",
+      "prescricoesCount": 1,
+      "examesSolicitadosCount": 3,
+      "imagensAnalisadasCount": 0,
+      "geradoPorIA": true
+    },
+    {
+      "id": "fin-003",
+      "pacienteId": "pct-002",
+      "pacienteNome": "Paula Mendes",
+      "pacienteIniciais": "PM",
+      "modalidade": "tele",
+      "inicioEm": "2026-05-10T10:30:00-03:00",
+      "fimEm": "2026-05-10T10:48:00-03:00",
+      "duracaoMin": 18,
+      "assinadoEm": "2026-05-10T10:50:00-03:00",
+      "queixaPrincipal": "Renovação de receitas",
+      "hipoteseDiagnostica": "Quadro estável; mantém conduta",
+      "prescricoesCount": 3,
+      "examesSolicitadosCount": 0,
+      "imagensAnalisadasCount": 0,
+      "geradoPorIA": false
+    },
+    {
+      "id": "fin-004",
+      "pacienteId": "pct-006",
+      "pacienteNome": "João Ricardo Mello",
+      "pacienteIniciais": "JM",
+      "modalidade": "presencial",
+      "inicioEm": "2026-05-10T14:00:00-03:00",
+      "fimEm": "2026-05-10T14:42:00-03:00",
+      "duracaoMin": 42,
+      "assinadoEm": "2026-05-10T14:45:00-03:00",
+      "queixaPrincipal": "Primeira consulta — investigação de obesidade",
+      "hipoteseDiagnostica": "Obesidade grau II + síndrome metabólica; investigar DM2",
+      "prescricoesCount": 0,
+      "examesSolicitadosCount": 5,
+      "imagensAnalisadasCount": 0,
+      "geradoPorIA": true
+    },
+    {
+      "id": "fin-005",
+      "pacienteId": "pct-003",
+      "pacienteNome": "Carlos Tavares",
+      "pacienteIniciais": "CT",
+      "modalidade": "presencial",
+      "inicioEm": "2026-05-08T09:30:00-03:00",
+      "fimEm": "2026-05-08T10:00:00-03:00",
+      "duracaoMin": 30,
+      "assinadoEm": "2026-05-08T10:02:00-03:00",
+      "queixaPrincipal": "Avaliação de prolactinoma — RM hipófise",
+      "hipoteseDiagnostica": "Microadenoma hipofisário (5mm); manter cabergolina",
+      "prescricoesCount": 1,
+      "examesSolicitadosCount": 1,
+      "imagensAnalisadasCount": 2,
+      "geradoPorIA": true
+    },
+    {
+      "id": "fin-006",
+      "pacienteId": "pct-004",
+      "pacienteNome": "Ana Beatriz Lima",
+      "pacienteIniciais": "AL",
+      "modalidade": "tele",
+      "inicioEm": "2026-05-07T15:00:00-03:00",
+      "fimEm": "2026-05-07T15:20:00-03:00",
+      "duracaoMin": 20,
+      "assinadoEm": "2026-05-07T15:22:00-03:00",
+      "queixaPrincipal": "Retorno hipotireoidismo — TSH em ascensão",
+      "hipoteseDiagnostica": "Hipotireoidismo Hashimoto — ajuste de dose",
+      "prescricoesCount": 1,
+      "examesSolicitadosCount": 1,
+      "imagensAnalisadasCount": 0,
+      "geradoPorIA": true
+    },
+    {
+      "id": "fin-007",
+      "pacienteId": "pct-007",
+      "pacienteNome": "Lucas Pereira",
+      "pacienteIniciais": "LP",
+      "modalidade": "presencial",
+      "inicioEm": "2026-05-05T11:00:00-03:00",
+      "fimEm": "2026-05-05T11:35:00-03:00",
+      "duracaoMin": 35,
+      "assinadoEm": "2026-05-05T11:38:00-03:00",
+      "queixaPrincipal": "Hipoglicemias frequentes em uso de insulina",
+      "hipoteseDiagnostica": "DM1 com hipoglicemias noturnas; ajuste basal",
+      "prescricoesCount": 2,
+      "examesSolicitadosCount": 2,
+      "imagensAnalisadasCount": 0,
+      "geradoPorIA": true
+    },
+    {
+      "id": "fin-008",
+      "pacienteId": "pct-008",
+      "pacienteNome": "Sofia Andrade",
+      "pacienteIniciais": "SA",
+      "modalidade": "presencial",
+      "inicioEm": "2026-04-28T10:00:00-03:00",
+      "fimEm": "2026-04-28T10:30:00-03:00",
+      "duracaoMin": 30,
+      "assinadoEm": "2026-04-28T10:32:00-03:00",
+      "queixaPrincipal": "Avaliação de osteoporose pós-menopausa",
+      "hipoteseDiagnostica": "Osteopenia (T-score -2.0); iniciar bisfosfonato",
+      "prescricoesCount": 2,
+      "examesSolicitadosCount": 3,
+      "imagensAnalisadasCount": 1,
+      "geradoPorIA": true
+    },
+    {
+      "id": "fin-009",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "pacienteIniciais": "MA",
+      "modalidade": "tele",
+      "inicioEm": "2026-04-15T16:00:00-03:00",
+      "fimEm": "2026-04-15T16:18:00-03:00",
+      "duracaoMin": 18,
+      "assinadoEm": "2026-04-15T16:20:00-03:00",
+      "queixaPrincipal": "Renovação trimestral de receitas",
+      "hipoteseDiagnostica": "Quadro estável; manter conduta",
+      "prescricoesCount": 3,
+      "examesSolicitadosCount": 0,
+      "imagensAnalisadasCount": 0,
+      "geradoPorIA": false
+    },
+    {
+      "id": "fin-010",
+      "pacienteId": "pct-002",
+      "pacienteNome": "Paula Mendes",
+      "pacienteIniciais": "PM",
+      "modalidade": "presencial",
+      "inicioEm": "2026-03-22T14:00:00-03:00",
+      "fimEm": "2026-03-22T14:40:00-03:00",
+      "duracaoMin": 40,
+      "assinadoEm": "2026-03-22T14:43:00-03:00",
+      "queixaPrincipal": "Investigação de SOP",
+      "hipoteseDiagnostica": "SOP confirmada (Rotterdam); resistência insulínica",
+      "prescricoesCount": 2,
+      "examesSolicitadosCount": 4,
+      "imagensAnalisadasCount": 1,
+      "geradoPorIA": true
+    },
+    {
+      "id": "fin-011",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "pacienteIniciais": "MA",
+      "modalidade": "presencial",
+      "inicioEm": "2026-02-10T09:00:00-03:00",
+      "fimEm": "2026-02-10T09:38:00-03:00",
+      "duracaoMin": 38,
+      "assinadoEm": "2026-02-10T09:42:00-03:00",
+      "queixaPrincipal": "Primeira consulta — acompanhamento de DM2 e hipotireoidismo subclínico",
+      "hipoteseDiagnostica": "DM2 estável; hipotireoidismo subclínico em observação",
+      "prescricoesCount": 3,
+      "examesSolicitadosCount": 3,
+      "imagensAnalisadasCount": 0,
+      "geradoPorIA": false,
+      "soap": {
+        "S": "Paciente assintomática, refere boa adesão à medicação atual (Metformina + Levotiroxina). Nega cansaço, ganho ponderal recente ou intolerância ao frio. Acompanhamento de rotina.",
+        "O": "PA 124x80 mmHg · FC 68 bpm · Peso 75,2 kg · IMC 27,9 · CA 88 cm. Tireoide sem alterações palpáveis. Pele e mucosas hidratadas. TSH 4,8 mUI/L (limite superior), HbA1c 6,8% (meta).",
+        "A": "1) DM2 (E11.9) — confirmada, estável. 2) Hipotireoidismo subclínico (E03.9) — em observação, TSH no limite.",
+        "P": "1) Manter Metformina 1g 2x/dia. 2) Manter Levotiroxina 50mcg em jejum. 3) Iniciar Vit D3 7000 UI 1x/semana (vit D 22 ng/mL — baixa). 4) Solicitar TSH/T4 livre e HbA1c em 3 meses. 5) Orientação dietética com nutricionista. 6) Retorno em 3 meses."
+      },
+      "prescricoes": [
+        {
+          "id": "prc-fin011-001",
+          "medicacao": "Metformina 1 g (cloridrato)",
+          "posologia": "1 comprimido após almoço e jantar (2x ao dia)",
+          "via": "Oral",
+          "duracao": "Uso contínuo",
+          "validade": "2026-08-10",
+          "memedId": "mmd-a1b2"
+        },
+        {
+          "id": "prc-fin011-002",
+          "medicacao": "Levotiroxina sódica 50 mcg",
+          "posologia": "1 comprimido em jejum, 30 min antes do café da manhã",
+          "via": "Oral",
+          "duracao": "Uso contínuo",
+          "validade": "2026-08-10",
+          "memedId": "mmd-a1b3"
+        },
+        {
+          "id": "prc-fin011-003",
+          "medicacao": "Vitamina D3 7000 UI",
+          "posologia": "1 cápsula 1x por semana (mesmo dia da semana)",
+          "via": "Oral",
+          "duracao": "12 semanas",
+          "validade": "2026-08-10",
+          "memedId": "mmd-a1b4"
+        }
+      ]
+    }
+  ]
+}

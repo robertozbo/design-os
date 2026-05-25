@@ -1,0 +1,340 @@
+{
+  "_meta": {
+    "models": {
+      "greeting": "Cabeçalho contextual com nome do personal, saudação por hora e data formatada.",
+      "kpis": "Métricas do mês: alunos ativos, sessões realizadas, MRR estimado, novas indicações.",
+      "agendaItem": "Sessão agendada para hoje (treino, avaliação ou primeira consulta) com horário, aluno, modalidade, status.",
+      "alunoRisco": "Aluno que precisa atenção — agrupado por critério (adesão baixa, sem sessão, dor, reavaliação atrasada).",
+      "proximaReavaliacao": "Aluno cuja próxima avaliação está próxima ou atrasada (>60 dias da última).",
+      "notaDiario": "Nota livre do diário do dia, com checkbox e timestamp.",
+      "atividadeEvento": "Evento recente na carteira (sessão completa/pulada, mensagem, indicação aceita, comentário de dor)."
+    },
+    "relationships": [
+      "AgendaItem referencia um Aluno (alunoResumo)",
+      "AlunoRisco referencia um Aluno + carrega critério de risco e severidade",
+      "AtividadeEvento referencia um Aluno + carrega tipo de evento",
+      "Kpis carrega comparações com o mês anterior (delta)"
+    ]
+  },
+  "greeting": {
+    "nome": "Roberto",
+    "saudacao": "Boa tarde",
+    "dataFormatada": "Quarta-feira, 6 de maio de 2026",
+    "dataISO": "2026-05-06"
+  },
+  "kpis": {
+    "alunosAtivos": { "atual": 14, "anterior": 12, "delta": 2 },
+    "sessoes": { "realizadas": 38, "alvoMes": 60, "percentual": 63 },
+    "mrr": {
+      "centavosAtual": 142000,
+      "centavosAnterior": 119800,
+      "delta": 22200,
+      "moeda": "BRL"
+    },
+    "indicacoes": { "aceitas": 3, "pendentes": 2 }
+  },
+  "atalhos": ["nova-avaliacao", "novo-treino", "convidar-aluno", "anotar"],
+  "agenda": [
+    {
+      "id": "ses-h-001",
+      "hora": "08:00",
+      "duracaoMin": 60,
+      "aluno": {
+        "id": "alu-003",
+        "nome": "Carlos Mendes",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos+Mendes&backgroundColor=8b5cf6"
+      },
+      "tipo": "treino",
+      "treinoLetra": "A",
+      "treinoNome": "Squat-foco",
+      "modalidade": "presencial",
+      "status": "realizada",
+      "local": "Studio Vila Olímpia"
+    },
+    {
+      "id": "ses-h-002",
+      "hora": "09:30",
+      "duracaoMin": 60,
+      "aluno": {
+        "id": "alu-001",
+        "nome": "João Silva",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6"
+      },
+      "tipo": "treino",
+      "treinoLetra": "B",
+      "treinoNome": "Costas e Bíceps",
+      "modalidade": "presencial",
+      "status": "realizada",
+      "local": "Cia Athletica Faria Lima"
+    },
+    {
+      "id": "ses-h-003",
+      "hora": "11:00",
+      "duracaoMin": 90,
+      "aluno": {
+        "id": "alu-005",
+        "nome": "Pedro Santos",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Pedro+Santos&backgroundColor=06b6d4"
+      },
+      "tipo": "primeira-consulta",
+      "modalidade": "presencial",
+      "status": "realizada",
+      "local": "Studio Vila Olímpia"
+    },
+    {
+      "id": "ses-h-004",
+      "hora": "15:00",
+      "duracaoMin": 60,
+      "aluno": {
+        "id": "alu-002",
+        "nome": "Maria Costa",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899"
+      },
+      "tipo": "treino",
+      "treinoLetra": "A",
+      "treinoNome": "Full-body",
+      "modalidade": "presencial",
+      "status": "confirmada",
+      "local": "Cia Athletica Faria Lima"
+    },
+    {
+      "id": "ses-h-005",
+      "hora": "17:00",
+      "duracaoMin": 75,
+      "aluno": {
+        "id": "alu-006",
+        "nome": "Beatriz Almeida",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Beatriz+Almeida&backgroundColor=d946ef"
+      },
+      "tipo": "avaliacao",
+      "modalidade": "presencial",
+      "status": "agendada",
+      "local": "Studio Vila Olímpia"
+    },
+    {
+      "id": "ses-h-006",
+      "hora": "19:00",
+      "duracaoMin": 45,
+      "aluno": {
+        "id": "alu-007",
+        "nome": "Rafael Lima",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Rafael+Lima&backgroundColor=f97316"
+      },
+      "tipo": "treino",
+      "treinoLetra": "C",
+      "treinoNome": "Pernas",
+      "modalidade": "online",
+      "status": "agendada"
+    }
+  ],
+  "alunosRisco": [
+    {
+      "alunoId": "alu-002",
+      "aluno": {
+        "id": "alu-002",
+        "nome": "Maria Costa",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899"
+      },
+      "criterio": "adesao-baixa",
+      "motivo": "Adesão de 67% — caiu de 85% no mês anterior",
+      "desde": "há 12 dias",
+      "severidade": "media"
+    },
+    {
+      "alunoId": "alu-007",
+      "aluno": {
+        "id": "alu-007",
+        "nome": "Rafael Lima",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Rafael+Lima&backgroundColor=f97316"
+      },
+      "criterio": "sem-sessao",
+      "motivo": "Sem sessão registrada há 9 dias",
+      "desde": "última: 27/abr",
+      "severidade": "alta"
+    },
+    {
+      "alunoId": "alu-004",
+      "aluno": {
+        "id": "alu-004",
+        "nome": "Ana Oliveira",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Ana+Oliveira&backgroundColor=f59e0b"
+      },
+      "criterio": "dor",
+      "motivo": "Comentário recente: dor leve no movimento de elevação lateral",
+      "desde": "há 3 dias",
+      "severidade": "alta"
+    },
+    {
+      "alunoId": "alu-008",
+      "aluno": {
+        "id": "alu-008",
+        "nome": "Júlia Ferreira",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Julia+Ferreira&backgroundColor=84cc16"
+      },
+      "criterio": "reavaliacao-atrasada",
+      "motivo": "Reavaliação atrasada — última há 78 dias (alvo: 60)",
+      "desde": "atrasada há 18 dias",
+      "severidade": "baixa"
+    }
+  ],
+  "proximasReavaliacoes": [
+    {
+      "alunoId": "alu-008",
+      "aluno": {
+        "id": "alu-008",
+        "nome": "Júlia Ferreira",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Julia+Ferreira&backgroundColor=84cc16"
+      },
+      "ultimaAvaliacaoData": "2026-02-17",
+      "diasDesdeUltima": 78,
+      "status": "atrasada",
+      "diasParaOuDesdePrazo": 18
+    },
+    {
+      "alunoId": "alu-002",
+      "aluno": {
+        "id": "alu-002",
+        "nome": "Maria Costa",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899"
+      },
+      "ultimaAvaliacaoData": "2026-05-04",
+      "diasDesdeUltima": 2,
+      "status": "proxima",
+      "diasParaOuDesdePrazo": 58
+    },
+    {
+      "alunoId": "alu-003",
+      "aluno": {
+        "id": "alu-003",
+        "nome": "Carlos Mendes",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos+Mendes&backgroundColor=8b5cf6"
+      },
+      "ultimaAvaliacaoData": "2026-04-20",
+      "diasDesdeUltima": 16,
+      "status": "proxima",
+      "diasParaOuDesdePrazo": 44
+    },
+    {
+      "alunoId": "alu-007",
+      "aluno": {
+        "id": "alu-007",
+        "nome": "Rafael Lima",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Rafael+Lima&backgroundColor=f97316"
+      },
+      "ultimaAvaliacaoData": "2026-03-14",
+      "diasDesdeUltima": 53,
+      "status": "proxima",
+      "diasParaOuDesdePrazo": 7
+    }
+  ],
+  "diario": [
+    {
+      "id": "n-001",
+      "texto": "Comprar fita métrica nova — quebrou a antiga na avaliação do Pedro",
+      "criadoEm": "2026-05-06T11:42:00",
+      "feita": false
+    },
+    {
+      "id": "n-002",
+      "texto": "Confirmar com Beatriz se ela trouxe roupa pras fotos da avaliação",
+      "criadoEm": "2026-05-06T13:15:00",
+      "feita": false
+    },
+    {
+      "id": "n-003",
+      "texto": "Mandar mensagem pro Rafael — sumiu, ver se vai vir 19h",
+      "criadoEm": "2026-05-06T14:20:00",
+      "feita": true
+    }
+  ],
+  "atividadeRecente": [
+    {
+      "id": "ev-001",
+      "tipo": "sessao-completa",
+      "aluno": {
+        "id": "alu-001",
+        "nome": "João Silva",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6"
+      },
+      "descricao": "concluiu Treino B · 47min · RPE 7.3",
+      "timestamp": "há 6 horas"
+    },
+    {
+      "id": "ev-002",
+      "tipo": "sessao-completa",
+      "aluno": {
+        "id": "alu-003",
+        "nome": "Carlos Mendes",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Carlos+Mendes&backgroundColor=8b5cf6"
+      },
+      "descricao": "concluiu Squat-foco · streak de 22 sessões",
+      "timestamp": "há 7 horas"
+    },
+    {
+      "id": "ev-003",
+      "tipo": "comentario-dor",
+      "aluno": {
+        "id": "alu-004",
+        "nome": "Ana Oliveira",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Ana+Oliveira&backgroundColor=f59e0b"
+      },
+      "descricao": "relatou dor leve no ombro durante elevação lateral",
+      "timestamp": "ontem · 18:42"
+    },
+    {
+      "id": "ev-004",
+      "tipo": "avaliacao-completa",
+      "aluno": {
+        "id": "alu-002",
+        "nome": "Maria Costa",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Maria+Costa&backgroundColor=ec4899"
+      },
+      "descricao": "completou avaliação — perdeu 5kg em 90 dias",
+      "timestamp": "ontem · 10:15"
+    },
+    {
+      "id": "ev-005",
+      "tipo": "indicacao-aceita",
+      "aluno": {
+        "id": "alu-008",
+        "nome": "Júlia Ferreira",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Julia+Ferreira&backgroundColor=84cc16"
+      },
+      "descricao": "aceitou convite e baixou o app",
+      "timestamp": "anteontem"
+    },
+    {
+      "id": "ev-006",
+      "tipo": "mensagem",
+      "aluno": {
+        "id": "alu-005",
+        "nome": "Pedro Santos",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Pedro+Santos&backgroundColor=06b6d4"
+      },
+      "descricao": "enviou mensagem: \"valeu pela primeira sessão!\"",
+      "timestamp": "anteontem"
+    },
+    {
+      "id": "ev-007",
+      "tipo": "sessao-pulada",
+      "aluno": {
+        "id": "alu-007",
+        "nome": "Rafael Lima",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Rafael+Lima&backgroundColor=f97316"
+      },
+      "descricao": "pulou Treino C sem aviso",
+      "timestamp": "há 3 dias"
+    },
+    {
+      "id": "ev-008",
+      "tipo": "sessao-completa",
+      "aluno": {
+        "id": "alu-001",
+        "nome": "João Silva",
+        "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Joao+Silva&backgroundColor=14b8a6"
+      },
+      "descricao": "concluiu Treino A · subiu 5kg no supino",
+      "timestamp": "há 4 dias"
+    }
+  ]
+}

@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Tailwind v4 respects .gitignore — force-scan prototype folders that are
+   gitignored but need their classes generated (clinico/mobile/personal/psicologo). */
+@source "./sections-clinico/**/*.{ts,tsx}";
+@source "./sections-mobile/**/*.{ts,tsx}";
+@source "./sections-personal/**/*.{ts,tsx}";
+@source "./sections-psicologo/**/*.{ts,tsx}";
+@source "./shell-clinico/**/*.{ts,tsx}";
+
 @custom-variant dark (&:is(.dark *));
 
 /*
@@ -205,5 +213,37 @@
     to {
       height: 0;
     }
+  }
+
+  /* IA scan animations — varredura da imagem médica durante análise IA */
+  @keyframes ia-scan-y {
+    0%   { top: 0%; }
+    50%  { top: calc(100% - 3px); }
+    100% { top: 0%; }
+  }
+  @keyframes ia-scan-x {
+    0%   { left: 0%; }
+    50%  { left: calc(100% - 3px); }
+    100% { left: 0%; }
+  }
+  @keyframes ia-trail-y {
+    0%, 100% { top: -120px; }
+    50%      { top: calc(100% - 120px); }
+  }
+  @keyframes ia-corner-pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.08); }
+  }
+  @keyframes ia-grid-fade {
+    0%, 100% { opacity: 0.18; }
+    50%      { opacity: 0.42; }
+  }
+  @keyframes ia-dim-pulse {
+    0%, 100% { opacity: 0.55; }
+    50%      { opacity: 0.32; }
+  }
+  @keyframes ia-blip {
+    0%, 100% { opacity: 0; transform: scale(0.6); }
+    20%, 80% { opacity: 1; transform: scale(1); }
   }
 }

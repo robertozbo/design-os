@@ -70,6 +70,11 @@ const SUB_PAGE_CONFIG: Record<string, SubPageConfig> = {
     title: 'Medicação',
     subtitle: 'Prescrição, doses do dia e adesão',
   },
+  exames: {
+    title: 'Exames',
+    subtitle: 'Laudos, extração IA e histórico',
+    rightAction: 'search-and-add',
+  },
   plano: {
     title: 'Plano',
     subtitle: 'Assinatura e pagamentos',

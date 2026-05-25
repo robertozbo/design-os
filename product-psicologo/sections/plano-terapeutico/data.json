@@ -1,0 +1,122 @@
+{
+  "_meta": {
+    "description": "Plano terapêutico estruturado do paciente — objetivo principal, SMART goals, técnicas, indicadores, versões."
+  },
+  "paciente": {
+    "id": "p-pedro",
+    "nomeCompleto": "Pedro Santos",
+    "inicial": "P",
+    "fotoUrl": null,
+    "idade": 42
+  },
+  "plano": {
+    "nome": "TCC para Depressão Moderada",
+    "abordagem": "tcc",
+    "status": "em_curso",
+    "versaoAtual": 2,
+    "criadoEm": "2026-03-15",
+    "sessaoAtual": 5,
+    "totalSessoes": 12,
+    "frequencia": "semanal"
+  },
+  "objetivoPrincipal": "Reduzir sintomas depressivos pra faixa mínima/leve (PHQ-9 ≤ 9) e desenvolver habilidades de enfrentamento sustentáveis pra prevenir recaídas.",
+  "objetivosSmart": [
+    {
+      "id": "obj-1",
+      "especifico": "Reduzir sintomas depressivos medidos pelo PHQ-9",
+      "indicador": { "instrumento": "PHQ-9", "valorAtual": 17, "valorAlvo": 9, "direcao": "reduzir" },
+      "relevancia": "Indicador primário do quadro depressivo — alinha com objetivo principal",
+      "prazo": "2026-07-15",
+      "status": "em_andamento",
+      "progresso": 0.15
+    },
+    {
+      "id": "obj-2",
+      "especifico": "Identificar e reformular pensamentos automáticos no contexto profissional",
+      "indicador": { "instrumento": "Registros TCC/sem", "valorAtual": 3, "valorAlvo": 7, "direcao": "aumentar" },
+      "relevancia": "Trabalho identificado como gatilho principal — diretamente ligado ao objetivo geral",
+      "prazo": "2026-06-15",
+      "status": "em_andamento",
+      "progresso": 0.42
+    },
+    {
+      "id": "obj-3",
+      "especifico": "Aumentar atividades prazerosas/de domínio (ativação comportamental)",
+      "indicador": { "instrumento": "Atividades positivas/sem", "valorAtual": 5, "valorAlvo": 10, "direcao": "aumentar" },
+      "relevancia": "Anedonia presente · técnica core pra depressão moderada",
+      "prazo": "2026-05-30",
+      "status": "em_andamento",
+      "progresso": 0.5
+    },
+    {
+      "id": "obj-4",
+      "especifico": "Restabelecer padrão de sono regular (7-8h, dormir antes 23h)",
+      "indicador": { "instrumento": "Adesão semanal %", "valorAtual": 30, "valorAlvo": 80, "direcao": "aumentar" },
+      "relevancia": "Sono fragmentado mantém ciclo depressivo · sinaliza gravidade",
+      "prazo": "2026-06-30",
+      "status": "em_andamento",
+      "progresso": 0.37
+    },
+    {
+      "id": "obj-5",
+      "especifico": "Discutir e processar conflito conjugal recente (sessão dedicada)",
+      "indicador": { "instrumento": "Sessões dedicadas", "valorAtual": 0, "valorAlvo": 2, "direcao": "aumentar" },
+      "relevancia": "Gatilho identificado em S5 — bloqueio emocional impede progresso geral",
+      "prazo": "2026-05-30",
+      "status": "em_andamento",
+      "progresso": 0
+    }
+  ],
+  "tecnicas": [
+    { "id": "tec-1", "nome": "Reestruturação Cognitiva", "abordagem": "tcc", "vezesPlanejadas": 8, "vezesAplicadas": 3 },
+    { "id": "tec-2", "nome": "Registro de Pensamentos", "abordagem": "tcc", "vezesPlanejadas": 12, "vezesAplicadas": 5 },
+    { "id": "tec-3", "nome": "Ativação Comportamental", "abordagem": "tcc", "vezesPlanejadas": 6, "vezesAplicadas": 2 },
+    { "id": "tec-4", "nome": "Mindfulness da Respiração", "abordagem": "mindfulness", "vezesPlanejadas": 5, "vezesAplicadas": 1 },
+    { "id": "tec-5", "nome": "Resolução de Problemas", "abordagem": "tcc", "vezesPlanejadas": 3, "vezesAplicadas": 0 }
+  ],
+  "indicadores": [
+    {
+      "instrumento": "PHQ-9",
+      "direcao": "reduzir",
+      "linhaBase": 19,
+      "atual": 17,
+      "alvo": 9,
+      "pontos": [
+        { "data": "2026-03-15", "valor": 19 },
+        { "data": "2026-04-01", "valor": 18 },
+        { "data": "2026-04-15", "valor": 12 },
+        { "data": "2026-04-29", "valor": 12 },
+        { "data": "2026-05-03", "valor": 17 }
+      ]
+    },
+    {
+      "instrumento": "GAD-7",
+      "direcao": "reduzir",
+      "linhaBase": 16,
+      "atual": 14,
+      "alvo": 7,
+      "pontos": [
+        { "data": "2026-03-15", "valor": 16 },
+        { "data": "2026-04-01", "valor": 15 },
+        { "data": "2026-04-15", "valor": 13 },
+        { "data": "2026-04-29", "valor": 14 }
+      ]
+    }
+  ],
+  "versoes": [
+    {
+      "versao": 2,
+      "criadaEm": "2026-04-29",
+      "criadaPor": "Dra. Marina Silva",
+      "resumoMudancas": "Adicionado objetivo dedicado ao conflito conjugal · expandido total de sessões de 10 → 12 · técnica EMDR removida (não pertinente)",
+      "ehAtual": true
+    },
+    {
+      "versao": 1,
+      "criadaEm": "2026-03-15",
+      "criadaPor": "Dra. Marina Silva",
+      "resumoMudancas": "Versão inicial · 4 objetivos SMART · 4 técnicas · 10 sessões previstas",
+      "ehAtual": false
+    }
+  ]
+}

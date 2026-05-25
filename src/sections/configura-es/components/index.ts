@@ -1,0 +1,6 @@
+export { ConfiguracoesPage } from './ConfiguracoesPage'
+export { NotificacoesPanel } from './NotificacoesPanel'
+export { IntegracoesPanel } from './IntegracoesPanel'
+export { InterfacePanel } from './InterfacePanel'
+export { SegurancaPanel } from './SegurancaPanel'
+export { PrivacidadePanel } from './PrivacidadePanel'

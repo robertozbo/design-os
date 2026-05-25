@@ -1,0 +1,142 @@
+{
+  "_meta": {
+    "models": {
+      "PlanoData": "Estado da seção Plano — tiers disponíveis + assinatura atual + métodos de pagamento + faturas.",
+      "PlanoTierConfig": "Configuração de cada tier (Free/Plus/Pro) com preços mensal/anual, features e flag de recomendação.",
+      "AssinaturaAtual": "Status atual da assinatura do usuário (active/trialing/cancelled/etc) + datas críticas."
+    },
+    "relationships": [
+      "Backend: subscriptionPlans (Stripe products) + userPlans (active subscription) + paymentMethods + paymentTransactions",
+      "Stripe price IDs vêm do env (STRIPE_PRICE_PLUS_BRL_MONTHLY, etc.)",
+      "Webhook customer.subscription.updated mantém AssinaturaAtual sincronizada"
+    ]
+  },
+  "tiers": [
+    {
+      "tier": "free",
+      "label": "Free",
+      "tagline": "Comece gratuitamente",
+      "cor": "slate",
+      "precoMensal": {
+        "valorCentavos": 0,
+        "moeda": "BRL",
+        "stripePriceId": null,
+        "label": "Grátis"
+      },
+      "precoAnual": null,
+      "descontoAnualPct": null,
+      "features": [
+        { "texto": "Diário manual de alimentação e atividades", "incluso": true, "destaque": true },
+        { "texto": "Métricas básicas (peso, IMC manual)", "incluso": true },
+        { "texto": "1 análise de saúde por mês", "incluso": true },
+        { "texto": "Vinculação com profissional", "incluso": false },
+        { "texto": "Sync com Apple Health / Health Connect", "incluso": false },
+        { "texto": "IA pra extração de dados (balança, exames)", "incluso": false },
+        { "texto": "Projeção corporal IA", "incluso": false }
+      ]
+    },
+    {
+      "tier": "plus",
+      "label": "Plus",
+      "tagline": "Acompanhamento profissional",
+      "cor": "teal",
+      "precoMensal": {
+        "valorCentavos": 4990,
+        "moeda": "BRL",
+        "stripePriceId": "price_plus_brl_monthly",
+        "label": "R$ 49,90/mês"
+      },
+      "precoAnual": {
+        "valorCentavos": 47880,
+        "moeda": "BRL",
+        "stripePriceId": "price_plus_brl_yearly",
+        "label": "R$ 478,80/ano",
+        "labelMensalEquivalente": "R$ 39,90/mês equivalente"
+      },
+      "descontoAnualPct": 20,
+      "features": [
+        { "texto": "Tudo do Free, e mais:", "incluso": true },
+        { "texto": "Vinculação com nutri, personal, médico, psicólogo", "incluso": true, "destaque": true },
+        { "texto": "Sync com Apple Health / Health Connect", "incluso": true, "destaque": true },
+        { "texto": "Plano nutricional do profissional", "incluso": true },
+        { "texto": "Treinos prescritos pelo personal", "incluso": true },
+        { "texto": "Análises de saúde ilimitadas (com gate de dados)", "incluso": true },
+        { "texto": "IA pra extração de dados (balança, exames)", "incluso": false },
+        { "texto": "Projeção corporal IA", "incluso": false }
+      ]
+    },
+    {
+      "tier": "pro",
+      "label": "Pro",
+      "tagline": "Toda a inteligência Nymos",
+      "cor": "violet",
+      "recomendado": true,
+      "precoMensal": {
+        "valorCentavos": 9990,
+        "moeda": "BRL",
+        "stripePriceId": "price_pro_brl_monthly",
+        "label": "R$ 99,90/mês"
+      },
+      "precoAnual": {
+        "valorCentavos": 95880,
+        "moeda": "BRL",
+        "stripePriceId": "price_pro_brl_yearly",
+        "label": "R$ 958,80/ano",
+        "labelMensalEquivalente": "R$ 79,90/mês equivalente"
+      },
+      "descontoAnualPct": 20,
+      "features": [
+        { "texto": "Tudo do Plus, e mais:", "incluso": true },
+        { "texto": "IA ilimitada — OCR de balança, glicemia, pressão", "incluso": true, "destaque": true },
+        { "texto": "Análise antropométrica completa (bioimpedância)", "incluso": true, "destaque": true },
+        { "texto": "Projeção corporal IA (Nano Banana)", "incluso": true, "destaque": true },
+        { "texto": "Histórico de exames ilimitado", "incluso": true },
+        { "texto": "Análise comparativa avançada", "incluso": true },
+        { "texto": "Suporte prioritário", "incluso": true }
+      ]
+    }
+  ],
+  "assinaturaAtual": {
+    "tier": "plus",
+    "status": "active",
+    "stripeSubscriptionId": "sub_1NcXyZBz...",
+    "ciclo": "monthly",
+    "renovaEm": "2026-06-04",
+    "canceladoEm": null,
+    "emTrial": false,
+    "trialAteEm": null
+  },
+  "metodosPagamento": [
+    {
+      "id": "pm_1NcXyZ",
+      "tipo": "credit_card",
+      "bandeira": "visa",
+      "ultimos4": "4242",
+      "vencimento": "12/28",
+      "isDefault": true
+    }
+  ],
+  "faturas": [
+    {
+      "id": "in_1NcXyZ",
+      "data": "2026-05-04",
+      "valor": "R$ 49,90",
+      "status": "paid",
+      "invoicePdfUrl": "https://invoice.stripe.com/i/acct_1.../in_1NcXyZ"
+    },
+    {
+      "id": "in_1NcAbc",
+      "data": "2026-04-04",
+      "valor": "R$ 49,90",
+      "status": "paid",
+      "invoicePdfUrl": "https://invoice.stripe.com/i/acct_1.../in_1NcAbc"
+    },
+    {
+      "id": "in_1NcDef",
+      "data": "2026-03-04",
+      "valor": "R$ 49,90",
+      "status": "paid",
+      "invoicePdfUrl": "https://invoice.stripe.com/i/acct_1.../in_1NcDef"
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "_meta": {
+    "models": {
+      "thread": "Conversa contínua entre um paciente e o consultório, escopada a um canal (clínico ou admin). Tem últimaMensagem (preview), contagem de não-lidas, e status (ativa/arquivada).",
+      "mensagem": "Item individual de uma thread. Tem autor (paciente, médico, secretária, sistema), conteúdo, timestamp, status de envio e anexos opcionais.",
+      "anexo": "Arquivo anexado a uma mensagem (imagem ou PDF) — só permitido no canal clínico no V1, até 10MB e 3 por mensagem.",
+      "contadoresCanais": "Resumo de não-lidas por canal pra mostrar nos tabs."
+    },
+    "relationships": [
+      "Paciente tem N Threads (uma por canal, no máximo 2 ativas por vez).",
+      "Thread tem N Mensagens cronológicas.",
+      "Mensagem do médico/secretária tem status (enviada/entregue); do paciente NÃO tem status (privacidade).",
+      "Mensagem do sistema é gerada automaticamente (exame chegou, consulta confirmada, etc.) e não tem status.",
+      "Canal Clínico só é visível para médico + paciente; canal Admin para secretária + paciente."
+    ]
+  },
+  "persona": "medico",
+  "canalAtivo": "clinico",
+  "contadores": {
+    "clinico": 4,
+    "admin": 2,
+    "arquivadas": 12
+  },
+  "threads": [
+    {
+      "id": "th-maria-clin",
+      "paciente": {
+        "id": "pct-maria",
+        "nome": "Maria Silva Andrade",
+        "iniciais": "MA",
+        "idade": 45,
+        "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Hipotireoidismo"],
+        "statusApp": "vinculado"
+      },
+      "canal": "clinico",
+      "status": "ativa",
+      "ultimaMensagem": {
+        "autor": "paciente",
+        "conteudo": "Dr. Pedro, tô medindo a glicemia em jejum e tá vindo entre 145 e 160 essa semana. É normal?",
+        "enviadaEm": "2026-05-10T08:42:00-03:00"
+      },
+      "naoLidas": 2,
+      "atualizadaEm": "2026-05-10T08:42:00-03:00"
+    },
+    {
+      "id": "th-joao-clin",
+      "paciente": {
+        "id": "pct-joao",
+        "nome": "João Ricardo Mello",
+        "iniciais": "JM",
+        "idade": 52,
+        "condicoesCronicas": ["Dislipidemia", "Hipertensão"],
+        "statusApp": "vinculado"
+      },
+      "canal": "clinico",
+      "status": "ativa",
+      "ultimaMensagem": {
+        "autor": "medico",
+        "conteudo": "João, recebi seu exame. TSH e T4 estão ótimos. Mantenha a Levo 75mcg.",
+        "enviadaEm": "2026-05-10T07:15:00-03:00"
+      },
+      "naoLidas": 0,
+      "atualizadaEm": "2026-05-10T07:15:00-03:00"
+    },
+    {
+      "id": "th-sofia-clin",
+      "paciente": {
+        "id": "pct-sofia",
+        "nome": "Sofia Andrade",
+        "iniciais": "SA",
+        "idade": 28,
+        "condicoesCronicas": ["SOP"],
+        "statusApp": "vinculado"
+      },
+      "canal": "clinico",
+      "status": "ativa",
+      "ultimaMensagem": {
+        "autor": "sistema",
+        "conteudo": "Exame recebido · Perfil hormonal (LH/FSH/Testosterona)",
+        "enviadaEm": "2026-05-09T16:30:00-03:00"
+      },
+      "naoLidas": 1,
+      "atualizadaEm": "2026-05-09T16:30:00-03:00"
+    },
+    {
+      "id": "th-paula-clin",
+      "paciente": {
+        "id": "pct-paula",
+        "nome": "Paula Mendes",
+        "iniciais": "PM",
+        "idade": 38,
+        "condicoesCronicas": ["Obesidade", "Pré-diabetes"],
+        "statusApp": "vinculado"
+      },
+      "canal": "clinico",
+      "status": "ativa",
+      "ultimaMensagem": {
+        "autor": "paciente",
+        "conteudo": "Dr., comecei o Ozempic 0,25mg semana passada. Senti um pouco de náusea no primeiro dia.",
+        "enviadaEm": "2026-05-08T19:22:00-03:00"
+      },
+      "naoLidas": 1,
+      "atualizadaEm": "2026-05-08T19:22:00-03:00"
+    },
+    {
+      "id": "th-lucas-admin",
+      "paciente": {
+        "id": "pct-lucas",
+        "nome": "Lucas Pereira",
+        "iniciais": "LP",
+        "idade": 41,
+        "statusApp": "vinculado"
+      },
+      "canal": "admin",
+      "status": "ativa",
+      "ultimaMensagem": {
+        "autor": "paciente",
+        "conteudo": "Oi! Consigo remarcar a consulta da quinta-feira pra próxima semana? Surgiu algo no trabalho.",
+        "enviadaEm": "2026-05-10T10:05:00-03:00"
+      },
+      "naoLidas": 1,
+      "atualizadaEm": "2026-05-10T10:05:00-03:00"
+    },
+    {
+      "id": "th-renata-admin",
+      "paciente": {
+        "id": "pct-renata",
+        "nome": "Renata Costa",
+        "iniciais": "RC",
+        "idade": 34,
+        "statusApp": "vinculado"
+      },
+      "canal": "admin",
+      "status": "ativa",
+      "ultimaMensagem": {
+        "autor": "secretaria",
+        "conteudo": "Renata, enviei o link de pagamento por PIX. Recibo digital após confirmação.",
+        "enviadaEm": "2026-05-09T14:48:00-03:00"
+      },
+      "naoLidas": 0,
+      "atualizadaEm": "2026-05-09T14:48:00-03:00"
+    },
+    {
+      "id": "th-felipe-admin",
+      "paciente": {
+        "id": "pct-felipe",
+        "nome": "Felipe Vasconcelos",
+        "iniciais": "FV",
+        "idade": 47,
+        "statusApp": "convite-pendente"
+      },
+      "canal": "admin",
+      "status": "ativa",
+      "ultimaMensagem": {
+        "autor": "paciente",
+        "conteudo": "Bom dia, qual o valor da primeira consulta com endocrinologista?",
+        "enviadaEm": "2026-05-08T09:10:00-03:00"
+      },
+      "naoLidas": 1,
+      "atualizadaEm": "2026-05-08T09:10:00-03:00"
+    }
+  ],
+  "threadAtiva": {
+    "id": "th-maria-clin",
+    "paciente": {
+      "id": "pct-maria",
+      "nome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "idade": 45,
+      "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Hipotireoidismo"],
+      "statusApp": "vinculado"
+    },
+    "canal": "clinico",
+    "status": "ativa",
+    "ultimaMensagem": {
+      "autor": "paciente",
+      "conteudo": "Dr. Pedro, tô medindo a glicemia em jejum e tá vindo entre 145 e 160 essa semana. É normal?",
+      "enviadaEm": "2026-05-10T08:42:00-03:00"
+    },
+    "naoLidas": 2,
+    "atualizadaEm": "2026-05-10T08:42:00-03:00",
+    "mensagens": [
+      {
+        "id": "msg-001",
+        "autor": "sistema",
+        "tipoSistema": "consulta",
+        "conteudo": "Consulta realizada · 12 de fevereiro · Dr. Pedro Lima",
+        "enviadaEm": "2026-02-12T15:30:00-03:00"
+      },
+      {
+        "id": "msg-002",
+        "autor": "medico",
+        "conteudo": "Maria, conforme combinado na consulta, comece a medir a glicemia em jejum 3x por semana e me manda os valores aqui. Qualquer dúvida sobre o ajuste da Metformina, me avisa.",
+        "enviadaEm": "2026-02-12T16:05:00-03:00",
+        "status": "entregue"
+      },
+      {
+        "id": "msg-003",
+        "autor": "paciente",
+        "conteudo": "Combinado Dr.! Comprei o aparelho hoje.",
+        "enviadaEm": "2026-02-12T19:42:00-03:00"
+      },
+      {
+        "id": "msg-004",
+        "autor": "sistema",
+        "tipoSistema": "exame",
+        "conteudo": "Exame recebido · HbA1c 7,1% · revisar comparação histórica",
+        "enviadaEm": "2026-04-28T11:00:00-03:00"
+      },
+      {
+        "id": "msg-005",
+        "autor": "medico",
+        "conteudo": "Maria, vi a HbA1c — caiu de 8.4 pra 7.1 desde a última consulta. Excelente. Vamos manter a conduta atual. Próxima reavaliação em 3 meses.",
+        "enviadaEm": "2026-04-28T11:22:00-03:00",
+        "status": "entregue"
+      },
+      {
+        "id": "msg-006",
+        "autor": "paciente",
+        "conteudo": "Dr. Pedro, tô medindo a glicemia em jejum e tá vindo entre 145 e 160 essa semana. É normal?",
+        "enviadaEm": "2026-05-10T08:42:00-03:00"
+      },
+      {
+        "id": "msg-007",
+        "autor": "paciente",
+        "conteudo": "Comi feijoada ontem com a família, pode ter influenciado né?",
+        "enviadaEm": "2026-05-10T08:43:00-03:00"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "_meta": {
+    "description": "Estado da tela de boas-vindas pós-login com plano expirado."
+  },
+  "primeiroNome": "Roberto",
+  "avatarInicial": "R",
+  "fotoUrl": null,
+  "tierExpirado": "plus",
+  "labelTier": "Plus",
+  "expirouEm": "2026-04-04",
+  "precoMensalLabel": "R$ 49,90/mês",
+  "stripePriceId": "price_plus_brl_monthly",
+  "featuresPerdidas": [
+    "Vinculação com profissional",
+    "Sync com Apple Health / Health Connect",
+    "Plano nutricional do profissional",
+    "Treinos prescritos pelo personal"
+  ]
+}

@@ -1,0 +1,6 @@
+export { FotosCorporaisPaciente } from './FotosCorporaisPaciente'
+export { CaptureCard } from './CaptureCard'
+export { LatestSessionCard } from './LatestSessionCard'
+export { ComparisonCard } from './ComparisonCard'
+export { HistoryGallery } from './HistoryGallery'
+export { LgpdConsentModal } from './LgpdConsentModal'

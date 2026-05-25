@@ -1,0 +1,276 @@
+{
+  "_meta": {
+    "models": {
+      "resumoHoje": "Resumo de adesão da semana + lista de doses do dia atual (derivadas das prescrições ativas).",
+      "doseMedicacao": "Dose programada do dia, com horário, nome, dose e status (cumprido/pendente/futuro/perdido). Paciente marca cumprido; sistema marca perdido após 2h sem ação.",
+      "medicacaoAtiva": "Medicação em uso, derivada da prescrição Memed do médico vinculado. Read-only do ponto de vista do paciente — só médico altera. Campo medicoId aponta pro prescritor. Campos GLP-1 (categoria/via/frequencia/farmaco) ativam UI específica.",
+      "registroReceita": "Entrada do histórico de prescrições emitidas/alteradas pelo médico vinculado.",
+      "medicosVinculados": "Array de médicos Nymos vinculados ao paciente. V1 Clínico = 1 (endo). V2 permitirá múltiplas especialidades (endo + ginecologista + psiquiatra etc).",
+      "curvaPK": "Série de pontos da curva farmacocinética estimada de uma medicação GLP-1. Concentração relativa (0-1), NÃO mg/dL. Modelo populacional, não medição clínica.",
+      "registroInjecao": "Aplicação de medicação subcutânea registrada pelo paciente — sítio + dor + horário.",
+      "registroSintomas": "Log de sintomas pós-dose com escalas 0-10. `pensamentosAlimentares` é métrica-âncora pra GLP-1 (food noise)."
+    },
+    "relationships": [
+      "MedicacaoAtiva é derivada (read-only) de Prescricao Memed; paciente não edita posologia.",
+      "DoseMedicacao herda nome+dose+posologia de MedicacaoAtiva; status é o único campo editável pelo paciente.",
+      "RegistroReceita é o log auditável de tudo que o médico vinculado prescreveu/ajustou/descontinuou pra esse paciente.",
+      "ResumoHoje.adesaoSemana é agregação automática de doses dos últimos 7 dias.",
+      "CurvaPK é calculada por backend a partir do farmaco + ultima dose + dose label. Frontend só renderiza.",
+      "RegistroInjecao alimenta backend pra recalcular a CurvaPK e a adesão das medicações GLP-1.",
+      "RegistroSintomas se associa automaticamente à RegistroInjecao mais recente nos últimos 7 dias."
+    ]
+  },
+  "medicosVinculados": [
+    {
+      "id": "med-pedro",
+      "nome": "Dr. Pedro Lima",
+      "especialidade": "Endocrinologista",
+      "iniciais": "PL"
+    }
+  ],
+  "resumoHoje": {
+    "adesaoSemana": {
+      "percentual": 92,
+      "dias": ["cumprido", "cumprido", "cumprido", "cumprido", "cumprido", "parcial", "hoje"]
+    },
+    "doses": [
+      {
+        "id": "dose-001",
+        "horario": "07:00",
+        "nome": "Levotiroxina",
+        "dose": "75mcg",
+        "status": "cumprido"
+      },
+      {
+        "id": "dose-002",
+        "horario": "08:00",
+        "nome": "Metformina",
+        "dose": "850mg",
+        "status": "pendente"
+      },
+      {
+        "id": "dose-003",
+        "horario": "20:00",
+        "nome": "Metformina",
+        "dose": "850mg",
+        "status": "futuro",
+        "tempoRestante": "em 4h"
+      }
+    ],
+    "adesaoBaixa": false
+  },
+  "medicacoesAtivas": [
+    {
+      "id": "med-levo",
+      "nome": "Levotiroxina",
+      "dose": "75mcg",
+      "posologia": "1x ao dia · 07h · em jejum",
+      "iniciadaEm": "12/fev",
+      "duracao": "continua",
+      "duracaoLabel": "Contínua",
+      "adesao30d": 96,
+      "orientacao": "Tomar em jejum, aguardar 30min pra café da manhã.",
+      "memedId": "memed-rx-1029",
+      "atualizadoEm": "2026-05-11T11:32:00-03:00",
+      "medicoId": "med-pedro",
+      "categoria": "outros",
+      "via": "oral",
+      "frequencia": "diaria"
+    },
+    {
+      "id": "med-met",
+      "nome": "Metformina",
+      "dose": "850mg",
+      "posologia": "2x ao dia · 08h e 20h · após refeição",
+      "iniciadaEm": "12/fev",
+      "duracao": "continua",
+      "duracaoLabel": "Contínua",
+      "adesao30d": 88,
+      "orientacao": "Tomar logo após café e jantar pra reduzir desconforto gástrico.",
+      "memedId": "memed-rx-1029",
+      "medicoId": "med-pedro",
+      "categoria": "outros",
+      "via": "oral",
+      "frequencia": "diaria"
+    },
+    {
+      "id": "med-ozm",
+      "nome": "Ozempic",
+      "dose": "0,5mg",
+      "posologia": "1x por semana · sexta-feira 09h",
+      "iniciadaEm": "12/fev",
+      "duracao": "continua",
+      "duracaoLabel": "Contínua",
+      "proximaDoseLabel": "sex · 22 mai · 09:00",
+      "adesao30d": 100,
+      "orientacao": "Aplicação subcutânea no abdome ou coxa. Manter na geladeira. Girar sítio a cada aplicação.",
+      "memedId": "memed-rx-1029",
+      "medicoId": "med-pedro",
+      "categoria": "glp1_injetavel",
+      "via": "subcutanea",
+      "frequencia": "semanal",
+      "farmaco": "semaglutide_sc"
+    }
+  ],
+  "historicoReceitas": [
+    {
+      "id": "rx-28abr",
+      "data": "28/abr",
+      "titulo": "Ozempic · ajuste de dose pra 0,5mg",
+      "medicoNome": "Dr. Pedro Lima",
+      "tipo": "ajuste",
+      "motivo": "Titulação completa · paciente tolerou 0,25mg sem náusea relevante.",
+      "posologiaAnterior": "0,25mg · 1x por semana",
+      "posologiaNova": "0,5mg · 1x por semana",
+      "memedId": "memed-rx-1029"
+    },
+    {
+      "id": "rx-12fev",
+      "data": "12/fev",
+      "titulo": "Metformina + Ozempic prescritos",
+      "medicoNome": "Dr. Pedro Lima",
+      "tipo": "inicio",
+      "motivo": "Início de tratamento pra DM2 + obesidade · titulação progressiva GLP-1.",
+      "posologiaNova": "Metformina 850mg 2x ao dia + Ozempic 0,25mg 1x por semana",
+      "memedId": "memed-rx-0892"
+    },
+    {
+      "id": "rx-05dez",
+      "data": "05/dez",
+      "titulo": "Levotiroxina iniciada 50mcg",
+      "medicoNome": "Dr. Pedro Lima",
+      "tipo": "inicio",
+      "motivo": "Hipotireoidismo subclínico · TSH 7,8 mUI/L.",
+      "posologiaNova": "Levotiroxina 50mcg · 1x ao dia · em jejum",
+      "memedId": "memed-rx-0610"
+    }
+  ],
+  "receitaRenovada": {
+    "medicacaoId": "med-levo",
+    "haLabel": "há 12min",
+    "nomeMed": "Levotiroxina"
+  },
+  "curvasPK": [
+    {
+      "medicacaoId": "med-ozm",
+      "ultimaDoseISO": "2026-05-15T09:00:00-03:00",
+      "proximaDoseISO": "2026-05-22T09:00:00-03:00",
+      "nivelHoje": 0.78,
+      "statusHoje": "caindo",
+      "pontos": [
+        { "data": "2026-05-08", "nivel": 0.62 },
+        { "data": "2026-05-09", "nivel": 0.55 },
+        { "data": "2026-05-10", "nivel": 0.48 },
+        { "data": "2026-05-11", "nivel": 0.42 },
+        { "data": "2026-05-12", "nivel": 0.36 },
+        { "data": "2026-05-13", "nivel": 0.31 },
+        { "data": "2026-05-14", "nivel": 0.28 },
+        { "data": "2026-05-15", "nivel": 0.55 },
+        { "data": "2026-05-16", "nivel": 0.82 },
+        { "data": "2026-05-17", "nivel": 0.94 },
+        { "data": "2026-05-18", "nivel": 0.88 },
+        { "data": "2026-05-19", "nivel": 0.78 },
+        { "data": "2026-05-20", "nivel": 0.66, "projetado": true },
+        { "data": "2026-05-21", "nivel": 0.54, "projetado": true },
+        { "data": "2026-05-22", "nivel": 0.92, "projetado": true }
+      ]
+    }
+  ],
+  "injecoes": [
+    {
+      "id": "inj-006",
+      "medicacaoId": "med-ozm",
+      "aplicadoEm": "2026-05-15T09:12:00-03:00",
+      "aplicadoEmLabel": "sex 15/05 · 09:12",
+      "sitio": "abdome_sup_esq",
+      "dor": 2,
+      "doseLabel": "0,5mg"
+    },
+    {
+      "id": "inj-005",
+      "medicacaoId": "med-ozm",
+      "aplicadoEm": "2026-05-08T08:54:00-03:00",
+      "aplicadoEmLabel": "sex 08/05 · 08:54",
+      "sitio": "coxa_dir",
+      "dor": 3,
+      "doseLabel": "0,5mg"
+    },
+    {
+      "id": "inj-004",
+      "medicacaoId": "med-ozm",
+      "aplicadoEm": "2026-05-01T09:08:00-03:00",
+      "aplicadoEmLabel": "sex 01/05 · 09:08",
+      "sitio": "abdome_inf_dir",
+      "dor": 1,
+      "doseLabel": "0,5mg"
+    },
+    {
+      "id": "inj-003",
+      "medicacaoId": "med-ozm",
+      "aplicadoEm": "2026-04-24T09:01:00-03:00",
+      "aplicadoEmLabel": "sex 24/04 · 09:01",
+      "sitio": "coxa_esq",
+      "dor": 2,
+      "doseLabel": "0,5mg"
+    },
+    {
+      "id": "inj-002",
+      "medicacaoId": "med-ozm",
+      "aplicadoEm": "2026-04-17T09:23:00-03:00",
+      "aplicadoEmLabel": "sex 17/04 · 09:23",
+      "sitio": "abdome_sup_dir",
+      "dor": 4,
+      "doseLabel": "0,25mg"
+    },
+    {
+      "id": "inj-001",
+      "medicacaoId": "med-ozm",
+      "aplicadoEm": "2026-04-10T08:47:00-03:00",
+      "aplicadoEmLabel": "sex 10/04 · 08:47",
+      "sitio": "abdome_inf_esq",
+      "dor": 3,
+      "doseLabel": "0,25mg"
+    }
+  ],
+  "sintomas": [
+    {
+      "id": "sym-006",
+      "injecaoId": "inj-006",
+      "registradoEm": "2026-05-16T19:30:00-03:00",
+      "haLabel": "há 3 dias",
+      "nausea": 3,
+      "refluxo": 2,
+      "pensamentosAlimentares": 2,
+      "fadiga": 4,
+      "diarreia": 1,
+      "constipacao": 3,
+      "observacoes": "Saciedade boa nos 2 primeiros dias. Pouca fome até no jantar."
+    },
+    {
+      "id": "sym-005",
+      "injecaoId": "inj-005",
+      "registradoEm": "2026-05-09T18:00:00-03:00",
+      "haLabel": "há 10 dias",
+      "nausea": 4,
+      "refluxo": 3,
+      "pensamentosAlimentares": 3,
+      "fadiga": 5,
+      "diarreia": 2,
+      "constipacao": 2,
+      "observacoes": null
+    },
+    {
+      "id": "sym-004",
+      "injecaoId": "inj-004",
+      "registradoEm": "2026-05-02T17:30:00-03:00",
+      "haLabel": "há 17 dias",
+      "nausea": 2,
+      "refluxo": 1,
+      "pensamentosAlimentares": 2,
+      "fadiga": 3,
+      "diarreia": 0,
+      "constipacao": 4,
+      "observacoes": null
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+export { MensagensInbox } from './MensagensInbox'

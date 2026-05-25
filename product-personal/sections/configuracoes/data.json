@@ -1,0 +1,363 @@
+{
+  "_meta": {
+    "models": {
+      "perfil": "Perfil profissional do personal — dados pessoais, CREF, especialidades, abordagens, formação, bio.",
+      "agenda": "Disponibilidade semanal, modalidades, locais e valores por sessão.",
+      "plano": "Plano de assinatura atual + opções (Free/Plus/Pro) + métodos de pagamento + histórico.",
+      "notificacoes": "Categorias de notificação com 3 canais cada (email, push, SMS).",
+      "integracoes": "Integrações disponíveis: Apple Health, Garmin, Stripe, WhatsApp, etc.",
+      "dados": "Idioma + tema + ações LGPD."
+    },
+    "relationships": [
+      "Perfil é o usuário Personal autenticado",
+      "Plano.opcoes lista os 3 tiers Nymos com features",
+      "Integracao.requerPlano gateia features Plus/Pro",
+      "Notificações.email/push/sms são toggles independentes"
+    ]
+  },
+  "perfil": {
+    "nome": "Roberto Zboralski",
+    "email": "roberto@nymos.app",
+    "telefone": "(11) 98888-7777",
+    "cref": "099999-G/SP",
+    "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Roberto+Zboralski&backgroundColor=14b8a6",
+    "bio": "Personal trainer há 8 anos, formado em Ed. Física pela USP. Foco em hipertrofia, performance e reabilitação pós-fisio. Atendo presencial em Vila Olímpia e Faria Lima, e online pelo app Nymos.",
+    "especialidades": ["Hipertrofia", "Performance", "Reabilitação"],
+    "abordagens": ["Musculação", "Treinamento Funcional", "Personal Online"],
+    "formacao": [
+      {
+        "id": "f-1",
+        "curso": "Bacharelado em Educação Física",
+        "instituicao": "USP",
+        "ano": 2017
+      },
+      {
+        "id": "f-2",
+        "curso": "Pós em Fisiologia do Exercício",
+        "instituicao": "USP",
+        "ano": 2019
+      },
+      {
+        "id": "f-3",
+        "curso": "Certificação CrossFit Level 2",
+        "instituicao": "CrossFit HQ",
+        "ano": 2022
+      }
+    ]
+  },
+  "agenda": {
+    "modalidades": ["presencial", "online"],
+    "disponibilidade": [
+      { "dia": "seg", "ativo": true, "inicioHora": "06:00", "fimHora": "20:00" },
+      { "dia": "ter", "ativo": true, "inicioHora": "06:00", "fimHora": "20:00" },
+      { "dia": "qua", "ativo": true, "inicioHora": "06:00", "fimHora": "20:00" },
+      { "dia": "qui", "ativo": true, "inicioHora": "06:00", "fimHora": "20:00" },
+      { "dia": "sex", "ativo": true, "inicioHora": "06:00", "fimHora": "18:00" },
+      { "dia": "sab", "ativo": true, "inicioHora": "08:00", "fimHora": "12:00" },
+      { "dia": "dom", "ativo": false, "inicioHora": "08:00", "fimHora": "12:00" }
+    ],
+    "locais": [
+      {
+        "id": "l-1",
+        "nome": "Studio Vila Olímpia",
+        "endereco": "Rua Olimpíadas, 200 · Vila Olímpia",
+        "ativo": true
+      },
+      {
+        "id": "l-2",
+        "nome": "Cia Athletica Faria Lima",
+        "endereco": "Av. Faria Lima, 1500 · Itaim",
+        "ativo": true
+      },
+      {
+        "id": "l-3",
+        "nome": "Domicílio (área Itaim/Vila Olímpia)",
+        "endereco": "A combinar com aluno",
+        "ativo": false
+      }
+    ],
+    "valores": [
+      {
+        "id": "v-1",
+        "tipo": "avulsa",
+        "label": "Sessão avulsa",
+        "centavos": 12000,
+        "unidade": "/sessão"
+      },
+      {
+        "id": "v-2",
+        "tipo": "mensal-3x",
+        "label": "Mensal · 3x/semana",
+        "centavos": 95000,
+        "unidade": "/mês"
+      },
+      {
+        "id": "v-3",
+        "tipo": "mensal-4x",
+        "label": "Mensal · 4x/semana",
+        "centavos": 120000,
+        "unidade": "/mês"
+      },
+      {
+        "id": "v-4",
+        "tipo": "mensal-5x",
+        "label": "Mensal Plus · 5x/semana",
+        "centavos": 145000,
+        "unidade": "/mês"
+      },
+      {
+        "id": "v-5",
+        "tipo": "trimestral",
+        "label": "Pacote trimestral · 4x/semana",
+        "centavos": 320000,
+        "unidade": "/3 meses"
+      }
+    ]
+  },
+  "plano": {
+    "atual": "plus",
+    "opcoes": [
+      {
+        "tier": "free",
+        "nome": "Free",
+        "centavos": 0,
+        "features": [
+          { "label": "Até 5 alunos", "incluido": true },
+          { "label": "Treinos e exercícios", "incluido": true },
+          { "label": "Avaliações antropométricas", "incluido": true },
+          { "label": "Vinculação ao app do aluno", "incluido": false },
+          { "label": "Indicações ilimitadas", "incluido": false },
+          { "label": "Análise IA + relatórios", "incluido": false },
+          { "label": "Integrações wearables", "incluido": false }
+        ]
+      },
+      {
+        "tier": "plus",
+        "nome": "Plus",
+        "centavos": 4990,
+        "destaque": true,
+        "features": [
+          { "label": "Alunos ilimitados", "incluido": true },
+          { "label": "Treinos e exercícios", "incluido": true },
+          { "label": "Avaliações antropométricas + funcionais", "incluido": true },
+          { "label": "Vinculação ao app do aluno", "incluido": true },
+          { "label": "Indicações ilimitadas", "incluido": true },
+          { "label": "Mensagens com aluno", "incluido": true },
+          { "label": "Análise IA + relatórios", "incluido": false },
+          { "label": "Integrações wearables", "incluido": false }
+        ]
+      },
+      {
+        "tier": "pro",
+        "nome": "Pro",
+        "centavos": 9990,
+        "features": [
+          { "label": "Tudo do Plus", "incluido": true },
+          { "label": "Análise IA + relatórios estruturados", "incluido": true },
+          { "label": "Integrações wearables (Apple Health, Garmin)", "incluido": true },
+          { "label": "Sugestões automáticas de progressão", "incluido": true },
+          { "label": "Detecção de overtraining via HRV", "incluido": true },
+          { "label": "Suporte prioritário", "incluido": true }
+        ]
+      }
+    ],
+    "proximaCobrancaData": "2026-06-01",
+    "proximaCobrancaCentavos": 4990,
+    "metodos": [
+      {
+        "id": "m-1",
+        "tipo": "cartao",
+        "rotulo": "Cartão Mastercard",
+        "ultimosDigitos": "4242",
+        "bandeira": "Mastercard",
+        "validade": "12/28",
+        "principal": true
+      },
+      {
+        "id": "m-2",
+        "tipo": "pix",
+        "rotulo": "Pix · roberto@nymos.app",
+        "principal": false
+      }
+    ],
+    "historico": [
+      {
+        "id": "c-1",
+        "data": "2026-05-01",
+        "centavos": 4990,
+        "status": "paga",
+        "descricao": "Plus · maio/2026",
+        "reciboUrl": "#"
+      },
+      {
+        "id": "c-2",
+        "data": "2026-04-01",
+        "centavos": 4990,
+        "status": "paga",
+        "descricao": "Plus · abril/2026",
+        "reciboUrl": "#"
+      },
+      {
+        "id": "c-3",
+        "data": "2026-03-01",
+        "centavos": 4990,
+        "status": "paga",
+        "descricao": "Plus · março/2026",
+        "reciboUrl": "#"
+      },
+      {
+        "id": "c-4",
+        "data": "2026-02-01",
+        "centavos": 4990,
+        "status": "falhou",
+        "descricao": "Plus · fevereiro/2026 (cobrança falhou — retry OK)"
+      },
+      {
+        "id": "c-5",
+        "data": "2026-01-01",
+        "centavos": 4990,
+        "status": "paga",
+        "descricao": "Plus · janeiro/2026",
+        "reciboUrl": "#"
+      }
+    ]
+  },
+  "notificacoes": {
+    "categorias": [
+      {
+        "id": "sessao-completa",
+        "label": "Aluno completou treino",
+        "descricao": "Quando aluno marca sessão como executada",
+        "email": false,
+        "push": true,
+        "sms": false
+      },
+      {
+        "id": "comentario-dor",
+        "label": "Aluno relatou dor/desconforto",
+        "descricao": "Importante! Pode exigir ajuste de plano",
+        "email": true,
+        "push": true,
+        "sms": true
+      },
+      {
+        "id": "indicacao-aceita",
+        "label": "Aluno aceitou convite (vinculou app)",
+        "email": true,
+        "push": true,
+        "sms": false
+      },
+      {
+        "id": "sessao-cancelada",
+        "label": "Aluno cancelou sessão agendada",
+        "email": true,
+        "push": true,
+        "sms": false
+      },
+      {
+        "id": "lembrete-sessao",
+        "label": "Lembrete de sessão (1h antes)",
+        "email": false,
+        "push": true,
+        "sms": false
+      },
+      {
+        "id": "adesao-baixa",
+        "label": "Adesão baixa (< 60% no mês)",
+        "descricao": "Triggered automático",
+        "email": true,
+        "push": true,
+        "sms": false
+      },
+      {
+        "id": "reaval-atrasada",
+        "label": "Reavaliação atrasada (> 60 dias)",
+        "email": true,
+        "push": false,
+        "sms": false
+      },
+      {
+        "id": "cobranca-gerada",
+        "label": "Cobrança gerada",
+        "email": true,
+        "push": false,
+        "sms": false
+      },
+      {
+        "id": "cobranca-paga",
+        "label": "Pagamento confirmado / falhou",
+        "email": true,
+        "push": true,
+        "sms": false
+      },
+      {
+        "id": "resumo-semanal",
+        "label": "Resumo semanal (relatório segunda 8h)",
+        "email": true,
+        "push": false,
+        "sms": false
+      }
+    ]
+  },
+  "integracoes": [
+    {
+      "id": "apple-health",
+      "nome": "Apple Health",
+      "descricao": "Sincroniza peso, FC repouso, HRV, sono, passos do iPhone do aluno",
+      "status": "conectado",
+      "iconKey": "apple",
+      "conectadoEm": "2026-04-12",
+      "requerPlano": "pro"
+    },
+    {
+      "id": "garmin",
+      "nome": "Garmin Connect",
+      "descricao": "Importa dados de treino, FC, distância dos relógios Garmin do aluno",
+      "status": "disponivel",
+      "iconKey": "watch",
+      "requerPlano": "pro"
+    },
+    {
+      "id": "health-connect",
+      "nome": "Health Connect (Android)",
+      "descricao": "Sincroniza métricas de saúde de dispositivos Android",
+      "status": "disponivel",
+      "iconKey": "smartphone",
+      "requerPlano": "pro"
+    },
+    {
+      "id": "stripe",
+      "nome": "Stripe",
+      "descricao": "Cobrança recorrente do plano Nymos (Plus/Pro)",
+      "status": "conectado",
+      "iconKey": "credit-card",
+      "conectadoEm": "2025-09-01"
+    },
+    {
+      "id": "z-api",
+      "nome": "Z-API · WhatsApp Business",
+      "descricao": "Envia convites e mensagens via WhatsApp diretamente do app",
+      "status": "disponivel",
+      "iconKey": "message-circle",
+      "requerPlano": "plus"
+    },
+    {
+      "id": "google-calendar",
+      "nome": "Google Calendar",
+      "descricao": "Sincroniza agenda de sessões com seu calendário pessoal",
+      "status": "disponivel",
+      "iconKey": "calendar"
+    },
+    {
+      "id": "memed",
+      "nome": "Memed",
+      "descricao": "Prescrição digital integrada (apenas se você for médico co-credenciado)",
+      "status": "em-breve",
+      "iconKey": "file-text"
+    }
+  ],
+  "dados": {
+    "idioma": "pt-BR",
+    "tema": "system"
+  }
+}

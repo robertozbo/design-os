@@ -1,0 +1,157 @@
+{
+  "_meta": {
+    "models": {
+      "ProfissionaisData": "Estado da seção Profissionais — vinculados ativos + convites recebidos + convites enviados.",
+      "ProfissionalVinculado": "Profissional ativo no acompanhamento, com status, última interação, próximo agendamento e escopo de compartilhamento.",
+      "ConviteRecebido": "Convite que o profissional enviou ao paciente — paciente decide aceitar/recusar. Escopo é definido no aceite (não no convite).",
+      "ConviteEnviado": "Convite que o paciente enviou ao profissional aguardando resposta.",
+      "EscopoCompartilhamento": "Booleans por categoria — define o que o profissional vê. Granularidade por profissional individual."
+    }
+  },
+  "vinculados": [
+    {
+      "prof": {
+        "id": "prof-ana",
+        "tipo": "nutricionista",
+        "fullName": "Dra. Ana Souza",
+        "especialidade": "Nutricionista esportiva",
+        "registro": "CRN 12345",
+        "fotoUrl": null,
+        "inicial": "A"
+      },
+      "status": "ativo",
+      "vinculadoEm": "2025-12-15",
+      "ultimaInteracao": "ontem",
+      "proximoAgendamento": "2026-05-12T15:00:00",
+      "escopo": {
+        "metricasBasicas": true,
+        "bioimpedancia": true,
+        "examesLaboratoriais": true,
+        "atividades": false,
+        "treinos": false,
+        "fotosCorporais": false,
+        "nutricao": true,
+        "objetivos": true,
+        "medicacao": true,
+        "saudeMental": false
+      }
+    },
+    {
+      "prof": {
+        "id": "prof-rafa",
+        "tipo": "personal",
+        "fullName": "Rafa Costa",
+        "especialidade": "Personal trainer · hipertrofia",
+        "registro": "CREF 67890",
+        "fotoUrl": null,
+        "inicial": "R"
+      },
+      "status": "ativo",
+      "vinculadoEm": "2026-04-01",
+      "ultimaInteracao": "há 2d",
+      "proximoAgendamento": null,
+      "escopo": {
+        "metricasBasicas": true,
+        "bioimpedancia": true,
+        "examesLaboratoriais": false,
+        "atividades": true,
+        "treinos": true,
+        "fotosCorporais": false,
+        "nutricao": false,
+        "objetivos": true,
+        "medicacao": false,
+        "saudeMental": false
+      }
+    }
+  ],
+  "convitesRecebidos": [
+    {
+      "id": "conv-rec-1",
+      "prof": {
+        "id": "prof-marina",
+        "tipo": "psicologo",
+        "fullName": "Marina Silva",
+        "especialidade": "Psicóloga · saúde mental",
+        "registro": "CRP 06/45678",
+        "fotoUrl": null,
+        "inicial": "M"
+      },
+      "enviadoEm": "2026-05-03",
+      "tempoRelativo": "há 2d",
+      "mensagem": "Oi Roberto! Sou a Marina, sua nutricionista Ana me indicou. Gostaria de iniciar acompanhamento em saúde mental se você topar."
+    },
+    {
+      "id": "conv-rec-2",
+      "prof": {
+        "id": "prof-bruno",
+        "tipo": "personal",
+        "fullName": "Bruno Ribeiro",
+        "especialidade": "Personal · funcional",
+        "registro": "CREF 33445",
+        "fotoUrl": null,
+        "inicial": "B"
+      },
+      "enviadoEm": "2026-05-17",
+      "tempoRelativo": "há 2d",
+      "mensagem": "E aí! Me indicaram você. Posso te acompanhar nos treinos se topar."
+    }
+  ],
+  "convitesEnviados": [
+    {
+      "id": "conv-enviado-1",
+      "prof": {
+        "id": "prof-fabio",
+        "tipo": "medico",
+        "fullName": "Dr. Fábio Almeida",
+        "especialidade": "Endocrinologista",
+        "registro": "CRM 78901",
+        "fotoUrl": null,
+        "inicial": "F"
+      },
+      "enviadoEm": "2026-05-01",
+      "tempoRelativo": "há 4d",
+      "status": "pendente"
+    }
+  ],
+  "codigosDisponiveis": [
+    {
+      "codigo": "RAFA-7K2X",
+      "prof": {
+        "id": "prof-rafa-novo",
+        "tipo": "personal",
+        "fullName": "Rafa Costa",
+        "especialidade": "Personal trainer · hipertrofia",
+        "registro": "CREF 67890",
+        "fotoUrl": null,
+        "inicial": "R"
+      },
+      "mensagem": "Bem-vindo! Vou te acompanhar nos treinos a partir desta semana."
+    },
+    {
+      "codigo": "MARIA-N3F1",
+      "prof": {
+        "id": "prof-maria-nutri",
+        "tipo": "nutricionista",
+        "fullName": "Maria Albuquerque",
+        "especialidade": "Nutricionista clínica",
+        "registro": "CRN 24561",
+        "fotoUrl": null,
+        "inicial": "M"
+      },
+      "mensagem": null
+    },
+    {
+      "codigo": "JOAO-9PXR",
+      "prof": {
+        "id": "prof-joao-personal",
+        "tipo": "personal",
+        "fullName": "João Mendonça",
+        "especialidade": "Personal · funcional + reabilitação",
+        "registro": "CREF 12348",
+        "fotoUrl": null,
+        "inicial": "J"
+      },
+      "mensagem": "Pronto pra começarmos? Qualquer dúvida me chama."
+    }
+  ]
+}

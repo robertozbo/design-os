@@ -1,0 +1,51 @@
+{
+  "id": "perfil-psi-1",
+  "identidade": {
+    "nome": "Marina Silva",
+    "tratamento": "Dra.",
+    "cargo": "Psicóloga Clínica · Terapeuta Cognitivo-Comportamental",
+    "papel": "clinico",
+    "foto": null,
+    "iniciais": "MS",
+    "emailCorporativo": "marina.silva@nymos.app",
+    "telefone": "+55 11 98765-4321",
+    "idiomaPreferido": "pt",
+    "fusoHorario": "America/Sao_Paulo"
+  },
+  "registrosProfissionais": [
+    {
+      "id": "reg-1",
+      "tipo": "CRP",
+      "numero": "06/123456",
+      "conselho": "CRP",
+      "uf": "SP",
+      "dataEmissao": "2018-03-12",
+      "dataValidade": "2027-03-12",
+      "primario": true
+    },
+    {
+      "id": "reg-2",
+      "tipo": "CRP",
+      "numero": "07/045678",
+      "conselho": "CRP",
+      "uf": "RS",
+      "dataEmissao": "2020-08-01",
+      "dataValidade": "2026-08-01",
+      "primario": false
+    }
+  ],
+  "assinaturaDigital": {
+    "imagemUrl": null,
+    "imagemUploadedEm": "2026-04-15T14:22:00Z",
+    "hashSha256": "a3f5b2c1d8e9f4a6b7c2d8e9f1a3b5c7d2e4f6a8b1c3d5e7f9a2b4c6d8e1f3a5",
+    "icpBrasilHabilitado": false,
+    "icpCertificadoNome": null
+  },
+  "historicoAtuacao": {
+    "pacientesAtivos": 24,
+    "sessoesRealizadas": 1843,
+    "planosTerapeuticos": 38,
+    "anosDePratica": 7,
+    "abordagensDominantes": ["TCC", "ACT", "Mindfulness", "EMDR"]
+  }
+}

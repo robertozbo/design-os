@@ -1,0 +1,130 @@
+{
+  "_meta": {
+    "description": "Sessão em andamento — anotação SOAP/DAP, técnicas, homework, risco."
+  },
+  "paciente": {
+    "id": "p-pedro",
+    "nomeCompleto": "Pedro Santos",
+    "inicial": "P",
+    "fotoUrl": null,
+    "idade": 42,
+    "scoresRecentes": [
+      { "instrumento": "PHQ-9", "valor": 17, "severidade": "moderada_severa", "aplicadoEm": "2026-05-03" },
+      { "instrumento": "GAD-7", "valor": 14, "severidade": "moderada", "aplicadoEm": "2026-04-29" }
+    ]
+  },
+  "plano": {
+    "nome": "TCC para Depressão",
+    "abordagem": "tcc",
+    "sessaoAtual": 5,
+    "totalSessoes": 12
+  },
+  "modo": "soap",
+  "iniciadaEm": "2026-05-06T14:00:00",
+  "soap": {
+    "subjetivo": "Paciente relata sentir-se mais cansado nesta semana, com episódios de choro pela manhã. Refere dificuldade em concentrar-se no trabalho e culpabilidade por não estar produtivo. Nega ideação suicida quando perguntado diretamente. Mencionou ter brigado com a esposa no fim de semana.",
+    "objetivo": "Postura encurvada, contato visual reduzido. Discurso lentificado, sem sinais psicóticos. Choro durante relato do episódio com a esposa. Aparenta cansaço (relata dormir mal há 3 noites).",
+    "avaliacao": "Quadro depressivo em piora — PHQ-9 subiu de 12 → 17 desde a última sessão. Distorção cognitiva 'catastrofização' e 'leitura mental' presentes no relato sobre o trabalho. Possível gatilho relacionado ao conflito conjugal.",
+    "plano": "Manter farmacoterapia (encaminhamento já realizado pro psiquiatra). Iniciar reestruturação cognitiva focada nos pensamentos automáticos sobre o trabalho. Homework: registro de pensamentos diário. Reaplicar PHQ-9 na próxima sessão."
+  },
+  "dap": {
+    "dados": "",
+    "avaliacao": "",
+    "plano": ""
+  },
+  "livre": "",
+  "tecnicasSelecionadas": ["tec-reest-cog", "tec-registro-pensamento"],
+  "catalogoTecnicas": [
+    {
+      "id": "tec-reest-cog",
+      "nome": "Reestruturação Cognitiva",
+      "abordagem": "tcc",
+      "categoria": "cognitiva",
+      "descricao": "Identificar e reformular pensamentos automáticos disfuncionais"
+    },
+    {
+      "id": "tec-registro-pensamento",
+      "nome": "Registro de Pensamentos",
+      "abordagem": "tcc",
+      "categoria": "cognitiva",
+      "descricao": "Diário estruturado situação→pensamento→emoção→reformulação"
+    },
+    {
+      "id": "tec-ativacao-comp",
+      "nome": "Ativação Comportamental",
+      "abordagem": "tcc",
+      "categoria": "comportamental",
+      "descricao": "Agendamento de atividades prazerosas e de domínio"
+    },
+    {
+      "id": "tec-exposicao",
+      "nome": "Exposição Gradual",
+      "abordagem": "tcc",
+      "categoria": "comportamental",
+      "descricao": "Exposição hierárquica a estímulos ansiogênicos"
+    },
+    {
+      "id": "tec-mindfulness-resp",
+      "nome": "Mindfulness da Respiração",
+      "abordagem": "mindfulness",
+      "categoria": "experiencial",
+      "descricao": "Atenção plena à respiração — 5 a 10 min"
+    },
+    {
+      "id": "tec-defusao",
+      "nome": "Desfusão Cognitiva",
+      "abordagem": "act",
+      "categoria": "cognitiva",
+      "descricao": "Distanciar-se dos pensamentos sem tentar mudá-los"
+    },
+    {
+      "id": "tec-aceitacao",
+      "nome": "Aceitação",
+      "abordagem": "act",
+      "categoria": "experiencial",
+      "descricao": "Abrir-se às experiências internas indesejadas"
+    },
+    {
+      "id": "tec-valores",
+      "nome": "Clarificação de Valores",
+      "abordagem": "act",
+      "categoria": "narrativa",
+      "descricao": "Identificar valores pessoais como direção da vida"
+    },
+    {
+      "id": "tec-emdr",
+      "nome": "EMDR — Estimulação Bilateral",
+      "abordagem": "emdr",
+      "categoria": "corporal",
+      "descricao": "Movimento ocular pra reprocessamento de memórias traumáticas"
+    },
+    {
+      "id": "tec-empatia",
+      "nome": "Escuta Empática",
+      "abordagem": "humanista",
+      "categoria": "experiencial",
+      "descricao": "Validação emocional sem julgamento"
+    },
+    {
+      "id": "tec-genograma",
+      "nome": "Genograma Familiar",
+      "abordagem": "sistemica",
+      "categoria": "narrativa",
+      "descricao": "Mapeamento de padrões transgeracionais"
+    },
+    {
+      "id": "tec-relaxamento",
+      "nome": "Relaxamento Progressivo",
+      "abordagem": "tcc",
+      "categoria": "corporal",
+      "descricao": "Tensão e relaxamento muscular sequencial (Jacobson)"
+    }
+  ],
+  "homework": {
+    "texto": "Registrar 1 pensamento automático por dia usando a planilha situação → pensamento → emoção → distorção cognitiva → resposta alternativa. Foco em situações no trabalho.",
+    "tags": ["registro-pensamento", "trabalho"],
+    "prazoEm": "2026-05-13"
+  },
+  "risco": 1,
+  "notasPrivadas": "Hipótese: avaliar conflito conjugal mais a fundo na próxima sessão. Considerar terapia de casal se padrão se repetir."
+}

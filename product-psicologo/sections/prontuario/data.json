@@ -1,0 +1,114 @@
+{
+  "_meta": {
+    "description": "Prontuário psicológico compliant Resolução CFP 001/2022 — identificação, anamnese, evolução, instrumentos, intervenções, encaminhamentos, alta."
+  },
+  "identificacao": {
+    "nomeCompleto": "Pedro Santos",
+    "cpf": "***.***.***-32",
+    "dataNascimento": "1983-04-12",
+    "idade": 42,
+    "genero": "Masculino",
+    "estadoCivil": "Casado",
+    "profissao": "Engenheiro de software",
+    "contatoEmergencia": {
+      "nome": "Carla Santos",
+      "relacao": "Esposa",
+      "telefone": "+55 11 98765-4321"
+    }
+  },
+  "anamnese": {
+    "queixaPrincipal": "Tristeza persistente, perda de interesse no trabalho e dificuldade pra dormir há aproximadamente 3 meses. Refere choro frequente sem motivo aparente.",
+    "historiaAtual": "Início insidioso há 3 meses, coincidindo com promoção a líder técnico no trabalho. Aumento gradativo dos sintomas, com piora nas últimas 2 semanas após conflito conjugal por questão financeira. Sente-se 'esgotado e inútil', mesmo que objetivamente esteja entregando bem profissionalmente.",
+    "historiaPregressa": "Episódio depressivo leve aos 24 anos durante mestrado, tratado com terapia (12 sessões) e fluoxetina por 6 meses. Resolução completa. Sem internações. Nega ideação suicida prévia.",
+    "antecedentesFamiliares": "Mãe com transtorno depressivo recorrente. Tio paterno com diagnóstico de transtorno bipolar. Pai sem antecedentes psiquiátricos.",
+    "habitosContexto": "Sedentário no momento (parou de correr há 2 meses). Café 3-4x ao dia. Nega álcool. Não fumante. Sono fragmentado (~5h/noite). Casado há 8 anos, 1 filha de 4 anos.",
+    "hipoteseDiagnosticaInicial": "Episódio depressivo moderado (CID-10 F32.1) precipitado por estresse ocupacional + conjugal. Indicação: TCC com foco em reestruturação cognitiva + ativação comportamental + encaminhamento psiquiátrico (já realizado).",
+    "realizadaEm": "2026-03-15"
+  },
+  "evolucao": [
+    {
+      "numero": 1,
+      "dataHora": "2026-03-15T09:00:00",
+      "duracaoMin": 60,
+      "modalidade": "presencial",
+      "resumo": "Sessão de acolhimento e anamnese. Paciente colaborativo, contato visual presente. PHQ-9 inicial = 19 (severa). GAD-7 = 16 (severa). Encaminhado pra psiquiatra. Estabelecido contrato terapêutico e psicoeducação sobre TCC.",
+      "tecnicasUsadas": ["Acolhimento", "Psicoeducação"],
+      "homeworkPrescrito": "Diário de humor diário (1-10) — observar padrões temporais",
+      "risco": "moderado"
+    },
+    {
+      "numero": 2,
+      "dataHora": "2026-04-01T09:00:00",
+      "duracaoMin": 50,
+      "modalidade": "online",
+      "resumo": "PHQ-9 = 18. Iniciado uso de sertralina (psiquiatra). Discutidos diários de humor — paciente identifica picos de tristeza ao fim do expediente. Iniciamos identificação de pensamentos automáticos.",
+      "tecnicasUsadas": ["Identificação de Pensamentos Automáticos"],
+      "homeworkPrescrito": "Registro de pensamentos diário (situação → pensamento → emoção)",
+      "risco": "baixo"
+    },
+    {
+      "numero": 3,
+      "dataHora": "2026-04-15T09:00:00",
+      "duracaoMin": 50,
+      "modalidade": "online",
+      "resumo": "PHQ-9 = 12 (queda significativa). Bem adaptado à medicação. Identificou pensamentos como 'sou uma fraude' como recorrentes. Iniciamos reestruturação cognitiva.",
+      "tecnicasUsadas": ["Reestruturação Cognitiva", "Registro de Pensamentos"],
+      "homeworkPrescrito": "Registro com coluna de pensamento alternativo + 1 atividade prazerosa por dia",
+      "risco": "baixo"
+    },
+    {
+      "numero": 4,
+      "dataHora": "2026-04-29T09:00:00",
+      "duracaoMin": 50,
+      "modalidade": "online",
+      "resumo": "PHQ-9 = 12 estável. Conseguiu retomar corrida 2x na semana. Boa adesão aos registros. Trabalhamos a distorção 'leitura mental' no contexto profissional.",
+      "tecnicasUsadas": ["Reestruturação Cognitiva", "Ativação Comportamental"],
+      "homeworkPrescrito": "Manter rotina de exercício + registro focado em interações no trabalho",
+      "risco": "baixo"
+    },
+    {
+      "numero": 5,
+      "dataHora": "2026-05-06T09:00:00",
+      "duracaoMin": 50,
+      "modalidade": "online",
+      "resumo": "PHQ-9 = 17 (piora significativa). Conflito conjugal recente (briga sobre finanças). Choro durante sessão. Distorções catastrofização e culpa retornaram. Confirmado: continua sem ideação suicida.",
+      "tecnicasUsadas": ["Reestruturação Cognitiva", "Registro de Pensamentos"],
+      "homeworkPrescrito": "Registro de pensamentos focado em conflito conjugal + comunicação não-violenta com esposa",
+      "risco": "moderado"
+    }
+  ],
+  "instrumentos": [
+    { "data": "2026-03-15", "instrumento": "PHQ-9", "valor": 19, "severidade": "moderada_severa", "delta": null },
+    { "data": "2026-03-15", "instrumento": "GAD-7", "valor": 16, "severidade": "severa", "delta": null },
+    { "data": "2026-04-01", "instrumento": "PHQ-9", "valor": 18, "severidade": "moderada_severa", "delta": -1 },
+    { "data": "2026-04-15", "instrumento": "PHQ-9", "valor": 12, "severidade": "moderada", "delta": -6 },
+    { "data": "2026-04-15", "instrumento": "GAD-7", "valor": 13, "severidade": "moderada", "delta": -3 },
+    { "data": "2026-04-29", "instrumento": "PHQ-9", "valor": 12, "severidade": "moderada", "delta": 0 },
+    { "data": "2026-04-29", "instrumento": "GAD-7", "valor": 14, "severidade": "moderada", "delta": 1 },
+    { "data": "2026-05-03", "instrumento": "PHQ-9", "valor": 17, "severidade": "moderada_severa", "delta": 5 }
+  ],
+  "intervencoes": [
+    { "tecnica": "Reestruturação Cognitiva", "abordagem": "TCC", "vezesAplicadas": 3, "eficaciaPercebida": 4, "notas": "Boa adesão · paciente engaja com diário" },
+    { "tecnica": "Registro de Pensamentos", "abordagem": "TCC", "vezesAplicadas": 5, "eficaciaPercebida": 4, "notas": "Ferramenta principal · permite análise pós-sessão" },
+    { "tecnica": "Ativação Comportamental", "abordagem": "TCC", "vezesAplicadas": 2, "eficaciaPercebida": 3, "notas": "Voltou a correr — mantém quando há motivação · perdido com piora atual" },
+    { "tecnica": "Psicoeducação", "abordagem": "TCC", "vezesAplicadas": 1, "eficaciaPercebida": 5, "notas": "Sessão 1 · paciente compreendeu modelo cognitivo rapidamente" }
+  ],
+  "encaminhamentos": [
+    {
+      "data": "2026-03-15",
+      "para": "psiquiatra",
+      "profissional": "Dr. Henrique Lima · CRM 12345",
+      "motivo": "Avaliação pra início de farmacoterapia (PHQ-9 19, GAD-7 16). Suspeita de transtorno depressivo moderado.",
+      "retorno": "Confirmado diagnóstico CID-10 F32.1. Iniciado sertralina 50mg/dia, ajuste pra 100mg após 2 semanas."
+    }
+  ],
+  "alta": null,
+  "profissional": {
+    "nome": "Dra. Marina Silva",
+    "crp": "CRP 06/45678",
+    "especialidade": "Psicóloga Clínica · Especialista em TCC"
+  },
+  "hashAuditoria": "sha256:8f4e3b2c9d1a5f6e7b8c9d0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c",
+  "versao": 5,
+  "atualizadoEm": "2026-05-06"
+}

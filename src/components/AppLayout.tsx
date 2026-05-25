@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Layers, ArrowLeft } from 'lucide-react'
+import { useNavigate, Link } from 'react-router-dom'
+import { Layers, ArrowLeft, Smartphone, HardHat, Radio } from 'lucide-react'
 import { PhaseNav } from './PhaseNav'
 import { ThemeToggle } from './ThemeToggle'
 import { Button } from '@/components/ui/button'
@@ -54,16 +54,81 @@ export function AppLayout({
                   </h1>
                 </>
               )}
-              <div className="ml-auto">
+              <div className="ml-auto flex items-center gap-2">
+                <Link
+                  to="/mobile"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  <Smartphone className="w-3.5 h-3.5" strokeWidth={1.7} />
+                  Mobile
+                </Link>
+                <Link
+                  to="/psicologo"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  🧠 Psicólogo
+                </Link>
+                <Link
+                  to="/clinico"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  🩺 Clínico
+                </Link>
+                <Link
+                  to="/sections#sst-nr-1"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  <HardHat className="w-3.5 h-3.5" strokeWidth={1.7} />
+                  SST
+                </Link>
+                <Link
+                  to="/sections/eventos-esocial/screen-designs/CaixaEventosGlobal"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-teal-700 dark:text-teal-300 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition-colors"
+                >
+                  <Radio className="w-3.5 h-3.5" strokeWidth={1.7} />
+                  Caixa eSocial
+                </Link>
                 <ThemeToggle />
               </div>
             </div>
           ) : (
             /* Main page header with phase nav - full width */
             <div className="flex items-center justify-between gap-4">
-              {/* Theme Toggle on left for balance */}
-              <div className="w-10 shrink-0">
-                {/* Empty spacer for balance */}
+              {/* Module links on left */}
+              <div className="shrink-0 flex items-center gap-2">
+                <Link
+                  to="/mobile"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  <Smartphone className="w-3.5 h-3.5" strokeWidth={1.7} />
+                  Mobile
+                </Link>
+                <Link
+                  to="/psicologo"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  🧠 Psicólogo
+                </Link>
+                <Link
+                  to="/clinico"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  🩺 Clínico
+                </Link>
+                <Link
+                  to="/sections#sst-nr-1"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  <HardHat className="w-3.5 h-3.5" strokeWidth={1.7} />
+                  SST
+                </Link>
+                <Link
+                  to="/sections/eventos-esocial/screen-designs/CaixaEventosGlobal"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-teal-700 dark:text-teal-300 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition-colors"
+                >
+                  <Radio className="w-3.5 h-3.5" strokeWidth={1.7} />
+                  Caixa eSocial
+                </Link>
               </div>
 
               {/* Phase Navigation - centered */}

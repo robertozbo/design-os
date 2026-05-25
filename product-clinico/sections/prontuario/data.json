@@ -1,0 +1,163 @@
+{
+  "_meta": {
+    "models": {
+      "pacienteProntuario": "Identificação completa do paciente no prontuário (nome, CPF, dados pessoais, contato, condições crônicas).",
+      "anamnese": "Anamnese estruturada por endocrinologia: queixa, HMA, antecedentes pessoais/familiares, medicações em uso, alergias, hábitos.",
+      "habito": "Item de hábito (tabaco, álcool, atividade física) com status e detalhes.",
+      "exameFisico": "Exame físico: sinais vitais, antropometria, exame específico do sistema endócrino.",
+      "sinalVital": "Medida pontual: PA, FC, FR, temperatura.",
+      "antropometriaPonto": "Medida antropométrica em data específica (peso, altura, IMC, CA).",
+      "hipoteseDiagnostica": "Hipótese diagnóstica com CID e status (provável/confirmada).",
+      "evolucaoProntuario": "Evolução resumida no prontuário com SOAP expandível e flag IA.",
+      "exameAnexado": "Exame referenciado no prontuário (resumo, link pra section Exames).",
+      "prescricaoAtiva": "Prescrição vigente referenciada no prontuário."
+    },
+    "relationships": [
+      "Prontuario tem PacienteProntuario (1:1)",
+      "Anamnese pertence ao Prontuario; arrays de antecedentes/alergias/hábitos crescem ao longo do tempo",
+      "ExameFisico tem múltiplos AntropometriaPonto pra histórico longitudinal",
+      "Evoluções, Exames e Prescrições são derivadas das outras sections (read-only aqui)"
+    ]
+  },
+  "paciente": {
+    "id": "pct-001",
+    "nome": "Maria Silva Andrade",
+    "iniciais": "MA",
+    "cpf": "***.456.***-89",
+    "dataNascimento": "1980-08-12",
+    "idade": 45,
+    "genero": "feminino",
+    "telefone": "+55 11 98765-4321",
+    "email": "maria.andrade@email.com",
+    "endereco": "Rua das Acácias, 234 — Vila Madalena, São Paulo/SP",
+    "convenio": "Particular",
+    "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Hipotireoidismo subclínico"],
+    "statusApp": "vinculado",
+    "vinculadoEm": "2024-03-15",
+    "primeiroAtendimentoEm": "2026-02-10",
+    "ultimaConsultaEm": "2026-05-07",
+    "totalConsultas": 2
+  },
+  "anamnese": {
+    "queixaPrincipal": "Cansaço persistente há 6 semanas e ganho ponderal sem mudança alimentar.",
+    "hma": "Paciente refere início insidioso de cansaço progressivo há cerca de 6 semanas, associado a sonolência diurna mesmo com sono noturno preservado. Relata ganho ponderal de 3 kg no período, sem mudança no padrão alimentar. Apresenta intolerância ao frio e constipação intermitente. Nega sintomas cardiovasculares ou queixa de palpitações. Já em tratamento prévio de hipotireoidismo (Levotiroxina 50 mcg/dia há 2 anos) e DM2 (Metformina 1g 2x/dia há 2 anos).",
+    "antecedentesPessoais": [
+      "Diabetes Mellitus tipo 2 — diagnóstico em dez/2024",
+      "Hipotireoidismo subclínico — diagnóstico em ago/2023",
+      "Dislipidemia leve",
+      "Cesariana em 2010"
+    ],
+    "antecedentesFamiliares": [
+      "Mãe: DM2, hipertensão",
+      "Pai: hipotireoidismo, IAM aos 68 anos",
+      "Irmã: SOP"
+    ],
+    "medicacoesEmUso": [
+      "Metformina 1 g — 2x ao dia (após almoço e jantar)",
+      "Levotiroxina 50 mcg — 1x ao dia (jejum, 30 min antes do café)",
+      "Vitamina D3 7000 UI — 1x por semana"
+    ],
+    "alergias": [
+      { "substancia": "Dipirona", "reacao": "rash cutâneo", "severidade": "moderada" }
+    ],
+    "habitos": [
+      { "tipo": "tabaco", "status": "nao", "detalhe": "Nunca fumou" },
+      { "tipo": "alcool", "status": "social", "detalhe": "Esporadicamente em finais de semana" },
+      { "tipo": "atividade-fisica", "status": "irregular", "detalhe": "Caminhada 2x/semana ~30min" },
+      { "tipo": "sono", "status": "preservado", "detalhe": "7-8h por noite" }
+    ]
+  },
+  "exameFisico": {
+    "sinaisVitais": {
+      "pa": "128 x 82 mmHg",
+      "fc": "62 bpm",
+      "fr": "16 irpm",
+      "temperatura": "36,4 °C",
+      "registradoEm": "2026-05-07"
+    },
+    "antropometriaAtual": {
+      "peso": 78.4,
+      "altura": 1.64,
+      "imc": 29.1,
+      "circunferenciaAbdominal": 92,
+      "registradoEm": "2026-05-07"
+    },
+    "antropometriaHistorico": [
+      { "data": "2024-12-15", "peso": 75.2, "imc": 27.9, "ca": 88 },
+      { "data": "2025-05-10", "peso": 76.1, "imc": 28.3, "ca": 89 },
+      { "data": "2025-08-10", "peso": 75.8, "imc": 28.1, "ca": 89 },
+      { "data": "2025-11-10", "peso": 75.5, "imc": 28.0, "ca": 88 },
+      { "data": "2026-02-10", "peso": 75.2, "imc": 27.9, "ca": 88 },
+      { "data": "2026-05-07", "peso": 78.4, "imc": 29.1, "ca": 92 }
+    ],
+    "exameEspecifico": "Tireoide palpável, sem nódulos detectáveis, levemente aumentada simétrica. Pele seca, fria, especialmente extremidades. Reflexos osteotendinosos com fase de relaxamento prolongada. Ausência de edema de MMII. Acantose nigricans leve em região cervical posterior."
+  },
+  "hipoteses": [
+    {
+      "cid": "E03.9",
+      "label": "Hipotireoidismo, não especificado",
+      "status": "provavel",
+      "nota": "Em progressão de subclínico → manifesto"
+    },
+    {
+      "cid": "E11.9",
+      "label": "Diabetes Mellitus tipo 2 sem complicações",
+      "status": "confirmada",
+      "nota": "Estável com Metformina (HbA1c 6,8%)"
+    },
+    {
+      "cid": "E78.5",
+      "label": "Hiperlipidemia não especificada",
+      "status": "provavel",
+      "nota": "Aguardando perfil lipídico atualizado"
+    }
+  ],
+  "planoAtual": "1) Solicitar TSH e T4 livre em 6 semanas pra reavaliar resposta. 2) Aumentar Levotiroxina pra 75 mcg em jejum. 3) Manter Metformina 1 g 2x/dia. 4) Orientar paciente a NÃO ajustar dose por conta própria. 5) Reforço de adesão à dieta com nutricionista. 6) Retorno em 6 semanas com novo TSH em mãos. 7) Avaliar perfil lipídico no próximo exame.",
+  "evolucoes": [
+    {
+      "id": "fin-001",
+      "data": "2026-05-07",
+      "modalidade": "presencial",
+      "medico": "Dr. Pedro Lima",
+      "geradoPorIA": true,
+      "modeloIA": "claude-opus-4-7",
+      "planoResumo": "Aumento de Levotiroxina pra 75 mcg, novo TSH em 6 sem, manutenção Metformina.",
+      "soap": {
+        "S": "Paciente refere cansaço progressivo há 6 semanas, sonolência diurna, ganho de 3kg, intolerância ao frio, constipação intermitente.",
+        "O": "PA 128x82, FC 62, peso 78,4 kg (↑3,2 kg), IMC 29,1. Tireoide palpável, pele seca.",
+        "A": "Hipotireoidismo subclínico em progressão. DM2 estável (HbA1c 6,8%).",
+        "P": "Aumentar Levotiroxina 75mcg, manter Metformina, novo TSH em 6 sem, retorno em 6 sem."
+      }
+    },
+    {
+      "id": "fin-011",
+      "data": "2026-02-10",
+      "modalidade": "presencial",
+      "medico": "Dr. Pedro Lima",
+      "geradoPorIA": false,
+      "modeloIA": null,
+      "planoResumo": "Primeira consulta · diagnóstico inicial de hipotireoidismo subclínico + DM2; manutenção de Metformina e Levotiroxina 50mcg.",
+      "soap": {
+        "S": "Paciente assintomática, refere boa adesão à medicação atual.",
+        "O": "PA 124x80, peso 75,2 kg, IMC 27,9, TSH 4,8 mUI/L (limite).",
+        "A": "DM2 estável (HbA1c 6,8%); hipotireoidismo subclínico em observação.",
+        "P": "Manter Metformina 1g 2x/dia e Levotiroxina 50mcg; novo TSH e HbA1c em 3 meses; orientar pesagem semanal."
+      }
+    }
+  ],
+  "examesAnexados": [
+    { "id": "exm-001", "tipo": "Perfil tireoidiano", "data": "2026-04-22", "destaqueLabel": "TSH 6,4 mUI/L (alto)", "alertNivel": "alto" },
+    { "id": "exm-002", "tipo": "Hemoglobina glicada", "data": "2026-04-22", "destaqueLabel": "HbA1c 6,8% (meta)", "alertNivel": "normal" },
+    { "id": "exm-003", "tipo": "Vitamina D", "data": "2026-03-15", "destaqueLabel": "25(OH)D 38 ng/mL (normal)", "alertNivel": "normal" },
+    { "id": "exm-004", "tipo": "Bioquímica completa", "data": "2025-11-08", "destaqueLabel": "Glicemia 118 mg/dL (alto)", "alertNivel": "alto" }
+  ],
+  "prescricoesAtivas": [
+    {
+      "id": "prc-2025-11-10-001",
+      "data": "2025-11-10",
+      "medicacoes": "Metformina 1g 2x/dia · Levotiroxina 50mcg 1x/dia · Vit D3 7000UI 1x/sem",
+      "validade": "2026-05-10",
+      "memedId": "mmd-x7j2"
+    }
+  ]
+}

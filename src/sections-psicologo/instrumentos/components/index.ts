@@ -1,0 +1,1 @@
+export { Instrumentos } from './Instrumentos'

@@ -1,0 +1,189 @@
+{
+  "_meta": {
+    "models": {
+      "DispositivoViewModel": "Combina Device do backend (3 tipos: apple_health/google_fit/health_connect) com campos UI: ícone, cor, label humanizado, ultimaSyncRelativo, tiposDado chips, bateriaPct.",
+      "Device": "Backend row. deviceType limita a 3 valores. deviceSubtype identifica origem física (apple_watch/iphone). Outros wearables fluem como sources dos dados, não como Device separado.",
+      "CategoriaPicker": "Modal de adicionar dispositivo agora tem 3 cards: Apple Health (disponível), Google Fit (em breve), Health Connect (em breve). Cada um lista origens compatíveis (informativo)."
+    },
+    "relationships": [
+      "stats agrega dispositivos (count + última sync mais recente)",
+      "filtros são derivados dinamicamente de dispositivo.device.isConnected/syncStatus",
+      "categoriasPicker é catálogo estático das 3 integrações backend",
+      "tiposDado de cada dispositivo vem das healthkitPermissions ou da config da integração"
+    ]
+  },
+
+  "stats": {
+    "total": 2,
+    "conectados": 1,
+    "ultimaSyncRelativo": "há 4 min"
+  },
+
+  "filtros": [
+    { "id": "todos", "label": "Todos", "count": 2 },
+    { "id": "conectados", "label": "Conectados", "count": 1 },
+    { "id": "desconectados", "label": "Desconectados", "count": 1 }
+  ],
+
+  "dispositivos": [
+    {
+      "device": {
+        "id": "dev-1",
+        "userId": "u-1",
+        "deviceType": "apple_health",
+        "deviceSubtype": "apple_watch",
+        "name": "Apple Watch Series 9",
+        "description": "Series 9 · 41mm",
+        "credentials": {},
+        "isConnected": true,
+        "lastSync": "2026-05-04T14:13:00.000Z",
+        "syncStatus": "connected",
+        "createdAt": "2026-04-12T10:00:00.000Z",
+        "updatedAt": "2026-05-04T14:13:00.000Z"
+      },
+      "marcaLabel": "Apple Watch",
+      "modelo": "Series 9 · 41mm",
+      "iconeNome": "Watch",
+      "iconeCor": "red-400",
+      "iconeBg": "bg-red-500/15",
+      "ultimaSyncRelativo": "há 4 min",
+      "bateriaPct": 78,
+      "tiposDado": [
+        { "id": "daily_steps", "label": "Passos", "iconeNome": "Footprints" },
+        { "id": "resting_heart_rate", "label": "BPM", "iconeNome": "Heart" },
+        { "id": "sleep_hours", "label": "Sono", "iconeNome": "Moon" },
+        { "id": "calories_burned", "label": "Calorias", "iconeNome": "Flame" },
+        { "id": "distance_traveled", "label": "Distância", "iconeNome": "Activity" }
+      ]
+    },
+    {
+      "device": {
+        "id": "dev-2",
+        "userId": "u-1",
+        "deviceType": "apple_health",
+        "deviceSubtype": "iphone",
+        "name": "Apple Saúde",
+        "description": "HealthKit · iOS",
+        "credentials": {},
+        "isConnected": false,
+        "lastSync": "2026-04-20T08:30:00.000Z",
+        "syncStatus": "disconnected",
+        "createdAt": "2026-03-15T10:00:00.000Z",
+        "updatedAt": "2026-04-20T08:30:00.000Z"
+      },
+      "marcaLabel": "Apple Saúde",
+      "modelo": "HealthKit · iOS",
+      "iconeNome": "Heart",
+      "iconeCor": "pink-400",
+      "iconeBg": "bg-pink-500/15",
+      "ultimaSyncRelativo": "há 14 dias",
+      "bateriaPct": null,
+      "tiposDado": [
+        { "id": "daily_steps", "label": "Passos", "iconeNome": "Footprints" },
+        { "id": "heart_rate", "label": "BPM", "iconeNome": "Heart" },
+        { "id": "sleep_hours", "label": "Sono", "iconeNome": "Moon" },
+        { "id": "oxygen_saturation", "label": "SpO₂", "iconeNome": "Activity" }
+      ]
+    }
+  ],
+
+  "categoriasPicker": [
+    {
+      "id": "apple_health",
+      "label": "Apple Health",
+      "descricao": "iPhone, Apple Watch, balanças e apps via HealthKit",
+      "iconeNome": "Heart",
+      "iconeCor": "pink-400",
+      "iconeBg": "bg-pink-500/15",
+      "disponivel": true,
+      "origens": [
+        {
+          "id": "apple-watch",
+          "label": "Apple Watch",
+          "iconeNome": "Watch",
+          "iconeCor": "red-400",
+          "descricao": "BPM, sono, passos, calorias, treinos",
+          "automatico": true
+        },
+        {
+          "id": "iphone",
+          "label": "iPhone",
+          "iconeNome": "Heart",
+          "iconeCor": "pink-400",
+          "descricao": "Passos, distância, andares subidos",
+          "automatico": true
+        },
+        {
+          "id": "balanca-via-healthkit",
+          "label": "Balança Bluetooth",
+          "iconeNome": "Scale",
+          "iconeCor": "amber-400",
+          "descricao": "Peso e composição via HealthKit",
+          "automatico": false
+        },
+        {
+          "id": "garmin-via-healthkit",
+          "label": "Garmin",
+          "iconeNome": "Watch",
+          "iconeCor": "blue-400",
+          "descricao": "Conecte no app Garmin e libere para HealthKit",
+          "automatico": false
+        },
+        {
+          "id": "whoop-via-healthkit",
+          "label": "Whoop, Oura, Fitbit",
+          "iconeNome": "Activity",
+          "iconeCor": "violet-400",
+          "descricao": "Conecte no app da marca e libere para HealthKit",
+          "automatico": false
+        }
+      ]
+    },
+    {
+      "id": "health_connect",
+      "label": "Health Connect",
+      "descricao": "Android · centralizador de saúde do Google",
+      "iconeNome": "Heart",
+      "iconeCor": "teal-400",
+      "iconeBg": "bg-teal-500/15",
+      "disponivel": true,
+      "origens": [
+        {
+          "id": "wearos",
+          "label": "Wear OS",
+          "iconeNome": "Watch",
+          "iconeCor": "indigo-400",
+          "descricao": "Galaxy Watch, Pixel Watch e similares",
+          "automatico": true
+        },
+        {
+          "id": "samsung-health",
+          "label": "Samsung Health",
+          "iconeNome": "Activity",
+          "iconeCor": "blue-400",
+          "descricao": "Métricas via Samsung Health",
+          "automatico": false
+        }
+      ]
+    },
+    {
+      "id": "google_fit",
+      "label": "Google Fit",
+      "descricao": "Legado · usuários ativos do Google Fit",
+      "iconeNome": "Activity",
+      "iconeCor": "green-400",
+      "iconeBg": "bg-green-500/15",
+      "disponivel": false,
+      "origens": [
+        {
+          "id": "google-fit-app",
+          "label": "App Google Fit",
+          "iconeNome": "Activity",
+          "iconeCor": "green-400",
+          "descricao": "Passos, atividades, peso, sono",
+          "automatico": true
+        }
+      ]
+    }
+  ]
+}

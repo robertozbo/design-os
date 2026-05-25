@@ -1,0 +1,74 @@
+{
+  "_meta": {
+    "description": "Catálogo mock de Exercises do backend agrupados por MuscleGroup. Em produção vem de GET /workouts/catalog/exercises."
+  },
+  "muscleGroups": [
+    { "id": "mg-peito", "name": "Peito", "category": "upper_body", "icon": "dumbbell", "sortOrder": 1 },
+    { "id": "mg-costas", "name": "Costas", "category": "upper_body", "icon": "dumbbell", "sortOrder": 2 },
+    { "id": "mg-ombros", "name": "Ombros", "category": "upper_body", "icon": "dumbbell", "sortOrder": 3 },
+    { "id": "mg-biceps", "name": "Bíceps", "category": "upper_body", "icon": "dumbbell", "sortOrder": 4 },
+    { "id": "mg-triceps", "name": "Tríceps", "category": "upper_body", "icon": "dumbbell", "sortOrder": 5 },
+    { "id": "mg-pernas", "name": "Pernas", "category": "lower_body", "icon": "footprints", "sortOrder": 6 },
+    { "id": "mg-gluteos", "name": "Glúteos", "category": "lower_body", "icon": "footprints", "sortOrder": 7 },
+    { "id": "mg-core", "name": "Core", "category": "core", "icon": "activity", "sortOrder": 8 },
+    { "id": "mg-cardio", "name": "Cardio", "category": "cardio", "icon": "heart", "sortOrder": 9 }
+  ],
+  "exercises": [
+    { "id": "ex-supino-reto", "muscleGroupId": "mg-peito", "name": "Supino reto barra", "exerciseType": "reps", "estimatedMet": 6.0, "imageUrl": null, "videoUrl": "https://example.com/v/supino-reto", "instructions": "Pegada média, descer a barra até tocar levemente o peito." },
+    { "id": "ex-supino-inclinado", "muscleGroupId": "mg-peito", "name": "Supino inclinado halter", "exerciseType": "reps", "estimatedMet": 5.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-supino-declinado", "muscleGroupId": "mg-peito", "name": "Supino declinado", "exerciseType": "reps", "estimatedMet": 5.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-cross-cabo", "muscleGroupId": "mg-peito", "name": "Crossover na polia", "exerciseType": "reps", "estimatedMet": 4.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-crucifixo", "muscleGroupId": "mg-peito", "name": "Crucifixo halter", "exerciseType": "reps", "estimatedMet": 4.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-flexao", "muscleGroupId": "mg-peito", "name": "Flexão de braço", "exerciseType": "reps", "estimatedMet": 5.0, "imageUrl": null, "videoUrl": "https://example.com/v/flexao", "instructions": "Coluna alinhada, descer até tocar o peito no chão." },
+
+    { "id": "ex-puxada-frente", "muscleGroupId": "mg-costas", "name": "Puxada frente pegada larga", "exerciseType": "reps", "estimatedMet": 6.5, "imageUrl": null, "videoUrl": "https://example.com/v/puxada", "instructions": "Pegada larga, puxar até a barra tocar próximo ao peito." },
+    { "id": "ex-remada-curvada", "muscleGroupId": "mg-costas", "name": "Remada curvada barra", "exerciseType": "reps", "estimatedMet": 6.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-remada-baixa", "muscleGroupId": "mg-costas", "name": "Remada baixa cabo", "exerciseType": "reps", "estimatedMet": 5.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-remada-cavalinho", "muscleGroupId": "mg-costas", "name": "Remada cavalinho", "exerciseType": "reps", "estimatedMet": 6.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-pullover", "muscleGroupId": "mg-costas", "name": "Pullover halter", "exerciseType": "reps", "estimatedMet": 4.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-barra-fixa", "muscleGroupId": "mg-costas", "name": "Barra fixa", "exerciseType": "reps", "estimatedMet": 8.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+
+    { "id": "ex-desenvolvimento", "muscleGroupId": "mg-ombros", "name": "Desenvolvimento halter", "exerciseType": "reps", "estimatedMet": 6.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-desenvolvimento-mil", "muscleGroupId": "mg-ombros", "name": "Desenvolvimento militar", "exerciseType": "reps", "estimatedMet": 6.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-elevacao-lateral", "muscleGroupId": "mg-ombros", "name": "Elevação lateral", "exerciseType": "reps", "estimatedMet": 5.0, "imageUrl": null, "videoUrl": "https://example.com/v/elev-lateral", "instructions": "Cotovelos levemente flexionados, subir até altura dos ombros." },
+    { "id": "ex-elevacao-frontal", "muscleGroupId": "mg-ombros", "name": "Elevação frontal", "exerciseType": "reps", "estimatedMet": 4.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-encolhimento", "muscleGroupId": "mg-ombros", "name": "Encolhimento halter", "exerciseType": "reps", "estimatedMet": 4.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+
+    { "id": "ex-rosca-direta", "muscleGroupId": "mg-biceps", "name": "Rosca direta barra", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-rosca-alt", "muscleGroupId": "mg-biceps", "name": "Rosca alternada halter", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-rosca-martelo", "muscleGroupId": "mg-biceps", "name": "Rosca martelo halter", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-rosca-scott", "muscleGroupId": "mg-biceps", "name": "Rosca scott", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+
+    { "id": "ex-triceps-corda", "muscleGroupId": "mg-triceps", "name": "Tríceps corda na polia", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-triceps-frances", "muscleGroupId": "mg-triceps", "name": "Tríceps francês", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-triceps-testa", "muscleGroupId": "mg-triceps", "name": "Tríceps testa barra W", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-mergulho", "muscleGroupId": "mg-triceps", "name": "Mergulho banco", "exerciseType": "reps", "estimatedMet": 5.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+
+    { "id": "ex-agachamento", "muscleGroupId": "mg-pernas", "name": "Agachamento livre", "exerciseType": "reps", "estimatedMet": 7.5, "imageUrl": null, "videoUrl": "https://example.com/v/agachamento", "instructions": "Pés na largura dos ombros, descer até paralela." },
+    { "id": "ex-agachamento-frontal", "muscleGroupId": "mg-pernas", "name": "Agachamento frontal", "exerciseType": "reps", "estimatedMet": 7.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-leg-press", "muscleGroupId": "mg-pernas", "name": "Leg press 45°", "exerciseType": "reps", "estimatedMet": 6.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-cadeira-extensora", "muscleGroupId": "mg-pernas", "name": "Cadeira extensora", "exerciseType": "reps", "estimatedMet": 5.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-cadeira-flexora", "muscleGroupId": "mg-pernas", "name": "Cadeira flexora", "exerciseType": "reps", "estimatedMet": 5.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-stiff", "muscleGroupId": "mg-pernas", "name": "Stiff barra", "exerciseType": "reps", "estimatedMet": 6.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-panturrilha-pe", "muscleGroupId": "mg-pernas", "name": "Panturrilha em pé", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-panturrilha-sent", "muscleGroupId": "mg-pernas", "name": "Panturrilha sentado", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+
+    { "id": "ex-elevacao-pelvica", "muscleGroupId": "mg-gluteos", "name": "Elevação pélvica barra", "exerciseType": "reps", "estimatedMet": 5.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-cadeira-abdutora", "muscleGroupId": "mg-gluteos", "name": "Cadeira abdutora", "exerciseType": "reps", "estimatedMet": 4.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-coice-cabo", "muscleGroupId": "mg-gluteos", "name": "Coice na polia", "exerciseType": "reps", "estimatedMet": 5.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-afundo", "muscleGroupId": "mg-gluteos", "name": "Afundo búlgaro", "exerciseType": "reps", "estimatedMet": 6.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+
+    { "id": "ex-prancha", "muscleGroupId": "mg-core", "name": "Prancha abdominal", "exerciseType": "time", "estimatedMet": 3.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-abdominal", "muscleGroupId": "mg-core", "name": "Abdominal supra", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-abdominal-infra", "muscleGroupId": "mg-core", "name": "Abdominal infra", "exerciseType": "reps", "estimatedMet": 4.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-russian-twist", "muscleGroupId": "mg-core", "name": "Russian twist halter", "exerciseType": "reps", "estimatedMet": 4.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-prancha-lateral", "muscleGroupId": "mg-core", "name": "Prancha lateral", "exerciseType": "time", "estimatedMet": 3.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+
+    { "id": "ex-corrida-esteira", "muscleGroupId": "mg-cardio", "name": "Corrida esteira", "exerciseType": "time", "estimatedMet": 8.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-bike-erg", "muscleGroupId": "mg-cardio", "name": "Bike ergométrica", "exerciseType": "time", "estimatedMet": 7.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-eliptico", "muscleGroupId": "mg-cardio", "name": "Elíptico", "exerciseType": "time", "estimatedMet": 6.5, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-sprint", "muscleGroupId": "mg-cardio", "name": "Sprint na esteira", "exerciseType": "time", "estimatedMet": 12.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-burpee", "muscleGroupId": "mg-cardio", "name": "Burpees", "exerciseType": "time", "estimatedMet": 10.0, "imageUrl": null, "videoUrl": null, "instructions": null },
+    { "id": "ex-pular-corda", "muscleGroupId": "mg-cardio", "name": "Pular corda", "exerciseType": "time", "estimatedMet": 11.0, "imageUrl": null, "videoUrl": null, "instructions": null }
+  ]
+}

@@ -1,0 +1,435 @@
+{
+  "_meta": {
+    "models": {
+      "UsuarioContexto": "Combina User do backend + cálculos UI (saudação dinâmica, streak, primeiroNome, frase IA contextual).",
+      "User": "Auth/users module — id, email, name, image, role (FREE/REGULAR/PREMIUM/etc.), version, etc.",
+      "PlanoHoje": "Embute PatientDiet (instância do plano alimentar) + array de RefeicaoHoje (PatientDietMeal + registrada).",
+      "AnelCalorias": "Derivado de MealLog (consumido) + DashboardMetricsSummary.caloriesBurned (gasto).",
+      "MiniStat": "id = MetricType.value (ex: 'weight', 'daily_steps'). Frontend resolve valor/delta via Metrics + período.",
+      "Novidade": "Banner condicional. Quando tipo='analise-ia', insight aponta pro AIInsight do backend (dashboard module)."
+    },
+    "relationships": [
+      "usuario.user é User do backend",
+      "plano.diet é PatientDiet (com PatientDietMeal[])",
+      "plano.refeicoes[].meal é PatientDietMeal individual + flag registrada (vem de MealLog)",
+      "novidades[].insight é AIInsight quando tipo='analise-ia', null caso contrário",
+      "anelCalorias é agregado computado no frontend a partir de Metrics + MealLogs",
+      "miniStats[].id corresponde a MetricType.value pra navegação/lookup"
+    ]
+  },
+
+  "usuario": {
+    "user": {
+      "id": "u-1",
+      "email": "roberto@nymos.com",
+      "name": "Roberto Zboralski",
+      "image": null,
+      "emailVerified": "2026-01-15T10:00:00.000Z",
+      "role": "PREMIUM",
+      "createdAt": "2026-01-15T10:00:00.000Z",
+      "updatedAt": "2026-05-04T14:00:00.000Z",
+      "deletedAt": null,
+      "version": 1
+    },
+    "primeiroNome": "Roberto",
+    "avatarInicial": "R",
+    "fotoUrl": null,
+    "periodo": "manha",
+    "saudacao": "Bom dia, Roberto",
+    "fraseIA": "Você dormiu 8h, ótimo dia pra treino.",
+    "streakDias": 12,
+    "notificacoesNaoLidas": 3,
+    "wearableConectado": true
+  },
+
+  "novidades": [
+    {
+      "id": "nov-1",
+      "tipo": "analise-ia",
+      "insight": {
+        "id": "ai-1",
+        "type": "recommendation",
+        "title": "Nova análise de saúde disponível",
+        "description": "Snapshot dos últimos 30 dias com 1 ponto de atenção e 0 riscos.",
+        "confidence": 92,
+        "severity": "low",
+        "metricType": "general",
+        "timeframe": "30d",
+        "recommendations": [
+          "Mantenha o ritmo atual de treino",
+          "Considere reduzir consumo de sódio nas refeições"
+        ],
+        "createdAt": "2026-05-04T14:00:00.000Z"
+      },
+      "iconeNome": "Sparkles",
+      "titulo": "Nova análise de saúde disponível",
+      "subtitulo": "Snapshot de 30 dias · 0 risco · 1 atenção",
+      "rota": "/analise-de-saude",
+      "dispensada": false
+    },
+    {
+      "id": "nov-2",
+      "tipo": "plano-novo",
+      "insight": null,
+      "iconeNome": "Utensils",
+      "titulo": "Dra. Ana atualizou seu plano",
+      "subtitulo": "Plano XP-12 · ajuste de proteína",
+      "rota": "/nutricao/plano",
+      "dispensada": false
+    }
+  ],
+
+  "heroSaude": {
+    "scoreAtual": 78,
+    "tendencia": "melhorando",
+    "microStatus": [
+      { "label": "Composição", "status": "bom" },
+      { "label": "Atividade", "status": "otimo" },
+      { "label": "Sono", "status": "atencao" }
+    ],
+    "ultimaAnaliseEm": "2026-04-04"
+  },
+
+  "medicacaoHoje": {
+    "medicoNome": "Dr. Pedro Lima · Endocrinologista",
+    "total": 3,
+    "cumpridas": 1,
+    "adesaoSemana": 92,
+    "proximasDoses": [
+      {
+        "id": "dose-001",
+        "horario": "07:00",
+        "nome": "Levotiroxina",
+        "dose": "75mcg",
+        "status": "cumprido"
+      },
+      {
+        "id": "dose-002",
+        "horario": "08:00",
+        "nome": "Metformina",
+        "dose": "850mg",
+        "status": "pendente"
+      },
+      {
+        "id": "dose-003",
+        "horario": "20:00",
+        "nome": "Metformina",
+        "dose": "850mg",
+        "status": "futuro"
+      }
+    ]
+  },
+
+  "plano": {
+    "diet": {
+      "id": "diet-xp12",
+      "userId": "u-1",
+      "templateId": "tmpl-xp12",
+      "professionalId": "prof-ana",
+      "name": "XP-12",
+      "description": "Plano de manutenção com alta proteína",
+      "objective": "high_protein",
+      "totalCalories": 2220,
+      "status": "active",
+      "startDate": "2026-04-15T00:00:00.000Z",
+      "endDate": null,
+      "createdAt": "2026-04-15T10:00:00.000Z",
+      "updatedAt": "2026-05-04T08:30:00.000Z",
+      "meals": [
+        {
+          "id": "pdm-1",
+          "dietId": "diet-xp12",
+          "mealType": "breakfast",
+          "name": "Café da manhã",
+          "scheduledTime": "07:00",
+          "calories": 410,
+          "protein": 32,
+          "carbohydrates": 48,
+          "fat": 12,
+          "fiber": 6,
+          "notes": null,
+          "sortOrder": 1
+        },
+        {
+          "id": "pdm-2",
+          "dietId": "diet-xp12",
+          "mealType": "morning_snack",
+          "name": "Lanche da manhã",
+          "scheduledTime": "10:00",
+          "calories": 240,
+          "protein": 18,
+          "carbohydrates": 24,
+          "fat": 8,
+          "fiber": 3,
+          "notes": null,
+          "sortOrder": 2
+        },
+        {
+          "id": "pdm-3",
+          "dietId": "diet-xp12",
+          "mealType": "lunch",
+          "name": "Almoço",
+          "scheduledTime": "13:30",
+          "calories": 720,
+          "protein": 52,
+          "carbohydrates": 80,
+          "fat": 22,
+          "fiber": 9,
+          "notes": null,
+          "sortOrder": 3
+        },
+        {
+          "id": "pdm-4",
+          "dietId": "diet-xp12",
+          "mealType": "afternoon_snack",
+          "name": "Lanche da tarde",
+          "scheduledTime": "16:30",
+          "calories": 290,
+          "protein": 22,
+          "carbohydrates": 30,
+          "fat": 10,
+          "fiber": 4,
+          "notes": null,
+          "sortOrder": 4
+        },
+        {
+          "id": "pdm-5",
+          "dietId": "diet-xp12",
+          "mealType": "dinner",
+          "name": "Jantar",
+          "scheduledTime": "20:00",
+          "calories": 560,
+          "protein": 45,
+          "carbohydrates": 55,
+          "fat": 18,
+          "fiber": 7,
+          "notes": null,
+          "sortOrder": 5
+        }
+      ]
+    },
+    "ativo": true,
+    "profissionalNome": "Dra. Ana Carolina",
+    "profissionalRole": "nutri",
+    "refeicoesRegistradas": 3,
+    "refeicoesTotal": 5,
+    "refeicoes": [
+      {
+        "meal": {
+          "id": "pdm-1",
+          "dietId": "diet-xp12",
+          "mealType": "breakfast",
+          "name": "Café da manhã",
+          "scheduledTime": "07:00",
+          "calories": 410,
+          "protein": 32,
+          "carbohydrates": 48,
+          "fat": 12,
+          "fiber": 6,
+          "notes": null,
+          "sortOrder": 1
+        },
+        "registrada": true
+      },
+      {
+        "meal": {
+          "id": "pdm-2",
+          "dietId": "diet-xp12",
+          "mealType": "morning_snack",
+          "name": "Lanche da manhã",
+          "scheduledTime": "10:00",
+          "calories": 240,
+          "protein": 18,
+          "carbohydrates": 24,
+          "fat": 8,
+          "fiber": 3,
+          "notes": null,
+          "sortOrder": 2
+        },
+        "registrada": true
+      },
+      {
+        "meal": {
+          "id": "pdm-3",
+          "dietId": "diet-xp12",
+          "mealType": "lunch",
+          "name": "Almoço",
+          "scheduledTime": "13:30",
+          "calories": 720,
+          "protein": 52,
+          "carbohydrates": 80,
+          "fat": 22,
+          "fiber": 9,
+          "notes": null,
+          "sortOrder": 3
+        },
+        "registrada": false
+      },
+      {
+        "meal": {
+          "id": "pdm-4",
+          "dietId": "diet-xp12",
+          "mealType": "afternoon_snack",
+          "name": "Lanche da tarde",
+          "scheduledTime": "16:30",
+          "calories": 290,
+          "protein": 22,
+          "carbohydrates": 30,
+          "fat": 10,
+          "fiber": 4,
+          "notes": null,
+          "sortOrder": 4
+        },
+        "registrada": false
+      },
+      {
+        "meal": {
+          "id": "pdm-5",
+          "dietId": "diet-xp12",
+          "mealType": "dinner",
+          "name": "Jantar",
+          "scheduledTime": "20:00",
+          "calories": 560,
+          "protein": 45,
+          "carbohydrates": 55,
+          "fat": 18,
+          "fiber": 7,
+          "notes": null,
+          "sortOrder": 5
+        },
+        "registrada": true
+      }
+    ],
+    "proximaRefeicao": {
+      "meal": {
+        "id": "pdm-3",
+        "dietId": "diet-xp12",
+        "mealType": "lunch",
+        "name": "Almoço",
+        "scheduledTime": "13:30",
+        "calories": 720,
+        "protein": 52,
+        "carbohydrates": 80,
+        "fat": 22,
+        "fiber": 9,
+        "notes": null,
+        "sortOrder": 3
+      },
+      "registrada": false
+    }
+  },
+
+  "anelCalorias": {
+    "consumidas": 1370,
+    "gastas": 480,
+    "meta": 2000,
+    "metaGasto": 600,
+    "acima": false,
+    "semMeta": false
+  },
+
+  "miniStats": [
+    {
+      "id": "weight",
+      "label": "Peso",
+      "valor": "83",
+      "unidade": "kg",
+      "delta": "↓ -0,3 kg",
+      "tendencia": "down",
+      "iconeNome": "Scale",
+      "iconeCor": "teal-400",
+      "rota": "/minha-saude#weight"
+    },
+    {
+      "id": "sleep_hours",
+      "label": "Sono",
+      "valor": "8h 12m",
+      "unidade": "",
+      "delta": "ótimo",
+      "tendencia": "stable",
+      "iconeNome": "Moon",
+      "iconeCor": "violet-400",
+      "rota": "/metricas/sleep_hours"
+    },
+    {
+      "id": "daily_steps",
+      "label": "Passos",
+      "valor": "6.230",
+      "unidade": "",
+      "delta": "↑ vs ontem",
+      "tendencia": "up",
+      "iconeNome": "Footprints",
+      "iconeCor": "sky-400",
+      "rota": "/metricas/daily_steps"
+    },
+    {
+      "id": "daily_hydration",
+      "label": "Água",
+      "valor": "4/8",
+      "unidade": "copos",
+      "delta": "em dia",
+      "tendencia": "stable",
+      "iconeNome": "Droplet",
+      "iconeCor": "cyan-400",
+      "rota": "/metricas/daily_hydration"
+    },
+    {
+      "id": "resting_heart_rate",
+      "label": "BPM repouso",
+      "valor": "64",
+      "unidade": "bpm",
+      "delta": "estável",
+      "tendencia": "stable",
+      "iconeNome": "Heart",
+      "iconeCor": "rose-400",
+      "rota": "/metricas/resting_heart_rate"
+    },
+    {
+      "id": "body_fat_percentage",
+      "label": "% Gordura",
+      "valor": "12,0",
+      "unidade": "%",
+      "delta": "↓ -0,4%",
+      "tendencia": "down",
+      "iconeNome": "Activity",
+      "iconeCor": "amber-400",
+      "rota": "/metricas/body_fat_percentage"
+    }
+  ],
+
+  "semanaAtiva": {
+    "diasAtivos": 4,
+    "diasTotal": 7,
+    "meta": 5,
+    "dias": [
+      { "dia": "seg", "label": "Seg", "ativo": true, "hoje": false },
+      { "dia": "ter", "label": "Ter", "ativo": true, "hoje": false },
+      { "dia": "qua", "label": "Qua", "ativo": false, "hoje": false },
+      { "dia": "qui", "label": "Qui", "ativo": true, "hoje": false },
+      { "dia": "sex", "label": "Sex", "ativo": true, "hoje": false },
+      { "dia": "sab", "label": "Sáb", "ativo": false, "hoje": true },
+      { "dia": "dom", "label": "Dom", "ativo": false, "hoje": false }
+    ]
+  },
+
+  "quickActions": [
+    {
+      "id": "nutricao",
+      "label": "Nutrição",
+      "iconeNome": "Apple",
+      "rota": "/nutricao"
+    },
+    {
+      "id": "atividades",
+      "label": "Atividades",
+      "iconeNome": "Flame",
+      "rota": "/atividades"
+    },
+    {
+      "id": "treinos",
+      "label": "Treinos",
+      "iconeNome": "Dumbbell",
+      "rota": "/treinos"
+    }
+  ]
+}

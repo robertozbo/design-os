@@ -1,0 +1,32 @@
+{
+  "_meta": {
+    "description": "Preferências do usuário — sincroniza com userSettings no backend."
+  },
+  "tema": "escuro",
+  "idioma": "pt-BR",
+  "unidades": "metric",
+  "formatoData": "DD/MM/YYYY",
+  "notificacoes": {
+    "push": true,
+    "email": true,
+    "lembretesDiarios": true,
+    "analisesIA": true,
+    "profissionalRespondeu": true,
+    "alertaPlanoExpirando": true
+  },
+  "privacidade": {
+    "compartilharDadosAnonimos": false,
+    "permitirIAUsarDados": true,
+    "permitirIAUsarDadosLocked": false
+  },
+  "acessibilidade": {
+    "reduzirMovimento": false,
+    "altoContraste": false,
+    "textoMaior": false
+  },
+  "appInfo": {
+    "versao": "0.5.2",
+    "build": "2026.5.4",
+    "ambiente": "production"
+  }
+}

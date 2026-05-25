@@ -1,0 +1,846 @@
+{
+  "_meta": {
+    "models": {
+      "exameListItem": "Resumo de um exame na lista. Inclui paciente, tipo, status de revisão, e principal biomarker alterado.",
+      "exameDetalhe": "Versão completa de um exame quando aberto. Inclui laudo, biomarkers, anamnese pré-consulta vinculada, medicação ativa do paciente, análise IA.",
+      "biomarker": "Valor numérico individual (HbA1c, TSH, etc.) com histórico, referência e alerta.",
+      "laudoOriginal": "Texto bruto do laudo do laboratório (parágrafos, conclusões). Mostrado no viewer.",
+      "iaAnalise": "Análise IA composta de 4 blocos (resumo, comparação histórica, cruzamento queixa, cruzamento medicação). Cada bloco é uma string com modelo + timestamp.",
+      "iaBloco": "Um bloco específico da análise IA com tipo, conteúdo, modelo, timestamp e fonte.",
+      "anamneseSintoma": "Sintoma relatado pelo paciente na anamnese pré-consulta — usado pra cruzamento IA.",
+      "medicacaoAtiva": "Medicação que o paciente está usando — usada pra cruzamento IA.",
+      "filtroLista": "Estado atual dos filtros aplicados na lista (paciente, tipo, período, status revisão)."
+    },
+    "relationships": [
+      "ExameListItem é o que aparece na Lista; ExameDetalhe é a versão expandida com IA",
+      "ExameDetalhe contém LaudoOriginal + array de Biomarkers + IAAnalise (4 IABlocos)",
+      "IAAnalise referencia AnamneseSintoma e MedicacaoAtiva como fontes",
+      "FiltroLista controla o que é renderizado na Lista"
+    ]
+  },
+  "filtroAtivo": {
+    "busca": "",
+    "tipos": [],
+    "statusRevisao": "todos",
+    "periodo": "30d"
+  },
+  "examesLista": [
+    {
+      "id": "exm-maria-tsh",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+      "tipo": "Perfil tireoidiano",
+      "categoria": "laboratorial",
+      "laboratorio": "Fleury",
+      "dataColeta": "2026-04-22",
+      "recebidoEm": "2026-05-07T11:00:00-03:00",
+      "statusRevisao": "a-revisar",
+      "destaqueBiomarker": {
+        "nome": "TSH",
+        "valor": 6.4,
+        "unidade": "mUI/L",
+        "alertNivel": "alto",
+        "tendencia": "subindo",
+        "historico": [3.8, 4.1, 4.7, 5.2, 6.4]
+      }
+    },
+    {
+      "id": "exm-joao-glicada",
+      "pacienteId": "pct-006",
+      "pacienteNome": "João Ricardo Mello",
+      "iniciais": "JM",
+      "condicoesCronicas": ["DM2", "Dislipidemia"],
+      "tipo": "Hemoglobina glicada",
+      "categoria": "laboratorial",
+      "laboratorio": "Sabin",
+      "dataColeta": "2026-05-04",
+      "recebidoEm": "2026-05-06T09:30:00-03:00",
+      "statusRevisao": "a-revisar",
+      "destaqueBiomarker": {
+        "nome": "HbA1c",
+        "valor": 7.6,
+        "unidade": "%",
+        "alertNivel": "alto",
+        "tendencia": "subindo",
+        "historico": [6.9, 7.0, 7.2, 7.4, 7.6]
+      }
+    },
+    {
+      "id": "exm-gustavo-tireo",
+      "pacienteId": "pct-010",
+      "pacienteNome": "Gustavo Henrique",
+      "iniciais": "GH",
+      "condicoesCronicas": ["Tireoidite Hashimoto"],
+      "tipo": "Perfil tireoidiano completo",
+      "categoria": "laboratorial",
+      "laboratorio": "Fleury",
+      "dataColeta": "2026-05-05",
+      "recebidoEm": "2026-05-06T14:20:00-03:00",
+      "statusRevisao": "a-revisar",
+      "destaqueBiomarker": {
+        "nome": "Anti-TPO",
+        "valor": 248,
+        "unidade": "UI/mL",
+        "alertNivel": "alto",
+        "tendencia": "estavel",
+        "historico": [220, 232, 240, 248, 248]
+      }
+    },
+    {
+      "id": "exm-paula-bioqu",
+      "pacienteId": "pct-002",
+      "pacienteNome": "Paula Mendes",
+      "iniciais": "PM",
+      "condicoesCronicas": ["SOP", "Pré-diabetes"],
+      "tipo": "Bioquímica + insulina jejum",
+      "categoria": "laboratorial",
+      "laboratorio": "Hermes Pardini",
+      "dataColeta": "2026-04-30",
+      "recebidoEm": "2026-05-02T10:15:00-03:00",
+      "statusRevisao": "revisado",
+      "revisadoEm": "2026-05-03T16:00:00-03:00",
+      "destaqueBiomarker": {
+        "nome": "HOMA-IR",
+        "valor": 3.8,
+        "unidade": "",
+        "alertNivel": "alto",
+        "tendencia": "subindo",
+        "historico": [2.1, 2.6, 3.0, 3.4, 3.8]
+      }
+    },
+    {
+      "id": "exm-maria-glicada",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+      "tipo": "Hemoglobina glicada",
+      "categoria": "laboratorial",
+      "laboratorio": "Fleury",
+      "dataColeta": "2026-04-22",
+      "recebidoEm": "2026-04-25T08:40:00-03:00",
+      "statusRevisao": "revisado",
+      "revisadoEm": "2026-04-26T10:00:00-03:00",
+      "destaqueBiomarker": {
+        "nome": "HbA1c",
+        "valor": 6.8,
+        "unidade": "%",
+        "alertNivel": "normal",
+        "tendencia": "caindo",
+        "historico": [7.3, 7.1, 7.0, 6.9, 6.8]
+      }
+    },
+    {
+      "id": "exm-carlos-rxtorax",
+      "pacienteId": "pct-003",
+      "pacienteNome": "Carlos Tavares",
+      "iniciais": "CT",
+      "condicoesCronicas": ["DM2"],
+      "tipo": "Raio-X de tórax",
+      "categoria": "imagem",
+      "laboratorio": "CDB",
+      "dataColeta": "2026-04-18",
+      "recebidoEm": "2026-04-19T15:30:00-03:00",
+      "statusRevisao": "revisado",
+      "revisadoEm": "2026-04-22T11:15:00-03:00",
+      "destaqueBiomarker": null
+    }
+  ],
+  "exameDetalhe": {
+    "id": "exm-maria-tsh",
+    "pacienteId": "pct-001",
+    "pacienteNome": "Maria Silva Andrade",
+    "iniciais": "MA",
+    "idade": 45,
+    "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+    "tipo": "Perfil tireoidiano",
+    "categoria": "laboratorial",
+    "laboratorio": "Fleury",
+    "medicoSolicitante": "Dr. Pedro Lima",
+    "dataColeta": "2026-04-22",
+    "dataResultado": "2026-04-25",
+    "recebidoEm": "2026-05-07T11:00:00-03:00",
+    "statusRevisao": "a-revisar",
+    "revisadoEm": null,
+    "revisadoPor": null,
+    "observacaoMedico": "",
+    "laudoOriginal": {
+      "texto": "PERFIL TIREOIDIANO\n\nMÉTODO: Eletroquimioluminescência (Roche Cobas)\n\nRESULTADOS:\nTSH (Tireoestimulante): 6,4 mUI/L (Ref: 0,4 - 4,5 mUI/L) ↑\nT4 livre: 0,9 ng/dL (Ref: 0,8 - 1,8 ng/dL)\nT3 total: 1,1 ng/mL (Ref: 0,8 - 2,0 ng/mL)\n\nCOMENTÁRIO TÉCNICO:\nValor de TSH acima do limite superior de referência, com T4 livre próximo ao limite inferior. Padrão laboratorial sugestivo de hipotireoidismo subclínico em progressão para manifesto. Sugere-se reavaliação clínica com correlação aos sintomas e considerar ajuste de terapia de reposição se em uso.\n\nResponsável técnico: Dr. Antonio Camargo (CRM 89421)",
+      "paginas": 1
+    },
+    "biomarkers": [
+      {
+        "nome": "TSH",
+        "nomeCompleto": "Hormônio Tireoestimulante",
+        "valor": 6.4,
+        "unidade": "mUI/L",
+        "faixaReferencia": "0,4 - 4,5",
+        "alertNivel": "alto",
+        "tendencia": "subindo",
+        "deltaPercent": 36.2,
+        "historico": [
+          { "data": "2024-08-15", "valor": 3.8 },
+          { "data": "2025-01-20", "valor": 4.1 },
+          { "data": "2025-08-10", "valor": 4.7 },
+          { "data": "2025-11-08", "valor": 5.2 },
+          { "data": "2026-04-22", "valor": 6.4 }
+        ]
+      },
+      {
+        "nome": "T4 Livre",
+        "nomeCompleto": "Tiroxina Livre",
+        "valor": 0.9,
+        "unidade": "ng/dL",
+        "faixaReferencia": "0,8 - 1,8",
+        "alertNivel": "normal",
+        "tendencia": "caindo",
+        "deltaPercent": -25.0,
+        "historico": [
+          { "data": "2024-08-15", "valor": 1.2 },
+          { "data": "2025-01-20", "valor": 1.1 },
+          { "data": "2025-08-10", "valor": 1.0 },
+          { "data": "2025-11-08", "valor": 0.95 },
+          { "data": "2026-04-22", "valor": 0.9 }
+        ]
+      },
+      {
+        "nome": "T3 Total",
+        "nomeCompleto": "Triiodotironina Total",
+        "valor": 1.1,
+        "unidade": "ng/mL",
+        "faixaReferencia": "0,8 - 2,0",
+        "alertNivel": "normal",
+        "tendencia": "estavel",
+        "deltaPercent": 0,
+        "historico": [
+          { "data": "2025-08-10", "valor": 1.2 },
+          { "data": "2025-11-08", "valor": 1.1 },
+          { "data": "2026-04-22", "valor": 1.1 }
+        ]
+      }
+    ],
+    "iaAnalise": {
+      "modeloIA": "claude-opus-4-7",
+      "geradoEm": "2026-05-07T11:02:14-03:00",
+      "blocos": [
+        {
+          "tipo": "resumo-laudo",
+          "titulo": "Resumo do laudo",
+          "conteudo": "TSH 6,4 mUI/L (acima do limite de 4,5). T4 livre 0,9 ng/dL próximo ao limite inferior. Padrão laboratorial sugestivo de **hipotireoidismo subclínico em progressão** para manifesto. O laboratório sugere reavaliação clínica e considerar ajuste da terapia de reposição.",
+          "fonte": "Laudo Fleury · Dr. Antonio Camargo · 25/04/2026"
+        },
+        {
+          "tipo": "comparacao-historica",
+          "titulo": "Comparação histórica",
+          "conteudo": "TSH **subiu de 4,1 → 6,4 (+56%) em 16 meses**, com tendência consistente de progressão. T4 livre caiu de 1,1 → 0,9 ng/dL no mesmo período. A trajetória sugere descompensação progressiva, não variação pontual.",
+          "fonte": "5 medições anteriores (2024-08 a 2026-04)"
+        },
+        {
+          "tipo": "cruzamento-queixa",
+          "titulo": "Cruzamento com queixa atual",
+          "conteudo": "Paciente relatou na anamnese pré-consulta: **cansaço persistente há 6 semanas**, **ganho ponderal de 3kg sem mudança alimentar**, sonolência diurna, intolerância ao frio e constipação intermitente. **Quadro clínico altamente compatível com o achado laboratorial** de hipotireoidismo descompensado.",
+          "fonte": "Anamnese pré-consulta · 06/05/2026"
+        },
+        {
+          "tipo": "cruzamento-medicacao",
+          "titulo": "Cruzamento com medicação em uso",
+          "conteudo": "Paciente em uso de **Levotiroxina 50 mcg em jejum** desde 22/08/2023 (mantido na última prescrição em 10/11/2025). Adesão registrada nos últimos 30 dias: 86%. Considerando a tendência de TSH em alta e adesão razoável, **a dose pode estar subdosada para o peso atual** (78,4 kg). Decisão clínica é sua.",
+          "fonte": "Prescrição Memed · 10/11/2025 · adesão diário do paciente"
+        }
+      ]
+    },
+    "anamneseSintomas": [
+      "Cansaço persistente há 6 semanas",
+      "Ganho ponderal de 3kg sem mudança alimentar",
+      "Sonolência diurna",
+      "Intolerância ao frio",
+      "Constipação intermitente"
+    ],
+    "medicacaoAtiva": [
+      {
+        "nome": "Levotiroxina",
+        "dose": "50 mcg",
+        "posologia": "1x ao dia em jejum",
+        "iniciadaEm": "2023-08-22",
+        "adesao30Dias": 0.86
+      },
+      {
+        "nome": "Metformina",
+        "dose": "1 g",
+        "posologia": "2x ao dia",
+        "iniciadaEm": "2024-03-15",
+        "adesao30Dias": 0.93
+      }
+    ]
+  },
+  "examesLabDetalhes": [
+    {
+      "id": "exm-001",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "idade": 45,
+      "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+      "tipo": "Perfil tireoidiano",
+      "categoria": "laboratorial",
+      "laboratorio": "Fleury",
+      "medicoSolicitante": "Dr. Pedro Lima",
+      "dataColeta": "2026-04-22",
+      "dataResultado": "2026-04-25",
+      "recebidoEm": "2026-05-07T11:00:00-03:00",
+      "statusRevisao": "a-revisar",
+      "revisadoEm": null,
+      "revisadoPor": null,
+      "observacaoMedico": "",
+      "laudoOriginal": {
+        "texto": "PERFIL TIREOIDIANO\n\nMÉTODO: Eletroquimioluminescência (Roche Cobas)\n\nRESULTADOS:\nTSH (Tireoestimulante): 6,4 mUI/L (Ref: 0,4 - 4,5 mUI/L) ↑\nT4 livre: 0,9 ng/dL (Ref: 0,8 - 1,8 ng/dL)\nT3 total: 1,1 ng/mL (Ref: 0,8 - 2,0 ng/mL)\n\nCOMENTÁRIO TÉCNICO:\nValor de TSH acima do limite superior de referência, com T4 livre próximo ao limite inferior. Padrão laboratorial sugestivo de hipotireoidismo subclínico em progressão para manifesto.\n\nResponsável técnico: Dr. Antonio Camargo (CRM 89421)",
+        "paginas": 1
+      },
+      "biomarkers": [
+        {
+          "nome": "TSH",
+          "nomeCompleto": "Hormônio Tireoestimulante",
+          "valor": 6.4,
+          "unidade": "mUI/L",
+          "faixaReferencia": "0,4 - 4,5",
+          "alertNivel": "alto",
+          "tendencia": "subindo",
+          "deltaPercent": 36.2,
+          "historico": [
+            { "data": "2024-08-15", "valor": 3.8 },
+            { "data": "2025-01-20", "valor": 4.1 },
+            { "data": "2025-08-10", "valor": 4.7 },
+            { "data": "2025-11-08", "valor": 5.2 },
+            { "data": "2026-04-22", "valor": 6.4 }
+          ]
+        },
+        {
+          "nome": "T4 Livre",
+          "nomeCompleto": "Tiroxina Livre",
+          "valor": 0.9,
+          "unidade": "ng/dL",
+          "faixaReferencia": "0,8 - 1,8",
+          "alertNivel": "normal",
+          "tendencia": "caindo",
+          "deltaPercent": -25.0,
+          "historico": [
+            { "data": "2024-08-15", "valor": 1.2 },
+            { "data": "2025-01-20", "valor": 1.1 },
+            { "data": "2025-08-10", "valor": 1.0 },
+            { "data": "2025-11-08", "valor": 0.95 },
+            { "data": "2026-04-22", "valor": 0.9 }
+          ]
+        }
+      ],
+      "iaAnalise": {
+        "modeloIA": "claude-opus-4-7",
+        "geradoEm": "2026-05-07T11:02:14-03:00",
+        "blocos": [
+          {
+            "tipo": "resumo-laudo",
+            "titulo": "Resumo do laudo",
+            "conteudo": "TSH 6,4 mUI/L (acima do limite de 4,5). T4 livre 0,9 ng/dL próximo ao limite inferior. Padrão laboratorial sugestivo de **hipotireoidismo subclínico em progressão** para manifesto.",
+            "fonte": "Laudo Fleury · Dr. Antonio Camargo · 25/04/2026"
+          },
+          {
+            "tipo": "comparacao-historica",
+            "titulo": "Comparação histórica",
+            "conteudo": "TSH **subiu de 4,1 → 6,4 (+56%) em 16 meses**, com tendência consistente de progressão. T4 livre caiu de 1,1 → 0,9 ng/dL no mesmo período. A trajetória sugere descompensação progressiva, não variação pontual.",
+            "fonte": "5 medições anteriores (2024-08 a 2026-04)"
+          },
+          {
+            "tipo": "cruzamento-queixa",
+            "titulo": "Cruzamento com queixa atual",
+            "conteudo": "Paciente relatou na anamnese: **cansaço persistente há 6 semanas**, **ganho ponderal de 3kg sem mudança alimentar**, intolerância ao frio. **Quadro altamente compatível** com o achado laboratorial.",
+            "fonte": "Anamnese pré-consulta · 06/05/2026"
+          },
+          {
+            "tipo": "cruzamento-medicacao",
+            "titulo": "Cruzamento com medicação em uso",
+            "conteudo": "Em uso de **Levotiroxina 50 mcg em jejum** desde 22/08/2023. Adesão 30d: 86%. Com TSH em alta e adesão razoável, **a dose pode estar subdosada para o peso atual** (78,4 kg).",
+            "fonte": "Prescrição Memed · adesão diário do paciente"
+          }
+        ]
+      },
+      "anamneseSintomas": [
+        "Cansaço persistente há 6 semanas",
+        "Ganho ponderal de 3kg sem mudança alimentar",
+        "Sonolência diurna",
+        "Intolerância ao frio"
+      ],
+      "medicacaoAtiva": [
+        { "nome": "Levotiroxina", "dose": "50 mcg", "posologia": "1x ao dia em jejum", "iniciadaEm": "2023-08-22", "adesao30Dias": 0.86 },
+        { "nome": "Metformina", "dose": "1 g", "posologia": "2x ao dia", "iniciadaEm": "2024-03-15", "adesao30Dias": 0.93 }
+      ]
+    },
+    {
+      "id": "exm-002",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "idade": 45,
+      "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+      "tipo": "Hemoglobina glicada",
+      "categoria": "laboratorial",
+      "laboratorio": "Fleury",
+      "medicoSolicitante": "Dr. Pedro Lima",
+      "dataColeta": "2026-04-22",
+      "dataResultado": "2026-04-25",
+      "recebidoEm": "2026-05-07T11:00:00-03:00",
+      "statusRevisao": "a-revisar",
+      "revisadoEm": null,
+      "revisadoPor": null,
+      "observacaoMedico": "",
+      "laudoOriginal": {
+        "texto": "HEMOGLOBINA GLICADA (HbA1c)\n\nMÉTODO: HPLC (Cromatografia líquida de alta performance)\n\nRESULTADO:\nHbA1c: 6,8 % (Ref. ADA 2024: meta DM2 < 7,0 %; ideal < 6,5 %)\nGlicemia média estimada: 148 mg/dL\n\nCOMENTÁRIO TÉCNICO:\nValor dentro da meta ADA pra paciente com DM2 sob tratamento (< 7,0 %). Tendência decrescente nos últimos 16 meses (7,3 → 6,8). Continuidade do controle glicêmico atual recomendada.\n\nResponsável técnico: Dr. Antonio Camargo (CRM 89421)",
+        "paginas": 1
+      },
+      "biomarkers": [
+        {
+          "nome": "HbA1c",
+          "nomeCompleto": "Hemoglobina glicada",
+          "valor": 6.8,
+          "unidade": "%",
+          "faixaReferencia": "< 7,0 (meta DM2)",
+          "alertNivel": "normal",
+          "tendencia": "caindo",
+          "deltaPercent": -6.8,
+          "historico": [
+            { "data": "2024-08-15", "valor": 7.3 },
+            { "data": "2025-01-20", "valor": 7.1 },
+            { "data": "2025-08-10", "valor": 7.0 },
+            { "data": "2025-11-08", "valor": 6.9 },
+            { "data": "2026-04-22", "valor": 6.8 }
+          ]
+        }
+      ],
+      "iaAnalise": {
+        "modeloIA": "claude-opus-4-7",
+        "geradoEm": "2026-05-07T11:02:48-03:00",
+        "blocos": [
+          {
+            "tipo": "resumo-laudo",
+            "titulo": "Resumo do laudo",
+            "conteudo": "HbA1c **6,8 % — dentro da meta** ADA pra DM2 (< 7,0 %). Glicemia média estimada 148 mg/dL. Controle adequado sob terapia atual.",
+            "fonte": "Laudo Fleury · 25/04/2026"
+          },
+          {
+            "tipo": "comparacao-historica",
+            "titulo": "Comparação histórica",
+            "conteudo": "Tendência **decrescente sustentada** ao longo de 16 meses (7,3 → 7,1 → 7,0 → 6,9 → 6,8 %). Resposta favorável e consistente à Metformina + dieta.",
+            "fonte": "5 medições (2024-08 a 2026-04)"
+          },
+          {
+            "tipo": "cruzamento-medicacao",
+            "titulo": "Cruzamento com medicação em uso",
+            "conteudo": "Metformina 1 g 2x/dia desde 03/2024. Adesão 30d: 93%. **Manter conduta** — o controle glicêmico está alinhado com a meta ADA. Reavaliar em 3 meses.",
+            "fonte": "Memed · adesão diário"
+          }
+        ]
+      },
+      "anamneseSintomas": [
+        "Cansaço persistente",
+        "Ganho ponderal recente"
+      ],
+      "medicacaoAtiva": [
+        { "nome": "Metformina", "dose": "1 g", "posologia": "2x ao dia", "iniciadaEm": "2024-03-15", "adesao30Dias": 0.93 }
+      ]
+    },
+    {
+      "id": "exm-003",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "idade": 45,
+      "condicoesCronicas": ["DM2", "Hipotireoidismo"],
+      "tipo": "Vitamina D",
+      "categoria": "laboratorial",
+      "laboratorio": "Sabin",
+      "medicoSolicitante": "Dr. Pedro Lima",
+      "dataColeta": "2026-03-15",
+      "dataResultado": "2026-03-17",
+      "recebidoEm": "2026-03-18T09:30:00-03:00",
+      "statusRevisao": "revisado",
+      "revisadoEm": "2026-03-20",
+      "revisadoPor": "Dr. Pedro Lima",
+      "observacaoMedico": "Suplementação Vit D3 7000 UI/sem mantida — alvo já atingido.",
+      "laudoOriginal": {
+        "texto": "25-HIDROXIVITAMINA D (25-OH-D)\n\nMÉTODO: Quimioluminescência\n\nRESULTADO:\n25-OH-D: 38 ng/mL (Ref. Endocrine Society: 30 - 100 ng/mL — suficiente)\n\nCOMENTÁRIO TÉCNICO:\nNível dentro da faixa considerada suficiente. Recomenda-se manutenção da suplementação atual se vigente, com reavaliação anual.\n\nResponsável técnico: Dra. Camila Reis (CRM 102733)",
+        "paginas": 1
+      },
+      "biomarkers": [
+        {
+          "nome": "25-OH-D",
+          "nomeCompleto": "25-hidroxivitamina D",
+          "valor": 38,
+          "unidade": "ng/mL",
+          "faixaReferencia": "30 - 100",
+          "alertNivel": "normal",
+          "tendencia": "subindo",
+          "deltaPercent": 72.7,
+          "historico": [
+            { "data": "2024-08-15", "valor": 22 },
+            { "data": "2025-01-20", "valor": 28 },
+            { "data": "2025-08-10", "valor": 33 },
+            { "data": "2025-11-08", "valor": 36 },
+            { "data": "2026-03-15", "valor": 38 }
+          ]
+        }
+      ],
+      "iaAnalise": {
+        "modeloIA": "claude-opus-4-7",
+        "geradoEm": "2026-03-18T09:35:00-03:00",
+        "blocos": [
+          {
+            "tipo": "resumo-laudo",
+            "titulo": "Resumo do laudo",
+            "conteudo": "25-OH-D **38 ng/mL — suficiência atingida** (faixa Endocrine Society 30–100). Resposta clara à suplementação.",
+            "fonte": "Laudo Sabin · 17/03/2026"
+          },
+          {
+            "tipo": "comparacao-historica",
+            "titulo": "Comparação histórica",
+            "conteudo": "Resposta linear à suplementação: **22 → 28 → 33 → 36 → 38 ng/mL** em 19 meses. Saiu da insuficiência (< 30) há 8 meses.",
+            "fonte": "5 medições (2024-08 a 2026-03)"
+          },
+          {
+            "tipo": "cruzamento-medicacao",
+            "titulo": "Cruzamento com medicação em uso",
+            "conteudo": "Vit D3 7000 UI 1x/sem (iniciada 08/2024). Considerar **reduzir pra 7000 UI quinzenal** ou suspender com nova dosagem em 6 meses, dado o alvo atingido.",
+            "fonte": "Memed · adesão semanal"
+          }
+        ]
+      },
+      "anamneseSintomas": [],
+      "medicacaoAtiva": [
+        { "nome": "Vitamina D3", "dose": "7000 UI", "posologia": "1x por semana", "iniciadaEm": "2024-08-15", "adesao30Dias": 0.95 }
+      ]
+    }
+  ],
+  "examesImagemDetalhes": [
+    {
+      "id": "img-joao-rxtorax",
+      "pacienteId": "pct-002",
+      "pacienteNome": "João Carlos Mendes",
+      "iniciais": "JM",
+      "idade": 58,
+      "condicoesCronicas": ["DM2", "Obesidade", "Dislipidemia"],
+      "tipo": "Raio-X de tórax (PA + perfil)",
+      "modalidade": "raio-x",
+      "laboratorio": "CDB - Imagem",
+      "medicoSolicitante": "Dr. Pedro Lima",
+      "radiologistaResponsavel": "Dra. Helena Marques (CRM 78201)",
+      "dataColeta": "2026-05-05",
+      "dataResultado": "2026-05-06",
+      "recebidoEm": "2026-05-06T16:20:00-03:00",
+      "statusRevisao": "a-revisar",
+      "revisadoEm": null,
+      "revisadoPor": null,
+      "observacaoMedico": "",
+      "indicacao": "Investigação de dispneia aos médios esforços em paciente DM2 obeso com início recente de Semaglutida.",
+      "dicomDisponivel": true,
+      "laudoOriginal": {
+        "texto": "RAIO-X DE TÓRAX EM PA E PERFIL\n\nTÉCNICA: Incidências em PA e perfil esquerdo, em inspiração adequada.\n\nACHADOS:\nÁrea cardíaca com índice cardiotorácico de 0,55 (limite superior 0,50), sugerindo cardiomegalia leve.\nMediastino centrado, sem alargamento.\nÍndice torácico simétrico.\nCampos pulmonares hiperinsuflados, sem opacidades focais ou consolidações.\nSeios costofrênicos livres bilateralmente.\nEstruturas ósseas visualizadas sem alterações grosseiras.\n\nCOMPARAÇÃO:\nQuando comparado ao exame de 12/03/2024 (mesmo serviço), nota-se discreto aumento da silhueta cardíaca; campos pulmonares mantidos.\n\nIMPRESSÃO:\n1) Cardiomegalia leve — sugerimos correlação com ecocardiograma.\n2) Hiperinsuflação pulmonar discreta.\n3) Ausência de sinais de pneumonia, derrame pleural ou consolidação.\n\nResponsável técnico: Dra. Helena Marques (CRM 78201)",
+        "paginas": 1
+      },
+      "imagens": [
+        { "id": "img-1", "rotulo": "PA", "descricao": "Posteroanterior, em inspiração", "mockVisual": "torax-pa" },
+        { "id": "img-2", "rotulo": "Perfil", "descricao": "Perfil esquerdo", "mockVisual": "torax-perfil" }
+      ],
+      "achados": [
+        { "texto": "Cardiomegalia leve (ICT 0,55)", "significancia": "atencao" },
+        { "texto": "Hiperinsuflação pulmonar discreta", "significancia": "atencao" },
+        { "texto": "Sem opacidades focais", "significancia": "normal" },
+        { "texto": "Seios costofrênicos livres", "significancia": "normal" }
+      ],
+      "comparacao": {
+        "dataAnterior": "2024-03-12",
+        "resumo": "Cardiomegalia incipiente — ICT subiu de 0,49 → 0,55",
+        "delta": "progressao"
+      },
+      "iaAnalise": {
+        "modeloIA": "claude-opus-4-7@2026-04",
+        "geradoEm": "2026-05-06T16:24:00-03:00",
+        "blocos": [
+          {
+            "tipo": "resumo-laudo",
+            "titulo": "Resumo do laudo",
+            "conteudo": "Cardiomegalia leve nova (ICT 0,55, antes 0,49) com hiperinsuflação pulmonar discreta. Sem foco infeccioso. Radiologista sugere correlação com ecocardiograma.",
+            "fonte": "laudo-radiologista"
+          },
+          {
+            "tipo": "comparacao-historica",
+            "titulo": "Comparação com 12/03/2024",
+            "conteudo": "Progressão do índice cardiotorácico: 0,49 → 0,55 em 14 meses. Hiperinsuflação pulmonar surge nesta avaliação. Recomenda-se investigação cardíaca dirigida.",
+            "fonte": "raio-x-anterior"
+          },
+          {
+            "tipo": "cruzamento-queixa",
+            "titulo": "Cruzamento com queixa atual",
+            "conteudo": "Paciente relata dispneia aos médios esforços. O achado de cardiomegalia + hiperinsuflação é compatível com a queixa e justifica avaliação cardiológica + função pulmonar.",
+            "fonte": "anamnese-queixa"
+          },
+          {
+            "tipo": "cruzamento-medicacao",
+            "titulo": "Cruzamento com medicação em uso",
+            "conteudo": "Semaglutida iniciada há 6 semanas — sem associação direta com os achados. Sinvastatina e Metformina sem repercussão radiológica esperada. Não há medicação cardiotóxica em uso.",
+            "fonte": "memed-prescricoes-ativas"
+          }
+        ]
+      },
+      "anamneseSintomas": [
+        "Dispneia aos médios esforços",
+        "Cansaço aos esforços habituais",
+        "Sem dor torácica",
+        "Sem ortopneia"
+      ],
+      "medicacaoAtiva": [
+        { "nome": "Semaglutida", "dose": "1mg", "posologia": "1x semana SC", "iniciadaEm": "2026-03-22", "adesao30Dias": 1.0 },
+        { "nome": "Metformina", "dose": "1g", "posologia": "2x ao dia", "iniciadaEm": "2024-08-10", "adesao30Dias": 0.95 },
+        { "nome": "Sinvastatina", "dose": "20mg", "posologia": "1x noite", "iniciadaEm": "2024-08-10", "adesao30Dias": 0.92 }
+      ]
+    },
+    {
+      "id": "img-maria-usg-tireoide",
+      "pacienteId": "pct-001",
+      "pacienteNome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "idade": 45,
+      "condicoesCronicas": ["DM2", "Hashimoto"],
+      "tipo": "USG de tireoide com Doppler",
+      "modalidade": "usg",
+      "laboratorio": "Fleury",
+      "medicoSolicitante": "Dr. Pedro Lima",
+      "radiologistaResponsavel": "Dr. Marcelo Vieira (CRM 91123)",
+      "dataColeta": "2026-05-04",
+      "dataResultado": "2026-05-05",
+      "recebidoEm": "2026-05-05T10:08:00-03:00",
+      "statusRevisao": "a-revisar",
+      "revisadoEm": null,
+      "revisadoPor": null,
+      "observacaoMedico": "",
+      "indicacao": "Reavaliação de tireoidite de Hashimoto com TSH em ascensão e nódulo prévio TI-RADS 3.",
+      "dicomDisponivel": true,
+      "laudoOriginal": {
+        "texto": "ULTRASSONOGRAFIA DE TIREOIDE COM DOPPLER\n\nTÉCNICA: Avaliação em modo B e Doppler colorido com transdutor linear de alta frequência.\n\nACHADOS:\nGlândula tireoide tópica, com volume estimado de 10,8 mL (LD 5,2 / LE 4,9 / istmo 0,7). Parênquima difusamente heterogêneo e hipoecogênico, padrão compatível com tireoidite crônica autoimune (Hashimoto).\n\nLOBO DIREITO: Nódulo sólido, hipoecogênico, contornos regulares, halo periférico, sem microcalcificações, dimensões 8 × 6 × 5 mm (volume ~0,12 mL). Vascularização periférica ao Doppler. Classificação TI-RADS 3.\n\nLOBO ESQUERDO: Sem nódulos focais.\n\nLINFONODOMEGALIA CERVICAL: Não identificada.\n\nCOMPARAÇÃO:\nUSG de 14/06/2025 (mesmo serviço): nódulo do LD media 7 × 6 × 5 mm. Crescimento de aproximadamente 1 mm no maior eixo em 11 meses.\n\nIMPRESSÃO:\n1) Tireoidite crônica de Hashimoto com parênquima heterogêneo.\n2) Nódulo TI-RADS 3 em LD com discreto crescimento — controle ultrassonográfico em 12 meses.\n\nResponsável técnico: Dr. Marcelo Vieira (CRM 91123)",
+        "paginas": 1
+      },
+      "imagens": [
+        { "id": "img-1", "rotulo": "LD long", "descricao": "Lobo direito, corte longitudinal", "mockVisual": "tireoide-long" },
+        { "id": "img-2", "rotulo": "LD trans", "descricao": "Lobo direito, corte transversal", "mockVisual": "tireoide-trans" },
+        { "id": "img-3", "rotulo": "LE long", "descricao": "Lobo esquerdo, corte longitudinal", "mockVisual": "tireoide-long" },
+        { "id": "img-4", "rotulo": "LE trans", "descricao": "Lobo esquerdo, corte transversal", "mockVisual": "tireoide-trans" }
+      ],
+      "achados": [
+        { "texto": "Tireoidite crônica (parênquima heterogêneo)", "significancia": "atencao" },
+        { "texto": "Nódulo LD TI-RADS 3", "significancia": "atencao", "medida": "8 × 6 × 5 mm" },
+        { "texto": "Volume tireoidiano normal (10,8 mL)", "significancia": "normal" },
+        { "texto": "Sem linfonodomegalia cervical", "significancia": "normal" }
+      ],
+      "comparacao": {
+        "dataAnterior": "2025-06-14",
+        "resumo": "Nódulo LD cresceu de 7→8mm em 11 meses",
+        "delta": "progressao"
+      },
+      "iaAnalise": {
+        "modeloIA": "claude-opus-4-7@2026-04",
+        "geradoEm": "2026-05-05T10:12:00-03:00",
+        "blocos": [
+          {
+            "tipo": "resumo-laudo",
+            "titulo": "Resumo do laudo",
+            "conteudo": "Tireoide com padrão típico de Hashimoto (heterogênea, hipoecogênica). Nódulo TI-RADS 3 em LD com discreto crescimento (7→8mm em 11 meses). Radiologista sugere controle em 12 meses.",
+            "fonte": "laudo-radiologista"
+          },
+          {
+            "tipo": "comparacao-historica",
+            "titulo": "Comparação com 14/06/2025",
+            "conteudo": "Nódulo cresceu 1mm no maior eixo. Tipicamente esperado em nódulos benignos é variação <2mm/ano — este crescimento é compatível com benignidade, mas merece o follow-up sugerido.",
+            "fonte": "usg-anterior"
+          },
+          {
+            "tipo": "cruzamento-queixa",
+            "titulo": "Cruzamento com queixa atual",
+            "conteudo": "Paciente relata fadiga e ganho de peso (5kg em 6 meses). Compatível com hipotireoidismo subclínico em progressão (TSH 6,4 no último laboratorial). USG não muda conduta — o tratamento é guiado pelos hormônios.",
+            "fonte": "anamnese-queixa"
+          },
+          {
+            "tipo": "cruzamento-medicacao",
+            "titulo": "Cruzamento com medicação em uso",
+            "conteudo": "Levotiroxina 50mcg em uso há 2 anos. TSH em ascensão sugere subdose — considerar aumento pra 75mcg, reavaliar TSH em 6 semanas. USG não impacta dose de reposição.",
+            "fonte": "memed-prescricoes-ativas"
+          }
+        ]
+      },
+      "anamneseSintomas": [
+        "Fadiga progressiva",
+        "Ganho de peso 5kg/6m",
+        "Intolerância ao frio",
+        "Sem palpitações"
+      ],
+      "medicacaoAtiva": [
+        { "nome": "Levotiroxina", "dose": "50mcg", "posologia": "1x manhã em jejum", "iniciadaEm": "2024-02-10", "adesao30Dias": 0.97 },
+        { "nome": "Metformina", "dose": "850mg", "posologia": "2x ao dia", "iniciadaEm": "2023-11-04", "adesao30Dias": 0.91 }
+      ]
+    },
+    {
+      "id": "img-joao-usg-abdome",
+      "pacienteId": "pct-002",
+      "pacienteNome": "João Carlos Mendes",
+      "iniciais": "JM",
+      "idade": 58,
+      "condicoesCronicas": ["DM2", "Obesidade", "Dislipidemia"],
+      "tipo": "USG de abdome total",
+      "modalidade": "usg",
+      "laboratorio": "Hermes Pardini",
+      "medicoSolicitante": "Dr. Pedro Lima",
+      "radiologistaResponsavel": "Dra. Cristina Albuquerque (CRM 65431)",
+      "dataColeta": "2026-04-29",
+      "dataResultado": "2026-04-30",
+      "recebidoEm": "2026-04-30T13:42:00-03:00",
+      "statusRevisao": "a-revisar",
+      "revisadoEm": null,
+      "revisadoPor": null,
+      "observacaoMedico": "",
+      "indicacao": "Rastreio de esteatose hepática em paciente DM2 + obesidade com TGO/TGP discretamente elevadas.",
+      "dicomDisponivel": false,
+      "laudoOriginal": {
+        "texto": "ULTRASSONOGRAFIA DE ABDOME TOTAL\n\nTÉCNICA: Avaliação em modo B com transdutor convexo, paciente em jejum de 8 horas.\n\nFÍGADO: Dimensões aumentadas (lobo direito 16,8 cm na linha hemiclavicular). Parênquima hiperecogênico, atenuação posterior do feixe sonoro e perda da definição das paredes da veia porta — padrão compatível com ESTEATOSE HEPÁTICA GRAU II (moderada).\n\nVESÍCULA BILIAR: Distendida, paredes finas (2 mm), conteúdo anecoico, sem cálculos.\n\nVIAS BILIARES: Não dilatadas. Colédoco com calibre normal (4 mm).\n\nPÂNCREAS: Parcialmente visualizado (limitação por gases). Cabeça e corpo sem alterações grosseiras.\n\nBAÇO: Dimensões e ecotextura normais (10,2 cm).\n\nRINS: Topografia preservada bilateralmente. Direito 11,2 cm, esquerdo 11,5 cm. Cortical e relação cortico-medular preservadas. Sem dilatação pielocalicinal. Sem cálculos.\n\nAORTA E VEIA CAVA: Calibres normais.\n\nIMPRESSÃO:\n1) ESTEATOSE HEPÁTICA GRAU II (moderada) — sem comparação com exame prévio.\n2) Demais órgãos abdominais sem alterações.\n\nResponsável técnico: Dra. Cristina Albuquerque (CRM 65431)",
+        "paginas": 1
+      },
+      "imagens": [
+        { "id": "img-1", "rotulo": "Fígado", "descricao": "Lobo direito, longitudinal", "mockVisual": "abdome-fig-hepatico" },
+        { "id": "img-2", "rotulo": "Rim D", "descricao": "Rim direito, longitudinal", "mockVisual": "abdome-rim" },
+        { "id": "img-3", "rotulo": "Rim E", "descricao": "Rim esquerdo, longitudinal", "mockVisual": "abdome-rim" }
+      ],
+      "achados": [
+        { "texto": "Esteatose hepática grau II (moderada)", "significancia": "critico" },
+        { "texto": "Hepatomegalia (16,8 cm)", "significancia": "atencao" },
+        { "texto": "Rins, baço e pâncreas sem alterações", "significancia": "normal" },
+        { "texto": "Vesícula sem cálculos", "significancia": "normal" }
+      ],
+      "comparacao": null,
+      "iaAnalise": {
+        "modeloIA": "claude-opus-4-7@2026-04",
+        "geradoEm": "2026-04-30T13:46:00-03:00",
+        "blocos": [
+          {
+            "tipo": "resumo-laudo",
+            "titulo": "Resumo do laudo",
+            "conteudo": "Esteatose hepática grau II (moderada) com hepatomegalia. Vesícula, vias biliares, pâncreas, baço e rins sem alterações. Sem exame prévio pra comparar.",
+            "fonte": "laudo-radiologista"
+          },
+          {
+            "tipo": "comparacao-historica",
+            "titulo": "Comparação histórica",
+            "conteudo": "Primeiro USG de abdome no histórico — não há baseline pra comparar. Sugerido baseline laboratorial: TGO/TGP, GGT, FA, perfil lipídico atual.",
+            "fonte": "sem-prévio"
+          },
+          {
+            "tipo": "cruzamento-queixa",
+            "titulo": "Cruzamento com queixa atual",
+            "conteudo": "Paciente relata desconforto epigástrico vago e cansaço — compatíveis com NAFLD/esteato-hepatite. Importante diferenciar simples esteatose de NASH (esteato-hepatite) — considerar elastografia hepática.",
+            "fonte": "anamnese-queixa"
+          },
+          {
+            "tipo": "cruzamento-medicacao",
+            "titulo": "Cruzamento com medicação em uso",
+            "conteudo": "Sinvastatina pode causar hepatotoxicidade idiossincrática rara — monitorar TGO/TGP. Semaglutida (GLP-1) na verdade FAVORECE redução da esteatose; manutenção pode ser benéfica. Metformina é segura no contexto.",
+            "fonte": "memed-prescricoes-ativas"
+          }
+        ]
+      },
+      "anamneseSintomas": [
+        "Desconforto epigástrico vago",
+        "Cansaço pós-prandial",
+        "Sem dor abdominal contínua",
+        "Sem icterícia"
+      ],
+      "medicacaoAtiva": [
+        { "nome": "Semaglutida", "dose": "1mg", "posologia": "1x semana SC", "iniciadaEm": "2026-03-22", "adesao30Dias": 1.0 },
+        { "nome": "Metformina", "dose": "1g", "posologia": "2x ao dia", "iniciadaEm": "2024-08-10", "adesao30Dias": 0.95 },
+        { "nome": "Sinvastatina", "dose": "20mg", "posologia": "1x noite", "iniciadaEm": "2024-08-10", "adesao30Dias": 0.92 }
+      ]
+    },
+    {
+      "id": "img-beatriz-rm-hipofise",
+      "pacienteId": "pct-005",
+      "pacienteNome": "Beatriz Costa Lima",
+      "iniciais": "BL",
+      "idade": 36,
+      "condicoesCronicas": ["Galactorreia", "Irregularidade menstrual"],
+      "tipo": "RM de sela turca / hipófise com contraste",
+      "modalidade": "rm",
+      "laboratorio": "Alta Excelência - RM 3T",
+      "medicoSolicitante": "Dr. Pedro Lima",
+      "radiologistaResponsavel": "Dr. Eduardo Yamasaki (CRM 102345)",
+      "dataColeta": "2026-05-02",
+      "dataResultado": "2026-05-03",
+      "recebidoEm": "2026-05-03T18:55:00-03:00",
+      "statusRevisao": "a-revisar",
+      "revisadoEm": null,
+      "revisadoPor": null,
+      "observacaoMedico": "",
+      "indicacao": "Investigação de hiperprolactinemia (prolactina 89 ng/mL) com galactorreia e irregularidade menstrual.",
+      "dicomDisponivel": true,
+      "laudoOriginal": {
+        "texto": "RESSONÂNCIA MAGNÉTICA DE SELA TURCA E HIPÓFISE COM CONTRASTE\n\nTÉCNICA: Sequências sagitais T1 pré-contraste, coronais T1 pré e pós-contraste dinâmico, T2 coronal de alta resolução. Equipamento 3T.\n\nACHADOS:\nSela turca de morfologia preservada. Hipófise apresenta volume normal (4 × 12 × 6 mm) e altura de 5 mm.\n\nIDENTIFICA-SE LESÃO FOCAL hipointensa em T1 e iso/hiperintensa em T2 na porção lateral DIREITA da adeno-hipófise, medindo aproximadamente 4 × 3 × 3 mm. Após contraste, a lesão apresenta REALCE TARDIO em relação ao parênquima hipofisário normal — padrão típico de microadenoma hipofisário.\n\nNão há sinais de efeito de massa, desvio do infundíbulo (centrado), nem invasão do seio cavernoso. Quiasma óptico de morfologia preservada e sem contato com a lesão.\n\nDemais estruturas encefálicas avaliadas dentro dos limites da normalidade.\n\nIMPRESSÃO:\n1) Microadenoma hipofisário direito de aproximadamente 4 mm — sem efeito de massa.\n2) Não identificadas alterações sugestivas de macroadenoma, apoplexia ou cisto.\n\nResponsável técnico: Dr. Eduardo Yamasaki (CRM 102345)",
+        "paginas": 1
+      },
+      "imagens": [
+        { "id": "img-1", "rotulo": "Sagital T1", "descricao": "Corte sagital T1 pré-contraste", "mockVisual": "crânio-sagital-t1" },
+        { "id": "img-2", "rotulo": "Coronal T1 pré", "descricao": "Corte coronal T1 sem contraste", "mockVisual": "crânio-coronal-t1" },
+        { "id": "img-3", "rotulo": "Coronal T1 pós", "descricao": "Corte coronal T1 com contraste dinâmico", "mockVisual": "crânio-coronal-t1" }
+      ],
+      "achados": [
+        { "texto": "Microadenoma hipofisário direito", "significancia": "critico", "medida": "4 × 3 × 3 mm" },
+        { "texto": "Sem efeito de massa", "significancia": "normal" },
+        { "texto": "Quiasma óptico preservado", "significancia": "normal" },
+        { "texto": "Hipófise volume normal", "significancia": "normal" }
+      ],
+      "comparacao": null,
+      "iaAnalise": {
+        "modeloIA": "claude-opus-4-7@2026-04",
+        "geradoEm": "2026-05-03T19:01:00-03:00",
+        "blocos": [
+          {
+            "tipo": "resumo-laudo",
+            "titulo": "Resumo do laudo",
+            "conteudo": "Microadenoma hipofisário direito de 4mm com realce tardio típico, sem efeito de massa, sem invasão de seio cavernoso, quiasma óptico livre. Achado compatível com prolactinoma.",
+            "fonte": "laudo-radiologista"
+          },
+          {
+            "tipo": "comparacao-historica",
+            "titulo": "Comparação histórica",
+            "conteudo": "Primeiro estudo de imagem da sela turca da paciente — sem baseline. Após início do tratamento, sugere-se nova RM em 6-12 meses pra avaliar resposta.",
+            "fonte": "sem-prévio"
+          },
+          {
+            "tipo": "cruzamento-queixa",
+            "titulo": "Cruzamento com queixa atual",
+            "conteudo": "Galactorreia + irregularidade menstrual + hiperprolactinemia (89 ng/mL) + microadenoma direito = quadro clássico de microprolactinoma. Não há sintomas visuais (compatível com ausência de compressão de quiasma).",
+            "fonte": "anamnese-queixa"
+          },
+          {
+            "tipo": "cruzamento-medicacao",
+            "titulo": "Cruzamento com medicação em uso",
+            "conteudo": "ATENÇÃO: Sertralina (ISRS) pode causar hiperprolactinemia secundária. É preciso confirmar que a hiperprolactinemia é tumoral antes de iniciar agonista dopaminérgico. Sugere-se: dosar prolactina após 72h sem Sertralina (com cobertura psiquiátrica) e considerar TRH-test se persistir dúvida.",
+            "fonte": "memed-prescricoes-ativas"
+          }
+        ]
+      },
+      "anamneseSintomas": [
+        "Galactorreia espontânea (6 meses)",
+        "Ciclos irregulares",
+        "Cefaleia ocasional",
+        "Sem alteração visual"
+      ],
+      "medicacaoAtiva": [
+        { "nome": "Metformina", "dose": "850mg", "posologia": "2x ao dia", "iniciadaEm": "2025-09-15", "adesao30Dias": 0.88 },
+        { "nome": "Sertralina", "dose": "50mg", "posologia": "1x manhã", "iniciadaEm": "2025-11-02", "adesao30Dias": 0.96 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "_meta": {
+    "models": {
+      "QuickActionUI": "Combina ChatOption do backend (ai-chat module) + UI: cor, lucide icon name. CHAT_OPTIONS no backend tem 7 entries (scale, glucose, blood_pressure, food, lab_exam, bioimpedance, body_photo).",
+      "HistoricoItemUI": "Combina ChatHistoryItem (backend) + UI: cor, ícone, resumo formatado de extractedData, tempo relativo.",
+      "HeroIAState": "Texto contextual do hero — pode ser dinâmico via IA (ex: 'Detectei que faz tempo desde sua última pesagem')."
+    },
+    "relationships": [
+      "quickActions 1:1 com CHAT_OPTIONS do backend",
+      "historico vem de GET /ai-chat/history (ChatHistoryResponse)",
+      "cada quickAction.option.targetTable indica onde os dados extraídos vão (metrics/nutrition/exams/body_evaluations)"
+    ]
+  },
+
+  "hero": {
+    "fraseTitulo": "Como posso te ajudar?",
+    "fraseSubtitulo": "Tire uma foto ou faça uma pergunta",
+    "ctaLabel": "Conversar com a IA"
+  },
+
+  "quickActions": [
+    {
+      "option": {
+        "type": "scale",
+        "icon": "scale",
+        "label": "Foto da Balança",
+        "description": "Extrair peso da imagem da balança",
+        "targetTable": "metrics",
+        "agentClass": "ScaleOCRAgent"
+      },
+      "cor": "teal",
+      "iconeNome": "Scale",
+      "resumo": "Peso instantâneo"
+    },
+    {
+      "option": {
+        "type": "body_photo",
+        "icon": "camera",
+        "label": "Foto Corporal",
+        "description": "Análise visual + projeção corporal",
+        "targetTable": "body_evaluations",
+        "agentClass": "BodyPhotoAgent"
+      },
+      "cor": "sky",
+      "iconeNome": "Camera",
+      "resumo": "Análise + projeção"
+    },
+    {
+      "option": {
+        "type": "lab_exam",
+        "icon": "file-text",
+        "label": "Exame Laboratorial",
+        "description": "Extrair biomarcadores do PDF/foto",
+        "targetTable": "exams",
+        "agentClass": "LabExamOCRAgent"
+      },
+      "cor": "emerald",
+      "iconeNome": "FileText",
+      "resumo": "Biomarcadores"
+    },
+    {
+      "option": {
+        "type": "bioimpedance",
+        "icon": "activity",
+        "label": "Bioimpedância",
+        "description": "Extrair composição corporal",
+        "targetTable": "body_evaluations",
+        "agentClass": "BioimpedanceOCRAgent"
+      },
+      "cor": "amber",
+      "iconeNome": "Activity",
+      "resumo": "Composição corporal"
+    },
+    {
+      "option": {
+        "type": "glucose",
+        "icon": "droplet",
+        "label": "Foto de Glicemia",
+        "description": "Extrair glicemia do medidor",
+        "targetTable": "metrics",
+        "agentClass": "GlucoseOCRAgent"
+      },
+      "cor": "rose",
+      "iconeNome": "Droplet",
+      "resumo": "Açúcar no sangue"
+    },
+    {
+      "option": {
+        "type": "blood_pressure",
+        "icon": "heart-pulse",
+        "label": "Foto de Pressão",
+        "description": "Extrair pressão arterial do medidor",
+        "targetTable": "metrics",
+        "agentClass": "BloodPressureOCRAgent"
+      },
+      "cor": "rose",
+      "iconeNome": "HeartPulse",
+      "resumo": "PA sistólica/diastólica"
+    },
+    {
+      "option": {
+        "type": "food",
+        "icon": "apple",
+        "label": "Foto de Alimento",
+        "description": "Analisar dados nutricionais",
+        "targetTable": "nutrition",
+        "agentClass": "FoodRecognitionAgent"
+      },
+      "cor": "violet",
+      "iconeNome": "Apple",
+      "resumo": "Calorias do prato"
+    }
+  ],
+
+  "historico": [
+    {
+      "item": {
+        "id": "h-1",
+        "type": "metrics",
+        "optionType": "scale",
+        "extractedData": { "weight": 83.4, "unit": "kg" },
+        "confidence": 92,
+        "createdAt": "2026-05-04T08:30:00.000Z"
+      },
+      "cor": "teal",
+      "iconeNome": "Scale",
+      "label": "Foto da Balança",
+      "resumoExtraido": "83,4 kg · 92% confiança",
+      "tempoRelativo": "há 6h",
+      "rota": "/ia/historico/h-1"
+    },
+    {
+      "item": {
+        "id": "h-2",
+        "type": "exams",
+        "optionType": "lab_exam",
+        "extractedData": {
+          "examType": "cholesterol",
+          "values": { "ldl": 100, "hdl": 55, "total": 178 }
+        },
+        "confidence": 88,
+        "createdAt": "2026-05-03T14:22:00.000Z"
+      },
+      "cor": "emerald",
+      "iconeNome": "FileText",
+      "label": "Exame Laboratorial",
+      "resumoExtraido": "Colesterol · LDL 100 · HDL 55 · 88% confiança",
+      "tempoRelativo": "ontem",
+      "rota": "/ia/historico/h-2"
+    },
+    {
+      "item": {
+        "id": "h-3",
+        "type": "body_evaluations",
+        "optionType": "body_photo",
+        "extractedData": {
+          "photos": 4,
+          "summary": "Boa base muscular, gordura concentrada em abdômen"
+        },
+        "confidence": 85,
+        "createdAt": "2026-04-28T18:45:00.000Z"
+      },
+      "cor": "sky",
+      "iconeNome": "Camera",
+      "label": "Foto Corporal",
+      "resumoExtraido": "4 fotos · análise visual completa",
+      "tempoRelativo": "há 6 dias",
+      "rota": "/ia/historico/h-3"
+    },
+    {
+      "item": {
+        "id": "h-4",
+        "type": "body_evaluations",
+        "optionType": "bioimpedance",
+        "extractedData": {
+          "bodyFat": 12,
+          "muscleMass": 45.9,
+          "visceralFat": 6
+        },
+        "confidence": 91,
+        "createdAt": "2026-04-25T10:15:00.000Z"
+      },
+      "cor": "amber",
+      "iconeNome": "Activity",
+      "label": "Bioimpedância",
+      "resumoExtraido": "12% gordura · 45,9 kg músculo · 91% confiança",
+      "tempoRelativo": "há 9 dias",
+      "rota": "/ia/historico/h-4"
+    }
+  ]
+}

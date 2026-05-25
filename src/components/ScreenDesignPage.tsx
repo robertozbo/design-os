@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Maximize2, GripVertical, Layout, Smartphone, Tablet, Monitor } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ThemeToggle'
-import { loadScreenDesignComponent, sectionUsesShell } from '@/lib/section-loader'
+import { loadScreenDesignComponent, sectionUsesShell, getSectionScreenDesigns } from '@/lib/section-loader'
 import { loadAppShell, hasShellComponents, loadShellInfo } from '@/lib/shell-loader'
 import { loadProductData } from '@/lib/product-loader'
 import React from 'react'
@@ -252,27 +252,82 @@ export function ScreenDesignFullscreen() {
           // Try to get navigation items from shell spec
           const shellInfo = loadShellInfo()
           const specNavItems = shellInfo?.spec?.navigationItems || []
+          const productData = loadProductData()
+          const roadmapSections = productData.roadmap?.sections ?? []
 
-          // Parse navigation items from spec (format: "**Label** → Description")
-          const navigationItems = specNavItems.length > 0
+          const slugify = (str: string) =>
+            str
+              .toLowerCase()
+              .replace(/\s+&\s+/g, '-and-')
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/(^-|-$)/g, '')
+
+          const findSectionIdForLabel = (label: string): string | null => {
+            const labelSlug = slugify(label)
+            // Try exact slug match against roadmap section IDs first
+            const exact = roadmapSections.find((s) => s.id === labelSlug)
+            if (exact) return exact.id
+            // Fallback: match by slugified section title
+            const byTitle = roadmapSections.find((s) => {
+              const titleClean = s.title.replace(/`\[[^\]]+\]`/g, '').trim()
+              return slugify(titleClean) === labelSlug
+            })
+            return byTitle?.id ?? null
+          }
+
+          // Build navigation items wired to actual section prototypes
+          type Item = {
+            label: string
+            href: string
+            isActive: boolean
+            sectionId: string | null
+            screenName: string | null
+          }
+          const items: Item[] = specNavItems.length > 0
             ? specNavItems.map((item, index) => {
-                // Extract label from **Label** format
                 const labelMatch = item.match(/\*\*([^*]+)\*\*/)
-                const label = labelMatch ? labelMatch[1] : item.split('→')[0]?.trim() || `Item ${index + 1}`
+                const label = labelMatch
+                  ? labelMatch[1]
+                  : item.split('→')[0]?.trim() || `Item ${index + 1}`
+                const targetId = findSectionIdForLabel(label)
+                const designs = targetId ? getSectionScreenDesigns(targetId) : []
+                const screenName = designs[0]?.name ?? null
+                const href = targetId && screenName
+                  ? `/sections/${targetId}/screen-designs/${screenName}`
+                  : `#${slugify(label)}`
                 return {
                   label,
-                  href: `/${label.toLowerCase().replace(/\s+/g, '-')}`,
-                  isActive: index === 0,
+                  href,
+                  isActive: targetId === sectionId,
+                  sectionId: targetId,
+                  screenName,
                 }
               })
-            : [
-                { label: 'Dashboard', href: '/', isActive: true },
-                { label: 'Items', href: '/items' },
-                { label: 'Settings', href: '/settings' },
-              ]
+            : []
+
+          const navigationItems = items.map(({ label, href, isActive }) => ({
+            label,
+            href,
+            isActive,
+          }))
 
           const defaultUser = {
             name: 'Demo User',
+          }
+
+          const handleNavigate = (href: string) => {
+            if (!href || href.startsWith('#')) return
+            try {
+              // Inside an iframe (Design OS preview) → navigate the parent
+              // so the chrome (breadcrumbs, theme toggle) reflects the new section.
+              if (window.top && window.top !== window.self) {
+                window.top.location.href = href
+                return
+              }
+            } catch {
+              // Cross-origin guard (shouldn't happen in dev)
+            }
+            window.location.href = `${href}/fullscreen`
           }
 
           // Pass props dynamically - the shell component decides what it needs
@@ -280,7 +335,7 @@ export function ScreenDesignFullscreen() {
             <ShellComponent
               navigationItems={navigationItems}
               user={defaultUser}
-              onNavigate={() => {}}
+              onNavigate={handleNavigate}
               onLogout={() => {}}
             >
               {children}

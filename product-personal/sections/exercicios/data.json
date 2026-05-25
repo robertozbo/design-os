@@ -1,0 +1,422 @@
+{
+  "_meta": {
+    "models": {
+      "exercise": "Item da biblioteca de exercícios. Pode ser curado (base Nymos) ou customizado pelo personal. Carrega mídia (vídeo/GIF), grupos musculares, equipamento, padrão de movimento, dificuldade, instruções e variações.",
+      "sourceOption": "Filtro de fonte (Todos/Curados/Customizados/Favoritos) com contagem.",
+      "muscleGroupOption": "Filtro de grupo muscular com contagem.",
+      "equipmentOption": "Filtro de equipamento com contagem.",
+      "movementPatternOption": "Filtro de padrão de movimento com contagem.",
+      "sortOption": "Opção de ordenação da lista."
+    },
+    "relationships": [
+      "Cada Exercise tem um muscleGroup primário e zero ou mais secundários",
+      "Cada Exercise tem um equipment principal",
+      "Cada Exercise tem um movementPattern",
+      "Exercise.variations[] referencia outros Exercise.id"
+    ]
+  },
+  "exercicios": [
+    {
+      "id": "ex-001",
+      "name": "Supino reto com barra",
+      "source": "curated",
+      "isFavorite": true,
+      "primaryMuscle": "Peito",
+      "secondaryMuscles": ["Tríceps", "Ombros"],
+      "muscleGroup": "peito",
+      "equipment": "barra",
+      "movementPattern": "push",
+      "difficulty": 3,
+      "averageTimeSeconds": 90,
+      "videoUrl": "https://cdn.nymos.app/exercises/supino-reto-barra.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?w=600&q=80",
+      "instructions": [
+        "Deite no banco com os pés firmes no chão e olhos alinhados com a barra",
+        "Pegue a barra com as mãos um pouco mais abertas que a largura dos ombros",
+        "Retire a barra do suporte e estabilize sobre o peito com braços estendidos",
+        "Desça a barra controladamente até tocar a linha mamilar",
+        "Empurre a barra de volta à posição inicial sem travar os cotovelos"
+      ],
+      "tips": [
+        "Mantenha as escápulas retraídas e em depressão durante todo o movimento",
+        "Não levante o quadril do banco — pés fixos no chão",
+        "Trajetória da barra deve ser ligeiramente diagonal (linha mamilar → ombros)"
+      ],
+      "variations": ["ex-002", "ex-003"],
+      "contraindications": ["Lesão de ombro aguda", "Bursite acromial"]
+    },
+    {
+      "id": "ex-002",
+      "name": "Supino inclinado com halteres",
+      "source": "curated",
+      "isFavorite": false,
+      "primaryMuscle": "Peito",
+      "secondaryMuscles": ["Ombros", "Tríceps"],
+      "muscleGroup": "peito",
+      "equipment": "halteres",
+      "movementPattern": "push",
+      "difficulty": 3,
+      "averageTimeSeconds": 90,
+      "videoUrl": "https://cdn.nymos.app/exercises/supino-inclinado-halteres.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80",
+      "instructions": [
+        "Ajuste o banco em inclinação de 30-45 graus",
+        "Sente-se com os halteres apoiados nas coxas",
+        "Use o impulso das pernas para levar os halteres à posição inicial",
+        "Desça os halteres em arco amplo até a linha do ombro",
+        "Empurre de volta concentrando o esforço no peito superior"
+      ],
+      "tips": [
+        "Inclinação acima de 45° transfere foco demais pros ombros",
+        "Mantenha os punhos neutros durante todo o movimento"
+      ],
+      "variations": ["ex-001"],
+      "contraindications": ["Lesão de ombro"]
+    },
+    {
+      "id": "ex-003",
+      "name": "Crucifixo com halteres",
+      "source": "curated",
+      "isFavorite": false,
+      "primaryMuscle": "Peito",
+      "secondaryMuscles": ["Ombros"],
+      "muscleGroup": "peito",
+      "equipment": "halteres",
+      "movementPattern": "push",
+      "difficulty": 2,
+      "averageTimeSeconds": 75,
+      "videoUrl": "https://cdn.nymos.app/exercises/crucifixo-halteres.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=80",
+      "instructions": [
+        "Deite no banco com halteres acima do peito, palmas voltadas uma para a outra",
+        "Mantenha leve flexão dos cotovelos (constante durante o movimento)",
+        "Abra os braços em arco amplo até sentir alongamento no peito",
+        "Retorne à posição inicial contraindo o peito"
+      ],
+      "tips": [
+        "Não estenda totalmente os cotovelos — mantenha a flexão fixa",
+        "Foque no alongamento, não na carga"
+      ],
+      "variations": ["ex-001"],
+      "contraindications": ["Lesão de ombro", "Tendinite do supraespinhal"]
+    },
+    {
+      "id": "ex-004",
+      "name": "Agachamento livre",
+      "source": "curated",
+      "isFavorite": true,
+      "primaryMuscle": "Pernas",
+      "secondaryMuscles": ["Glúteos", "Core", "Lombar"],
+      "muscleGroup": "pernas",
+      "equipment": "barra",
+      "movementPattern": "squat",
+      "difficulty": 4,
+      "averageTimeSeconds": 120,
+      "videoUrl": "https://cdn.nymos.app/exercises/agachamento-livre.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80",
+      "instructions": [
+        "Posicione a barra no trapézio (high-bar) ou na espinha da escápula (low-bar)",
+        "Pés na largura dos ombros, pontas levemente para fora",
+        "Inicie o movimento empurrando o quadril para trás",
+        "Desça mantendo o tronco ereto até pelo menos 90° nos joelhos",
+        "Suba empurrando o chão e estendendo quadril e joelhos simultaneamente"
+      ],
+      "tips": [
+        "Joelhos seguem a linha dos pés — não desabar para dentro",
+        "Olhe para a frente, não para baixo",
+        "Manobra de Valsalva: respire fundo e segure no início da descida"
+      ],
+      "variations": ["ex-005", "ex-006"],
+      "contraindications": ["Hérnia lombar aguda", "Condromalácia patelar grau 3+", "Lesão de menisco recente"]
+    },
+    {
+      "id": "ex-005",
+      "name": "Agachamento goblet com kettlebell",
+      "source": "curated",
+      "isFavorite": false,
+      "primaryMuscle": "Pernas",
+      "secondaryMuscles": ["Glúteos", "Core"],
+      "muscleGroup": "pernas",
+      "equipment": "kettlebell",
+      "movementPattern": "squat",
+      "difficulty": 2,
+      "averageTimeSeconds": 60,
+      "videoUrl": "https://cdn.nymos.app/exercises/agachamento-goblet.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80",
+      "instructions": [
+        "Segure o kettlebell pela alça com ambas as mãos, próximo ao peito",
+        "Pés na largura dos ombros, pontas levemente para fora",
+        "Desça o quadril mantendo o tronco ereto",
+        "Cotovelos podem tocar a parte interna dos joelhos no fundo",
+        "Suba estendendo quadril e joelhos"
+      ],
+      "tips": [
+        "Excelente progressão pra ensinar padrão de agachamento antes de migrar pra barra",
+        "Mantenha o peito alto e o kettlebell colado no corpo"
+      ],
+      "variations": ["ex-004"],
+      "contraindications": []
+    },
+    {
+      "id": "ex-006",
+      "name": "Levantamento terra convencional",
+      "source": "curated",
+      "isFavorite": true,
+      "primaryMuscle": "Posteriores",
+      "secondaryMuscles": ["Glúteos", "Lombar", "Trapézio"],
+      "muscleGroup": "posteriores",
+      "equipment": "barra",
+      "movementPattern": "hinge",
+      "difficulty": 5,
+      "averageTimeSeconds": 120,
+      "videoUrl": "https://cdn.nymos.app/exercises/levantamento-terra.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80",
+      "instructions": [
+        "Posicione os pés sob a barra, na largura do quadril",
+        "Agache para pegar a barra com pegada pronada ou alternada (largura dos ombros)",
+        "Quadril alto, peito para cima, lombar neutra",
+        "Empurre o chão com os pés e levante a barra rente ao corpo",
+        "Estenda quadril e joelhos simultaneamente até a posição ereta"
+      ],
+      "tips": [
+        "A barra deve passar próxima às canelas e coxas durante todo o movimento",
+        "Não arredonde a lombar em nenhum momento — interrompa a série se acontecer",
+        "Use cinta apenas em cargas acima de 80% 1RM"
+      ],
+      "variations": ["ex-007"],
+      "contraindications": ["Hérnia lombar", "Espondilolistese", "Lesão recente de isquiotibial"]
+    },
+    {
+      "id": "ex-007",
+      "name": "Stiff com halteres",
+      "source": "curated",
+      "isFavorite": false,
+      "primaryMuscle": "Posteriores",
+      "secondaryMuscles": ["Glúteos", "Lombar"],
+      "muscleGroup": "posteriores",
+      "equipment": "halteres",
+      "movementPattern": "hinge",
+      "difficulty": 3,
+      "averageTimeSeconds": 75,
+      "videoUrl": "https://cdn.nymos.app/exercises/stiff-halteres.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": "https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?w=600&q=80",
+      "instructions": [
+        "Em pé, halteres nas mãos com palmas voltadas para o corpo",
+        "Joelhos com leve flexão (semi-flexionados, fixos durante todo o movimento)",
+        "Empurre o quadril para trás descendo os halteres rente às pernas",
+        "Desça até sentir alongamento nos isquiotibiais",
+        "Suba estendendo o quadril sem mudar a flexão dos joelhos"
+      ],
+      "tips": [
+        "É um movimento de quadril, não de coluna — mantenha lombar neutra",
+        "Não tente descer demais sem mobilidade pra isso"
+      ],
+      "variations": ["ex-006"],
+      "contraindications": ["Lesão de isquiotibial aguda"]
+    },
+    {
+      "id": "ex-008",
+      "name": "Remada curvada com barra",
+      "source": "curated",
+      "isFavorite": false,
+      "primaryMuscle": "Costas",
+      "secondaryMuscles": ["Bíceps", "Posteriores", "Lombar"],
+      "muscleGroup": "costas",
+      "equipment": "barra",
+      "movementPattern": "pull",
+      "difficulty": 4,
+      "averageTimeSeconds": 90,
+      "videoUrl": "https://cdn.nymos.app/exercises/remada-curvada.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": "https://images.unsplash.com/photo-1583500178690-f7fd39bcd4be?w=600&q=80",
+      "instructions": [
+        "Em pé, segure a barra com pegada pronada na largura dos ombros",
+        "Quadril para trás, tronco inclinado em ~45° (mantendo lombar neutra)",
+        "Joelhos semi-flexionados",
+        "Puxe a barra em direção ao abdômen baixo, contraindo as escápulas",
+        "Desça controladamente até a extensão completa dos braços"
+      ],
+      "tips": [
+        "Quanto mais inclinado o tronco, mais foco em latíssimo",
+        "Não use o impulso do quadril — mantenha a posição estável"
+      ],
+      "variations": [],
+      "contraindications": ["Hérnia lombar", "Dor lombar aguda"]
+    },
+    {
+      "id": "ex-009",
+      "name": "Prancha frontal",
+      "source": "curated",
+      "isFavorite": false,
+      "primaryMuscle": "Core",
+      "secondaryMuscles": ["Ombros", "Glúteos"],
+      "muscleGroup": "core",
+      "equipment": "peso-corporal",
+      "movementPattern": "carry",
+      "difficulty": 1,
+      "averageTimeSeconds": 60,
+      "videoUrl": "https://cdn.nymos.app/exercises/prancha-frontal.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=600&q=80",
+      "instructions": [
+        "Apoie cotovelos e antebraços no chão, alinhados com os ombros",
+        "Estenda as pernas, apoiando nos dedos dos pés",
+        "Forme uma linha reta da cabeça aos calcanhares",
+        "Contraia abdômen e glúteos durante todo o tempo",
+        "Sustente a posição pelo tempo prescrito"
+      ],
+      "tips": [
+        "Não suba o quadril nem deixe cair — mantenha alinhamento",
+        "Olhar para o chão, pescoço neutro"
+      ],
+      "variations": [],
+      "contraindications": ["Lesão de punho ou cotovelo"]
+    },
+    {
+      "id": "ex-101",
+      "name": "Supino com halteres — versão Cia Athletica Faria Lima",
+      "source": "custom",
+      "isFavorite": true,
+      "primaryMuscle": "Peito",
+      "secondaryMuscles": ["Ombros", "Tríceps"],
+      "muscleGroup": "peito",
+      "equipment": "halteres",
+      "movementPattern": "push",
+      "difficulty": 3,
+      "averageTimeSeconds": 90,
+      "videoUrl": "https://cdn.nymos.app/personal-roberto/supino-halteres-cia.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=80",
+      "instructions": [
+        "Use o banco azul próximo aos halteres de 30kg+",
+        "Sente com halteres apoiados, use impulso de perna pra subir",
+        "Banco em flat (não inclinar — usar inclinado se aluno pediu peito superior)",
+        "Desça halteres até linha do peito, alinhados com mamilo",
+        "Empurre concentrando no peito"
+      ],
+      "tips": [
+        "Halteres dessa academia vão até 50kg",
+        "Reservar banco com antecedência em horário de pico"
+      ],
+      "variations": ["ex-001", "ex-002"],
+      "contraindications": ["Lesão de ombro"]
+    },
+    {
+      "id": "ex-102",
+      "name": "Step-up com Bulgarian bag (variação João)",
+      "source": "custom",
+      "isFavorite": false,
+      "primaryMuscle": "Pernas",
+      "secondaryMuscles": ["Glúteos", "Core"],
+      "muscleGroup": "pernas",
+      "equipment": "outros",
+      "movementPattern": "lunge",
+      "difficulty": 3,
+      "averageTimeSeconds": 90,
+      "videoUrl": "https://cdn.nymos.app/personal-roberto/step-up-bulgarian.mp4",
+      "gifUrl": null,
+      "fallbackImageUrl": null,
+      "instructions": [
+        "Posicione o Bulgarian bag (10kg) sobre os ombros",
+        "Em frente ao step (40cm)",
+        "Suba com a perna direita, completando a extensão de quadril e joelho",
+        "Desça controladamente",
+        "Alterne pernas a cada repetição"
+      ],
+      "tips": [
+        "Variação criada pro João pelas dores de joelho que ele tem em agachamento profundo",
+        "Step de 30cm se ainda houver desconforto"
+      ],
+      "variations": ["ex-005"],
+      "contraindications": ["Instabilidade de tornozelo"]
+    },
+    {
+      "id": "ex-103",
+      "name": "Cardio funcional 4-min EMOM",
+      "source": "custom",
+      "isFavorite": false,
+      "primaryMuscle": "Cardio",
+      "secondaryMuscles": ["Pernas", "Core"],
+      "muscleGroup": "cardio",
+      "equipment": "peso-corporal",
+      "movementPattern": "carry",
+      "difficulty": 4,
+      "averageTimeSeconds": 240,
+      "videoUrl": null,
+      "gifUrl": null,
+      "fallbackImageUrl": null,
+      "instructions": [],
+      "tips": [
+        "Sequência: 10 burpees, 15 air squats, 20 mountain climbers, 30s prancha — repetir por 4 minutos",
+        "Adaptado por aluno conforme nível"
+      ],
+      "variations": [],
+      "contraindications": []
+    }
+  ],
+  "sources": [
+    { "id": "todos", "label": "Todos", "count": 12 },
+    { "id": "curados", "label": "Curados", "count": 9 },
+    { "id": "customizados", "label": "Customizados", "count": 3 },
+    { "id": "favoritos", "label": "Favoritos", "count": 4 }
+  ],
+  "muscleGroups": [
+    { "id": "todos", "label": "Todos os grupos", "count": 12 },
+    { "id": "peito", "label": "Peito", "count": 4 },
+    { "id": "costas", "label": "Costas", "count": 1 },
+    { "id": "pernas", "label": "Pernas", "count": 3 },
+    { "id": "posteriores", "label": "Posteriores", "count": 2 },
+    { "id": "core", "label": "Core", "count": 1 },
+    { "id": "cardio", "label": "Cardio", "count": 1 }
+  ],
+  "equipment": [
+    { "id": "todos", "label": "Qualquer equipamento", "count": 12 },
+    { "id": "barra", "label": "Barra", "count": 4 },
+    { "id": "halteres", "label": "Halteres", "count": 4 },
+    { "id": "kettlebell", "label": "Kettlebell", "count": 1 },
+    { "id": "peso-corporal", "label": "Peso corporal", "count": 2 },
+    { "id": "outros", "label": "Outros", "count": 1 }
+  ],
+  "movementPatterns": [
+    { "id": "todos", "label": "Todos os padrões", "count": 12 },
+    { "id": "push", "label": "Push", "count": 4 },
+    { "id": "pull", "label": "Pull", "count": 1 },
+    { "id": "squat", "label": "Squat", "count": 2 },
+    { "id": "hinge", "label": "Hinge", "count": 2 },
+    { "id": "carry", "label": "Carry", "count": 2 },
+    { "id": "lunge", "label": "Lunge", "count": 1 }
+  ],
+  "sortOptions": [
+    { "id": "name-asc", "label": "Nome (A-Z)" },
+    { "id": "most-used", "label": "Mais usados" },
+    { "id": "recent", "label": "Recentes" }
+  ],
+  "stats": {
+    "total": 12,
+    "curados": 9,
+    "customizados": 3,
+    "favoritos": 4
+  },
+  "emptyStates": {
+    "noResults": {
+      "title": "Nenhum exercício encontrado",
+      "description": "Tente ajustar os filtros ou criar um exercício customizado.",
+      "primaryCta": "Criar customizado",
+      "secondaryCta": "Limpar filtros"
+    }
+  },
+  "selected": {
+    "source": "todos",
+    "muscleGroup": "todos",
+    "equipment": "todos",
+    "movementPattern": "todos",
+    "sort": "name-asc"
+  }
+}

@@ -111,16 +111,20 @@ export function parseProductOverview(md: string): ProductOverview | null {
 /**
  * Parse product-roadmap.md content into ProductRoadmap structure
  *
- * Expected format:
- * # Product Roadmap
+ * Supports two layouts:
  *
- * ## Sections
+ * Flat (legacy):
+ *   ## Sections
+ *   ### 1. Title
  *
- * ### 1. [Section Title]
- * [One sentence description]
+ * Grouped:
+ *   ## [Group Name]
+ *   ### 1. Title
+ *   ### 2. Title
+ *   ## [Another Group]
+ *   ### 3. Title
  *
- * ### 2. [Section Title]
- * [One sentence description]
+ * "Sections" is treated as the default ungrouped bucket.
  */
 export function parseProductRoadmap(md: string): ProductRoadmap | null {
   if (!md || !md.trim()) return null
@@ -131,20 +135,33 @@ export function parseProductRoadmap(md: string): ProductRoadmap | null {
     // Normalize line endings (Windows CRLF → LF)
     const normalizedMd = md.replace(/\r\n/g, '\n')
 
-    // Match sections with pattern ### N. Title
-    const sectionMatches = [...normalizedMd.matchAll(/### (\d+)\.\s*(.+)\n+([\s\S]*?)(?=\n### |\n## |\n#[^#]|$)/g)]
+    // Walk through ## blocks, tracking the current group.
+    // Match each ## block with its body until the next ## or end of input.
+    const groupMatches = [...normalizedMd.matchAll(/(?:^|\n)## (.+)\n+([\s\S]*?)(?=\n## |$)/g)]
 
-    for (const match of sectionMatches) {
-      const order = parseInt(match[1], 10)
-      const title = match[2].trim()
-      const description = match[3].trim()
+    for (const groupMatch of groupMatches) {
+      const groupTitle = groupMatch[1].trim()
+      const groupBody = groupMatch[2]
 
-      sections.push({
-        id: slugify(title),
-        title,
-        description,
-        order,
-      })
+      // Treat "Sections" as ungrouped (legacy compatibility)
+      const group = groupTitle.toLowerCase() === 'sections' ? undefined : groupTitle
+
+      const sectionMatches = [...groupBody.matchAll(/### (\d+[a-z]?)\.\s*(.+)\n+([\s\S]*?)(?=\n### |\n## |\n#[^#]|$)/g)]
+
+      for (const match of sectionMatches) {
+        const title = match[2].trim()
+        // Phase markers like `[MVP]` / `[V2]` are roadmap metadata, not part
+        // of the slug — stripping them keeps IDs stable when markers are
+        // added or changed after the section directories already exist.
+        const slugSource = title.replace(/`\[[^\]]+\]`/g, '').trim()
+        sections.push({
+          id: slugify(slugSource),
+          title,
+          description: match[3].trim(),
+          order: parseInt(match[1], 10),
+          group,
+        })
+      }
     }
 
     // Sort by order

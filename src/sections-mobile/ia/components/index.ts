@@ -1,0 +1,6 @@
+export { IA } from './IA'
+export { HeroIA } from './HeroIA'
+export { QuickActionGrid } from './QuickActionGrid'
+export { HistoricoList } from './HistoricoList'
+export { EnviarParaIAModal } from './EnviarParaIAModal'
+export { ChatIAFullscreen } from './ChatIAFullscreen'

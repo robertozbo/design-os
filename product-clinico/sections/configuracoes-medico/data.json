@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "description": "Configurações do médico endocrinologista — perfil, disponibilidade, modalidades, valores, convênios, notificações, integrações (Memed/IA/teleconsulta) e secretária."
+  },
+  "perfil": {
+    "fotoUrl": null,
+    "inicial": "P",
+    "nomeCompleto": "Dr. Pedro Lima",
+    "crp": "CRM 123456-SP",
+    "email": "pedro@nymos.com",
+    "telefone": "+55 11 98765-4321",
+    "especialidade": "Endocrinologia · RQE 29874",
+    "abordagensPrincipais": ["Diabetes", "Tireoide", "Obesidade", "SOP"],
+    "formacao": [
+      { "instituicao": "USP - FMUSP", "titulo": "Graduação em Medicina", "ano": 2008 },
+      { "instituicao": "InCor - HCFMUSP", "titulo": "Residência em Clínica Médica", "ano": 2011 },
+      { "instituicao": "USP - FMUSP", "titulo": "Residência em Endocrinologia", "ano": 2013 },
+      { "instituicao": "SBEM", "titulo": "Título de Especialista em Endocrinologia", "ano": 2014 }
+    ],
+    "bio": "Endocrinologista com 14 anos de experiência. Atendo adultos com Diabetes Mellitus tipo 1 e 2, doenças da tireoide (hipo/hipertireoidismo, nódulos), obesidade e síndrome metabólica, SOP, e distúrbios hormonais. Abordagem centrada em evidências e medicina preventiva."
+  },
+  "disponibilidade": [
+    { "dia": "seg", "inicio": "09:00", "fim": "10:00", "modalidade": "online" },
+    { "dia": "seg", "inicio": "10:00", "fim": "11:00", "modalidade": "online" },
+    { "dia": "seg", "inicio": "14:00", "fim": "15:00", "modalidade": "presencial" },
+    { "dia": "seg", "inicio": "15:00", "fim": "16:00", "modalidade": "presencial" },
+    { "dia": "seg", "inicio": "16:00", "fim": "17:00", "modalidade": "presencial" },
+    { "dia": "ter", "inicio": "09:00", "fim": "10:00", "modalidade": "online" },
+    { "dia": "ter", "inicio": "14:00", "fim": "15:00", "modalidade": "presencial" },
+    { "dia": "ter", "inicio": "15:00", "fim": "16:00", "modalidade": "presencial" },
+    { "dia": "qua", "inicio": "09:00", "fim": "10:00", "modalidade": "online" },
+    { "dia": "qua", "inicio": "10:00", "fim": "11:00", "modalidade": "online" },
+    { "dia": "qua", "inicio": "11:00", "fim": "12:00", "modalidade": "online" },
+    { "dia": "qua", "inicio": "14:00", "fim": "15:00", "modalidade": "presencial" },
+    { "dia": "qua", "inicio": "17:00", "fim": "18:00", "modalidade": "presencial" },
+    { "dia": "qui", "inicio": "10:00", "fim": "11:00", "modalidade": "online" },
+    { "dia": "qui", "inicio": "15:00", "fim": "16:00", "modalidade": "presencial" },
+    { "dia": "qui", "inicio": "16:00", "fim": "17:00", "modalidade": "presencial" },
+    { "dia": "sex", "inicio": "09:00", "fim": "10:00", "modalidade": "online" },
+    { "dia": "sex", "inicio": "14:00", "fim": "15:00", "modalidade": "presencial" }
+  ],
+  "modalidades": {
+    "presencial": { "ativa": true, "endereco": "Av. Paulista, 1234 · Conj. 901 · Bela Vista · São Paulo SP" },
+    "online": { "ativa": true, "plataforma": "Google Meet (link enviado por email 30min antes)" },
+    "hibrida": { "ativa": false }
+  },
+  "valores": {
+    "sessaoPadraoBrl": 450,
+    "sessaoOnlineBrl": 380,
+    "primeiraConsultaBrl": 600,
+    "pacotes": [
+      { "id": "pkg-retorno", "nome": "Pacote Retornos · 3 consultas", "numSessoes": 3, "precoTotal": 1200, "validadeMeses": 6 }
+    ],
+    "formaPagamento": ["PIX", "Cartão de crédito", "Convênio (Unimed/Bradesco/Amil)"]
+  },
+  "convenios": [
+    { "id": "unimed", "nome": "Unimed", "ativo": true, "valorRepasseBrl": 180 },
+    { "id": "bradesco", "nome": "Bradesco Saúde", "ativo": true, "valorRepasseBrl": 160 },
+    { "id": "amil", "nome": "Amil", "ativo": false, "valorRepasseBrl": null },
+    { "id": "sulamerica", "nome": "SulAmérica", "ativo": true, "valorRepasseBrl": 170 },
+    { "id": "intermedica", "nome": "Hapvida NotreDame", "ativo": false, "valorRepasseBrl": null }
+  ],
+  "notificacoes": {
+    "pushSessaoIniciar": true,
+    "pushPacienteAlerta": true,
+    "pushMensagemPaciente": true,
+    "emailResumoDiario": true,
+    "emailNovoAgendamento": true,
+    "smsLembreteSessao": false
+  }
+}

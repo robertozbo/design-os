@@ -1,0 +1,115 @@
+{
+  "stats": {
+    "total": 7,
+    "processed": 5,
+    "pending": 1,
+    "failed": 1,
+    "byType": [
+      { "typeName": "hemograma", "label": "Hemograma completo", "count": 3 },
+      { "typeName": "lipidograma", "label": "Lipidograma", "count": 2 },
+      { "typeName": "glicemia", "label": "Glicemia em jejum", "count": 1 },
+      { "typeName": "tsh", "label": "TSH", "count": 1 }
+    ]
+  },
+  "groups": [
+    {
+      "dateLabel": "Segunda, 25 maio",
+      "dateISO": "2026-05-25",
+      "exams": [
+        {
+          "id": "exam-001",
+          "examType": {
+            "id": "type-hemograma",
+            "name": "hemograma",
+            "displayName": "Hemograma completo",
+            "category": "laboratorial"
+          },
+          "fileName": "hemograma_25_05_2026.pdf",
+          "createdAtISO": "2026-05-25T09:42:00",
+          "timeLabel": "09:42",
+          "extractedValues": {
+            "hemoglobina": { "value": 14.2, "unit": "g/dL", "normalMin": 12.0, "normalMax": 16.0, "status": "normal" },
+            "leucocitos": { "value": 7800, "unit": "/mm³", "normalMin": 4000, "normalMax": 10000, "status": "normal" },
+            "plaquetas": { "value": 230000, "unit": "/mm³", "normalMin": 150000, "normalMax": 450000, "status": "normal" }
+          },
+          "processing": { "phase": "done", "failed": false }
+        },
+        {
+          "id": "exam-002",
+          "examType": {
+            "id": "type-lipidograma",
+            "name": "lipidograma",
+            "displayName": "Lipidograma",
+            "category": "laboratorial"
+          },
+          "fileName": "lipidograma_25_05_2026.pdf",
+          "createdAtISO": "2026-05-25T09:40:00",
+          "timeLabel": "09:40",
+          "extractedValues": {
+            "colesterol_total": { "value": 245, "unit": "mg/dL", "normalMin": 0, "normalMax": 190, "status": "warning" },
+            "ldl": { "value": 158, "unit": "mg/dL", "normalMin": 0, "normalMax": 130, "status": "warning" },
+            "hdl": { "value": 48, "unit": "mg/dL", "normalMin": 40, "normalMax": 999, "status": "normal" },
+            "triglicerides": { "value": 195, "unit": "mg/dL", "normalMin": 0, "normalMax": 150, "status": "warning" }
+          },
+          "processing": { "phase": "done", "failed": false }
+        }
+      ]
+    },
+    {
+      "dateLabel": "Quinta, 21 maio",
+      "dateISO": "2026-05-21",
+      "exams": [
+        {
+          "id": "exam-003",
+          "examType": {
+            "id": "type-glicemia",
+            "name": "glicemia",
+            "displayName": "Glicemia em jejum",
+            "category": "laboratorial"
+          },
+          "fileName": "glicemia_21_05_2026.jpg",
+          "createdAtISO": "2026-05-21T08:15:00",
+          "timeLabel": "08:15",
+          "extractedValues": {
+            "glicose": { "value": 142, "unit": "mg/dL", "normalMin": 70, "normalMax": 99, "status": "critical" }
+          },
+          "processing": { "phase": "done", "failed": false }
+        },
+        {
+          "id": "exam-004",
+          "examType": {
+            "id": "type-tsh",
+            "name": "tsh",
+            "displayName": "TSH",
+            "category": "laboratorial"
+          },
+          "fileName": "tsh_21_05_2026.pdf",
+          "createdAtISO": "2026-05-21T08:14:00",
+          "timeLabel": "08:14",
+          "extractedValues": {},
+          "processing": { "phase": "extracting", "failed": false }
+        }
+      ]
+    },
+    {
+      "dateLabel": "Sábado, 16 maio",
+      "dateISO": "2026-05-16",
+      "exams": [
+        {
+          "id": "exam-005",
+          "examType": {
+            "id": "type-hemograma",
+            "name": "hemograma",
+            "displayName": "Hemograma completo",
+            "category": "laboratorial"
+          },
+          "fileName": "hemograma_16_05_2026.jpg",
+          "createdAtISO": "2026-05-16T10:30:00",
+          "timeLabel": "10:30",
+          "extractedValues": {},
+          "processing": { "phase": "extraction_failed", "failed": true, "errorMessage": "Imagem ilegível — refaça a foto com mais luz" }
+        }
+      ]
+    }
+  ]
+}

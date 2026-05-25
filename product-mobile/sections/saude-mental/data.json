@@ -1,0 +1,236 @@
+{
+  "_meta": {
+    "models": {
+      "SaudeMentalData": "Estado raiz da section — psicólogo vinculado (ou null), conversa, diário de hoje, tendências e histórico.",
+      "PsicologoVinculado": "Profissional psicólogo ativo no acompanhamento. Null quando o paciente ainda não convidou ninguém.",
+      "ChatState": "Estado do chat — lista de mensagens em ordem cronológica, indicador de digitação e contador de não-lidas.",
+      "ChatMensagem": "Mensagem trocada entre paciente, psicólogo ou sistema. Inclui autor, texto, timestamp e status de leitura.",
+      "DiarioEntrada": "Registro emocional do paciente em uma data — humor 1-10, emoções selecionadas, energia 1-5, sono 1-5 e nota livre.",
+      "EmocaoOption": "Tag de emoção disponível para seleção. Tem id, label e tom visual (positivo/neutro/negativo).",
+      "HumorPonto": "Ponto do mini-gráfico de 7 dias — data + valor (1-10) ou null quando não houve check-in.",
+      "TendenciaMensal": "Resumo agregado do humor médio do mês atual + comparação com mês anterior + frase de contexto.",
+      "HistoricoItem": "Entrada anterior do diário resumida para a lista de histórico (data + humor + emoções top + nota truncada)."
+    },
+    "relationships": [
+      "Paciente tem 0..1 PsicologoVinculado. Quando null, a tab Chat exibe empty state.",
+      "ChatMensagem pertence à conversa com o PsicologoVinculado. Sem psicólogo, a lista é vazia.",
+      "DiarioEntrada é registrada pelo paciente. A entrada de hoje pode ser null (não preenchida).",
+      "HumorPonto[] é derivado das DiarioEntrada[] recentes (últimos 7 dias).",
+      "EmocaoOption[] é catálogo fixo de emoções que alimentam DiarioEntrada.emocaoIds.",
+      "HistoricoItem[] são entradas anteriores do diário ordenadas por data desc."
+    ]
+  },
+
+  "header": {
+    "tag": "Saúde Mental",
+    "title": "Saúde Mental",
+    "subtitle": "Converse com seu psicólogo e registre como você está se sentindo."
+  },
+
+  "tabAtiva": "diario",
+
+  "psicologo": {
+    "id": "prof-marina",
+    "fullName": "Marina Silva",
+    "tratamento": "Psicóloga",
+    "registro": "CRP 06/45678",
+    "abordagem": "TCC · ACT",
+    "fotoUrl": null,
+    "inicial": "M",
+    "status": "online",
+    "statusLabel": "Online agora",
+    "ultimaInteracao": "há 3h",
+    "proximoAgendamento": {
+      "dataISO": "2026-05-15T16:00:00",
+      "label": "Sex, 15 mai · 16h00",
+      "modalidade": "Videochamada"
+    }
+  },
+
+  "chat": {
+    "naoLidas": 1,
+    "digitando": false,
+    "mensagens": [
+      {
+        "id": "msg-001",
+        "autor": "sistema",
+        "tipo": "sistema",
+        "texto": "Vocês começaram a conversar em 2 de maio.",
+        "enviadaEm": "2026-05-02T09:00:00",
+        "lida": true
+      },
+      {
+        "id": "msg-002",
+        "autor": "psicologo",
+        "tipo": "texto",
+        "texto": "Oi Roberto, prazer em te conhecer! Espero te ajudar nessa jornada. Conta um pouco do que te trouxe aqui quando estiver à vontade.",
+        "enviadaEm": "2026-05-02T09:01:30",
+        "lida": true
+      },
+      {
+        "id": "msg-003",
+        "autor": "paciente",
+        "tipo": "texto",
+        "texto": "Oi Marina! Obrigado. Tô passando por um momento de muita ansiedade no trabalho, querendo entender melhor o que tá acontecendo.",
+        "enviadaEm": "2026-05-02T18:42:00",
+        "lida": true
+      },
+      {
+        "id": "msg-004",
+        "autor": "sistema",
+        "tipo": "diario_compartilhado",
+        "texto": "Roberto compartilhou uma entrada do diário: humor 4/10 — ansioso, sobrecarregado.",
+        "enviadaEm": "2026-05-10T22:15:00",
+        "lida": true
+      },
+      {
+        "id": "msg-005",
+        "autor": "psicologo",
+        "tipo": "texto",
+        "texto": "Vi sua entrada de ontem. Você notou algo específico que disparou essa sensação? Foi mais durante o dia ou na hora de dormir?",
+        "enviadaEm": "2026-05-11T08:30:00",
+        "lida": true
+      },
+      {
+        "id": "msg-006",
+        "autor": "paciente",
+        "tipo": "texto",
+        "texto": "Foi piorando ao longo do dia. Tive uma reunião difícil às 15h e dali não consegui mais focar.",
+        "enviadaEm": "2026-05-11T09:12:00",
+        "lida": true
+      },
+      {
+        "id": "msg-007",
+        "autor": "psicologo",
+        "tipo": "texto",
+        "texto": "Faz sentido. Vamos trabalhar isso na próxima sessão. Pra hoje, tenta o exercício de respiração 4-7-8 quando sentir a ansiedade subindo — 4 segundos inspirando, 7 segurando, 8 expirando. Funciona pra muita gente.",
+        "enviadaEm": "2026-05-13T10:05:00",
+        "lida": false
+      }
+    ]
+  },
+
+  "diarioHoje": {
+    "dataISO": "2026-05-13",
+    "preenchido": false,
+    "humor": null,
+    "emocaoIds": [],
+    "energia": null,
+    "sono": null,
+    "nota": "",
+    "compartilharComPsicologo": true,
+    "submittedAt": null,
+    "hint": "Leva menos de 1 minuto. Anotações ficam só com você (a menos que escolha compartilhar)."
+  },
+
+  "emocoesCatalogo": [
+    { "id": "calmo", "label": "Calmo", "tom": "positivo" },
+    { "id": "feliz", "label": "Feliz", "tom": "positivo" },
+    { "id": "grato", "label": "Grato", "tom": "positivo" },
+    { "id": "focado", "label": "Focado", "tom": "positivo" },
+    { "id": "esperancoso", "label": "Esperançoso", "tom": "positivo" },
+    { "id": "neutro", "label": "Neutro", "tom": "neutro" },
+    { "id": "cansado", "label": "Cansado", "tom": "neutro" },
+    { "id": "indiferente", "label": "Indiferente", "tom": "neutro" },
+    { "id": "ansioso", "label": "Ansioso", "tom": "negativo" },
+    { "id": "estressado", "label": "Estressado", "tom": "negativo" },
+    { "id": "triste", "label": "Triste", "tom": "negativo" },
+    { "id": "irritado", "label": "Irritado", "tom": "negativo" },
+    { "id": "sobrecarregado", "label": "Sobrecarregado", "tom": "negativo" },
+    { "id": "desmotivado", "label": "Desmotivado", "tom": "negativo" }
+  ],
+
+  "humorSemana": {
+    "rangeLabel": "Últimos 7 dias",
+    "mediaSemanaAtual": 5.6,
+    "mediaSemanaAnterior": 5.2,
+    "deltaLabel": "+0.4 vs. semana anterior",
+    "tendenciaLabel": "Estável",
+    "dias": [
+      { "dateISO": "2026-05-07", "label": "Qui", "score": 6, "temRegistro": true },
+      { "dateISO": "2026-05-08", "label": "Sex", "score": 7, "temRegistro": true },
+      { "dateISO": "2026-05-09", "label": "Sáb", "score": 8, "temRegistro": true },
+      { "dateISO": "2026-05-10", "label": "Dom", "score": 4, "temRegistro": true },
+      { "dateISO": "2026-05-11", "label": "Seg", "score": 5, "temRegistro": true },
+      { "dateISO": "2026-05-12", "label": "Ter", "score": null, "temRegistro": false },
+      { "dateISO": "2026-05-13", "label": "Qua", "score": null, "temRegistro": false }
+    ]
+  },
+
+  "tendenciaMensal": {
+    "mesLabel": "Maio",
+    "humorMedio": 5.7,
+    "humorMedioAnterior": 6.2,
+    "deltaLabel": "-0.5 vs. abril",
+    "direcao": "queda",
+    "frase": "Seu humor caiu levemente em maio. Os dias com pior humor (10/mai) coincidem com a semana de muita reunião."
+  },
+
+  "historico": [
+    {
+      "id": "diario-2026-05-11",
+      "dataISO": "2026-05-11",
+      "dataLabel": "Seg, 11 mai",
+      "humor": 5,
+      "emocaoLabelsTop": ["Cansado", "Ansioso"],
+      "notaTruncada": "Reunião difícil às 15h derrubou o resto do dia. Tentei sair pra caminhar mas não consegui parar de pensar...",
+      "compartilhadoComPsicologo": false,
+      "notaCompleta": "Reunião difícil às 15h derrubou o resto do dia. Tentei sair pra caminhar mas não consegui parar de pensar. Acabei comendo mal à noite e foi tarde demais quando deitei.",
+      "todasEmocoesLabels": ["Cansado", "Ansioso", "Estressado"],
+      "energia": 2,
+      "sono": 2
+    },
+    {
+      "id": "diario-2026-05-10",
+      "dataISO": "2026-05-10",
+      "dataLabel": "Dom, 10 mai",
+      "humor": 4,
+      "emocaoLabelsTop": ["Ansioso", "Sobrecarregado"],
+      "notaTruncada": "Domingo pesado pensando na semana. Insônia. Acordei várias vezes e fiquei rolando pelo celular.",
+      "compartilhadoComPsicologo": true,
+      "notaCompleta": "Domingo pesado pensando na semana. Insônia. Acordei várias vezes e fiquei rolando pelo celular. Sei que isso só piora.",
+      "todasEmocoesLabels": ["Ansioso", "Sobrecarregado", "Cansado"],
+      "energia": 2,
+      "sono": 1
+    },
+    {
+      "id": "diario-2026-05-09",
+      "dataISO": "2026-05-09",
+      "dataLabel": "Sáb, 9 mai",
+      "humor": 8,
+      "emocaoLabelsTop": ["Feliz", "Grato"],
+      "notaTruncada": "Dia ótimo com a família. Almoço fora, caminhada à tarde. Dormi bem.",
+      "compartilhadoComPsicologo": false,
+      "notaCompleta": "Dia ótimo com a família. Almoço fora, caminhada à tarde. Dormi bem. Quero replicar essa rotina nos próximos finais de semana.",
+      "todasEmocoesLabels": ["Feliz", "Grato", "Calmo"],
+      "energia": 5,
+      "sono": 5
+    },
+    {
+      "id": "diario-2026-05-08",
+      "dataISO": "2026-05-08",
+      "dataLabel": "Sex, 8 mai",
+      "humor": 7,
+      "emocaoLabelsTop": ["Focado", "Calmo"],
+      "notaTruncada": "Sexta tranquila no trabalho. Consegui fechar o relatório que tava me incomodando.",
+      "compartilhadoComPsicologo": false,
+      "notaCompleta": "Sexta tranquila no trabalho. Consegui fechar o relatório que tava me incomodando. Saí no horário e fui pro happy hour com calma.",
+      "todasEmocoesLabels": ["Focado", "Calmo", "Grato"],
+      "energia": 4,
+      "sono": 4
+    },
+    {
+      "id": "diario-2026-05-07",
+      "dataISO": "2026-05-07",
+      "dataLabel": "Qui, 7 mai",
+      "humor": 6,
+      "emocaoLabelsTop": ["Neutro", "Cansado"],
+      "notaTruncada": "",
+      "compartilhadoComPsicologo": false,
+      "notaCompleta": "",
+      "todasEmocoesLabels": ["Neutro", "Cansado"],
+      "energia": 3,
+      "sono": 3
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "_meta": {
+    "description": "Estado inicial do chat IA. Em produção, mensagens vêm de backend ai-chat com streaming."
+  },
+  "saudacaoInicial": "Oi Roberto! Sou o assistente Nymos. Posso analisar seus dados, comparar tendências e sugerir ações. Em que posso ajudar?",
+  "sugestoes": [
+    "Como melhorar minha qualidade do sono?",
+    "Analisar minha glicemia da semana",
+    "Sugerir treino de hoje",
+    "Resumo dos meus exames"
+  ]
+}

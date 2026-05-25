@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "description": "Configurações do psicólogo — perfil, disponibilidade, modalidades, valores, convênios, notificações."
+  },
+  "perfil": {
+    "fotoUrl": null,
+    "inicial": "M",
+    "nomeCompleto": "Dra. Marina Silva",
+    "crp": "CRP 06/45678",
+    "email": "marina@nymos.com",
+    "telefone": "+55 11 98765-4321",
+    "especialidade": "Psicologia Clínica · Especialista em TCC",
+    "abordagensPrincipais": ["TCC", "ACT", "Mindfulness"],
+    "formacao": [
+      { "instituicao": "USP", "titulo": "Graduação em Psicologia", "ano": 2012 },
+      { "instituicao": "Beck Institute", "titulo": "Especialização em TCC", "ano": 2015 },
+      { "instituicao": "USP", "titulo": "Mestrado em Psicologia Clínica", "ano": 2018 }
+    ],
+    "bio": "Psicóloga clínica com 12 anos de experiência. Atendo adultos com transtornos de humor (depressão · ansiedade) e TDAH. Abordagem integrativa baseada em evidências, combinando TCC tradicional com elementos da Terapia de Aceitação e Compromisso (ACT) e práticas de Mindfulness."
+  },
+  "disponibilidade": [
+    { "dia": "seg", "inicio": "09:00", "fim": "10:00", "modalidade": "online" },
+    { "dia": "seg", "inicio": "10:00", "fim": "11:00", "modalidade": "online" },
+    { "dia": "seg", "inicio": "14:00", "fim": "15:00", "modalidade": "presencial" },
+    { "dia": "seg", "inicio": "15:00", "fim": "16:00", "modalidade": "presencial" },
+    { "dia": "seg", "inicio": "16:00", "fim": "17:00", "modalidade": "presencial" },
+    { "dia": "ter", "inicio": "09:00", "fim": "10:00", "modalidade": "online" },
+    { "dia": "ter", "inicio": "14:00", "fim": "15:00", "modalidade": "presencial" },
+    { "dia": "ter", "inicio": "15:00", "fim": "16:00", "modalidade": "presencial" },
+    { "dia": "qua", "inicio": "09:00", "fim": "10:00", "modalidade": "online" },
+    { "dia": "qua", "inicio": "10:00", "fim": "11:00", "modalidade": "online" },
+    { "dia": "qua", "inicio": "11:00", "fim": "12:00", "modalidade": "online" },
+    { "dia": "qua", "inicio": "14:00", "fim": "15:00", "modalidade": "presencial" },
+    { "dia": "qua", "inicio": "17:00", "fim": "18:00", "modalidade": "presencial" },
+    { "dia": "qui", "inicio": "10:00", "fim": "11:00", "modalidade": "online" },
+    { "dia": "qui", "inicio": "15:00", "fim": "16:00", "modalidade": "presencial" },
+    { "dia": "qui", "inicio": "16:00", "fim": "17:00", "modalidade": "presencial" },
+    { "dia": "sex", "inicio": "09:00", "fim": "10:00", "modalidade": "online" },
+    { "dia": "sex", "inicio": "14:00", "fim": "15:00", "modalidade": "presencial" }
+  ],
+  "modalidades": {
+    "presencial": { "ativa": true, "endereco": "Av. Paulista, 1234 · Conj. 901 · Bela Vista · São Paulo SP" },
+    "online": { "ativa": true, "plataforma": "Google Meet (link enviado por email 30min antes)" },
+    "hibrida": { "ativa": false }
+  },
+  "valores": {
+    "sessaoPadraoBrl": 280,
+    "sessaoOnlineBrl": 240,
+    "primeiraConsultaBrl": 320,
+    "pacotes": [
+      { "id": "pkg-4", "nome": "Pacote Mensal · 4 sessões", "numSessoes": 4, "precoTotal": 960, "validadeMeses": 1 },
+      { "id": "pkg-12", "nome": "Pacote Trimestral · 12 sessões", "numSessoes": 12, "precoTotal": 2640, "validadeMeses": 3 }
+    ],
+    "formaPagamento": ["PIX", "Boleto", "Cartão de crédito", "Convênio (com reembolso)"]
+  },
+  "convenios": [
+    { "id": "unimed", "nome": "Unimed", "ativo": true, "valorRepasseBrl": 180 },
+    { "id": "bradesco", "nome": "Bradesco Saúde", "ativo": true, "valorRepasseBrl": 160 },
+    { "id": "amil", "nome": "Amil", "ativo": false, "valorRepasseBrl": null },
+    { "id": "sulamerica", "nome": "SulAmérica", "ativo": true, "valorRepasseBrl": 170 },
+    { "id": "intermedica", "nome": "Hapvida NotreDame", "ativo": false, "valorRepasseBrl": null }
+  ],
+  "notificacoes": {
+    "pushSessaoIniciar": true,
+    "pushPacienteAlerta": true,
+    "pushMensagemPaciente": true,
+    "emailResumoDiario": true,
+    "emailNovoAgendamento": true,
+    "smsLembreteSessao": false
+  }
+}
