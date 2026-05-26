@@ -1,0 +1,126 @@
+{
+  "stats": {
+    "total": 11,
+    "naoLidas": 6
+  },
+  "buckets": [
+    {
+      "bucket": "hoje",
+      "label": "Hoje",
+      "notificacoes": [
+        {
+          "id": "notif-001",
+          "tipo": "lembrete-medicacao",
+          "titulo": "Hora da Metformina",
+          "mensagem": "Lembrete: tome 500mg de Metformina com o café da manhã.",
+          "status": "nao-lida",
+          "criadaEmISO": "2026-05-25T08:00:00",
+          "link": "/medicacoes/metformina"
+        },
+        {
+          "id": "notif-002",
+          "tipo": "mensagem-profissional",
+          "titulo": "Nova mensagem da Dra. Ana",
+          "mensagem": "Recebi seu hemograma. Vamos conversar na próxima consulta sobre os marcadores.",
+          "status": "nao-lida",
+          "criadaEmISO": "2026-05-25T07:32:00",
+          "link": "/chat/dra-ana",
+          "ctaLabel": "Abrir conversa"
+        },
+        {
+          "id": "notif-003",
+          "tipo": "alerta-exame",
+          "titulo": "Resultado de exame disponível",
+          "mensagem": "Seu Lipidograma foi processado. 1 marcador fora da faixa de referência.",
+          "status": "nao-lida",
+          "criadaEmISO": "2026-05-25T06:15:00",
+          "link": "/exames/exam-004"
+        }
+      ]
+    },
+    {
+      "bucket": "ontem",
+      "label": "Ontem",
+      "notificacoes": [
+        {
+          "id": "notif-004",
+          "tipo": "sequencia",
+          "titulo": "7 dias seguidos!",
+          "mensagem": "Você registrou refeições por 7 dias consecutivos. Continue assim!",
+          "status": "nao-lida",
+          "criadaEmISO": "2026-05-24T20:10:00"
+        },
+        {
+          "id": "notif-005",
+          "tipo": "conquista",
+          "titulo": "Meta de água batida",
+          "mensagem": "Parabéns! Você atingiu 2L de água hoje pela primeira vez na semana.",
+          "status": "lida",
+          "criadaEmISO": "2026-05-24T18:45:00"
+        },
+        {
+          "id": "notif-006",
+          "tipo": "saude",
+          "titulo": "Pressão dentro do alvo",
+          "mensagem": "Suas últimas 3 medições de PA estão dentro da faixa recomendada.",
+          "status": "lida",
+          "criadaEmISO": "2026-05-24T14:20:00"
+        }
+      ]
+    },
+    {
+      "bucket": "esta-semana",
+      "label": "Esta semana",
+      "notificacoes": [
+        {
+          "id": "notif-007",
+          "tipo": "lembrete-medicacao",
+          "titulo": "Atrasou a Losartana",
+          "mensagem": "Você não marcou a dose das 22h de ontem. Confirme se tomou.",
+          "status": "nao-lida",
+          "criadaEmISO": "2026-05-22T22:30:00",
+          "link": "/medicacoes/losartana"
+        },
+        {
+          "id": "notif-008",
+          "tipo": "ranking",
+          "titulo": "Subiu no ranking semanal",
+          "mensagem": "Você está em #4 entre os pacientes da Dra. Ana esta semana.",
+          "status": "nao-lida",
+          "criadaEmISO": "2026-05-21T19:00:00",
+          "link": "/ranking"
+        },
+        {
+          "id": "notif-009",
+          "tipo": "sistema",
+          "titulo": "Nova versão disponível",
+          "mensagem": "Atualizamos o app com melhorias no diário alimentar. Reinicie pra aplicar.",
+          "status": "lida",
+          "criadaEmISO": "2026-05-20T10:00:00"
+        }
+      ]
+    },
+    {
+      "bucket": "mais-antigas",
+      "label": "Mais antigas",
+      "notificacoes": [
+        {
+          "id": "notif-010",
+          "tipo": "alerta-exame",
+          "titulo": "Hora de repetir o TSH",
+          "mensagem": "Faz 3 meses desde seu último exame de TSH. A Dra. Ana sugere repetir.",
+          "status": "lida",
+          "criadaEmISO": "2026-05-15T09:00:00"
+        },
+        {
+          "id": "notif-011",
+          "tipo": "conquista",
+          "titulo": "Primeiro mês completo",
+          "mensagem": "Você completou 30 dias usando o Nymos. Obrigado por estar com a gente!",
+          "status": "lida",
+          "criadaEmISO": "2026-05-10T12:00:00"
+        }
+      ]
+    }
+  ]
+}

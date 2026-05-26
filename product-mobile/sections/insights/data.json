@@ -1,0 +1,99 @@
+{
+  "stats": {
+    "total": 6,
+    "unread": 3,
+    "weekly": 1,
+    "alerts": 2
+  },
+  "insights": [
+    {
+      "id": "ins-001",
+      "source": "weekly",
+      "category": "weekly_summary",
+      "severity": "info",
+      "title": "Resumo semanal: 18 maio - 24 maio",
+      "content": "Sua semana foi marcada por consistência no sono (média de 7h12min, melhor desde abril) e queda no humor a partir de quinta. Atividade física manteve 4 sessões — boa cadência. A IA identificou correlação entre o pico de cansaço de quinta e a noite mal dormida de quarta (4h47min). Para semana que vem: tentar manter rotina noturna entre 22h-23h e revisar carga de trabalho na quarta.",
+      "isRead": false,
+      "generatedAtISO": "2026-05-25T08:00:00",
+      "generatedAtLabel": "25/05 08:00",
+      "relatedMetrics": [
+        { "key": "sleep_7d", "label": "Sono 7d" },
+        { "key": "mood_7d", "label": "Humor 7d" },
+        { "key": "activity_7d", "label": "Atividade 7d" }
+      ]
+    },
+    {
+      "id": "ins-002",
+      "source": "micro",
+      "category": "metric_alert",
+      "severity": "alert",
+      "title": "Glicose em jejum acima da referência",
+      "content": "Seu último exame (21/05) mostrou glicose em jejum de 142 mg/dL — acima da faixa normal (70-99 mg/dL). Considerando que seu lipidograma também veio com colesterol total e triglicerídeos elevados, vale conversar com a Dra. Ana na próxima consulta. Enquanto isso: priorizar carboidratos de baixo IG e evitar bebidas açucaradas.",
+      "isRead": false,
+      "generatedAtISO": "2026-05-22T10:14:00",
+      "generatedAtLabel": "22/05 10:14",
+      "relatedMetrics": [
+        { "key": "exam_glucose", "label": "Glicemia" },
+        { "key": "exam_lipid", "label": "Lipidograma" }
+      ]
+    },
+    {
+      "id": "ins-003",
+      "source": "micro",
+      "category": "nutrition_tip",
+      "severity": "info",
+      "title": "Você está abaixo da meta de proteína há 3 dias",
+      "content": "Média de 78g/dia nos últimos 3 dias (meta: 110g). Tentar incluir uma fonte proteica no café (ovos, iogurte natural, queijo branco) costuma resolver. Lembrete: pico de cortisol matinal + proteína = saciedade mais estável até o almoço.",
+      "isRead": false,
+      "generatedAtISO": "2026-05-24T07:30:00",
+      "generatedAtLabel": "24/05 07:30",
+      "relatedMetrics": [
+        { "key": "protein_3d", "label": "Proteína 3d" }
+      ]
+    },
+    {
+      "id": "ins-004",
+      "source": "micro",
+      "category": "activity_suggestion",
+      "severity": "attention",
+      "title": "Passos diários caíram 35% essa semana",
+      "content": "Média de 6.420 passos/dia (semana anterior: 9.880). Pode ser efeito do feriado, mas se manter, vale tentar 2 caminhadas curtas (15min) entre reuniões. A correlação humor↔atividade no seu histórico é forte: dias com 8k+ passos têm humor médio 0.8 ponto maior.",
+      "isRead": true,
+      "generatedAtISO": "2026-05-23T18:42:00",
+      "generatedAtLabel": "23/05 18:42",
+      "relatedMetrics": [
+        { "key": "steps_7d", "label": "Passos 7d" },
+        { "key": "mood_corr", "label": "Humor x Atividade" }
+      ]
+    },
+    {
+      "id": "ins-005",
+      "source": "micro",
+      "category": "metric_highlight",
+      "severity": "alert",
+      "title": "Pressão arterial elevada em 3 medições seguidas",
+      "content": "Suas 3 últimas medições (20, 22 e 24/05) ficaram entre 138/89 e 144/92. A IA classifica como pré-hipertensão. Recomendação: medir em horário consistente (manhã, sentado, após 5min de descanso) e levar histórico pra próxima consulta médica.",
+      "isRead": true,
+      "generatedAtISO": "2026-05-24T19:10:00",
+      "generatedAtLabel": "24/05 19:10",
+      "relatedMetrics": [
+        { "key": "bp_7d", "label": "PA 7d" }
+      ]
+    },
+    {
+      "id": "ins-006",
+      "source": "micro",
+      "category": "weekend_tip",
+      "severity": "info",
+      "title": "Fim de semana à vista — proteja seu sono",
+      "content": "Nas últimas 3 sextas seu horário de dormir atrasou em média 1h23min — e segundas seguintes vieram com humor médio 5.2 (vs 6.8 da semana). Tentar manter hora de dormir similar à da semana costuma melhorar a segunda-feira.",
+      "isRead": true,
+      "generatedAtISO": "2026-05-22T20:00:00",
+      "generatedAtLabel": "22/05 20:00",
+      "relatedMetrics": [
+        { "key": "sleep_friday", "label": "Sono sexta" },
+        { "key": "mood_monday", "label": "Humor segunda" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "bioimpedance": {
+    "stats": {
+      "total": 4,
+      "lastWeight": 76.4,
+      "lastBodyFat": 21.8
+    },
+    "groups": [
+      {
+        "dateLabel": "Segunda, 25 maio",
+        "dateISO": "2026-05-25",
+        "items": [
+          {
+            "id": "bio-001",
+            "evaluationDateISO": "2026-05-25T07:30:00",
+            "timeLabel": "07:30",
+            "source": "device",
+            "deviceBrand": "InBody",
+            "deviceModel": "270",
+            "weight": 76.4,
+            "bodyFatPercentage": 21.8,
+            "muscleMass": 34.9,
+            "visceralFat": 7,
+            "bodyWaterPercentage": 58.2,
+            "bmr": 1685,
+            "metabolicAge": 28,
+            "bmi": 24.1,
+            "notes": "Pré-treino, jejum 12h."
+          }
+        ]
+      },
+      {
+        "dateLabel": "Segunda, 18 maio",
+        "dateISO": "2026-05-18",
+        "items": [
+          {
+            "id": "bio-002",
+            "evaluationDateISO": "2026-05-18T07:25:00",
+            "timeLabel": "07:25",
+            "source": "device",
+            "deviceBrand": "InBody",
+            "deviceModel": "270",
+            "weight": 77.1,
+            "bodyFatPercentage": 22.4,
+            "muscleMass": 34.6,
+            "visceralFat": 8,
+            "bodyWaterPercentage": 57.5,
+            "bmr": 1672,
+            "metabolicAge": 29,
+            "bmi": 24.3,
+            "notes": null
+          }
+        ]
+      },
+      {
+        "dateLabel": "Quinta, 07 maio",
+        "dateISO": "2026-05-07",
+        "items": [
+          {
+            "id": "bio-003",
+            "evaluationDateISO": "2026-05-07T18:40:00",
+            "timeLabel": "18:40",
+            "source": "manual",
+            "weight": 77.8,
+            "bodyFatPercentage": 23.1,
+            "muscleMass": 34.2,
+            "visceralFat": 8,
+            "bodyWaterPercentage": 56.8,
+            "bmr": 1660,
+            "metabolicAge": 30,
+            "bmi": 24.5,
+            "notes": "Lançamento manual via balança doméstica."
+          },
+          {
+            "id": "bio-004",
+            "evaluationDateISO": "2026-05-07T07:10:00",
+            "timeLabel": "07:10",
+            "source": "ia",
+            "weight": 77.6,
+            "bodyFatPercentage": 23.0,
+            "muscleMass": 34.3,
+            "visceralFat": 8,
+            "bodyWaterPercentage": 56.9,
+            "bmr": 1662,
+            "metabolicAge": 30,
+            "bmi": 24.4,
+            "notes": "Estimativa IA via fotos."
+          }
+        ]
+      }
+    ]
+  },
+  "photos": {
+    "stats": {
+      "total": 3,
+      "lastSessionLabel": "há 3 dias"
+    },
+    "groups": [
+      {
+        "dateLabel": "Sexta, 22 maio",
+        "dateISO": "2026-05-22",
+        "items": [
+          {
+            "id": "ses-001",
+            "evaluationDateISO": "2026-05-22T08:15:00",
+            "timeLabel": "08:15",
+            "source": "manual",
+            "photos": [
+              { "id": "ph-001-f", "photoType": "front", "imageUrl": "placeholder://front-22-05" },
+              { "id": "ph-001-s", "photoType": "side", "imageUrl": "placeholder://side-22-05" },
+              { "id": "ph-001-b", "photoType": "back", "imageUrl": "placeholder://back-22-05" }
+            ],
+            "notes": "Sessão semanal — luz natural manhã."
+          }
+        ]
+      },
+      {
+        "dateLabel": "Sexta, 15 maio",
+        "dateISO": "2026-05-15",
+        "items": [
+          {
+            "id": "ses-002",
+            "evaluationDateISO": "2026-05-15T08:20:00",
+            "timeLabel": "08:20",
+            "source": "manual",
+            "photos": [
+              { "id": "ph-002-f", "photoType": "front", "imageUrl": "placeholder://front-15-05" },
+              { "id": "ph-002-s", "photoType": "side", "imageUrl": "placeholder://side-15-05" }
+            ],
+            "notes": "Faltou a foto de costas."
+          }
+        ]
+      },
+      {
+        "dateLabel": "Sexta, 01 maio",
+        "dateISO": "2026-05-01",
+        "items": [
+          {
+            "id": "ses-003",
+            "evaluationDateISO": "2026-05-01T08:05:00",
+            "timeLabel": "08:05",
+            "source": "ia",
+            "photos": [
+              { "id": "ph-003-f", "photoType": "front", "imageUrl": "placeholder://front-01-05" },
+              { "id": "ph-003-s", "photoType": "side", "imageUrl": "placeholder://side-01-05" },
+              { "id": "ph-003-b", "photoType": "back", "imageUrl": "placeholder://back-01-05" }
+            ],
+            "notes": "Baseline pré-dieta."
+          }
+        ]
+      }
+    ]
+  }
+}

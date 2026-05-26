@@ -75,6 +75,23 @@ const SUB_PAGE_CONFIG: Record<string, SubPageConfig> = {
     subtitle: 'Laudos, extração IA e histórico',
     rightAction: 'search-and-add',
   },
+  'avaliacoes-corporais': {
+    title: 'Avaliações Corporais',
+    subtitle: 'Bioimpedância e fotos do seu corpo',
+    rightAction: 'search-and-add',
+  },
+  insights: {
+    title: 'Insights',
+    subtitle: 'Análises IA cross-feature',
+  },
+  desafios: {
+    title: 'Desafios',
+    subtitle: 'Metas, pontos e ranking',
+  },
+  notificacoes: {
+    title: 'Notificações',
+    subtitle: 'Lembretes, alertas e mensagens',
+  },
   plano: {
     title: 'Plano',
     subtitle: 'Assinatura e pagamentos',
