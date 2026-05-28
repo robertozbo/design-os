@@ -1,0 +1,10 @@
+{
+  "tema": "escuro",
+  "compartilhaDadosAnonimos": true,
+  "biometriaAtiva": true,
+  "exclusao": {
+    "pendenteExclusao": false,
+    "exclusaoEm": null,
+    "emailNotificacao": null
+  }
+}
