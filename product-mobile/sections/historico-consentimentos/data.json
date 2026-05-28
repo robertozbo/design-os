@@ -1,0 +1,60 @@
+{
+  "tema": "escuro",
+  "consentimentos": [
+    {
+      "id": "c-1",
+      "tipo": "terms_of_use",
+      "versao": "v2.8",
+      "ativo": true,
+      "aceitoEm": "2026-04-15T11:02:00-03:00",
+      "revogadoEm": null,
+      "ipRegistro": "189.45.12.88",
+      "obrigatorio": true,
+      "trechoTermo": "Bem-vindo à Nymos. Estes termos regulam o uso da plataforma de saúde e bem-estar. Ao aceitar, você concorda com as regras de conduta, política de privacidade integrada e responsabilidades sobre o uso dos dados de saúde compartilhados…"
+    },
+    {
+      "id": "c-2",
+      "tipo": "privacy_policy",
+      "versao": "v3.2",
+      "ativo": true,
+      "aceitoEm": "2026-04-15T11:02:00-03:00",
+      "revogadoEm": null,
+      "ipRegistro": "189.45.12.88",
+      "obrigatorio": true,
+      "trechoTermo": "Política de Privacidade Nymos · v3.2 (2026-03-01). Esta política descreve como coletamos, usamos, armazenamos e protegemos seus dados pessoais e de saúde de acordo com a LGPD (Lei 13.709/2018)…"
+    },
+    {
+      "id": "c-3",
+      "tipo": "data_processing",
+      "versao": "v1.4",
+      "ativo": true,
+      "aceitoEm": "2026-04-15T11:02:30-03:00",
+      "revogadoEm": null,
+      "ipRegistro": "189.45.12.88",
+      "obrigatorio": true,
+      "trechoTermo": "Tratamento de dados sensíveis de saúde · Nymos processa suas métricas, exames e fotos corporais com criptografia AES-256 e auditoria contínua. Profissionais conectados acessam apenas os dados explicitamente liberados…"
+    },
+    {
+      "id": "c-4",
+      "tipo": "marketing",
+      "versao": "v1.0",
+      "ativo": true,
+      "aceitoEm": "2026-04-15T11:02:30-03:00",
+      "revogadoEm": null,
+      "ipRegistro": "189.45.12.88",
+      "obrigatorio": false,
+      "trechoTermo": "Comunicações de marketing · você receberá emails ocasionais sobre novos recursos, ofertas e parceiros relevantes. Você pode revogar este consentimento a qualquer momento sem afetar outras funcionalidades."
+    },
+    {
+      "id": "c-5",
+      "tipo": "marketing",
+      "versao": "v0.9",
+      "ativo": false,
+      "aceitoEm": "2025-11-20T09:18:00-03:00",
+      "revogadoEm": "2026-02-04T16:44:00-03:00",
+      "ipRegistro": "200.18.220.40",
+      "obrigatorio": false,
+      "trechoTermo": "Comunicações de marketing · você receberá emails ocasionais sobre novos recursos, ofertas e parceiros relevantes."
+    }
+  ]
+}
