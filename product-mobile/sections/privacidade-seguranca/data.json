@@ -1,0 +1,69 @@
+{
+  "tema": "escuro",
+  "seguranca": {
+    "biometria": true,
+    "biometriaTipoDispositivo": "face_id",
+    "pinAtivo": false,
+    "duasEtapas": false,
+    "duasEtapasMetodo": null
+  },
+  "sessoesAtivas": [
+    {
+      "id": "sess-1",
+      "device": "iPhone 15 Pro",
+      "os": "iOS 17.4",
+      "local": "São Paulo, SP",
+      "ultimaAtividade": "2026-05-28T08:42:00-03:00",
+      "atual": true
+    },
+    {
+      "id": "sess-2",
+      "device": "MacBook Pro 14",
+      "os": "macOS 14.5 · Safari",
+      "local": "São Paulo, SP",
+      "ultimaAtividade": "2026-05-27T22:15:00-03:00",
+      "atual": false
+    },
+    {
+      "id": "sess-3",
+      "device": "iPad Air",
+      "os": "iPadOS 17.3",
+      "local": "Campinas, SP",
+      "ultimaAtividade": "2026-05-22T14:08:00-03:00",
+      "atual": false
+    }
+  ],
+  "privacidade": {
+    "compartilharDadosAnonimos": true,
+    "permitirIAUsarDados": true,
+    "permitirIAUsarDadosLocked": true,
+    "visibilidadePerfil": "profissionais"
+  },
+  "consentimentos": [
+    {
+      "id": "c-1",
+      "tipo": "Política de Privacidade",
+      "versaoTermo": "v3.2",
+      "aceitoEm": "2026-04-15T11:02:00-03:00",
+      "revogadoEm": null,
+      "ipRegistro": "189.45.12.88"
+    },
+    {
+      "id": "c-2",
+      "tipo": "Termos de Uso",
+      "versaoTermo": "v2.8",
+      "aceitoEm": "2026-04-15T11:02:00-03:00",
+      "revogadoEm": null,
+      "ipRegistro": "189.45.12.88"
+    },
+    {
+      "id": "c-3",
+      "tipo": "Uso de IA com meus dados",
+      "versaoTermo": "v1.4",
+      "aceitoEm": "2026-04-15T11:02:30-03:00",
+      "revogadoEm": null,
+      "ipRegistro": "189.45.12.88"
+    }
+  ],
+  "ultimoExportLGPDEm": null
+}
