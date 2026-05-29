@@ -1,0 +1,92 @@
+{
+  "_meta": {
+    "models": {
+      "pacienteSessao": "Paciente focal desta evolução, com contexto: número da sessão, EVA da sessão anterior (pré-preenche o slider), última sessão e status Nymos Move.",
+      "condutaOption": "Conduta aplicável em sessão de fisioterapia (chip multi-select). Agrupada por categoria.",
+      "formEvolucao": "Estado do formulário SOAP que o fisio preenche.",
+      "sugestaoConduta": "Sugestão contextual baseada na última sessão e queixa (ex: 'paciente relatou dor em rotação interna → sugerir terapia manual em ombro')."
+    }
+  },
+  "pacienteFoco": {
+    "id": "p-001",
+    "nome": "Ana Carolina Mendes",
+    "idade": 42,
+    "queixaCurta": "Lombociatalgia L5/S1",
+    "evaUltimaSessao": 4,
+    "evaInicial": 8,
+    "sessaoNumero": 15,
+    "ultimaSessaoData": "2026-05-26",
+    "statusNymosMove": "conectado",
+    "proximaSessaoData": "2026-06-02"
+  },
+  "condutas": [
+    { "id": "tens", "label": "TENS", "categoria": "eletro" },
+    { "id": "ultrassom", "label": "Ultrassom", "categoria": "eletro" },
+    { "id": "correntes", "label": "Correntes interferenciais", "categoria": "eletro" },
+    { "id": "laser", "label": "Laser", "categoria": "eletro" },
+
+    { "id": "terapia-manual", "label": "Terapia manual", "categoria": "terapia-manual" },
+    { "id": "mobilizacao-articular", "label": "Mobilização articular", "categoria": "terapia-manual" },
+    { "id": "manipulacao", "label": "Manipulação", "categoria": "terapia-manual" },
+    { "id": "liberacao-miofascial", "label": "Liberação miofascial", "categoria": "terapia-manual" },
+    { "id": "pontos-gatilho", "label": "Pontos gatilho", "categoria": "terapia-manual" },
+
+    { "id": "exercicios", "label": "Exercícios terapêuticos", "categoria": "exercicio" },
+    { "id": "estabilizacao", "label": "Estabilização lombar", "categoria": "exercicio" },
+    { "id": "alongamento", "label": "Alongamento", "categoria": "exercicio" },
+    { "id": "fortalecimento", "label": "Fortalecimento", "categoria": "exercicio" },
+    { "id": "propriocepcao", "label": "Propriocepção", "categoria": "exercicio" },
+
+    { "id": "orientacao-postural", "label": "Orientação postural", "categoria": "orientacao" },
+    { "id": "ergonomia", "label": "Ergonomia", "categoria": "orientacao" },
+    { "id": "higiene-sono", "label": "Higiene do sono", "categoria": "orientacao" },
+    { "id": "auto-cuidado", "label": "Auto-cuidado domiciliar", "categoria": "orientacao" },
+
+    { "id": "crioterapia", "label": "Crioterapia", "categoria": "outros" },
+    { "id": "termoterapia", "label": "Termoterapia", "categoria": "outros" },
+    { "id": "bandagem", "label": "Bandagem funcional", "categoria": "outros" }
+  ],
+  "categorias": [
+    { "id": "terapia-manual", "label": "Terapia manual", "emoji": "🤲" },
+    { "id": "eletro", "label": "Eletro/Termo", "emoji": "⚡" },
+    { "id": "exercicio", "label": "Exercício", "emoji": "💪" },
+    { "id": "orientacao", "label": "Orientação", "emoji": "📋" },
+    { "id": "outros", "label": "Outros", "emoji": "🩹" }
+  ],
+  "sugestoes": [
+    {
+      "id": "sug-1",
+      "label": "Terapia manual + estabilização lombar",
+      "motivo": "Plano da última sessão indicava progressão de core"
+    },
+    {
+      "id": "sug-2",
+      "label": "Avaliar marcha e padrão postural",
+      "motivo": "Sessão anterior recomendou reavaliar nesta"
+    }
+  ],
+  "rascunhoSugerido": {
+    "subjetivo": "",
+    "objetivo": "",
+    "avaliacao": "",
+    "plano": ""
+  },
+  "ultimaSessaoResumo": {
+    "data": "2026-05-26",
+    "eva": 3,
+    "subjetivo": "Refere melhora geral, dor apenas ao final do dia após muito tempo sentada.",
+    "plano": "Progredir core com prancha lateral e bird-dog. Manter alongamento de cadeia posterior."
+  },
+  "evolucoesRecentes": [
+    { "id": "ev-001", "pacienteId": "p-001", "pacienteNome": "Ana Carolina Mendes", "sessaoNumero": 14, "data": "2026-05-26", "eva": 3, "evaAnterior": 4, "tendencia": "melhora", "condutas": ["Terapia manual", "Exercícios", "Alongamento"], "subjetivoCurto": "Refere melhora geral, dor apenas ao final do dia", "tempoMin": 60 },
+    { "id": "ev-002", "pacienteId": "p-002", "pacienteNome": "Carlos Mendonça", "sessaoNumero": 21, "data": "2026-05-28", "eva": 5, "evaAnterior": 5, "tendencia": "estavel", "condutas": ["TENS", "Exercícios", "Manipulação"], "subjetivoCurto": "Mantém quadro com leve melhora ao final do dia", "tempoMin": 60 },
+    { "id": "ev-003", "pacienteId": "p-005", "pacienteNome": "Patrícia Lemos", "sessaoNumero": 12, "data": "2026-05-28", "eva": 4, "evaAnterior": 5, "tendencia": "melhora", "condutas": ["Liberação miofascial", "Alongamento", "Orientação postural"], "subjetivoCurto": "Cervical mais solta, ainda tensão ao final do expediente", "tempoMin": 45 },
+    { "id": "ev-004", "pacienteId": "p-004", "pacienteNome": "Roberto Tanaka", "sessaoNumero": 18, "data": "2026-05-28", "eva": 4, "evaAnterior": 4, "tendencia": "estavel", "condutas": ["Fortalecimento", "Propriocepção"], "subjetivoCurto": "Sem queixa, exercícios progredindo bem", "tempoMin": 60 },
+    { "id": "ev-005", "pacienteId": "p-008", "pacienteNome": "Marcos Vieira", "sessaoNumero": 8, "data": "2026-05-28", "eva": 5, "evaAnterior": 5, "tendencia": "estavel", "condutas": ["Ultrassom", "Exercícios"], "subjetivoCurto": "Mantém dor no quadril ao deitar de lado", "tempoMin": 60 },
+    { "id": "ev-006", "pacienteId": "p-012", "pacienteNome": "Eduardo Pacheco", "sessaoNumero": 5, "data": "2026-05-28", "eva": 5, "evaAnterior": 5, "tendencia": "melhora", "condutas": ["Mobilização articular", "Exercícios"], "subjetivoCurto": "Conseguiu dormir de lado pela primeira vez em meses", "tempoMin": 45 },
+    { "id": "ev-007", "pacienteId": "p-009", "pacienteNome": "Larissa Coutinho", "sessaoNumero": 11, "data": "2026-05-27", "eva": 4, "evaAnterior": 5, "tendencia": "melhora", "condutas": ["Liberação miofascial", "Alongamento", "Bandagem"], "subjetivoCurto": "Dor matinal reduzida, dor após corrida persiste", "tempoMin": 60 },
+    { "id": "ev-008", "pacienteId": "p-006", "pacienteNome": "Felipe Andrade", "sessaoNumero": 6, "data": "2026-05-27", "eva": 5, "evaAnterior": 6, "tendencia": "melhora", "condutas": ["Terapia manual", "Exercícios"], "subjetivoCurto": "Sente o ombro mais móvel mas ainda evita pegar peso", "tempoMin": 60 },
+    { "id": "ev-009", "pacienteId": "p-010", "pacienteNome": "Otávio Sampaio", "sessaoNumero": 4, "data": "2026-05-26", "eva": 6, "evaAnterior": 6, "tendencia": "estavel", "condutas": ["Terapia manual", "Tração cervical"], "subjetivoCurto": "Sono ruim segundo Nymos Move — FC repouso alta", "tempoMin": 60 },
+    { "id": "ev-010", "pacienteId": "p-001", "pacienteNome": "Ana Carolina Mendes", "sessaoNumero": 13, "data": "2026-05-21", "eva": 4, "evaAnterior": 4, "tendencia": "estavel", "condutas": ["TENS", "Exercícios", "Terapia manual"], "subjetivoCurto": "Sem queixas novas, aderência ao app: 6 de 7 dias", "tempoMin": 60 }
+  ]
+}

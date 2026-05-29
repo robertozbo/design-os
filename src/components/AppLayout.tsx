@@ -75,6 +75,12 @@ export function AppLayout({
                   🩺 Clínico
                 </Link>
                 <Link
+                  to="/fisio"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  🤸 Fisio
+                </Link>
+                <Link
                   to="/sections#sst-nr-1"
                   className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
                 >
@@ -114,6 +120,12 @@ export function AppLayout({
                   className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
                 >
                   🩺 Clínico
+                </Link>
+                <Link
+                  to="/fisio"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  🤸 Fisio
                 </Link>
                 <Link
                   to="/sections#sst-nr-1"

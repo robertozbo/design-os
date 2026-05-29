@@ -1,0 +1,183 @@
+{
+  "_meta": {
+    "models": {
+      "kpisDia": "Indicadores do dia atual no topo do dashboard.",
+      "proximaSessao": "Próxima sessão agendada (próximas 4 do dia).",
+      "alertaClinico": "Alerta sobre paciente que precisa atenção do fisio (sem evolução, aderência caindo, sono ruim).",
+      "atividadeRecenteItem": "Evento recente (últimas 6h) no histórico operacional.",
+      "kpiMes": "Indicador do mês com delta vs mês anterior."
+    }
+  },
+  "saudacao": {
+    "texto": "Bom dia, Roberto",
+    "dataExtenso": "Quinta-feira, 28 de maio de 2026"
+  },
+  "kpisDia": {
+    "total": 9,
+    "confirmados": 6,
+    "realizados": 4,
+    "proximaHora": "14:00"
+  },
+  "proximasSessoes": [
+    {
+      "id": "ag-26",
+      "hora": "14:00",
+      "pacienteId": "p-001",
+      "pacienteNome": "Ana Carolina Mendes",
+      "queixaCurta": "Lombociatalgia L5/S1",
+      "evaUltima": 3,
+      "duracaoMin": 60,
+      "status": "confirmada",
+      "isProxima": true
+    },
+    {
+      "id": "ag-27",
+      "hora": "15:00",
+      "pacienteId": "p-004",
+      "pacienteNome": "Roberto Tanaka",
+      "queixaCurta": "Pós-op LCA",
+      "evaUltima": 4,
+      "duracaoMin": 60,
+      "status": "confirmada",
+      "isProxima": false
+    },
+    {
+      "id": "ag-28",
+      "hora": "16:00",
+      "pacienteId": "p-013",
+      "pacienteNome": "Mariana Fontes",
+      "queixaCurta": "Cervicobraquialgia",
+      "evaUltima": 7,
+      "duracaoMin": 60,
+      "status": "agendada",
+      "isProxima": false
+    },
+    {
+      "id": "ag-29",
+      "hora": "17:00",
+      "pacienteId": "p-010",
+      "pacienteNome": "Otávio Sampaio",
+      "queixaCurta": "Hérnia cervical C5-C6",
+      "evaUltima": 6,
+      "duracaoMin": 60,
+      "status": "agendada",
+      "isProxima": false
+    }
+  ],
+  "alertasClinicos": [
+    {
+      "id": "al-1",
+      "severidade": "risco",
+      "texto": "EVA aumentou de 4 para 7 nas últimas 2 sessões",
+      "pacienteNome": "Mariana Fontes",
+      "pacienteId": "p-013",
+      "acaoLabel": "Revisar plano"
+    },
+    {
+      "id": "al-2",
+      "severidade": "atencao",
+      "texto": "Aderência aos exercícios caiu 14pp (Nymos Move · 7 dias)",
+      "pacienteNome": "Ana Carolina Mendes",
+      "pacienteId": "p-001",
+      "acaoLabel": "Mensagem WhatsApp"
+    },
+    {
+      "id": "al-3",
+      "severidade": "atencao",
+      "texto": "Sem evolução registrada há 12 dias",
+      "pacienteNome": "Beatriz Souza",
+      "pacienteId": "p-007",
+      "acaoLabel": "Agendar retorno"
+    },
+    {
+      "id": "al-4",
+      "severidade": "info",
+      "texto": "Em 14 sessões — sugerir reavaliação completa",
+      "pacienteNome": "Ana Carolina Mendes",
+      "pacienteId": "p-001",
+      "acaoLabel": "Nova reavaliação"
+    },
+    {
+      "id": "al-5",
+      "severidade": "atencao",
+      "texto": "Dormiu menos de 6h em 4 das últimas 7 noites",
+      "pacienteNome": "Otávio Sampaio",
+      "pacienteId": "p-010",
+      "acaoLabel": "Orientar higiene do sono"
+    }
+  ],
+  "atividadeRecente": [
+    {
+      "id": "act-1",
+      "tipo": "evolucao",
+      "texto": "Evolução salva — sessão #14, EVA 3",
+      "pacienteNome": "Ana Carolina Mendes",
+      "dataIso": "2026-05-28T11:42:00"
+    },
+    {
+      "id": "act-2",
+      "tipo": "evolucao",
+      "texto": "Evolução salva — sessão #8, EVA 5",
+      "pacienteNome": "Marcos Vieira",
+      "dataIso": "2026-05-28T11:05:00"
+    },
+    {
+      "id": "act-3",
+      "tipo": "convite-aceito",
+      "texto": "Aceitou convite do Nymos Move",
+      "pacienteNome": "Eduardo Pacheco",
+      "dataIso": "2026-05-28T10:18:00"
+    },
+    {
+      "id": "act-4",
+      "tipo": "evolucao",
+      "texto": "Evolução salva — sessão #21, EVA 5",
+      "pacienteNome": "Carlos Mendonça",
+      "dataIso": "2026-05-28T10:05:00"
+    },
+    {
+      "id": "act-5",
+      "tipo": "novo-paciente",
+      "texto": "Novo paciente cadastrado — convite Nymos Move enviado",
+      "pacienteNome": "Henrique Ferraz",
+      "dataIso": "2026-05-27T17:30:00"
+    },
+    {
+      "id": "act-6",
+      "tipo": "falta",
+      "texto": "Falta registrada — Marcos Vieira",
+      "pacienteNome": "Marcos Vieira",
+      "dataIso": "2026-05-26T09:30:00"
+    }
+  ],
+  "kpisMes": [
+    {
+      "label": "Pacientes ativos",
+      "valor": "21",
+      "deltaPct": 23,
+      "deltaTexto": "+4 vs abril",
+      "positivo": true
+    },
+    {
+      "label": "Sessões realizadas",
+      "valor": "147",
+      "deltaPct": 12,
+      "deltaTexto": "+16 vs abril",
+      "positivo": true
+    },
+    {
+      "label": "Receita estimada",
+      "valor": "R$ 11.760",
+      "deltaPct": 12,
+      "deltaTexto": "+R$ 1.280",
+      "positivo": true
+    },
+    {
+      "label": "Novos pacientes",
+      "valor": "5",
+      "deltaPct": 25,
+      "deltaTexto": "+1 vs abril",
+      "positivo": true
+    }
+  ]
+}

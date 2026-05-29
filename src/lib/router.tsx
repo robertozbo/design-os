@@ -11,6 +11,7 @@ import { MobileSectionsPage, MobileSectionPage } from '@/components/MobilePage'
 import { PsicologoSectionsPage, PsicologoSectionPage } from '@/components/PsicologoPage'
 import { PersonalSectionsPage, PersonalSectionPage } from '@/components/PersonalPage'
 import { ClinicoSectionsPage, ClinicoSectionPage } from '@/components/ClinicoPage'
+import { FisioSectionsPage, FisioSectionPage } from '@/components/FisioPage'
 import ClinicoShellPreview from '@/shell-clinico/ShellPreview'
 
 export const router = createBrowserRouter([
@@ -89,5 +90,13 @@ export const router = createBrowserRouter([
   {
     path: '/clinico/sections/:sectionId',
     element: <ClinicoSectionPage />,
+  },
+  {
+    path: '/fisio',
+    element: <FisioSectionsPage />,
+  },
+  {
+    path: '/fisio/sections/:sectionId',
+    element: <FisioSectionPage />,
   },
 ])

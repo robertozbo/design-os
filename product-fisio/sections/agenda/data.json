@@ -1,0 +1,579 @@
+{
+  "_meta": {
+    "models": {
+      "agendamento": "Horário marcado entre fisio e paciente. Tem status (agendada/confirmada/realizada/falta/cancelada) ou pode ser bloqueio (almoço, curso, indisponibilidade).",
+      "pacienteResumo": "Resumo do paciente vinculado ao agendamento (referência ao Paciente em sections/pacientes).",
+      "kpisAgenda": "Indicadores do dia atual: total, confirmados, pendentes, realizados.",
+      "diaResumo": "Resumo de um dia da semana (para visão semanal)."
+    },
+    "relationships": [
+      "Agendamento referencia um Paciente (exceto se for bloqueio)",
+      "Agendamento pertence a uma data específica"
+    ],
+    "semanaReferencia": "25/05/2026 (Dom) — 31/05/2026 (Sáb). Hoje: 28/05/2026 (Qui)."
+  },
+  "kpisDia": {
+    "totalDia": 9,
+    "confirmados": 6,
+    "pendentes": 2,
+    "realizadosAteAgora": 4
+  },
+  "diasSemana": [
+    { "data": "2026-05-25", "diaSemana": "Seg", "totalSessoes": 8, "realizadas": 8, "faltas": 0 },
+    { "data": "2026-05-26", "diaSemana": "Ter", "totalSessoes": 7, "realizadas": 6, "faltas": 1 },
+    { "data": "2026-05-27", "diaSemana": "Qua", "totalSessoes": 9, "realizadas": 8, "faltas": 0 },
+    { "data": "2026-05-28", "diaSemana": "Qui", "totalSessoes": 9, "realizadas": 4, "faltas": 0 },
+    { "data": "2026-05-29", "diaSemana": "Sex", "totalSessoes": 8, "realizadas": 0, "faltas": 0 },
+    { "data": "2026-05-30", "diaSemana": "Sáb", "totalSessoes": 4, "realizadas": 0, "faltas": 0 },
+    { "data": "2026-05-31", "diaSemana": "Dom", "totalSessoes": 0, "realizadas": 0, "faltas": 0 }
+  ],
+  "agendamentos": [
+    {
+      "id": "ag-01",
+      "data": "2026-05-25",
+      "horaInicio": "08:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-002",
+        "nome": "Carlos Mendonça",
+        "queixaCurta": "Dor lombar L4-L5",
+        "evaUltima": 5,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-02",
+      "data": "2026-05-25",
+      "horaInicio": "09:00",
+      "duracaoMin": 45,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-003",
+        "nome": "Juliana Pires",
+        "queixaCurta": "Ombro congelado D",
+        "evaUltima": 6,
+        "statusNymosMove": "pendente"
+      }
+    },
+    {
+      "id": "ag-03",
+      "data": "2026-05-25",
+      "horaInicio": "10:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-004",
+        "nome": "Roberto Tanaka",
+        "queixaCurta": "Pós-op LCA",
+        "evaUltima": 4,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-04",
+      "data": "2026-05-25",
+      "horaInicio": "12:00",
+      "duracaoMin": 60,
+      "status": "bloqueio",
+      "bloqueio": { "titulo": "Almoço" }
+    },
+    {
+      "id": "ag-05",
+      "data": "2026-05-25",
+      "horaInicio": "14:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-001",
+        "nome": "Ana Carolina Mendes",
+        "queixaCurta": "Lombociatalgia L5/S1",
+        "evaUltima": 3,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-06",
+      "data": "2026-05-25",
+      "horaInicio": "15:00",
+      "duracaoMin": 45,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-005",
+        "nome": "Patrícia Lemos",
+        "queixaCurta": "Cervicalgia tensional",
+        "evaUltima": 4,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-07",
+      "data": "2026-05-25",
+      "horaInicio": "16:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-006",
+        "nome": "Felipe Andrade",
+        "queixaCurta": "Tendinite ombro E",
+        "evaUltima": 5,
+        "statusNymosMove": "pendente"
+      }
+    },
+    {
+      "id": "ag-08",
+      "data": "2026-05-25",
+      "horaInicio": "17:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-007",
+        "nome": "Beatriz Souza",
+        "queixaCurta": "Entorse tornozelo",
+        "evaUltima": 2,
+        "statusNymosMove": "conectado"
+      }
+    },
+
+    {
+      "id": "ag-09",
+      "data": "2026-05-26",
+      "horaInicio": "08:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-001",
+        "nome": "Ana Carolina Mendes",
+        "queixaCurta": "Lombociatalgia L5/S1",
+        "evaUltima": 3,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-10",
+      "data": "2026-05-26",
+      "horaInicio": "09:30",
+      "duracaoMin": 45,
+      "status": "falta",
+      "paciente": {
+        "id": "p-008",
+        "nome": "Marcos Vieira",
+        "queixaCurta": "Bursite trocantérica",
+        "evaUltima": 5,
+        "statusNymosMove": "nao-convidado"
+      }
+    },
+    {
+      "id": "ag-11",
+      "data": "2026-05-26",
+      "horaInicio": "10:30",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-009",
+        "nome": "Larissa Coutinho",
+        "queixaCurta": "Fasciíte plantar D",
+        "evaUltima": 4,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-12",
+      "data": "2026-05-26",
+      "horaInicio": "12:00",
+      "duracaoMin": 60,
+      "status": "bloqueio",
+      "bloqueio": { "titulo": "Almoço" }
+    },
+    {
+      "id": "ag-13",
+      "data": "2026-05-26",
+      "horaInicio": "14:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-002",
+        "nome": "Carlos Mendonça",
+        "queixaCurta": "Dor lombar L4-L5",
+        "evaUltima": 5,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-14",
+      "data": "2026-05-26",
+      "horaInicio": "15:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-010",
+        "nome": "Otávio Sampaio",
+        "queixaCurta": "Hérnia cervical C5-C6",
+        "evaUltima": 6,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-15",
+      "data": "2026-05-26",
+      "horaInicio": "17:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-004",
+        "nome": "Roberto Tanaka",
+        "queixaCurta": "Pós-op LCA",
+        "evaUltima": 4,
+        "statusNymosMove": "conectado"
+      }
+    },
+
+    {
+      "id": "ag-16",
+      "data": "2026-05-27",
+      "horaInicio": "08:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-006",
+        "nome": "Felipe Andrade",
+        "queixaCurta": "Tendinite ombro E",
+        "evaUltima": 5,
+        "statusNymosMove": "pendente"
+      }
+    },
+    {
+      "id": "ag-17",
+      "data": "2026-05-27",
+      "horaInicio": "09:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-007",
+        "nome": "Beatriz Souza",
+        "queixaCurta": "Entorse tornozelo",
+        "evaUltima": 2,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-18",
+      "data": "2026-05-27",
+      "horaInicio": "12:00",
+      "duracaoMin": 60,
+      "status": "bloqueio",
+      "bloqueio": { "titulo": "Almoço" }
+    },
+    {
+      "id": "ag-19",
+      "data": "2026-05-27",
+      "horaInicio": "14:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-009",
+        "nome": "Larissa Coutinho",
+        "queixaCurta": "Fasciíte plantar D",
+        "evaUltima": 4,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-20",
+      "data": "2026-05-27",
+      "horaInicio": "15:00",
+      "duracaoMin": 60,
+      "status": "cancelada",
+      "paciente": {
+        "id": "p-011",
+        "nome": "Vitória Camargo",
+        "queixaCurta": "Capsulite ombro D",
+        "evaUltima": 5,
+        "statusNymosMove": "pendente"
+      }
+    },
+
+    {
+      "id": "ag-21",
+      "data": "2026-05-28",
+      "horaInicio": "08:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-005",
+        "nome": "Patrícia Lemos",
+        "queixaCurta": "Cervicalgia tensional",
+        "evaUltima": 4,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-22",
+      "data": "2026-05-28",
+      "horaInicio": "09:00",
+      "duracaoMin": 45,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-012",
+        "nome": "Eduardo Pacheco",
+        "queixaCurta": "Síndrome do impacto",
+        "evaUltima": 5,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-23",
+      "data": "2026-05-28",
+      "horaInicio": "10:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-002",
+        "nome": "Carlos Mendonça",
+        "queixaCurta": "Dor lombar L4-L5",
+        "evaUltima": 5,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-24",
+      "data": "2026-05-28",
+      "horaInicio": "11:00",
+      "duracaoMin": 60,
+      "status": "realizada",
+      "paciente": {
+        "id": "p-008",
+        "nome": "Marcos Vieira",
+        "queixaCurta": "Bursite trocantérica",
+        "evaUltima": 5,
+        "statusNymosMove": "nao-convidado"
+      }
+    },
+    {
+      "id": "ag-25",
+      "data": "2026-05-28",
+      "horaInicio": "12:00",
+      "duracaoMin": 60,
+      "status": "bloqueio",
+      "bloqueio": { "titulo": "Almoço" }
+    },
+    {
+      "id": "ag-26",
+      "data": "2026-05-28",
+      "horaInicio": "14:00",
+      "duracaoMin": 60,
+      "status": "confirmada",
+      "paciente": {
+        "id": "p-001",
+        "nome": "Ana Carolina Mendes",
+        "queixaCurta": "Lombociatalgia L5/S1",
+        "evaUltima": 3,
+        "statusNymosMove": "conectado"
+      },
+      "lembreteEnviado": true,
+      "recorrencia": "semanal"
+    },
+    {
+      "id": "ag-27",
+      "data": "2026-05-28",
+      "horaInicio": "15:00",
+      "duracaoMin": 60,
+      "status": "confirmada",
+      "paciente": {
+        "id": "p-004",
+        "nome": "Roberto Tanaka",
+        "queixaCurta": "Pós-op LCA",
+        "evaUltima": 4,
+        "statusNymosMove": "conectado"
+      },
+      "lembreteEnviado": true
+    },
+    {
+      "id": "ag-28",
+      "data": "2026-05-28",
+      "horaInicio": "16:00",
+      "duracaoMin": 60,
+      "status": "agendada",
+      "paciente": {
+        "id": "p-013",
+        "nome": "Mariana Fontes",
+        "queixaCurta": "Cervicobraquialgia",
+        "evaUltima": 7,
+        "statusNymosMove": "nao-convidado"
+      }
+    },
+    {
+      "id": "ag-29",
+      "data": "2026-05-28",
+      "horaInicio": "17:00",
+      "duracaoMin": 60,
+      "status": "agendada",
+      "paciente": {
+        "id": "p-010",
+        "nome": "Otávio Sampaio",
+        "queixaCurta": "Hérnia cervical C5-C6",
+        "evaUltima": 6,
+        "statusNymosMove": "conectado"
+      }
+    },
+
+    {
+      "id": "ag-30",
+      "data": "2026-05-29",
+      "horaInicio": "08:00",
+      "duracaoMin": 60,
+      "status": "agendada",
+      "paciente": {
+        "id": "p-003",
+        "nome": "Juliana Pires",
+        "queixaCurta": "Ombro congelado D",
+        "evaUltima": 6,
+        "statusNymosMove": "pendente"
+      }
+    },
+    {
+      "id": "ag-31",
+      "data": "2026-05-29",
+      "horaInicio": "09:00",
+      "duracaoMin": 60,
+      "status": "confirmada",
+      "paciente": {
+        "id": "p-007",
+        "nome": "Beatriz Souza",
+        "queixaCurta": "Entorse tornozelo",
+        "evaUltima": 2,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-32",
+      "data": "2026-05-29",
+      "horaInicio": "10:00",
+      "duracaoMin": 60,
+      "status": "agendada",
+      "paciente": {
+        "id": "p-014",
+        "nome": "Henrique Ferraz",
+        "queixaCurta": "Pós-op manguito rotador",
+        "evaUltima": 6,
+        "statusNymosMove": "nao-convidado"
+      }
+    },
+    {
+      "id": "ag-33",
+      "data": "2026-05-29",
+      "horaInicio": "11:00",
+      "duracaoMin": 60,
+      "status": "confirmada",
+      "paciente": {
+        "id": "p-009",
+        "nome": "Larissa Coutinho",
+        "queixaCurta": "Fasciíte plantar D",
+        "evaUltima": 4,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-34",
+      "data": "2026-05-29",
+      "horaInicio": "12:00",
+      "duracaoMin": 60,
+      "status": "bloqueio",
+      "bloqueio": { "titulo": "Almoço" }
+    },
+    {
+      "id": "ag-35",
+      "data": "2026-05-29",
+      "horaInicio": "14:00",
+      "duracaoMin": 60,
+      "status": "agendada",
+      "paciente": {
+        "id": "p-002",
+        "nome": "Carlos Mendonça",
+        "queixaCurta": "Dor lombar L4-L5",
+        "evaUltima": 5,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-36",
+      "data": "2026-05-29",
+      "horaInicio": "15:00",
+      "duracaoMin": 60,
+      "status": "agendada",
+      "paciente": {
+        "id": "p-006",
+        "nome": "Felipe Andrade",
+        "queixaCurta": "Tendinite ombro E",
+        "evaUltima": 5,
+        "statusNymosMove": "pendente"
+      }
+    },
+    {
+      "id": "ag-37",
+      "data": "2026-05-29",
+      "horaInicio": "16:00",
+      "duracaoMin": 60,
+      "status": "agendada",
+      "paciente": {
+        "id": "p-012",
+        "nome": "Eduardo Pacheco",
+        "queixaCurta": "Síndrome do impacto",
+        "evaUltima": 5,
+        "statusNymosMove": "conectado"
+      }
+    },
+
+    {
+      "id": "ag-38",
+      "data": "2026-05-30",
+      "horaInicio": "09:00",
+      "duracaoMin": 60,
+      "status": "agendada",
+      "paciente": {
+        "id": "p-013",
+        "nome": "Mariana Fontes",
+        "queixaCurta": "Cervicobraquialgia",
+        "evaUltima": 7,
+        "statusNymosMove": "nao-convidado"
+      }
+    },
+    {
+      "id": "ag-39",
+      "data": "2026-05-30",
+      "horaInicio": "10:00",
+      "duracaoMin": 60,
+      "status": "agendada",
+      "paciente": {
+        "id": "p-005",
+        "nome": "Patrícia Lemos",
+        "queixaCurta": "Cervicalgia tensional",
+        "evaUltima": 4,
+        "statusNymosMove": "conectado"
+      }
+    },
+    {
+      "id": "ag-40",
+      "data": "2026-05-30",
+      "horaInicio": "11:00",
+      "duracaoMin": 60,
+      "status": "agendada",
+      "paciente": {
+        "id": "p-001",
+        "nome": "Ana Carolina Mendes",
+        "queixaCurta": "Lombociatalgia L5/S1",
+        "evaUltima": 3,
+        "statusNymosMove": "conectado"
+      },
+      "recorrencia": "semanal"
+    },
+    {
+      "id": "ag-41",
+      "data": "2026-05-30",
+      "horaInicio": "12:00",
+      "duracaoMin": 60,
+      "status": "bloqueio",
+      "bloqueio": { "titulo": "Pós-graduação Pilates" }
+    }
+  ]
+}

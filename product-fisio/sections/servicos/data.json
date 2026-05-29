@@ -1,0 +1,100 @@
+{
+  "servicos": [
+    {
+      "id": "srv-1",
+      "nome": "Avaliação cinético-funcional inicial",
+      "descricao": "Anamnese completa, EVA, goniometria, testes funcionais e plano terapêutico.",
+      "modalidade": "presencial",
+      "duracaoMin": 90,
+      "valorCentavos": 25000,
+      "cor": "teal",
+      "ativo": true,
+      "incluiAvaliacaoInicial": true,
+      "agendadoUlt30d": 8
+    },
+    {
+      "id": "srv-2",
+      "nome": "Sessão de fisioterapia ortopédica",
+      "descricao": "Atendimento padrão com terapia manual, exercícios e eletro.",
+      "modalidade": "presencial",
+      "duracaoMin": 60,
+      "valorCentavos": 15000,
+      "cor": "sky",
+      "ativo": true,
+      "incluiAvaliacaoInicial": false,
+      "agendadoUlt30d": 87
+    },
+    {
+      "id": "srv-3",
+      "nome": "Reavaliação periódica",
+      "descricao": "Comparativo de EVA, ADM e função vs avaliação anterior. A cada 10 sessões.",
+      "modalidade": "presencial",
+      "duracaoMin": 60,
+      "valorCentavos": 18000,
+      "cor": "violet",
+      "ativo": true,
+      "incluiAvaliacaoInicial": false,
+      "agendadoUlt30d": 6
+    },
+    {
+      "id": "srv-4",
+      "nome": "Pilates clínico",
+      "descricao": "Aula individual de Pilates com foco terapêutico e prescrição personalizada.",
+      "modalidade": "presencial",
+      "duracaoMin": 50,
+      "valorCentavos": 13000,
+      "cor": "emerald",
+      "ativo": true,
+      "incluiAvaliacaoInicial": false,
+      "agendadoUlt30d": 32
+    },
+    {
+      "id": "srv-5",
+      "nome": "RPG — Reeducação Postural Global",
+      "descricao": "Sessão de RPG com posturas ativas e cadeias musculares.",
+      "modalidade": "presencial",
+      "duracaoMin": 60,
+      "valorCentavos": 18000,
+      "cor": "amber",
+      "ativo": true,
+      "incluiAvaliacaoInicial": false,
+      "agendadoUlt30d": 14
+    },
+    {
+      "id": "srv-6",
+      "nome": "Atendimento domiciliar",
+      "descricao": "Sessão de fisioterapia no endereço do paciente (até 15km do consultório).",
+      "modalidade": "domicilio",
+      "duracaoMin": 60,
+      "valorCentavos": 25000,
+      "cor": "rose",
+      "ativo": true,
+      "incluiAvaliacaoInicial": false,
+      "agendadoUlt30d": 4
+    },
+    {
+      "id": "srv-7",
+      "nome": "Teleconsulta de orientação",
+      "descricao": "Sessão remota via vídeo — orientação postural, ergonomia e exercícios.",
+      "modalidade": "teleconsulta",
+      "duracaoMin": 45,
+      "valorCentavos": 12000,
+      "cor": "slate",
+      "ativo": true,
+      "incluiAvaliacaoInicial": false,
+      "agendadoUlt30d": 9
+    },
+    {
+      "id": "srv-8",
+      "nome": "Drenagem linfática manual",
+      "descricao": "Técnica de drenagem para pós-operatório e edema.",
+      "modalidade": "presencial",
+      "duracaoMin": 60,
+      "valorCentavos": 14000,
+      "cor": "sky",
+      "ativo": false,
+      "incluiAvaliacaoInicial": false,
+      "agendadoUlt30d": 0
+    }
+  ]
+}

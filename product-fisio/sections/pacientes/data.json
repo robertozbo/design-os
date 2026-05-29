@@ -1,0 +1,175 @@
+{
+  "_meta": {
+    "models": {
+      "paciente": "Pessoa em tratamento com o fisioterapeuta. Tem dados pessoais, queixa principal, status do vínculo com Nymos Move e indicadores cruzados (EVA atual/inicial, sessões realizadas, aderência).",
+      "sessaoSOAP": "Evolução de uma sessão atendida (Subjetivo/Objetivo/Avaliação/Plano) + EVA + condutas aplicadas.",
+      "avaliacaoResumo": "Resumo de avaliação cinético-funcional (inicial ou reavaliação).",
+      "agendamentoResumo": "Próximo agendamento ou histórico de sessão.",
+      "dadosWearable": "Dados do wearable do paciente (Nymos Move): passos, sono, FC e aderência aos exercícios.",
+      "atividadeRecente": "Eventos recentes (últimos 5) no histórico do paciente."
+    },
+    "relationships": [
+      "Paciente tem zero ou mais SessoesSOAP",
+      "Paciente tem zero ou mais AvaliacoesResumo",
+      "Paciente tem zero ou mais AgendamentosResumo",
+      "Paciente tem zero ou um DadosWearable (apenas se conectado ao Nymos Move)",
+      "Paciente tem zero ou mais AtividadesRecentes"
+    ]
+  },
+  "tabs": [
+    { "id": "em-tratamento", "label": "Em tratamento", "count": 18 },
+    { "id": "em-alta", "label": "Em alta", "count": 3 },
+    { "id": "inativos", "label": "Inativos", "count": 5 }
+  ],
+  "queixas": [
+    { "id": "todas", "label": "Todas as queixas", "count": 26 },
+    { "id": "coluna", "label": "Coluna", "count": 9 },
+    { "id": "joelho", "label": "Joelho", "count": 6 },
+    { "id": "ombro", "label": "Ombro", "count": 5 },
+    { "id": "pos-cirurgico", "label": "Pós-cirúrgico", "count": 3 },
+    { "id": "outros", "label": "Outros", "count": 3 }
+  ],
+  "kpis": {
+    "totalAtivos": 21,
+    "emAltaSemana": 2,
+    "semEvolucao7d": 4,
+    "novosMes": 5
+  },
+  "pacienteFoco": {
+    "id": "p-001",
+    "nome": "Ana Carolina Mendes",
+    "idade": 42,
+    "telefone": "(11) 98765-4321",
+    "email": "ana.mendes@email.com",
+    "queixaPrincipal": "Lombalgia crônica com irradiação para MID — pós queda há 8 meses",
+    "status": "em-tratamento",
+    "statusNymosMove": "conectado",
+    "dataInicioTratamento": "2026-03-12",
+    "evaAtual": 3,
+    "evaInicial": 8,
+    "sessoesRealizadas": 14,
+    "ultimaSessaoData": "2026-05-26",
+    "proximaSessaoData": "2026-05-30",
+    "ultimaAvaliacaoData": "2026-05-12",
+    "aderenciaExercicios": 78,
+    "tendencia": "melhora"
+  },
+  "evolucaoEVA": [
+    { "sessao": 1, "data": "2026-03-12", "eva": 8 },
+    { "sessao": 3, "data": "2026-03-19", "eva": 7 },
+    { "sessao": 5, "data": "2026-03-26", "eva": 6 },
+    { "sessao": 7, "data": "2026-04-09", "eva": 6 },
+    { "sessao": 9, "data": "2026-04-23", "eva": 5 },
+    { "sessao": 11, "data": "2026-05-07", "eva": 4 },
+    { "sessao": 13, "data": "2026-05-21", "eva": 4 },
+    { "sessao": 14, "data": "2026-05-26", "eva": 3 }
+  ],
+  "avaliacoesPaciente": [
+    {
+      "id": "av-003",
+      "tipo": "reavaliacao",
+      "data": "2026-05-12",
+      "eva": 4,
+      "admPrincipal": { "articulacao": "Flexão lombar", "valor": 60, "unidade": "graus" },
+      "observacao": "Ganho significativo de ADM (era 35°), redução de dor noturna. Mantém plano com progressão de carga."
+    },
+    {
+      "id": "av-002",
+      "tipo": "reavaliacao",
+      "data": "2026-04-14",
+      "eva": 6,
+      "admPrincipal": { "articulacao": "Flexão lombar", "valor": 45, "unidade": "graus" },
+      "observacao": "Melhora de ADM e redução de dor em repouso. Ainda relata dor ao levantar pela manhã."
+    },
+    {
+      "id": "av-001",
+      "tipo": "inicial",
+      "data": "2026-03-12",
+      "eva": 8,
+      "admPrincipal": { "articulacao": "Flexão lombar", "valor": 35, "unidade": "graus" },
+      "observacao": "Lombalgia crônica com irradiação L5/S1. Lasègue positivo à direita. Hipótese: lombociatalgia mecânica."
+    }
+  ],
+  "sessoesPaciente": [
+    {
+      "id": "s-014",
+      "data": "2026-05-26",
+      "eva": 3,
+      "subjetivo": "Refere melhora geral, dor apenas ao final do dia após muito tempo sentada. Conseguiu carregar a filha no colo sem dor pela primeira vez em meses.",
+      "objetivo": "Flexão lombar 60°, sem dor à palpação. Teste de Lasègue negativo bilateral.",
+      "avaliacao": "Evolução positiva — quadro álgico controlado, ganho funcional consistente.",
+      "plano": "Progredir core com prancha lateral e bird-dog. Manter alongamento de cadeia posterior.",
+      "condutas": ["Terapia manual", "Exercícios", "Alongamento"],
+      "tendencia": "melhora"
+    },
+    {
+      "id": "s-013",
+      "data": "2026-05-21",
+      "eva": 4,
+      "subjetivo": "Sem queixas novas. Aderiu ao exercício domiciliar prescrito (relatório Nymos Move: 6 de 7 dias).",
+      "objetivo": "Mantém ganho de ADM. Sem pontos gatilho ativos em paravertebrais.",
+      "avaliacao": "Estável com tendência de melhora.",
+      "plano": "Reavaliar marcha e padrão postural na próxima sessão.",
+      "condutas": ["TENS", "Exercícios", "Terapia manual"],
+      "tendencia": "estavel"
+    },
+    {
+      "id": "s-012",
+      "data": "2026-05-19",
+      "eva": 4,
+      "subjetivo": "Relata cansaço por dormir mal (apenas 5h). FC repouso elevado segundo Nymos Move.",
+      "objetivo": "Padrão respiratório curto, tensão em trapézio.",
+      "avaliacao": "Influência de stress externo no quadro álgico — atenção.",
+      "plano": "Incluir liberação miofascial cervical. Orientar higiene do sono.",
+      "condutas": ["Terapia manual", "Orientação"],
+      "tendencia": "estavel"
+    }
+  ],
+  "proximasSessoes": [
+    { "id": "ag-101", "data": "2026-05-30", "hora": "14:00", "duracaoMin": 60, "status": "confirmada" },
+    { "id": "ag-102", "data": "2026-06-02", "hora": "14:00", "duracaoMin": 60, "status": "agendada" },
+    { "id": "ag-103", "data": "2026-06-06", "hora": "14:00", "duracaoMin": 60, "status": "agendada" }
+  ],
+  "wearable": {
+    "passos7d": [4820, 6210, 5430, 7100, 3200, 5980, 6420],
+    "sonoMediaHoras": 6.4,
+    "sonoUltimas7Noites": [5.2, 6.8, 7.1, 5.5, 6.2, 7.4, 6.6],
+    "fcRepouso": 68,
+    "fcPico7d": 142,
+    "aderenciaExerciciosSemanal": [85, 71, 78, 82, 78],
+    "alertas": [
+      "Dormiu menos de 6h em 2 das últimas 7 noites",
+      "Aderência aos exercícios caiu de 85% para 71% na semana passada"
+    ]
+  },
+  "atividadeRecente": [
+    { "id": "at-1", "tipo": "sessao", "data": "2026-05-26", "descricao": "Sessão #14 — EVA 3, evolução positiva" },
+    { "id": "at-2", "tipo": "prescricao", "data": "2026-05-21", "descricao": "Exercício prescrito no Nymos Move — Prancha lateral 3x30s" },
+    { "id": "at-3", "tipo": "sessao", "data": "2026-05-21", "descricao": "Sessão #13 — EVA 4, estável" },
+    { "id": "at-4", "tipo": "agendamento", "data": "2026-05-19", "descricao": "Próxima sessão agendada para 30/05" },
+    { "id": "at-5", "tipo": "sessao", "data": "2026-05-19", "descricao": "Sessão #12 — EVA 4, atenção ao sono" }
+  ],
+  "alertas": [
+    { "id": "al-1", "severidade": "atencao", "texto": "Aderência aos exercícios domiciliares caiu 14pp na última semana" },
+    { "id": "al-2", "severidade": "info", "texto": "Em 14 sessões — sugerir reavaliação completa em breve" }
+  ],
+  "pacientesLista": [
+    { "id": "p-001", "nome": "Ana Carolina Mendes", "idade": 42, "queixaCurta": "Lombociatalgia L5/S1", "queixaCategoria": "coluna", "status": "em-tratamento", "evaAtual": 3, "sessoesRealizadas": 14, "ultimaSessaoData": "2026-05-26", "proximaSessaoData": "2026-05-30", "statusNymosMove": "conectado", "tendencia": "melhora", "telefone": "(11) 98765-4321" },
+    { "id": "p-002", "nome": "Carlos Mendonça", "idade": 58, "queixaCurta": "Dor lombar L4-L5", "queixaCategoria": "coluna", "status": "em-tratamento", "evaAtual": 5, "sessoesRealizadas": 21, "ultimaSessaoData": "2026-05-28", "proximaSessaoData": "2026-06-02", "statusNymosMove": "conectado", "tendencia": "estavel", "telefone": "(11) 97654-3210" },
+    { "id": "p-003", "nome": "Juliana Pires", "idade": 35, "queixaCurta": "Ombro congelado D", "queixaCategoria": "ombro", "status": "em-tratamento", "evaAtual": 6, "sessoesRealizadas": 8, "ultimaSessaoData": "2026-05-25", "proximaSessaoData": "2026-05-29", "statusNymosMove": "pendente", "tendencia": "melhora", "telefone": "(11) 96543-2109" },
+    { "id": "p-004", "nome": "Roberto Tanaka", "idade": 31, "queixaCurta": "Pós-op LCA joelho D", "queixaCategoria": "pos-cirurgico", "status": "em-tratamento", "evaAtual": 4, "sessoesRealizadas": 18, "ultimaSessaoData": "2026-05-28", "proximaSessaoData": "2026-05-30", "statusNymosMove": "conectado", "tendencia": "melhora", "telefone": "(11) 95432-1098" },
+    { "id": "p-005", "nome": "Patrícia Lemos", "idade": 39, "queixaCurta": "Cervicalgia tensional", "queixaCategoria": "coluna", "status": "em-tratamento", "evaAtual": 4, "sessoesRealizadas": 12, "ultimaSessaoData": "2026-05-28", "proximaSessaoData": "2026-06-01", "statusNymosMove": "conectado", "tendencia": "estavel", "telefone": "(11) 94321-0987" },
+    { "id": "p-006", "nome": "Felipe Andrade", "idade": 27, "queixaCurta": "Tendinite ombro E", "queixaCategoria": "ombro", "status": "em-tratamento", "evaAtual": 5, "sessoesRealizadas": 6, "ultimaSessaoData": "2026-05-27", "proximaSessaoData": "2026-06-02", "statusNymosMove": "pendente", "tendencia": "melhora", "telefone": "(11) 93210-9876" },
+    { "id": "p-007", "nome": "Beatriz Souza", "idade": 24, "queixaCurta": "Entorse tornozelo D", "queixaCategoria": "outros", "status": "em-alta", "evaAtual": 1, "sessoesRealizadas": 9, "ultimaSessaoData": "2026-05-25", "statusNymosMove": "conectado", "tendencia": "melhora", "telefone": "(11) 92109-8765" },
+    { "id": "p-008", "nome": "Marcos Vieira", "idade": 52, "queixaCurta": "Bursite trocantérica", "queixaCategoria": "outros", "status": "em-tratamento", "evaAtual": 5, "sessoesRealizadas": 8, "ultimaSessaoData": "2026-05-28", "statusNymosMove": "nao-convidado", "tendencia": "estavel", "telefone": "(11) 91098-7654" },
+    { "id": "p-009", "nome": "Larissa Coutinho", "idade": 33, "queixaCurta": "Fasciíte plantar D", "queixaCategoria": "outros", "status": "em-tratamento", "evaAtual": 4, "sessoesRealizadas": 11, "ultimaSessaoData": "2026-05-27", "proximaSessaoData": "2026-05-31", "statusNymosMove": "conectado", "tendencia": "melhora", "telefone": "(11) 90987-6543" },
+    { "id": "p-010", "nome": "Otávio Sampaio", "idade": 47, "queixaCurta": "Hérnia cervical C5-C6", "queixaCategoria": "coluna", "status": "em-tratamento", "evaAtual": 6, "sessoesRealizadas": 4, "ultimaSessaoData": "2026-05-26", "proximaSessaoData": "2026-05-30", "statusNymosMove": "conectado", "tendencia": "estavel", "telefone": "(11) 99876-5432" },
+    { "id": "p-011", "nome": "Vitória Camargo", "idade": 41, "queixaCurta": "Capsulite ombro D", "queixaCategoria": "ombro", "status": "em-tratamento", "evaAtual": 5, "sessoesRealizadas": 7, "ultimaSessaoData": "2026-05-19", "statusNymosMove": "pendente", "tendencia": "estavel", "telefone": "(11) 98765-1234" },
+    { "id": "p-012", "nome": "Eduardo Pacheco", "idade": 36, "queixaCurta": "Síndrome do impacto", "queixaCategoria": "ombro", "status": "em-tratamento", "evaAtual": 5, "sessoesRealizadas": 5, "ultimaSessaoData": "2026-05-28", "statusNymosMove": "conectado", "tendencia": "melhora", "telefone": "(11) 97654-2345" },
+    { "id": "p-013", "nome": "Mariana Fontes", "idade": 38, "queixaCurta": "Cervicobraquialgia", "queixaCategoria": "coluna", "status": "em-tratamento", "evaAtual": 7, "sessoesRealizadas": 2, "ultimaSessaoData": "2026-05-21", "statusNymosMove": "nao-convidado", "tendencia": "piora", "telefone": "(11) 96543-3456" },
+    { "id": "p-014", "nome": "Henrique Ferraz", "idade": 48, "queixaCurta": "Pós-op manguito rotador", "queixaCategoria": "pos-cirurgico", "status": "em-tratamento", "evaAtual": 6, "sessoesRealizadas": 1, "ultimaSessaoData": "2026-05-22", "statusNymosMove": "nao-convidado", "tendencia": "estavel", "telefone": "(11) 95432-4567" },
+    { "id": "p-015", "nome": "Tatiana Reis", "idade": 29, "queixaCurta": "Lombalgia gestacional", "queixaCategoria": "coluna", "status": "em-alta", "evaAtual": 2, "sessoesRealizadas": 12, "ultimaSessaoData": "2026-05-20", "statusNymosMove": "conectado", "tendencia": "melhora", "telefone": "(11) 94321-5678" },
+    { "id": "p-016", "nome": "Rodrigo Bastos", "idade": 44, "queixaCurta": "Epicondilite lateral", "queixaCategoria": "outros", "status": "inativo", "evaAtual": 3, "sessoesRealizadas": 6, "ultimaSessaoData": "2026-04-10", "statusNymosMove": "conectado", "tendencia": "estavel", "telefone": "(11) 93210-6789" },
+    { "id": "p-017", "nome": "Camila Borges", "idade": 31, "queixaCurta": "Pós-op joelho", "queixaCategoria": "pos-cirurgico", "status": "em-alta", "evaAtual": 1, "sessoesRealizadas": 22, "ultimaSessaoData": "2026-05-18", "statusNymosMove": "conectado", "tendencia": "melhora", "telefone": "(11) 92109-7890" }
+  ]
+}

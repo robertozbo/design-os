@@ -1,0 +1,76 @@
+{
+  "id": "fisio-001",
+  "identidade": {
+    "nome": "Roberto Zboralski",
+    "tratamento": "Dr.",
+    "cargo": "Fisioterapeuta Traumato-Ortopédico",
+    "especialidade": "traumato-ortopedica",
+    "foto": null,
+    "iniciais": "RZ",
+    "emailCorporativo": "roberto@nymos.app",
+    "telefone": "+55 (11) 98765-4321",
+    "idiomaPreferido": "pt",
+    "fusoHorario": "America/Sao_Paulo"
+  },
+  "registrosProfissionais": [
+    {
+      "id": "reg-1",
+      "tipo": "CREFITO",
+      "numero": "3/99999-F",
+      "conselho": "CREFITO",
+      "uf": "SP",
+      "dataEmissao": "2014-07-15",
+      "dataValidade": "2027-07-15",
+      "primario": true
+    },
+    {
+      "id": "reg-2",
+      "tipo": "CREFITO",
+      "numero": "13/45678-F",
+      "conselho": "CREFITO",
+      "uf": "RJ",
+      "dataEmissao": "2018-03-22",
+      "dataValidade": "2026-08-12",
+      "primario": false
+    }
+  ],
+  "assinaturaDigital": {
+    "imagemUrl": null,
+    "imagemUploadedEm": "2025-11-08T14:23:00Z",
+    "hashSha256": "b4a7e8c9d2f5e1a8b3c6d9e2f5a8b1c4d7e0f3a6b9c2d5e8f1a4b7c0d3e6f9a2",
+    "icpBrasilHabilitado": true,
+    "icpCertificadoNome": "Certisign A3 — Token físico"
+  },
+  "historicoAtuacao": {
+    "pacientesAtivos": 21,
+    "sessoesRealizadas": 1842,
+    "avaliacoesCineticoFuncionais": 287,
+    "anosDePratica": 12,
+    "metodosDominantes": [
+      "Pilates clínico",
+      "RPG",
+      "McKenzie",
+      "Mulligan",
+      "Dry needling",
+      "Terapia manual ortopédica"
+    ]
+  },
+  "perfilPublico": {
+    "ativo": true,
+    "slug": "roberto-zboralski",
+    "bioPublica": "Fisioterapeuta há 12 anos, especializado em reabilitação ortopédica e lesões esportivas. Atendimento individualizado integrando avaliação cinético-funcional e acompanhamento via Nymos Move.",
+    "cidade": "São Paulo",
+    "uf": "SP",
+    "mostrarFoto": true,
+    "mostrarEspecialidade": true,
+    "mostrarTelefone": false,
+    "mostrarEmail": true,
+    "mostrarWhatsapp": true,
+    "mostrarLocalizacao": true,
+    "mostrarMetodos": true,
+    "mostrarAnosExperiencia": true,
+    "permitirAgendamentoDireto": false,
+    "receberConvites": true,
+    "canaisConvite": ["whatsapp", "app"]
+  }
+}

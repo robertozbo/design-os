@@ -1,0 +1,147 @@
+{
+  "tierAtual": "plus",
+  "proximaCobrancaData": "2026-06-15",
+  "proximaCobrancaCentavos": 4900,
+  "diasDesdeAssinatura": 287,
+  "metodosPagamento": [
+    {
+      "id": "pm-1",
+      "bandeira": "visa",
+      "ultimos4": "4242",
+      "validade": "08/28",
+      "nomeNoCartao": "Roberto Zboralski",
+      "principal": true,
+      "stripePaymentMethodId": "pm_1OabcdXXXXXXXXXX"
+    },
+    {
+      "id": "pm-2",
+      "bandeira": "mastercard",
+      "ultimos4": "5555",
+      "validade": "11/27",
+      "nomeNoCartao": "Roberto Zboralski",
+      "principal": false,
+      "stripePaymentMethodId": "pm_1OefghYYYYYYYYY"
+    }
+  ],
+  "cobrancasRecentes": [
+    {
+      "id": "ch-1",
+      "data": "2026-05-15",
+      "descricao": "Atender Fisio Plus · Maio/2026",
+      "valorCentavos": 4900,
+      "status": "paga",
+      "stripeInvoiceId": "in_1OabcdEFG",
+      "notaFiscalUrl": "https://invoice.stripe.com/i/abc"
+    },
+    {
+      "id": "ch-2",
+      "data": "2026-04-15",
+      "descricao": "Atender Fisio Plus · Abril/2026",
+      "valorCentavos": 4900,
+      "status": "paga",
+      "stripeInvoiceId": "in_1OabcdHIJ",
+      "notaFiscalUrl": "https://invoice.stripe.com/i/def"
+    },
+    {
+      "id": "ch-3",
+      "data": "2026-03-15",
+      "descricao": "Atender Fisio Plus · Março/2026",
+      "valorCentavos": 4900,
+      "status": "paga",
+      "stripeInvoiceId": "in_1OabcdKLM",
+      "notaFiscalUrl": "https://invoice.stripe.com/i/ghi"
+    },
+    {
+      "id": "ch-4",
+      "data": "2026-02-15",
+      "descricao": "Atender Fisio Plus · Fevereiro/2026",
+      "valorCentavos": 4900,
+      "status": "paga",
+      "stripeInvoiceId": "in_1OabcdNOP",
+      "notaFiscalUrl": "https://invoice.stripe.com/i/jkl"
+    },
+    {
+      "id": "ch-5",
+      "data": "2026-01-15",
+      "descricao": "Atender Fisio Plus · Janeiro/2026",
+      "valorCentavos": 4900,
+      "status": "falhou",
+      "stripeInvoiceId": "in_1OabcdQRS",
+      "notaFiscalUrl": null
+    },
+    {
+      "id": "ch-6",
+      "data": "2026-01-15",
+      "descricao": "Atender Fisio Plus · Janeiro/2026 (reprocessado)",
+      "valorCentavos": 4900,
+      "status": "paga",
+      "stripeInvoiceId": "in_1OabcdTUV",
+      "notaFiscalUrl": "https://invoice.stripe.com/i/mno"
+    }
+  ],
+  "planosDisponiveis": [
+    {
+      "tier": "free",
+      "nome": "Free",
+      "precoCentavos": 0,
+      "destaque": false,
+      "badge": null,
+      "features": [
+        "Até 5 pacientes ativos",
+        "Agenda básica (dia/semana)",
+        "Avaliação simples",
+        "Sem suporte prioritário"
+      ],
+      "limites": { "pacientes": 5, "sessoesMes": 30, "armazenamentoGB": 1 }
+    },
+    {
+      "tier": "plus",
+      "nome": "Plus",
+      "precoCentavos": 4900,
+      "destaque": false,
+      "badge": "Atual",
+      "features": [
+        "Até 50 pacientes ativos",
+        "Agenda completa + lembretes WhatsApp",
+        "Avaliação cinético-funcional padrão COFFITO",
+        "Evolução SOAP ilimitada",
+        "Integração Nymos Move",
+        "Suporte por e-mail"
+      ],
+      "limites": { "pacientes": 50, "sessoesMes": 300, "armazenamentoGB": 10 }
+    },
+    {
+      "tier": "pro",
+      "nome": "Pro",
+      "precoCentavos": 8900,
+      "destaque": true,
+      "badge": "Mais popular",
+      "features": [
+        "Pacientes ilimitados",
+        "Tudo do Plus +",
+        "IA para sugestão de hipóteses diagnósticas",
+        "Telessaúde integrada",
+        "Múltiplos consultórios",
+        "Assinatura digital ICP-Brasil",
+        "Suporte prioritário"
+      ],
+      "limites": { "pacientes": "ilimitado", "sessoesMes": "ilimitado", "armazenamentoGB": 50 }
+    },
+    {
+      "tier": "premium",
+      "nome": "Premium",
+      "precoCentavos": 14900,
+      "destaque": false,
+      "badge": null,
+      "features": [
+        "Tudo do Pro +",
+        "Time/clínica até 5 fisios",
+        "Dashboard de gestão",
+        "API e webhooks",
+        "Treinamento dedicado da equipe Nymos",
+        "Suporte com SLA de 1h"
+      ],
+      "limites": { "pacientes": "ilimitado", "sessoesMes": "ilimitado", "armazenamentoGB": "ilimitado" }
+    }
+  ]
+}

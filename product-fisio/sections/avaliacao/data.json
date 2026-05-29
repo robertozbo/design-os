@@ -1,0 +1,183 @@
+{
+  "_meta": {
+    "models": {
+      "pacienteAvaliacao": "Paciente sendo avaliado, com contexto (inicial vs reavaliação).",
+      "stepAvaliacao": "Cada uma das 7 etapas da avaliação cinético-funcional.",
+      "dadosAnamnese": "Campos da anamnese (Step 1).",
+      "queixaDor": "Queixa principal com EVA e localização (Step 2).",
+      "medidaADM": "Medida goniométrica de uma articulação/movimento, com referência (Step 4).",
+      "testeFuncional": "Teste funcional aplicado e resultado (Step 5).",
+      "diagnosticoSugerido": "Hipótese diagnóstica com confiança (Step 6)."
+    }
+  },
+  "paciente": {
+    "id": "p-001",
+    "nome": "Ana Carolina Mendes",
+    "idade": 42,
+    "queixaPrincipal": "Lombociatalgia L5/S1",
+    "tipoAvaliacao": "reavaliacao",
+    "numeroReavaliacao": 3,
+    "ultimaAvaliacaoData": "2026-04-14",
+    "evaInicial": 8
+  },
+  "steps": [
+    { "id": "anamnese", "numero": 1, "titulo": "Anamnese", "resumo": "HMA, HMP, medicações, ocupação", "status": "completo" },
+    { "id": "queixa", "numero": 2, "titulo": "Queixa principal", "resumo": "EVA, tipo, localização", "status": "completo" },
+    { "id": "inspecao", "numero": 3, "titulo": "Inspeção & palpação", "resumo": "Observações, pontos gatilho", "status": "completo" },
+    { "id": "goniometria", "numero": 4, "titulo": "Goniometria (ADM)", "resumo": "Medidas articulares D/E vs referência", "status": "atual" },
+    { "id": "testes", "numero": 5, "titulo": "Testes funcionais", "resumo": "Lasègue, Romberg, TUG, etc.", "status": "pendente" },
+    { "id": "hipotese", "numero": 6, "titulo": "Hipótese diagnóstica", "resumo": "Diagnóstico cinético-funcional + CIF", "status": "pendente" },
+    { "id": "plano", "numero": 7, "titulo": "Plano terapêutico", "resumo": "Objetivos SMART + condutas + frequência", "status": "pendente" }
+  ],
+  "anamnese": {
+    "hma": "Paciente refere lombalgia crônica com irradiação para MID iniciada há 8 meses após queda da própria altura. Dor mais intensa pela manhã e ao final do dia. Refere melhora progressiva com tratamento.",
+    "hmp": "HAS controlada (Losartana 50mg). Sem cirurgias prévias. Sem alergias conhecidas.",
+    "medicacoes": ["Losartana 50mg", "Dipirona 500mg SOS"],
+    "atividadeFisica": "Sedentária. Trabalha sentada 8h/dia. Antes da lesão fazia caminhada 3x/semana.",
+    "ocupacao": "Analista contábil — home office"
+  },
+  "queixa": {
+    "descricao": "Dor lombar baixa com irradiação para face posterior de MID até panturrilha. Piora ao levantar pela manhã e após longos períodos sentada.",
+    "eva": 4,
+    "localizacao": "Lombar baixa (L4-L5/L5-S1) com irradiação para MID",
+    "tipo": "cronica",
+    "inicioMeses": 8
+  },
+  "medidasADM": [
+    {
+      "id": "adm-1",
+      "articulacao": "Coluna lombar",
+      "movimento": "Flexão",
+      "direito": 60,
+      "esquerdo": 60,
+      "referencia": 75,
+      "unidade": "graus"
+    },
+    {
+      "id": "adm-2",
+      "articulacao": "Coluna lombar",
+      "movimento": "Extensão",
+      "direito": 22,
+      "esquerdo": 22,
+      "referencia": 30,
+      "unidade": "graus"
+    },
+    {
+      "id": "adm-3",
+      "articulacao": "Coluna lombar",
+      "movimento": "Inclinação lateral",
+      "direito": 28,
+      "esquerdo": 26,
+      "referencia": 35,
+      "unidade": "graus"
+    },
+    {
+      "id": "adm-4",
+      "articulacao": "Quadril",
+      "movimento": "Flexão",
+      "direito": 110,
+      "esquerdo": 115,
+      "referencia": 120,
+      "unidade": "graus"
+    },
+    {
+      "id": "adm-5",
+      "articulacao": "Quadril",
+      "movimento": "Extensão",
+      "direito": 15,
+      "esquerdo": 18,
+      "referencia": 30,
+      "unidade": "graus"
+    },
+    {
+      "id": "adm-6",
+      "articulacao": "Quadril",
+      "movimento": "Rotação medial",
+      "direito": 28,
+      "esquerdo": 35,
+      "referencia": 40,
+      "unidade": "graus"
+    }
+  ],
+  "admInicial": {
+    "id": "adm-1",
+    "articulacao": "Coluna lombar",
+    "movimento": "Flexão",
+    "direito": 35,
+    "esquerdo": 35,
+    "referencia": 75,
+    "unidade": "graus"
+  },
+  "testesFuncionais": [
+    {
+      "id": "lasegue",
+      "nome": "Teste de Lasègue",
+      "descricaoCurta": "Elevação passiva do MI estendido — avalia compressão radicular L5/S1",
+      "resultado": "negativo",
+      "observacao": "Negativo bilateral (era positivo direito na avaliação inicial)",
+      "categoria": "Neural"
+    },
+    {
+      "id": "slump",
+      "nome": "Slump Test",
+      "descricaoCurta": "Tensão da dura-máter em flexão de tronco",
+      "resultado": "negativo",
+      "categoria": "Neural"
+    },
+    {
+      "id": "fabere",
+      "nome": "Teste de Patrick (FABER)",
+      "descricaoCurta": "Flexão, abdução e rotação externa do quadril",
+      "resultado": "negativo",
+      "categoria": "Articular"
+    },
+    {
+      "id": "tug",
+      "nome": "Timed Up and Go",
+      "descricaoCurta": "Tempo para levantar, andar 3m, retornar e sentar",
+      "resultado": "negativo",
+      "observacao": "9.2s (normal <12s)",
+      "categoria": "Funcional"
+    },
+    {
+      "id": "berg",
+      "nome": "Escala de Berg",
+      "descricaoCurta": "Avaliação do equilíbrio funcional (14 itens)",
+      "resultado": "nao-aplicado",
+      "categoria": "Funcional"
+    },
+    {
+      "id": "prancha",
+      "nome": "Prancha frontal",
+      "descricaoCurta": "Tempo de sustentação isométrica",
+      "resultado": "positivo",
+      "observacao": "32s (referência ≥60s) — fraqueza de core ainda presente",
+      "categoria": "Força"
+    }
+  ],
+  "diagnosticosSugeridos": [
+    {
+      "codigo": "M54.4",
+      "hipotese": "Lombociatalgia mecânica em melhora — sem sinais de compressão radicular ativa",
+      "confianca": "alta"
+    },
+    {
+      "codigo": "M62.81",
+      "hipotese": "Fraqueza de musculatura estabilizadora de tronco (core)",
+      "confianca": "alta"
+    }
+  ],
+  "avaliacoesFinalizadas": [
+    { "id": "av-001", "pacienteId": "p-001", "pacienteNome": "Ana Carolina Mendes", "pacienteIdade": 42, "tipo": "reavaliacao", "numeroReavaliacao": 3, "data": "2026-05-12", "eva": 4, "evaInicial": 8, "admPrincipal": { "articulacao": "Flexão lombar", "valor": 60, "unidade": "graus" }, "hipotese": "Lombociatalgia mecânica em melhora — sem compressão radicular ativa", "totalSessoesAteEntao": 11, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 75, "assinada": true, "pdfDisponivel": true },
+    { "id": "av-002", "pacienteId": "p-001", "pacienteNome": "Ana Carolina Mendes", "pacienteIdade": 42, "tipo": "reavaliacao", "numeroReavaliacao": 2, "data": "2026-04-14", "eva": 6, "evaInicial": 8, "admPrincipal": { "articulacao": "Flexão lombar", "valor": 45, "unidade": "graus" }, "hipotese": "Melhora progressiva, manter conduta", "totalSessoesAteEntao": 7, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 60, "assinada": true, "pdfDisponivel": true },
+    { "id": "av-003", "pacienteId": "p-002", "pacienteNome": "Carlos Mendonça", "pacienteIdade": 58, "tipo": "inicial", "data": "2026-04-28", "eva": 7, "admPrincipal": { "articulacao": "Flexão lombar", "valor": 40, "unidade": "graus" }, "hipotese": "Lombalgia mecânica L4-L5 com componente degenerativo", "totalSessoesAteEntao": 0, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 90, "assinada": true, "pdfDisponivel": true },
+    { "id": "av-004", "pacienteId": "p-002", "pacienteNome": "Carlos Mendonça", "pacienteIdade": 58, "tipo": "reavaliacao", "numeroReavaliacao": 1, "data": "2026-05-20", "eva": 5, "evaInicial": 7, "admPrincipal": { "articulacao": "Flexão lombar", "valor": 55, "unidade": "graus" }, "hipotese": "Boa resposta — progredir fortalecimento", "totalSessoesAteEntao": 15, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 60, "assinada": true, "pdfDisponivel": true },
+    { "id": "av-005", "pacienteId": "p-003", "pacienteNome": "Juliana Pires", "pacienteIdade": 35, "tipo": "inicial", "data": "2026-05-05", "eva": 8, "admPrincipal": { "articulacao": "Abdução ombro D", "valor": 65, "unidade": "graus" }, "hipotese": "Capsulite adesiva ombro D — fase de congelamento", "totalSessoesAteEntao": 0, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 90, "assinada": true, "pdfDisponivel": true },
+    { "id": "av-006", "pacienteId": "p-004", "pacienteNome": "Roberto Tanaka", "pacienteIdade": 31, "tipo": "inicial", "data": "2026-03-20", "eva": 6, "admPrincipal": { "articulacao": "Flexão joelho D", "valor": 95, "unidade": "graus" }, "hipotese": "Pós-operatório LCA — fase III reabilitação", "totalSessoesAteEntao": 0, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 90, "assinada": true, "pdfDisponivel": true },
+    { "id": "av-007", "pacienteId": "p-004", "pacienteNome": "Roberto Tanaka", "pacienteIdade": 31, "tipo": "reavaliacao", "numeroReavaliacao": 1, "data": "2026-04-22", "eva": 5, "evaInicial": 6, "admPrincipal": { "articulacao": "Flexão joelho D", "valor": 120, "unidade": "graus" }, "hipotese": "Progressão excelente — iniciar plyometric", "totalSessoesAteEntao": 12, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 60, "assinada": true, "pdfDisponivel": true },
+    { "id": "av-008", "pacienteId": "p-005", "pacienteNome": "Patrícia Lemos", "pacienteIdade": 39, "tipo": "inicial", "data": "2026-04-15", "eva": 7, "admPrincipal": { "articulacao": "Rotação cervical D", "valor": 50, "unidade": "graus" }, "hipotese": "Cervicalgia tensional com gatilhos miofasciais", "totalSessoesAteEntao": 0, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 90, "assinada": true, "pdfDisponivel": true },
+    { "id": "av-009", "pacienteId": "p-007", "pacienteNome": "Beatriz Souza", "pacienteIdade": 24, "tipo": "alta", "data": "2026-05-25", "eva": 1, "evaInicial": 7, "admPrincipal": { "articulacao": "Inversão tornozelo D", "valor": 30, "unidade": "graus" }, "hipotese": "Alta clínica — retorno gradual ao esporte", "totalSessoesAteEntao": 9, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 75, "assinada": true, "pdfDisponivel": true },
+    { "id": "av-010", "pacienteId": "p-010", "pacienteNome": "Otávio Sampaio", "pacienteIdade": 47, "tipo": "inicial", "data": "2026-05-19", "eva": 7, "admPrincipal": { "articulacao": "Rotação cervical E", "valor": 55, "unidade": "graus" }, "hipotese": "Cervicobraquialgia por hérnia C5-C6", "totalSessoesAteEntao": 0, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 90, "assinada": true, "pdfDisponivel": true },
+    { "id": "av-011", "pacienteId": "p-013", "pacienteNome": "Mariana Fontes", "pacienteIdade": 38, "tipo": "inicial", "data": "2026-05-21", "eva": 7, "admPrincipal": { "articulacao": "Rotação cervical D", "valor": 45, "unidade": "graus" }, "hipotese": "Cervicobraquialgia C6 — investigar imagem", "totalSessoesAteEntao": 0, "fisioterapeuta": "Dr. Roberto Zboralski", "duracaoMin": 90, "assinada": false, "pdfDisponivel": false }
+  ]
+}

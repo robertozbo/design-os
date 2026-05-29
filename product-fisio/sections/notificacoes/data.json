@@ -1,0 +1,105 @@
+{
+  "categorias": [
+    {
+      "id": "agendamento",
+      "label": "Agendamentos",
+      "descricao": "Confirmações, lembretes, faltas, remarcações",
+      "ativo": { "app": true, "whatsapp": true, "email": true, "sms": false },
+      "critica": true
+    },
+    {
+      "id": "clinico",
+      "label": "Eventos clínicos",
+      "descricao": "Alertas de paciente (dor piora, aderência cai, falta evolução)",
+      "ativo": { "app": true, "whatsapp": false, "email": true, "sms": false },
+      "critica": true
+    },
+    {
+      "id": "comunicacao",
+      "label": "Comunicação",
+      "descricao": "Convites de pacientes, novas mensagens, confirmações de leitura",
+      "ativo": { "app": true, "whatsapp": true, "email": false, "sms": false },
+      "critica": false
+    },
+    {
+      "id": "cobranca",
+      "label": "Cobrança e plano",
+      "descricao": "Próxima cobrança, falhas, NF, upgrades disponíveis",
+      "ativo": { "app": true, "whatsapp": false, "email": true, "sms": false },
+      "critica": false
+    },
+    {
+      "id": "marketing",
+      "label": "Novidades e dicas",
+      "descricao": "Releases, dicas de uso, webinars Nymos",
+      "ativo": { "app": false, "whatsapp": false, "email": true, "sms": false },
+      "critica": false
+    }
+  ],
+  "horarioSilencio": {
+    "ativo": true,
+    "inicio": "22:00",
+    "fim": "07:00",
+    "aplicaACanais": ["whatsapp", "sms"]
+  },
+  "recentes": [
+    {
+      "id": "n-1",
+      "categoriaId": "comunicacao",
+      "severidade": "info",
+      "titulo": "Novo convite de agendamento",
+      "descricao": "Mariana Fontes solicitou sessão para 02/06 às 14:00",
+      "dataIso": "2026-05-29T08:42:00",
+      "lida": false,
+      "acaoLabel": "Ver convite"
+    },
+    {
+      "id": "n-2",
+      "categoriaId": "clinico",
+      "severidade": "atencao",
+      "titulo": "Aderência caiu",
+      "descricao": "Ana Carolina Mendes — 71% (vs 85% semana passada)",
+      "dataIso": "2026-05-29T07:30:00",
+      "lida": false,
+      "acaoLabel": "Mensagem"
+    },
+    {
+      "id": "n-3",
+      "categoriaId": "agendamento",
+      "severidade": "sucesso",
+      "titulo": "Lembrete enviado",
+      "descricao": "Carlos Mendonça confirmou sessão de hoje 14:00 via WhatsApp",
+      "dataIso": "2026-05-29T07:00:00",
+      "lida": true
+    },
+    {
+      "id": "n-4",
+      "categoriaId": "cobranca",
+      "severidade": "info",
+      "titulo": "Próxima cobrança em 17 dias",
+      "descricao": "R$ 49,00 no cartão Visa •••• 4242 em 15/06",
+      "dataIso": "2026-05-28T19:00:00",
+      "lida": true
+    },
+    {
+      "id": "n-5",
+      "categoriaId": "clinico",
+      "severidade": "risco",
+      "titulo": "Paciente em risco",
+      "descricao": "Mariana Fontes — EVA subiu de 4 para 7 nas últimas 2 sessões",
+      "dataIso": "2026-05-28T15:20:00",
+      "lida": true,
+      "acaoLabel": "Revisar plano"
+    },
+    {
+      "id": "n-6",
+      "categoriaId": "agendamento",
+      "severidade": "atencao",
+      "titulo": "Falta registrada",
+      "descricao": "Marcos Vieira faltou à sessão de 09:30",
+      "dataIso": "2026-05-26T10:00:00",
+      "lida": true,
+      "acaoLabel": "Reagendar"
+    }
+  ]
+}

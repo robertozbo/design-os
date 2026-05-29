@@ -1,0 +1,79 @@
+{
+  "planos": [
+    {
+      "id": "pln-1",
+      "nome": "Tratamento Lombalgia · 10 sessões",
+      "descricao": "Pacote fechado: avaliação inicial + 10 sessões + reavaliação final. Foco em lombalgia crônica.",
+      "categoria": "pacote",
+      "servicoIds": ["srv-1", "srv-2", "srv-3"],
+      "servicoNomes": ["Avaliação inicial", "Sessão ortopédica × 10", "Reavaliação"],
+      "numSessoes": 10,
+      "valorTotalCentavos": 135000,
+      "parcelamentoOpcoes": [1, 2, 3],
+      "validadeDias": 90,
+      "ativo": true,
+      "pacientesAtivos": 6,
+      "cor": "teal"
+    },
+    {
+      "id": "pln-2",
+      "nome": "Reabilitação pós-cirúrgica · 20 sessões",
+      "descricao": "Programa de 20 sessões para pós-operatório de ortopedia (LCA, manguito, prótese).",
+      "categoria": "pacote",
+      "servicoIds": ["srv-1", "srv-2", "srv-3"],
+      "servicoNomes": ["Avaliação inicial", "Sessão ortopédica × 20", "2 reavaliações"],
+      "numSessoes": 20,
+      "valorTotalCentavos": 270000,
+      "parcelamentoOpcoes": [1, 3, 6],
+      "validadeDias": 120,
+      "ativo": true,
+      "pacientesAtivos": 3,
+      "cor": "violet"
+    },
+    {
+      "id": "pln-3",
+      "nome": "Pilates clínico mensal",
+      "descricao": "8 aulas de Pilates clínico por mês (2x/semana). Renovação automática.",
+      "categoria": "mensal",
+      "servicoIds": ["srv-4"],
+      "servicoNomes": ["Pilates clínico"],
+      "numSessoes": 8,
+      "valorTotalCentavos": 98000,
+      "parcelamentoOpcoes": [1],
+      "validadeDias": 30,
+      "ativo": true,
+      "pacientesAtivos": 9,
+      "cor": "emerald"
+    },
+    {
+      "id": "pln-4",
+      "nome": "RPG mensal",
+      "descricao": "4 sessões de RPG por mês.",
+      "categoria": "mensal",
+      "servicoIds": ["srv-5"],
+      "servicoNomes": ["RPG"],
+      "numSessoes": 4,
+      "valorTotalCentavos": 65000,
+      "parcelamentoOpcoes": [1],
+      "validadeDias": 30,
+      "ativo": true,
+      "pacientesAtivos": 4,
+      "cor": "amber"
+    },
+    {
+      "id": "pln-5",
+      "nome": "Avaliação completa",
+      "descricao": "Avaliação inicial detalhada + relatório PDF para o paciente.",
+      "categoria": "avulso",
+      "servicoIds": ["srv-1"],
+      "servicoNomes": ["Avaliação cinético-funcional"],
+      "numSessoes": 1,
+      "valorTotalCentavos": 25000,
+      "parcelamentoOpcoes": [1, 2],
+      "validadeDias": 30,
+      "ativo": true,
+      "pacientesAtivos": 0,
+      "cor": "sky"
+    }
+  ]
+}
