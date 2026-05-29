@@ -1,0 +1,41 @@
+{
+  "tema": "escuro",
+  "sessoes": [
+    {
+      "id": "sess-1",
+      "device": "iPhone 15 Pro",
+      "os": "iOS 17.4 · Nymos app",
+      "tipo": "mobile",
+      "local": "São Paulo, SP",
+      "ultimaAtividade": "2026-05-29T09:42:00-03:00",
+      "atual": true
+    },
+    {
+      "id": "sess-2",
+      "device": "MacBook Pro 14",
+      "os": "macOS 14.5 · Safari",
+      "tipo": "desktop",
+      "local": "São Paulo, SP",
+      "ultimaAtividade": "2026-05-28T22:15:00-03:00",
+      "atual": false
+    },
+    {
+      "id": "sess-3",
+      "device": "iPad Air",
+      "os": "iPadOS 17.3 · Nymos app",
+      "tipo": "tablet",
+      "local": "Campinas, SP",
+      "ultimaAtividade": "2026-05-22T14:08:00-03:00",
+      "atual": false
+    },
+    {
+      "id": "sess-4",
+      "device": "Pixel 8",
+      "os": "Android 14 · Chrome",
+      "tipo": "mobile",
+      "local": "Rio de Janeiro, RJ",
+      "ultimaAtividade": "2026-04-30T11:55:00-03:00",
+      "atual": false
+    }
+  ]
+}
