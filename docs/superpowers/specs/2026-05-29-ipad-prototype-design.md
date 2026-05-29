@@ -71,16 +71,18 @@ src/
 
 ### Routing
 
-Two new routes registered in the existing router:
+Two new routes registered in `src/lib/router.tsx` (the existing router file used by `MobilePage`, `FisioPage`, etc.):
 
 - `/ipad` → `IpadSectionsPage` — grid of the 5 sections, mirroring `/mobile`.
 - `/ipad/sections/:sectionId` → `IpadSectionPage` — opens the section inside `IpadFrame`.
 
 The mobile route (`/mobile`) and the rest of Design OS stay untouched.
 
+`IpadPage.tsx` mirrors `MobilePage.tsx`: a single file with two named exports — `IpadSectionsPage` (the grid index) and `IpadSectionPage` (the single-section viewer). Both consume `ipad-section-loader.ts`.
+
 ### Section loader
 
-`src/lib/ipad-section-loader.ts` is a direct mirror of `src/lib/mobile-section-loader.ts`, with three path substitutions:
+`src/lib/ipad-section-loader.ts` is a direct mirror of `src/lib/mobile-section-loader.ts` (and the just-added `src/lib/fisio-section-loader.ts`, which is byte-for-byte identical except for path substitutions — either can be used as the template). Substitutions:
 
 - `/product-mobile/sections/` → `/product-ipad/sections/`
 - `/src/sections-mobile/` → `/src/sections-ipad/`
@@ -107,12 +109,12 @@ No shared module — iPad has its own `data.json` per section to avoid coupling.
 ### Sidebar contents (top to bottom)
 
 1. **Brand row** — Nymos wordmark + small "iPad" badge, `mb-8`
-2. **Nav section** — five items, each `flex items-center gap-3 py-3 px-3 rounded-xl`:
+2. **Nav section** — five items, each `flex items-center gap-3 py-3 px-3 rounded-xl`. The order matches the Scope table (top to bottom):
    - Início — `Home` icon
    - Minha Saúde — `Heart` icon
    - Métricas — `BarChart3` icon
-   - IA — `Sparkles` icon
    - Chat IA — `MessageCircle` icon
+   - IA — `Sparkles` icon
    - Active state: `bg-teal-500/15 text-teal-300`, inactive: `text-slate-400 hover:bg-slate-900`
 3. **Spacer** (`flex-1`)
 4. **User pill** — avatar circle 40×40 + name "Roberto" + plan chip "Pro" in a rounded card `bg-slate-900 border border-slate-800 p-3 rounded-xl`
