@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "description": "Configurações próprias da secretária — perfil, senha, notificações operacionais, preferências e card informativo de escopo de acesso (fronteira LGPD). Sem config do consultório."
+  },
+  "perfil": {
+    "fotoUrl": null,
+    "inicial": "C",
+    "nomeCompleto": "Carla Souza",
+    "email": "carla@nymos.com",
+    "telefone": "+55 11 91234-5678",
+    "cargo": "Secretária",
+    "desde": "2025-08-01"
+  },
+  "notificacoes": {
+    "pushNovoAgendamento": true,
+    "pushCancelamento": true,
+    "pushMensagemAdmin": true,
+    "emailResumoAgenda": true,
+    "emailPagamentoConfirmado": true,
+    "smsLembretePlantao": false
+  },
+  "preferencias": {
+    "tema": "sistema",
+    "idioma": "pt-BR",
+    "fusoHorario": "America/Sao_Paulo (GMT-3)"
+  },
+  "escopo": {
+    "permitido": [
+      "Agenda (visão sem campo clínico)",
+      "Cadastro de pacientes (dados administrativos)",
+      "Mensagens — canal administrativo",
+      "Cobrança e recibos",
+      "Tracking de convênio"
+    ],
+    "bloqueado": [
+      "Prontuário",
+      "Exames e laudos",
+      "Prescrições",
+      "Consulta / escriba IA",
+      "Mensagens — canal clínico",
+      "Configurações do consultório (Memed, IA, valores, convênios)",
+      "Audit log clínico"
+    ]
+  }
+}

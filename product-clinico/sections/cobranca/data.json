@@ -1,0 +1,124 @@
+{
+  "_meta": {
+    "description": "Cobrança operada pela secretária — links PIX/cartão particulares, recibos e tracking textual de convênio. Sem dados clínicos."
+  },
+  "kpis": [
+    { "id": "recebido", "label": "Recebido no mês", "valor": "R$ 18.240", "delta": "+12%", "deltaPositivo": true },
+    { "id": "a-receber", "label": "A receber", "valor": "R$ 3.180", "delta": "+2 links", "deltaPositivo": false },
+    { "id": "links-ativos", "label": "Links ativos", "valor": "6", "delta": "aguardando", "deltaPositivo": true },
+    { "id": "convenio-analise", "label": "Convênio em análise", "valor": "R$ 1.520", "delta": "3 guias", "deltaPositivo": false }
+  ],
+  "particulares": [
+    {
+      "id": "cob-001",
+      "pacienteNome": "Maria Aparecida Santos",
+      "pacienteInicial": "M",
+      "descricao": "Consulta 12/07 · retorno",
+      "valorBrl": 450,
+      "metodo": "pix",
+      "status": "pago",
+      "criadaEm": "2026-07-12",
+      "pagaEm": "2026-07-12",
+      "linkPagamento": "https://pay.nymos.com/l/9f3a2b",
+      "recibos": [{ "id": "rec-001", "emitidoEm": "2026-07-12", "canal": "email" }]
+    },
+    {
+      "id": "cob-002",
+      "pacienteNome": "João Carlos Ferreira",
+      "pacienteInicial": "J",
+      "descricao": "Primeira consulta",
+      "valorBrl": 600,
+      "metodo": "ambos",
+      "status": "link_enviado",
+      "criadaEm": "2026-07-16",
+      "pagaEm": null,
+      "linkPagamento": "https://pay.nymos.com/l/1c7d40",
+      "recibos": []
+    },
+    {
+      "id": "cob-003",
+      "pacienteNome": "Ana Beatriz Lima",
+      "pacienteInicial": "A",
+      "descricao": "Pacote Retornos · 3 consultas",
+      "valorBrl": 1200,
+      "metodo": "cartao",
+      "status": "pendente",
+      "criadaEm": "2026-07-10",
+      "pagaEm": null,
+      "linkPagamento": "https://pay.nymos.com/l/5e8f11",
+      "recibos": []
+    },
+    {
+      "id": "cob-004",
+      "pacienteNome": "Roberto Nunes",
+      "pacienteInicial": "R",
+      "descricao": "Teleconsulta 08/07",
+      "valorBrl": 380,
+      "metodo": "pix",
+      "status": "pago",
+      "criadaEm": "2026-07-08",
+      "pagaEm": "2026-07-08",
+      "linkPagamento": "https://pay.nymos.com/l/aa20c9",
+      "recibos": [{ "id": "rec-002", "emitidoEm": "2026-07-08", "canal": "whatsapp" }]
+    },
+    {
+      "id": "cob-005",
+      "pacienteNome": "Fernanda Oliveira",
+      "pacienteInicial": "F",
+      "descricao": "Consulta 05/07",
+      "valorBrl": 450,
+      "metodo": "cartao",
+      "status": "cancelado",
+      "criadaEm": "2026-07-05",
+      "pagaEm": null,
+      "linkPagamento": null,
+      "recibos": []
+    }
+  ],
+  "convenios": [
+    {
+      "id": "conv-001",
+      "pacienteNome": "Carlos Eduardo Souza",
+      "pacienteInicial": "C",
+      "convenio": "Unimed",
+      "procedimento": "Consulta em endocrinologia (10101012)",
+      "valorEstimadoBrl": 180,
+      "status": "em_analise",
+      "atualizadoEm": "2026-07-11",
+      "observacao": "Guia 88213-A enviada ao convênio"
+    },
+    {
+      "id": "conv-002",
+      "pacienteNome": "Patrícia Gomes",
+      "pacienteInicial": "P",
+      "convenio": "Bradesco Saúde",
+      "procedimento": "Consulta de retorno",
+      "valorEstimadoBrl": 160,
+      "status": "pago",
+      "atualizadoEm": "2026-07-09",
+      "observacao": null
+    },
+    {
+      "id": "conv-003",
+      "pacienteNome": "Sérgio Almeida",
+      "pacienteInicial": "S",
+      "convenio": "SulAmérica",
+      "procedimento": "Consulta em endocrinologia",
+      "valorEstimadoBrl": 170,
+      "status": "enviado",
+      "atualizadoEm": "2026-07-15",
+      "observacao": "Aguardando protocolo"
+    },
+    {
+      "id": "conv-004",
+      "pacienteNome": "Luciana Martins",
+      "pacienteInicial": "L",
+      "convenio": "Amil",
+      "procedimento": "Consulta 02/07",
+      "valorEstimadoBrl": 175,
+      "status": "glosado",
+      "atualizadoEm": "2026-07-07",
+      "observacao": "Glosa por carência — recurso em andamento"
+    }
+  ]
+}
