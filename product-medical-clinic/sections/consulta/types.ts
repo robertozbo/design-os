@@ -27,6 +27,31 @@ export interface SOAP {
   P: string
 }
 
+/**
+ * Medidas aferidas **na sala**, durante a consulta. São campos numéricos e não texto do SOAP:
+ * valor digitado em prosa não vira série, não aparece no Acompanhamento e não dá para comparar com
+ * a consulta anterior. Alimentam a mesma série do app, com `fonte: 'Clínica'`.
+ *
+ * Resultado de laboratório (colesterol, triglicerídeos, HbA1c) **não entra aqui** — vem pela section
+ * Exames, que guarda data de coleta, laboratório e o laudo. Digitado na consulta, seria um número
+ * sem procedência num registro que tem valor legal.
+ */
+export interface MedidasConsulta {
+  /** kg */
+  peso: string
+  /** cm — praticamente fixa em adulto; serve pro IMC, não vira série. */
+  altura: string
+  /** mmHg — a pressão é um par: 138 sem o 88 é metade da informação. */
+  pressaoSistolica: string
+  pressaoDiastolica: string
+  /** bpm */
+  frequenciaCardiaca: string
+  /** °C */
+  temperatura: string
+  /** % */
+  saturacao: string
+}
+
 export interface MedicacaoAtiva {
   id: string
   nome: string

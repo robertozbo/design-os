@@ -87,5 +87,19 @@
         "geradoPorIA": true
       }
     ]
-  }
+  },
+  "queixasFrequentes": [
+    "Dor no peito",
+    "Tosse seca",
+    "Tontura",
+    "Cefaleia",
+    "Falta de ar",
+    "Cansaço",
+    "Palpitação",
+    "Dor abdominal",
+    "Febre",
+    "Insônia",
+    "Náusea",
+    "Formigamento"
+  ]
 }

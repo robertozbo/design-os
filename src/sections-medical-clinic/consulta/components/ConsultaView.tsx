@@ -5,6 +5,7 @@ import type {
   EscribaEstado,
   Modalidade,
   SOAP,
+  MedidasConsulta,
   ResumoApp,
 } from '@/../product-medical-clinic/sections/consulta/types'
 import { ContextoPanel } from './ContextoPanel'
@@ -16,6 +17,9 @@ import { formatTimer } from './helpers'
 interface Props {
   dados: ConsultaData
   /** Delta do app desde a última consulta. Ausente = paciente não vinculado. */
+  queixas: string[]
+  medidas?: MedidasConsulta
+  onMedida?: (campo: keyof MedidasConsulta, valor: string) => void
   resumoApp?: ResumoApp
   onAbrirAcompanhamento?: () => void
   modalidade: Modalidade
@@ -127,6 +131,9 @@ export function ConsultaView(props: Props) {
             onSoapChange={props.onSoapChange}
             onAssinar={props.onAssinar}
             onAbrirProntuario={props.onAbrirProntuario}
+            queixas={props.queixas}
+            medidas={props.medidas}
+            onMedida={props.onMedida}
           />
         </div>
         <div>

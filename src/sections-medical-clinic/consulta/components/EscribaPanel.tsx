@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  Activity,
   ArrowRight,
   BadgeCheck,
   Check,
@@ -18,8 +19,9 @@ import type {
   EscribaEstado,
   Modalidade,
   SOAP,
+  MedidasConsulta,
 } from '@/../product-medical-clinic/sections/consulta/types'
-import { formatTimer, SOAP_LABEL } from './helpers'
+import { formatTimer, SOAP_AJUDA, SOAP_LABEL } from './helpers'
 
 interface Props {
   estado: EscribaEstado
@@ -39,6 +41,10 @@ interface Props {
   onSoapChange: (campo: keyof SOAP, valor: string) => void
   onAssinar: () => void
   onAbrirProntuario: () => void
+  /** Sugestões clicáveis de queixa — alimentam o Subjetivo. */
+  queixas: string[]
+  medidas?: MedidasConsulta
+  onMedida?: (campo: keyof MedidasConsulta, valor: string) => void
 }
 
 export function EscribaPanel(props: Props) {
@@ -119,6 +125,9 @@ export function EscribaPanel(props: Props) {
           onChange={props.onSoapChange}
           onAssinar={props.onAssinar}
           onAbrirProntuario={props.onAbrirProntuario}
+          queixas={props.queixas}
+          medidas={props.medidas}
+          onMedida={props.onMedida}
         />
       </div>
     </div>
@@ -244,6 +253,84 @@ function Gravando({
   )
 }
 
+/** Campos numéricos das medidas aferidas na sala. A pressão é um par, nunca um número só. */
+const CAMPOS_MEDIDA: { chave: keyof MedidasConsulta; label: string; unidade: string; larg: string }[] = [
+  { chave: 'peso', label: 'Peso', unidade: 'kg', larg: 'w-20' },
+  { chave: 'altura', label: 'Altura', unidade: 'cm', larg: 'w-20' },
+  { chave: 'frequenciaCardiaca', label: 'FC', unidade: 'bpm', larg: 'w-20' },
+  { chave: 'temperatura', label: 'Temp.', unidade: '°C', larg: 'w-20' },
+  { chave: 'saturacao', label: 'SatO₂', unidade: '%', larg: 'w-20' },
+]
+
+function MedidasDeHoje({
+  medidas,
+  onMedida,
+}: {
+  medidas: MedidasConsulta
+  onMedida: (campo: keyof MedidasConsulta, valor: string) => void
+}) {
+  const campoCls =
+    'rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs tabular-nums text-slate-800 outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100'
+
+  return (
+    <div className="mb-2 rounded-lg border border-slate-200 p-2.5 dark:border-slate-800">
+      <div className="mb-2 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+        <Activity className="h-3 w-3" />
+        Medidas de hoje
+        <span className="font-normal normal-case tracking-normal text-slate-400">
+          · entram na série do paciente como medição da clínica
+        </span>
+      </div>
+      <div className="flex flex-wrap items-end gap-x-3 gap-y-2">
+        {/* Pressão primeiro: é o par, e o par é a informação. */}
+        <label className="flex flex-col gap-0.5">
+          <span className="text-[10px] text-slate-500 dark:text-slate-400">Pressão arterial</span>
+          <span className="flex items-center gap-1">
+            <input
+              inputMode="numeric"
+              value={medidas.pressaoSistolica}
+              onChange={(e) => onMedida('pressaoSistolica', e.target.value)}
+              placeholder="120"
+              aria-label="Pressão sistólica"
+              className={`${campoCls} w-14 text-center`}
+            />
+            <span className="text-slate-400">/</span>
+            <input
+              inputMode="numeric"
+              value={medidas.pressaoDiastolica}
+              onChange={(e) => onMedida('pressaoDiastolica', e.target.value)}
+              placeholder="80"
+              aria-label="Pressão diastólica"
+              className={`${campoCls} w-14 text-center`}
+            />
+            <span className="text-[10px] text-slate-400">mmHg</span>
+          </span>
+        </label>
+
+        {CAMPOS_MEDIDA.map((c) => (
+          <label key={String(c.chave)} className="flex flex-col gap-0.5">
+            <span className="text-[10px] text-slate-500 dark:text-slate-400">{c.label}</span>
+            <span className="flex items-center gap-1">
+              <input
+                inputMode="decimal"
+                value={medidas[c.chave]}
+                onChange={(e) => onMedida(c.chave, e.target.value)}
+                aria-label={`${c.label} em ${c.unidade}`}
+                className={`${campoCls} ${c.larg}`}
+              />
+              <span className="text-[10px] text-slate-400">{c.unidade}</span>
+            </span>
+          </label>
+        ))}
+      </div>
+      <p className="mt-2 text-[10px] text-slate-400">
+        Colesterol, triglicerídeos e demais resultados de laboratório entram por{' '}
+        <strong className="font-medium">Exames</strong> — lá o valor carrega data de coleta e laudo.
+      </p>
+    </div>
+  )
+}
+
 function AudioFonteChip({ fonte }: { fonte: string }) {
   return (
     <span className="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
@@ -291,6 +378,9 @@ function SoapEditor({
   onChange,
   onAssinar,
   onAbrirProntuario,
+  queixas,
+  medidas,
+  onMedida,
 }: {
   soap: SOAP
   estado: EscribaEstado
@@ -300,6 +390,9 @@ function SoapEditor({
   onChange: (campo: keyof SOAP, valor: string) => void
   onAssinar: () => void
   onAbrirProntuario: () => void
+  queixas: string[]
+  medidas?: MedidasConsulta
+  onMedida?: (campo: keyof MedidasConsulta, valor: string) => void
 }) {
   const [transcricaoAberta, setTranscricaoAberta] = useState(false)
   const assinado = estado === 'assinado'
@@ -343,12 +436,38 @@ function SoapEditor({
       <div className="space-y-3">
         {campos.map((c) => (
           <div key={c}>
-            <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
-              <span className="flex h-4 w-4 items-center justify-center rounded bg-slate-200 text-[9px] font-bold text-slate-600 dark:bg-slate-700 dark:text-slate-200">
+            <label className="mb-1 flex flex-wrap items-baseline gap-x-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-slate-200 text-[9px] font-bold text-slate-600 dark:bg-slate-700 dark:text-slate-200">
                 {c}
               </span>
               {SOAP_LABEL[c]}
+              {/* A explicação vive junto do rótulo: "Subjetivo" não ensina onde escrever o quê. */}
+              <span className="font-normal text-slate-400 dark:text-slate-500">
+                · {SOAP_AJUDA[c]}
+              </span>
             </label>
+
+            {/* Queixas frequentes alimentam o Subjetivo — é o relato do paciente. */}
+            {c === 'S' && !assinado && queixas.length > 0 && (
+              <div className="mb-1.5 flex flex-wrap gap-1">
+                {queixas.map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    onClick={() => onChange('S', soap.S ? `${soap.S.replace(/\s*$/, '')} · ${q}` : q)}
+                    className="rounded-full border border-slate-200 px-2 py-0.5 text-[10px] text-slate-500 transition hover:border-teal-500 hover:bg-teal-50 hover:text-teal-700 dark:border-slate-700 dark:text-slate-400 dark:hover:border-teal-500 dark:hover:bg-teal-950/40 dark:hover:text-teal-300"
+                  >
+                    + {q}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Medidas de hoje: campo numérico, não prosa — só assim viram série. */}
+            {c === 'O' && !assinado && onMedida && medidas && (
+              <MedidasDeHoje medidas={medidas} onMedida={onMedida} />
+            )}
+
             <textarea
               value={soap[c]}
               readOnly={assinado}

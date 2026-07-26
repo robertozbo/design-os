@@ -4,6 +4,7 @@ import type {
   AssinaturaInfo,
   ConsultaData,
   EscribaEstado,
+  MedidasConsulta,
   Modalidade,
   SOAP,
 } from '@/../product-medical-clinic/sections/consulta/types'
@@ -82,6 +83,16 @@ export default function ConsultaPreview() {
   const [transcricaoIdx, setTranscricaoIdx] = useState(0)
   const [soap, setSoap] = useState<SOAP>(VAZIO)
   const [viaIA, setViaIA] = useState(true)
+  // Medidas aferidas na sala — campo numérico, não prosa: só assim viram série do paciente.
+  const [medidas, setMedidas] = useState<MedidasConsulta>({
+    peso: '',
+    altura: '',
+    pressaoSistolica: '',
+    pressaoDiastolica: '',
+    frequenciaCardiaca: '',
+    temperatura: '',
+    saturacao: '',
+  })
   const [assinatura, setAssinatura] = useState<AssinaturaInfo | null>(null)
   const [modal, setModal] = useState<null | 'exame' | 'prescrever' | 'encaminhar'>(null)
   /** Painel aberto por cima da consulta — o SOAP continua montado atrás. */
@@ -205,6 +216,9 @@ export default function ConsultaPreview() {
         // Sobrepõe em vez de navegar: trocar de rota aqui descartaria a evolução não assinada.
         onAbrirProntuario={() => setPainel('prontuario')}
         onAcao={onAcao}
+        queixas={(data as { queixasFrequentes?: string[] }).queixasFrequentes ?? []}
+        medidas={medidas}
+        onMedida={(campo, valor) => setMedidas((m) => ({ ...m, [campo]: valor }))}
         resumoApp={RESUMO_APP}
         onAbrirAcompanhamento={() => setPainel('acompanhamento')}
         solicitacoes={solicitacoes}

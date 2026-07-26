@@ -45,6 +45,19 @@ A tela de **atendimento** do médico — presencial e teleconsulta no mesmo flux
   tela. A evolução é que manda na hierarquia visual
 - **Crédito da IA vem da transcrição**, não do campo estar preenchido: texto digitado à mão nunca é
   atribuído ao modelo, e a assinatura registra `assistidoPorIA` conforme o que de fato ocorreu
+- **Rótulo do SOAP explica o campo**: "Subjetivo" e "Objetivo" são jargão e não ensinam onde
+  escrever o quê. Cada letra vem com a frase do que entra ali (relato do paciente · o que você mediu
+  · sua interpretação · a conduta)
+- **Queixas frequentes** no Subjetivo: chips clicáveis (dor no peito, tosse seca, tontura…) que
+  acumulam no campo, sem impedir escrever livremente
+- **Medidas de hoje** no Objetivo — campos numéricos, não prosa. Valor digitado em texto não vira
+  série, não aparece no Acompanhamento e não dá para comparar com a consulta anterior. Alimentam a
+  mesma série do app, com `fonte: 'Clínica'`
+- **Pressão arterial é um par** (sistólica/diastólica): 138 sem o 88 é metade da informação
+- **Altura** entra para calcular IMC, não como série — em adulto é praticamente fixa
+- **Resultado de laboratório não se digita aqui**: colesterol, triglicerídeos e afins vêm pela
+  section Exames, que guarda data de coleta, laboratório e laudo. Digitado no SOAP seria número sem
+  procedência num registro com valor legal
 - **Barra de ações** (rodapé): Prescrever · Solicitar exame · Encaminhar · Assinar e finalizar
 - **Prontuário sem sair da consulta**: depois de assinar, "Abrir prontuário do paciente" abre um
   **painel do tamanho da página por cima** da consulta (`PainelSobreposto`), com "Voltar à consulta",

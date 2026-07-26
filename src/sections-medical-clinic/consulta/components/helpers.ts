@@ -31,3 +31,14 @@ export const SOAP_LABEL: Record<'S' | 'O' | 'A' | 'P', string> = {
   A: 'Avaliação',
   P: 'Plano',
 }
+
+/**
+ * O que entra em cada letra do SOAP. O rótulo sozinho não ensina: "Subjetivo" e "Objetivo" são
+ * jargão, e quem aprendeu há vinte anos (ou nunca formalizou) preenche no lugar errado.
+ */
+export const SOAP_AJUDA: Record<'S' | 'O' | 'A' | 'P', string> = {
+  S: 'O que o paciente relata — queixa, história, sintomas nas palavras dele',
+  O: 'O que você mediu e examinou — sinais vitais, exame físico, resultados',
+  A: 'Sua interpretação — hipóteses diagnósticas, o que isso significa',
+  P: 'A conduta — prescrição, exames solicitados, orientações, retorno',
+}
