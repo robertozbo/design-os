@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import data from '@/../product-medical-clinic/sections/consulta/data.json'
 import type {
   AssinaturaInfo,
@@ -8,8 +7,18 @@ import type {
   Modalidade,
   SOAP,
 } from '@/../product-medical-clinic/sections/consulta/types'
+import prontuarioData from '@/../product-medical-clinic/sections/prontuario/data.json'
+import type {
+  AcessoAtual,
+  AnamneseCompartilhada,
+  Evolucao,
+  MedicoVinculo,
+  PacienteRef,
+} from '@/../product-medical-clinic/sections/prontuario/types'
+import { ProntuarioView } from '../prontuario/components'
 import {
   ConsultaView,
+  PainelSobreposto,
   SolicitarExameModal,
   PrescreverModal,
   EncaminharModal,
@@ -26,7 +35,6 @@ let toastSeq = 0
 const VAZIO: SOAP = { S: '', O: '', A: '', P: '' }
 
 export default function ConsultaPreview() {
-  const navigate = useNavigate()
   const base = data as unknown as ConsultaData
 
   const [modalidade, setModalidade] = useState<Modalidade>(base.modalidade)
@@ -38,6 +46,8 @@ export default function ConsultaPreview() {
   const [viaIA, setViaIA] = useState(true)
   const [assinatura, setAssinatura] = useState<AssinaturaInfo | null>(null)
   const [modal, setModal] = useState<null | 'exame' | 'prescrever' | 'encaminhar'>(null)
+  /** Painel aberto por cima da consulta — o SOAP continua montado atrás. */
+  const [painel, setPainel] = useState<null | 'prontuario'>(null)
   const [prescricoesSessao, setPrescricoesSessao] = useState<SolicItem[]>([])
   const [examesSessao, setExamesSessao] = useState<SolicItem[]>([])
   const [encaminhamentosSessao, setEncaminhamentosSessao] = useState<SolicItem[]>([])
@@ -150,13 +160,30 @@ export default function ConsultaPreview() {
         onParar={() => setEstado('transcrevendo')}
         onSoapChange={(campo, valor) => setSoap((prev) => ({ ...prev, [campo]: valor }))}
         onAssinar={assinar}
-        onAbrirProntuario={() => {
-          pushToast(`Abrindo prontuário de ${base.paciente.nome}`)
-          navigate('/medical-clinic/sections/prontuario')
-        }}
+        // Sobrepõe em vez de navegar: trocar de rota aqui descartaria a evolução não assinada.
+        onAbrirProntuario={() => setPainel('prontuario')}
         onAcao={onAcao}
         solicitacoes={solicitacoes}
       />
+
+      {painel === 'prontuario' && (
+        <PainelSobreposto
+          titulo={`Prontuário · ${base.paciente.nome}`}
+          subtitulo="Consulta em andamento continua aberta atrás — nada é perdido ao fechar"
+          voltarPara="Voltar à consulta"
+          onFechar={() => setPainel(null)}
+        >
+          <ProntuarioView
+            paciente={prontuarioData.paciente as PacienteRef}
+            acessoAtual={prontuarioData.acessoAtual as AcessoAtual}
+            equipeCuidado={prontuarioData.equipeCuidado as MedicoVinculo[]}
+            anamnese={prontuarioData.anamnese as AnamneseCompartilhada}
+            evolucoes={prontuarioData.evolucoes as Evolucao[]}
+            onAbrirAudit={() => pushToast('Log de acesso disponível na section Prontuário')}
+            onExportar={() => pushToast('PDF gerado · exportação registrada no log de acesso')}
+          />
+        </PainelSobreposto>
+      )}
 
       {modal === 'exame' && (
         <SolicitarExameModal

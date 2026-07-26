@@ -1,12 +1,16 @@
 {
   "paciente": {
-    "id": "p-andre",
-    "nome": "André Nogueira",
-    "iniciais": "AN",
+    "id": "pct-001",
+    "nome": "Maria Silva Andrade",
+    "iniciais": "MA",
     "idade": 45,
-    "genero": "Masculino",
-    "convenio": "SulAmérica",
-    "condicoesCronicas": ["Hipotireoidismo", "Sobrepeso"]
+    "genero": "feminino",
+    "convenio": "Particular",
+    "condicoesCronicas": [
+      "Diabetes Mellitus tipo 2",
+      "Hipotireoidismo",
+      "Hipertensão"
+    ]
   },
   "motivo": "Tireoidite · primeira consulta",
   "modalidade": "presencial",
@@ -20,7 +24,7 @@
     "P": "Solicitados TSH, T4 livre e anti-TPO. Iniciar levotiroxina 50 mcg/dia em jejum, reavaliar em 6 semanas com novo TSH. Orientações sobre adesão e horário da medicação. Retorno agendado."
   },
   "transcricaoMock": [
-    "Médico: Bom dia, André. O que te trouxe hoje?",
+    "Médico: Bom dia, Maria. O que te trouxe hoje?",
     "Paciente: Doutora, ando muito cansado, sem energia nenhuma faz uns três meses…",
     "Paciente: E engordei uns quatro quilos mesmo comendo igual. Sinto muito frio também.",
     "Médico: Entendi. E o sono, como está? Notou queda de cabelo?",

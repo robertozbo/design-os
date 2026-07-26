@@ -35,6 +35,10 @@ A tela de **atendimento** do médico — presencial e teleconsulta no mesmo flux
   - Últimos exames (nome, data, valor/flag alterado)
   - Evoluções recentes (autor + especialidade + resumo) — cross-médico, sob escopo
 - **Barra de ações** (rodapé): Prescrever · Solicitar exame · Encaminhar · Assinar e finalizar
+- **Prontuário sem sair da consulta**: depois de assinar, "Abrir prontuário do paciente" abre um
+  **painel do tamanho da página por cima** da consulta (`PainelSobreposto`), com "Voltar à consulta",
+  X e fechamento por `Esc`. Nunca troca de rota: a consulta segue montada atrás, então a evolução
+  assinada, os exames solicitados e as prescrições da sessão continuam na tela ao fechar.
 
 ### Estados & regras
 - Não é possível assinar sem SOAP (rascunho existente)
