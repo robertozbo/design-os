@@ -71,10 +71,15 @@ export function desdeUltimaConsulta(iso: string): string {
   return meses === 1 ? 'há 1 mês' : `há ${meses} meses`
 }
 
-/** Número com sinal explícito — a variação só é legível se o sinal aparecer. */
+/**
+ * Número com sinal explícito — a variação só é legível se o sinal aparecer.
+ *
+ * Usa o menos tipográfico `−` (U+2212), não o hífen que o `Intl` devolve: os painéis da section
+ * dividem a mesma tela e o glifo mudava ao trocar de aba.
+ */
 export function comSinal(n: number, casas = 1): string {
   const v = n.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas })
-  return n > 0 ? `+${v}` : v
+  return n > 0 ? `+${v}` : v.replace(/^-/, '−')
 }
 
 export function numero(n: number, casas = 0): string {

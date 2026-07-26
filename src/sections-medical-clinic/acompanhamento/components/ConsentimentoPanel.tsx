@@ -2,7 +2,6 @@ import { useState } from 'react'
 import {
   CalendarDays,
   Check,
-  FlaskConical,
   Info,
   Link2,
   Lock,
@@ -14,18 +13,15 @@ import {
 } from 'lucide-react'
 import type {
   Consentimento,
-  ExameCompartilhado,
   VinculoApp,
 } from '@/../product-medical-clinic/sections/acompanhamento/types'
-import { desdeUltimaConsulta, diasEntre, NIVEL_META, dataExtensa } from './helpers'
+import { desdeUltimaConsulta, diasEntre, dataExtensa } from './helpers'
 
 interface Props {
   vinculo: VinculoApp
   consentimentos: Consentimento[]
-  exames: ExameCompartilhado[]
 }
 
-/** Leitura clínica do exame — dita só a cor do badge, sem tom de alarme. */
 /** Data + hora no formato da section — a data vem de `dataExtensa`, fonte única do módulo. */
 function formatarDataHora(iso: string): string {
   const hora = iso.slice(11, 16)
@@ -44,7 +40,11 @@ function IconeDispositivo({ nome }: { nome: string }) {
   return <Smartphone className={classe} />
 }
 
-export function ConsentimentoPanel({ vinculo, consentimentos, exames }: Props) {
+/**
+ * Enquadramento de LGPD de tudo que a tela mostra: de onde o dado vem (vínculo com o app) e o que o
+ * paciente autorizou compartilhar. Fica fora das tabs, no rodapé — informativo, não alarme.
+ */
+export function ConsentimentoPanel({ vinculo, consentimentos }: Props) {
   const [notaAberta, setNotaAberta] = useState(false)
 
   // Referência de "hoje" vem do helper da seção (data fixa do mock) — usar `Date.now()` faria o
@@ -55,10 +55,6 @@ export function ConsentimentoPanel({ vinculo, consentimentos, exames }: Props) {
   const syncAntiga = syncValida && diasSync > 2
 
   const liberados = consentimentos.filter((c) => c.compartilhado).length
-  // Só afirmamos algo sobre autorização de exames se o escopo existir de fato na lista — caso
-  // contrário a tela diria "o paciente não autorizou" sem base, que é justamente o erro que este
-  // painel existe para evitar.
-  const escopoExames = consentimentos.find((c) => /exame/i.test(c.escopo))
 
   return (
     <section className="space-y-4">
@@ -224,62 +220,6 @@ export function ConsentimentoPanel({ vinculo, consentimentos, exames }: Props) {
                       : 'Não compartilhado'}
                   </div>
                 </div>
-              </li>
-            ))
-          )}
-        </ul>
-      </div>
-
-      {/* ── Exames compartilhados pelo app ──────────────────────────────── */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <h3 className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-            <FlaskConical className="h-3.5 w-3.5" strokeWidth={2} />
-            Exames compartilhados pelo paciente
-          </h3>
-          {exames.length > 0 && (
-            <span className="text-[11px] font-medium tabular-nums text-slate-500 dark:text-slate-400">
-              {exames.length} {exames.length === 1 ? 'exame' : 'exames'}
-            </span>
-          )}
-        </div>
-
-        <ul className="mt-3 space-y-2">
-          {exames.length === 0 ? (
-            <li className="rounded-xl border border-dashed border-slate-300 p-6 text-center text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
-              {escopoExames === undefined
-                ? 'Nenhum exame compartilhado pelo app.'
-                : escopoExames.compartilhado
-                  ? 'O escopo está liberado, mas o paciente ainda não compartilhou exames pelo app.'
-                  : 'O paciente não autorizou o compartilhamento de exames — pode haver exames no app que a clínica não vê.'}
-            </li>
-          ) : (
-            exames.map((e) => (
-              <li
-                key={e.id}
-                className="flex items-start gap-3 rounded-xl border border-slate-200 p-3 dark:border-slate-800"
-              >
-                <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-                  <FlaskConical className="h-4 w-4" strokeWidth={1.75} />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <span className="text-sm font-medium text-slate-800 dark:text-slate-100">
-                      {e.nome}
-                    </span>
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${NIVEL_META[e.nivel].badge}`}
-                    >
-                      {NIVEL_META[e.nivel].label}
-                    </span>
-                  </div>
-                  <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
-                    {e.resumo}
-                  </p>
-                </div>
-                <span className="shrink-0 text-[11px] tabular-nums text-slate-500 dark:text-slate-400">
-                  {dataExtensa(e.data)}
-                </span>
               </li>
             ))
           )}

@@ -40,12 +40,18 @@ formatado** (`ResumoApp`) e só exibe. Assim a interpretação clínica não se 
 ## UI Requirements
 
 ### Layout
-- **Cabeçalho**: paciente, desde quando usa o app, última sincronização, dispositivos conectados
-- **Métricas** — grid de cards (1 col mobile · 2 md · 3 lg) com sparkline SVG e linha de meta
-- **Atividade** — card único: passos/dia, minutos ativos, treinos, adesão + barras SVG
-- **Composição corporal** — bioimpedância mais recente com variação contra a anterior, histórico
-  compacto, e a avaliação física com medidas e autoria
-- **Consentimento & exames** — vínculo, escopos (liberados e bloqueados) e exames compartilhados
+- **Cabeçalho**: paciente, referência temporal (desde a consulta de …) e o chip do vínculo com o app
+- **Tabs** com contador por aba:
+  | Tab | Conteúdo |
+  |---|---|
+  | **Métricas** | cards com valor, variação, meta, fonte e sparkline SVG |
+  | **Atividades** | passos/dia, minutos ativos, treinos, adesão + barras SVG com marca da última consulta |
+  | **Indicadores** | avaliação física/antropometria: medidas, variação e autoria da medição |
+  | **Bioindicadores** | bioimpedância: peso, gordura, massa magra, água, IMC + histórico |
+  | **Exames** | exames que o paciente subiu pelo app e liberou |
+- **Permissões** — vínculo, dispositivos e escopos (liberados e bloqueados). Fica **fora das tabs**,
+  sempre visível: esconder atrás de aba um escopo não liberado faria o médico confundir "não
+  compartilhou" com "não tem dado". É o enquadramento de LGPD de tudo que aparece acima.
 
 ### Estados & regras
 - **Direção desejável por métrica**: peso, glicemia e pressão caindo é bom; sono e passos subindo é

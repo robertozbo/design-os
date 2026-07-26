@@ -45,7 +45,12 @@
       "desde": "2026-03-15"
     },
     {
-      "escopo": "Composição corporal",
+      "escopo": "Indicadores",
+      "compartilhado": true,
+      "desde": "2026-04-02"
+    },
+    {
+      "escopo": "Bioindicadores",
       "compartilhado": true,
       "desde": "2026-04-02"
     },
