@@ -24,6 +24,8 @@ export interface AtendimentoItem {
   modalidade: Modalidade
   duracaoMin: number
   geradoPorIA: boolean
+  /** Paciente vinculado ao app Nymos — habilita acompanhamento entre consultas. */
+  pacienteVinculado: boolean
   prescricoes: number
   examesSolicitados: number
 }

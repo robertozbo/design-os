@@ -1,4 +1,4 @@
-import { FileText, Search, Sparkles, Video } from 'lucide-react'
+import { FileText, Search, Smartphone, Sparkles, Video } from 'lucide-react'
 import type {
   AtendimentoItem,
   AtendimentosData,
@@ -191,6 +191,15 @@ function AtendimentoRow({ item, onClick }: { item: AtendimentoItem; onClick: () 
             </span>
           )}
         </div>
+        {item.pacienteVinculado && (
+          <span
+            title={`${item.paciente.nome} usa o app Nymos — dados compartilhados entre consultas`}
+            className="shrink-0 text-emerald-500 dark:text-emerald-400"
+          >
+            <Smartphone className="h-4 w-4" strokeWidth={1.75} />
+            <span className="sr-only">Paciente vinculado ao app</span>
+          </span>
+        )}
         <div className="w-12 shrink-0 text-right text-[11px] font-mono tabular-nums text-slate-400">
           {item.duracaoMin}min
         </div>

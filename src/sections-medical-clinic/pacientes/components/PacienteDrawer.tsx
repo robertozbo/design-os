@@ -115,10 +115,35 @@ export function PacienteDrawer({
             <MiniCard label="Última consulta" valor={dataCurta(p.ultimaConsultaEm)} sub={p.ultimaEspecialidade ?? '—'} />
             <MiniCard label="Próxima consulta" valor={dataCurta(p.proximaConsultaEm)} sub={p.proximaEspecialidade ?? '—'} />
           </div>
-          <div>
-            <span className={`inline-block rounded-md px-2 py-1 text-[11px] font-medium ${STATUS_APP_META[p.statusApp].badge}`}>
-              {STATUS_APP_META[p.statusApp].label}
-            </span>
+          {/* App Nymos — status do vínculo e o convite no mesmo lugar */}
+          <div className="rounded-xl border border-slate-200 p-3 dark:border-slate-800">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                App Nymos
+              </span>
+              <span className={`rounded-md px-2 py-1 text-[11px] font-medium ${STATUS_APP_META[p.statusApp].badge}`}>
+                {STATUS_APP_META[p.statusApp].label}
+              </span>
+            </div>
+            <p className="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+              {!p.email
+                ? 'Sem email cadastrado — edite o paciente para poder convidar.'
+                : p.statusApp === 'vinculado'
+                  ? `Vinculado por ${p.email} · compartilha dados conforme as permissões que aceitou.`
+                  : p.statusApp === 'convite-pendente'
+                    ? `Convite enviado para ${p.email} · aguardando o aceite no app.`
+                    : `${p.email} ainda não foi convidado.`}
+            </p>
+            {p.statusApp !== 'vinculado' && (
+              <button
+                onClick={() => onConvidar(p.id)}
+                disabled={!p.email}
+                className="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-slate-200 py-2 text-xs font-medium text-slate-700 transition hover:border-teal-500 hover:bg-teal-50 hover:text-teal-700 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-200 dark:hover:border-teal-500 dark:hover:bg-teal-950/40 dark:hover:text-teal-300"
+              >
+                <Send className="h-3.5 w-3.5" />
+                {p.statusApp === 'convite-pendente' ? 'Reenviar convite' : 'Enviar convite'}
+              </button>
+            )}
           </div>
         </div>
 
@@ -130,27 +155,12 @@ export function PacienteDrawer({
           >
             <FileText className="h-4 w-4" /> Abrir prontuário compartilhado
           </button>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 gap-2">
             <button
               onClick={() => onNovaConsulta(p.id)}
               className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
             >
               <CalendarPlus className="h-3.5 w-3.5" /> Nova consulta
-            </button>
-            <button
-              onClick={() => onConvidar(p.id)}
-              disabled={p.statusApp === 'vinculado' || !p.email}
-              title={
-                !p.email
-                  ? 'Cadastre o email do paciente para poder convidar'
-                  : p.statusApp === 'convite-pendente'
-                    ? `Reenviar convite para ${p.email}`
-                    : `Enviar convite para ${p.email}`
-              }
-              className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
-            >
-              <Send className="h-3.5 w-3.5" />{' '}
-              {p.statusApp === 'convite-pendente' ? 'Reenviar convite' : 'Convidar app'}
             </button>
           </div>
         </div>

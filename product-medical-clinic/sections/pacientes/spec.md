@@ -12,7 +12,11 @@ O **pool compartilhado de pacientes** da clínica — a lista única de paciente
 - Toggle **Toda a clínica / Meus pacientes** (o médico logado filtra pra onde está na equipe)
 
 ### Abrir um paciente
-- Clicar numa linha abre **drawer de resumo**: identidade, equipe de cuidado (nome + especialidade + principal), próxima consulta, status do app
+- Clicar numa linha abre **drawer de resumo**: identidade, equipe de cuidado (nome + especialidade
+  + principal), próxima consulta e o bloco **App Nymos**
+- O bloco App Nymos reúne status e ação no mesmo lugar: badge do vínculo, a frase do estado atual
+  (vinculado por qual email · convite enviado aguardando aceite · ainda não convidado) e o botão
+  "Enviar convite"/"Reenviar convite". Some quando já está `vinculado`; fica desabilitado sem email
 - Botão **"Abrir prontuário compartilhado"** leva ao prontuário (cross-especialidade + audit log)
 - Botão "Convidar app" para paciente sem vínculo (vira "Reenviar convite" se já pendente);
   "Nova consulta" agenda
