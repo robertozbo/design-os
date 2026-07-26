@@ -19,6 +19,17 @@ export interface Ponto {
   valor: number
 }
 
+/**
+ * Segundo componente de uma medida que é **par** — pressão arterial é 138/88, não 138.
+ * A diastólica isolada muda conduta, então guardá-la à parte perderia informação clínica.
+ */
+export interface ComponenteSecundario {
+  rotulo: string
+  valorAtual: number
+  variacao: number
+  serie: Ponto[]
+}
+
 export interface Metrica {
   id: string
   nome: string
@@ -33,6 +44,8 @@ export interface Metrica {
   meta: number | null
   fonte: FonteDado
   serie: Ponto[]
+  /** Presente quando a medida é um par — exibida como "138/88". */
+  secundaria?: ComponenteSecundario
 }
 
 export interface Atividade {

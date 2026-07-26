@@ -33,7 +33,7 @@ import {
   type SolicItem,
 } from './components'
 
-const acomp = acompanhamentoData as unknown as AcompanhamentoData
+const ACOMP_INICIAL = acompanhamentoData as unknown as AcompanhamentoData
 
 /** Para onde o número deve ir. Cair é bom em peso/glicemia/pressão; subir é bom em sono. */
 const DIRECAO: Record<string, 'menor' | 'maior'> = {
@@ -53,8 +53,8 @@ function tomDa(m: Metrica): 'melhora' | 'piora' | 'neutro' {
 
 /** As 3 métricas que mais se mexeram — em consulta de 27 min, ninguém lê cinco. */
 const RESUMO_APP = {
-  ultimaSync: acomp.vinculo.ultimaSync,
-  itens: [...acomp.metricas]
+  ultimaSync: ACOMP_INICIAL.vinculo.ultimaSync,
+  itens: [...ACOMP_INICIAL.metricas]
     .sort((a, b) => Math.abs(b.variacao) - Math.abs(a.variacao))
     .slice(0, 3)
     .map((m) => ({
@@ -63,6 +63,51 @@ const RESUMO_APP = {
       delta: `${m.variacao > 0 ? '+' : ''}${m.variacao.toLocaleString('pt-BR')}`,
       tom: tomDa(m),
     })),
+}
+
+/** Dia da consulta no protótipo — mock tem data fixa para não mudar screenshot. */
+const DATA_CONSULTA = '2026-07-25'
+
+/** Quais medidas preenchidas viram ponto de série, na ordem em que aparecem no toast. */
+function aplicarMedidas(m: MedidasConsulta): string[] {
+  const nomes: string[] = []
+  if (m.peso.trim()) nomes.push('peso')
+  if (m.pressaoSistolica.trim() && m.pressaoDiastolica.trim()) nomes.push('pressão')
+  if (m.frequenciaCardiaca.trim()) nomes.push('FC')
+  return nomes
+}
+
+const num = (v: string) => Number(v.replace(',', '.'))
+
+/**
+ * Anexa a medida da consulta à métrica correspondente, com a variação recalculada contra o valor
+ * anterior. Altura fica de fora de propósito: em adulto é fixa e só serve pro IMC.
+ */
+function atualizarMetrica(m: Metrica, med: MedidasConsulta, data: string): Metrica {
+  const push = (metrica: Metrica, valor: number, secundario?: number): Metrica => ({
+    ...metrica,
+    valorAtual: valor,
+    medidoEm: data,
+    variacao: Math.round((valor - metrica.valorAtual) * 10) / 10,
+    fonte: 'Clínica',
+    serie: [...metrica.serie, { data, valor }],
+    secundaria:
+      metrica.secundaria && secundario !== undefined
+        ? {
+            ...metrica.secundaria,
+            valorAtual: secundario,
+            variacao: Math.round((secundario - metrica.secundaria.valorAtual) * 10) / 10,
+            serie: [...metrica.secundaria.serie, { data, valor: secundario }],
+          }
+        : metrica.secundaria,
+  })
+
+  if (m.id === 'm-peso' && med.peso.trim()) return push(m, num(med.peso))
+  if (m.id === 'm-fc' && med.frequenciaCardiaca.trim()) return push(m, num(med.frequenciaCardiaca))
+  if (m.id === 'm-pas' && med.pressaoSistolica.trim() && med.pressaoDiastolica.trim()) {
+    return push(m, num(med.pressaoSistolica), num(med.pressaoDiastolica))
+  }
+  return m
 }
 
 interface Toast {
@@ -82,8 +127,15 @@ export default function ConsultaPreview() {
   const [escribaTimer, setEscribaTimer] = useState(0)
   const [transcricaoIdx, setTranscricaoIdx] = useState(0)
   const [soap, setSoap] = useState<SOAP>(VAZIO)
-  const [viaIA, setViaIA] = useState(true)
+  /**
+   * Só é `true` quando achados do escriba foram de fato aplicados à evolução. Nasce `false`:
+   * a assinatura registra autoria de ato médico, e creditar a IA por texto que o médico digitou
+   * seria declaração falsa no documento que ele assina.
+   */
+  const [viaIA, setViaIA] = useState(false)
   // Medidas aferidas na sala — campo numérico, não prosa: só assim viram série do paciente.
+  // O Acompanhamento é estado: ao assinar, as medidas da sala entram na série do paciente.
+  const [acomp, setAcomp] = useState<AcompanhamentoData>(ACOMP_INICIAL)
   const [medidas, setMedidas] = useState<MedidasConsulta>({
     peso: '',
     altura: '',
@@ -175,8 +227,18 @@ export default function ConsultaPreview() {
       assistidoPorIA: viaIA,
       modeloIA: viaIA ? base.modeloIA : null,
     })
+    // Medida aferida na sala vira ponto da série, com fonte "Clínica" — é o que permite comparar
+    // o que o paciente mede em casa com o que foi medido no consultório.
+    const gravadas = aplicarMedidas(medidas)
+    if (gravadas.length > 0) {
+      setAcomp((a) => ({ ...a, metricas: a.metricas.map((m) => atualizarMetrica(m, medidas, DATA_CONSULTA)) }))
+    }
     setEstado('assinado')
-    pushToast('Evolução assinada e enviada ao prontuário')
+    pushToast(
+      gravadas.length > 0
+        ? `Evolução assinada · ${gravadas.join(', ')} ${gravadas.length > 1 ? 'registrados' : 'registrado'} no acompanhamento`
+        : 'Evolução assinada e enviada ao prontuário',
+    )
   }
 
   const onAcao = (a: 'prescrever' | 'exame' | 'encaminhar') => {
@@ -225,6 +287,7 @@ export default function ConsultaPreview() {
             porCampo[i.campo] = porCampo[i.campo] ? `${porCampo[i.campo]} ${i.texto}` : i.texto
           }
           setSoap(porCampo)
+          setViaIA(true)
           setEstado('rascunho')
           pushToast(`${itens.length} achado(s) aplicados à evolução · revise antes de assinar`)
         }}

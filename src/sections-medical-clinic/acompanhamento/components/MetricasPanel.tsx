@@ -240,6 +240,13 @@ function MetricaCard({
         <div className="flex items-baseline gap-1">
           <span className="text-3xl font-semibold tabular-nums text-slate-900 dark:text-slate-50">
             {fmt(metrica.valorAtual)}
+            {/* Medida par (pressão): o segundo número faz parte do valor, não é acessório. */}
+            {metrica.secundaria && (
+              <>
+                <span className="text-slate-300 dark:text-slate-600">/</span>
+                {fmt(metrica.secundaria.valorAtual)}
+              </>
+            )}
           </span>
           <span className="text-sm text-slate-400 dark:text-slate-500">{metrica.unidade}</span>
         </div>
@@ -249,7 +256,9 @@ function MetricaCard({
           >
             <Seta className="h-3.5 w-3.5 shrink-0" strokeWidth={2} aria-hidden="true" />
             <span>
-              {fmtSinal(variacao)} {metrica.unidade}
+              {fmtSinal(variacao)}
+              {metrica.secundaria && `/${fmtSinal(arredondar(metrica.secundaria.variacao))}`}{' '}
+              {metrica.unidade}
             </span>
           </div>
           <div className="text-[10px] text-slate-400 dark:text-slate-500">

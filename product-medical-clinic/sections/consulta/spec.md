@@ -60,7 +60,14 @@ A tela de **atendimento** do médico — presencial e teleconsulta no mesmo flux
 - **Medidas de hoje** no Objetivo — campos numéricos, não prosa. Valor digitado em texto não vira
   série, não aparece no Acompanhamento e não dá para comparar com a consulta anterior. Alimentam a
   mesma série do app, com `fonte: 'Clínica'`
-- **Pressão arterial é um par** (sistólica/diastólica): 138 sem o 88 é metade da informação
+- **Pressão arterial é um par** (sistólica/diastólica): 138 sem o 88 é metade da informação — e o
+  Acompanhamento exibe `138/88`, com variação `+4/+2`
+- **Ao assinar, as medidas viram série**: peso, pressão e FC entram no Acompanhamento com
+  `fonte: 'Clínica'`, o que permite comparar o que o paciente mede em casa com o que foi aferido no
+  consultório
+- **`assistidoPorIA` só é verdadeiro se achados do escriba foram aplicados**. Nasce falso: a
+  assinatura registra autoria de ato médico, e creditar a IA por texto que o médico digitou seria
+  declaração falsa no documento que ele assina
 - **Altura** entra para calcular IMC, não como série — em adulto é praticamente fixa
 - **Resultado de laboratório não se digita aqui**: colesterol, triglicerídeos e afins vêm pela
   section Exames, que guarda data de coleta, laboratório e laudo. Digitado no SOAP seria número sem

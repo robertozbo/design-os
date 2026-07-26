@@ -181,7 +181,7 @@
     },
     {
       "id": "m-pas",
-      "nome": "Pressão sistólica",
+      "nome": "Pressão arterial",
       "unidade": "mmHg",
       "valorAtual": 138,
       "medidoEm": "2026-07-22",
@@ -231,7 +231,54 @@
           "data": "2026-07-21",
           "valor": 138.0
         }
-      ]
+      ],
+      "secundaria": {
+        "rotulo": "Diastólica",
+        "valorAtual": 88,
+        "variacao": 2,
+        "serie": [
+          {
+            "data": "2026-05-20",
+            "valor": 84
+          },
+          {
+            "data": "2026-05-27",
+            "valor": 85
+          },
+          {
+            "data": "2026-06-03",
+            "valor": 85
+          },
+          {
+            "data": "2026-06-10",
+            "valor": 86
+          },
+          {
+            "data": "2026-06-17",
+            "valor": 86
+          },
+          {
+            "data": "2026-06-24",
+            "valor": 87
+          },
+          {
+            "data": "2026-07-01",
+            "valor": 87
+          },
+          {
+            "data": "2026-07-08",
+            "valor": 88
+          },
+          {
+            "data": "2026-07-15",
+            "valor": 88
+          },
+          {
+            "data": "2026-07-21",
+            "valor": 88
+          }
+        ]
+      }
     },
     {
       "id": "m-sono",
