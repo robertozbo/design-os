@@ -7,6 +7,8 @@ export type EscribaEstado =
   | 'consentimento'
   | 'gravando'
   | 'transcrevendo'
+  /** IA analisando a anotação manual do médico. */
+  | 'analisando'
   /** A IA terminou e lista o que extraiu; nada entra no SOAP antes do médico marcar. */
   | 'revisao'
   | 'rascunho'
@@ -119,6 +121,12 @@ export interface ConsultaData {
   transcricaoMock: string[]
   /** O que a IA extrai da transcrição, para o médico marcar antes de virar SOAP. */
   itensExtraidos: ItemExtraido[]
+  /**
+   * O que a IA devolve ao analisar a anotação **manual** do médico, cruzando com medicações
+   * ativas, exames recentes e os dados que o paciente compartilhou pelo app. Passa pela mesma
+   * revisão: nada entra sem marcação.
+   */
+  itensAnalise: ItemExtraido[]
   contexto: {
     medicacoes: MedicacaoAtiva[]
     exames: ExameRecente[]

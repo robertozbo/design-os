@@ -51,10 +51,15 @@ interface Props {
   itensExtraidos?: ItemExtraido[]
   onAplicarItens?: (itens: ItemExtraido[]) => void
   onDescartarItens?: () => void
+  origemRevisao?: 'transcricao' | 'analise'
+  /** Pede à IA para analisar o que o médico escreveu à mão. */
+  onAnalisar?: () => void
 }
 
 export function EscribaPanel(props: Props) {
   const { estado } = props
+  /** Há o que analisar? Sem texto, a IA não tem insumo. */
+  const temAnotacao = Object.values(props.soap).some((v) => v.trim().length > 0)
   const audioFonte =
     props.modalidade === 'tele'
       ? `chamada de vídeo (você + ${props.pacientePrimeiroNome})`
@@ -94,12 +99,14 @@ export function EscribaPanel(props: Props) {
           />
         )}
         {estado === 'transcrevendo' && <Transcrevendo />}
+        {estado === 'analisando' && <Analisando />}
         {estado === 'revisao' && props.itensExtraidos && props.onAplicarItens && (
           <RevisaoIA
             itens={props.itensExtraidos}
             modeloIA={props.modeloIA}
             onAplicar={props.onAplicarItens}
             onDescartar={props.onDescartarItens ?? (() => {})}
+            origem={props.origemRevisao}
           />
         )}
       </div>
@@ -112,7 +119,7 @@ export function EscribaPanel(props: Props) {
       quem não usa (ou cujo paciente não consentiu) ficava sem onde escrever.
     */}
     <div className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-      <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 px-4 py-3 dark:border-slate-800">
         <div className="flex items-center gap-2">
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300">
             <FileText className="h-4 w-4" />
@@ -128,6 +135,27 @@ export function EscribaPanel(props: Props) {
             </div>
           </div>
         </div>
+
+        {/*
+          Analisar a anotação MANUAL. O valor não é resumir o que o médico escreveu — é cruzar com
+          medicação ativa, exame recente e o que o paciente compartilhou pelo app. Passa pela mesma
+          revisão do escriba: a IA propõe, nada entra sem marcação.
+        */}
+        {props.onAnalisar && estado !== 'assinado' && estado !== 'revisao' && (
+          <button
+            onClick={props.onAnalisar}
+            disabled={!temAnotacao || estado === 'analisando'}
+            title={
+              temAnotacao
+                ? 'Analisa o que você escreveu junto com o contexto do paciente'
+                : 'Escreva alguma coisa na evolução para a IA analisar'
+            }
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 transition hover:border-teal-500 hover:bg-teal-50 hover:text-teal-700 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-300 dark:hover:border-teal-500 dark:hover:bg-teal-950/40 dark:hover:text-teal-300"
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            {estado === 'analisando' ? 'Analisando…' : 'Analisar com IA'}
+          </button>
+        )}
       </div>
       <div className="p-4">
         <SoapEditor
@@ -365,6 +393,17 @@ function Waveform() {
           style={{ height: `${h * 2}px`, animationDelay: `${i * 90}ms` }}
         />
       ))}
+    </div>
+  )
+}
+
+function Analisando() {
+  return (
+    <div className="flex flex-col items-center py-6 text-center">
+      <Loader2 className="h-6 w-6 animate-spin text-teal-500" />
+      <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+        Lendo sua anotação e cruzando com medicações, exames e dados do app…
+      </p>
     </div>
   )
 }

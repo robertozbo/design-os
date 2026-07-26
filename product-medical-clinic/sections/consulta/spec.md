@@ -48,6 +48,11 @@ A tela de **atendimento** do médico — presencial e teleconsulta no mesmo flux
   tela. A evolução é que manda na hierarquia visual
 - **Crédito da IA vem da transcrição**, não do campo estar preenchido: texto digitado à mão nunca é
   atribuído ao modelo, e a assinatura registra `assistidoPorIA` conforme o que de fato ocorreu
+- **Analisar anotação manual**: quando o médico escreve à mão, um botão "Analisar com IA" no bloco
+  Evolução lê o que ele escreveu e cruza com **medicações ativas, exames recentes e os dados que o
+  paciente compartilhou pelo app** — resumir a própria anotação não teria valor; cruzar com o
+  contexto tem. Passa pela mesma revisão do escriba, e o texto do médico é **preservado**: a IA
+  acrescenta, não substitui. Fica desabilitado sem anotação
 - **A IA propõe, o médico dispõe**: nenhum texto entra na evolução sem marcação explícita. Se os
   itens viessem pré-marcados, o médico estaria *removendo* o que a IA já escreveu no registro que ele
   assina — aprovação por omissão. Desmarcado, cada linha que entra é um ato dele. O atalho "Marcar

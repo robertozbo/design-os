@@ -9,6 +9,8 @@ interface Props {
   /** Recebe só o que o médico marcou — o resto nunca chega ao prontuário. */
   onAplicar: (itens: ItemExtraido[]) => void
   onDescartar: () => void
+  /** De onde vieram os itens — muda só o texto, não o pacto de marcação. */
+  origem?: 'transcricao' | 'analise'
 }
 
 const ORDEM: (keyof SOAP)[] = ['S', 'O', 'A', 'P']
@@ -21,7 +23,7 @@ const ORDEM: (keyof SOAP)[] = ['S', 'O', 'A', 'P']
  * entra no prontuário é um ato dele. O atalho "Marcar todos" existe para quando a extração está boa
  * e evita que a fricção vire teatro de conformidade.
  */
-export function RevisaoIA({ itens, modeloIA, onAplicar, onDescartar }: Props) {
+export function RevisaoIA({ itens, modeloIA, onAplicar, onDescartar, origem = 'transcricao' }: Props) {
   const [marcados, setMarcados] = useState<Set<string>>(new Set())
 
   const alternar = (id: string) =>
@@ -39,9 +41,12 @@ export function RevisaoIA({ itens, modeloIA, onAplicar, onDescartar }: Props) {
       <div className="flex items-start gap-2 rounded-lg bg-teal-50 px-3 py-2 text-[11px] text-teal-800 dark:bg-teal-950/30 dark:text-teal-300">
         <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" />
         <span>
-          <strong className="font-semibold">{modeloIA}</strong> extraiu {itens.length} achados da
-          transcrição. <strong className="font-semibold">Nada entra na evolução sem você marcar</strong> —
-          o que ficar de fora não é registrado.
+          <strong className="font-semibold">{modeloIA}</strong>{' '}
+          {origem === 'analise'
+            ? `analisou sua anotação junto com medicações ativas, exames recentes e os dados do app, e sugere ${itens.length} pontos.`
+            : `extraiu ${itens.length} achados da transcrição.`}{' '}
+          <strong className="font-semibold">Nada entra na evolução sem você marcar</strong> — o que
+          ficar de fora não é registrado.
         </span>
       </div>
 

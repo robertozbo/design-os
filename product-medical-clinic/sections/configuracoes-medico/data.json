@@ -42,21 +42,45 @@
     }
   ],
   "atendimento": {
-    "escribaPadrao": true,
+    "escribaPadrao": false,
     "teleconsulta": true,
     "templateAnamnese": "endocrinologia",
     "templatesDisponiveis": [
-      { "value": "endocrinologia", "label": "Endocrinologia" },
-      { "value": "clinica-geral", "label": "Clínica geral" },
-      { "value": "cardiologia", "label": "Cardiologia" },
-      { "value": "nutrologia", "label": "Nutrologia" }
+      {
+        "value": "endocrinologia",
+        "label": "Endocrinologia"
+      },
+      {
+        "value": "clinica-geral",
+        "label": "Clínica geral"
+      },
+      {
+        "value": "cardiologia",
+        "label": "Cardiologia"
+      },
+      {
+        "value": "nutrologia",
+        "label": "Nutrologia"
+      }
     ],
     "duracaoConsulta": "40",
     "duracoesDisponiveis": [
-      { "value": "20", "label": "20 minutos" },
-      { "value": "30", "label": "30 minutos" },
-      { "value": "40", "label": "40 minutos" },
-      { "value": "60", "label": "60 minutos" }
+      {
+        "value": "20",
+        "label": "20 minutos"
+      },
+      {
+        "value": "30",
+        "label": "30 minutos"
+      },
+      {
+        "value": "40",
+        "label": "40 minutos"
+      },
+      {
+        "value": "60",
+        "label": "60 minutos"
+      }
     ]
   },
   "prescricao": {

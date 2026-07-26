@@ -173,5 +173,52 @@
       "campo": "P",
       "texto": "Retorno agendado."
     }
+  ],
+  "itensAnalise": [
+    {
+      "id": "an-1",
+      "campo": "S",
+      "texto": "Queixa principal identificada: fadiga progressiva, com ganho de peso e intolerância ao frio."
+    },
+    {
+      "id": "an-2",
+      "campo": "S",
+      "texto": "Paciente também relata sonolência diurna — checar qualidade do sono na anamnese."
+    },
+    {
+      "id": "an-3",
+      "campo": "O",
+      "texto": "Sono médio caiu 40 min desde a última consulta (6,1 h/noite, dado do app) — pode responder por parte da fadiga."
+    },
+    {
+      "id": "an-4",
+      "campo": "O",
+      "texto": "Pressão sistólica subiu 4 mmHg e segue acima da meta combinada (138 vs 130 mmHg)."
+    },
+    {
+      "id": "an-5",
+      "campo": "A",
+      "texto": "Tríade fadiga + ganho de peso + intolerância ao frio é compatível com hipotireoidismo descompensado; TSH de 18 jul veio 8,4 µUI/mL (alterado)."
+    },
+    {
+      "id": "an-6",
+      "campo": "A",
+      "texto": "Glicemia de jejum caiu 9 mg/dL desde a última consulta — resposta favorável ao Ozempic em uso."
+    },
+    {
+      "id": "an-7",
+      "campo": "P",
+      "texto": "Considerar ajuste de levotiroxina: TSH alterado com sintomas compatíveis."
+    },
+    {
+      "id": "an-8",
+      "campo": "P",
+      "texto": "Reforçar higiene do sono — a queda coincide com o agravamento da queixa de cansaço."
+    },
+    {
+      "id": "an-9",
+      "campo": "P",
+      "texto": "Reavaliar losartana: PA acima da meta há duas medições consecutivas."
+    }
   ]
 }

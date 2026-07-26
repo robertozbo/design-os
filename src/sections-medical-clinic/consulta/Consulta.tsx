@@ -149,6 +149,8 @@ export default function ConsultaPreview() {
   const [modal, setModal] = useState<null | 'exame' | 'prescrever' | 'encaminhar'>(null)
   /** Painel aberto por cima da consulta — o SOAP continua montado atrás. */
   const [painel, setPainel] = useState<null | 'prontuario' | 'acompanhamento'>(null)
+  /** De onde vieram os itens em revisão — transcrição do escriba ou análise da anotação manual. */
+  const [origemRevisao, setOrigemRevisao] = useState<'transcricao' | 'analise'>('transcricao')
   const [prescricoesSessao, setPrescricoesSessao] = useState<SolicItem[]>([])
   const [examesSessao, setExamesSessao] = useState<SolicItem[]>([])
   const [encaminhamentosSessao, setEncaminhamentosSessao] = useState<SolicItem[]>([])
@@ -180,6 +182,13 @@ export default function ConsultaPreview() {
     setToasts((prev) => [...prev, { id, texto }])
     setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 3000)
   }
+
+  // A IA "pensando" sobre a anotação manual — mesmo tempo de espera do escriba.
+  useEffect(() => {
+    if (estado !== 'analisando') return
+    const id = setTimeout(() => setEstado('revisao'), 1600)
+    return () => clearTimeout(id)
+  }, [estado])
 
   // Cronômetro da consulta — corre até assinar.
   useEffect(() => {
@@ -215,7 +224,6 @@ export default function ConsultaPreview() {
   const iniciar = () => {
     setEscribaTimer(0)
     setTranscricaoIdx(0)
-    setViaIA(true)
     setEstado(base.consentimentoIAConcedido ? 'gravando' : 'consentimento')
   }
 
@@ -260,13 +268,16 @@ export default function ConsultaPreview() {
         // Só existe transcrição depois que o escriba rodou — antes disso o SOAP é registro manual,
         // e creditar a IA por um texto que o médico digitou seria falso na assinatura.
         transcricaoCompleta={
-          viaIA && (estado === 'rascunho' || estado === 'assinado') ? base.transcricaoMock : []
+          viaIA && origemRevisao === 'transcricao' && (estado === 'rascunho' || estado === 'assinado')
+            ? base.transcricaoMock
+            : []
         }
         soap={soap}
         assinatura={assinatura}
         onIniciar={iniciar}
         onConsentir={() => setEstado('gravando')}
         onRecusar={() => {
+          setOrigemRevisao('transcricao')
           setViaIA(false)
           setSoap(VAZIO)
           setEstado('rascunho')
@@ -279,10 +290,16 @@ export default function ConsultaPreview() {
         onAbrirProntuario={() => setPainel('prontuario')}
         onAcao={onAcao}
         queixas={(data as { queixasFrequentes?: string[] }).queixasFrequentes ?? []}
-        itensExtraidos={base.itensExtraidos}
+        origemRevisao={origemRevisao}
+        onAnalisar={() => {
+          setOrigemRevisao('analise')
+          setEstado('analisando')
+        }}
+        itensExtraidos={origemRevisao === 'analise' ? base.itensAnalise : base.itensExtraidos}
         onAplicarItens={(itens) => {
           // Só o que foi marcado vira texto — o resto nunca existiu no prontuário.
-          const porCampo = { ...VAZIO }
+          // Na análise da anotação manual, o texto do médico é a base — a IA acrescenta, não apaga.
+          const porCampo: SOAP = origemRevisao === 'analise' ? { ...soap } : { ...VAZIO }
           for (const i of itens) {
             porCampo[i.campo] = porCampo[i.campo] ? `${porCampo[i.campo]} ${i.texto}` : i.texto
           }

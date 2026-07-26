@@ -56,23 +56,28 @@ export default function EncaminhamentosPreview() {
           pacientes={base.pacientes}
           colegas={base.colegas}
           onFechar={() => setNovoAberto(false)}
-          onEnviar={(pacienteNome, colegaNome) => {
+          onEnviar={(dados) => {
             setNovoAberto(false)
             setAba('enviado')
+            // Grava o que o médico preencheu — motivo, contexto, itens e consentimento vinham
+            // fixos daqui, então o registro afirmava um escopo de compartilhamento que podia não
+            // ser o escolhido.
             const novo: Encaminhamento = {
               id: `enc-novo-${++toastSeq}`,
               direcao: 'enviado',
-              contraparte: base.colegas.find((c) => c.nome === colegaNome)!,
-              paciente: base.pacientes.find((p) => p.nome === pacienteNome)!,
-              motivo: 'Encaminhamento enviado',
-              contexto: 'Contexto clínico compartilhado com o colega.',
-              compartilhado: ['prontuario', 'exames'],
-              consentimentoPaciente: true,
+              contraparte: base.colegas.find((c) => c.nome === dados.colegaNome)!,
+              paciente: base.pacientes.find((p) => p.nome === dados.pacienteNome)!,
+              motivo: dados.motivo,
+              contexto: dados.contexto,
+              compartilhado: dados.compartilhado,
+              consentimentoPaciente: dados.consentimentoPaciente,
               status: 'pendente',
               em: 'agora',
             }
             setEnviados((prev) => [novo, ...prev])
-            pushToast(`Encaminhamento enviado a ${colegaNome} · aguardando aceite`)
+            pushToast(
+              `Encaminhamento enviado a ${dados.colegaNome} · ${dados.compartilhado.length} item(ns) compartilhado(s)`,
+            )
           }}
         />
       )}

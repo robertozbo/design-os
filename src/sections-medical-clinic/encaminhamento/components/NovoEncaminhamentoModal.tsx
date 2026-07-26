@@ -10,11 +10,26 @@ import { AVATAR_COR, BADGE_COR, ITEM_LABEL } from './helpers'
 interface Props {
   pacientes: PacienteSelector[]
   colegas: ColegaSelector[]
-  onEnviar: (pacienteNome: string, colegaNome: string) => void
+  onEnviar: (dados: NovoEncaminhamento) => void
   onFechar: () => void
 }
 
 const ITENS: ItemCompartilhado[] = ['prontuario', 'exames', 'medicacoes']
+
+/**
+ * O que o médico de fato preencheu. Antes só nome do paciente e do colega chegavam ao wrapper — o
+ * motivo, o contexto, os itens escolhidos e o consentimento eram descartados e substituídos por
+ * valores fixos. Num encaminhamento, **o que se compartilha é decisão sob consentimento**: gravar
+ * "prontuário + exames" quando o médico marcou só exames é declaração falsa na trilha de auditoria.
+ */
+export interface NovoEncaminhamento {
+  pacienteNome: string
+  colegaNome: string
+  motivo: string
+  contexto: string
+  compartilhado: ItemCompartilhado[]
+  consentimentoPaciente: boolean
+}
 
 export function NovoEncaminhamentoModal({ pacientes, colegas, onEnviar, onFechar }: Props) {
   const [passo, setPasso] = useState(1)
@@ -266,7 +281,18 @@ export function NovoEncaminhamentoModal({ pacientes, colegas, onEnviar, onFechar
           ) : (
             <button
               disabled={!podeEnviar}
-              onClick={() => paciente && colega && onEnviar(paciente.nome, colega.nome)}
+              onClick={() =>
+                paciente &&
+                colega &&
+                onEnviar({
+                  pacienteNome: paciente.nome,
+                  colegaNome: colega.nome,
+                  motivo: motivo.trim(),
+                  contexto: contexto.trim(),
+                  compartilhado: [...compartilhar],
+                  consentimentoPaciente: consentimento,
+                })
+              }
               className="ml-auto inline-flex items-center gap-1.5 rounded-lg bg-teal-500 px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-teal-600 disabled:cursor-not-allowed disabled:opacity-40"
             >
               <Send className="h-3.5 w-3.5" /> Enviar encaminhamento

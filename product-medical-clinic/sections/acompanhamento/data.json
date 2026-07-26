@@ -32,7 +32,7 @@
       "Balança Xiaomi Mi Body"
     ]
   },
-  "ultimaConsultaEm": "2026-07-10",
+  "ultimaConsultaEm": "2026-05-27",
   "consentimentos": [
     {
       "escopo": "Métricas",
@@ -77,7 +77,7 @@
       "unidade": "kg",
       "valorAtual": 78.4,
       "medidoEm": "2026-07-24",
-      "variacao": -2.4,
+      "variacao": -2.3,
       "tendencia": "descendo",
       "nivel": "normal",
       "meta": 74.0,
@@ -131,7 +131,7 @@
       "unidade": "mg/dL",
       "valorAtual": 118,
       "medidoEm": "2026-07-23",
-      "variacao": -9,
+      "variacao": -12.0,
       "tendencia": "descendo",
       "nivel": "atencao",
       "meta": 99,
@@ -185,7 +185,7 @@
       "unidade": "mmHg",
       "valorAtual": 138,
       "medidoEm": "2026-07-22",
-      "variacao": 4,
+      "variacao": 5.0,
       "tendencia": "subindo",
       "nivel": "alterado",
       "meta": 130,
@@ -235,7 +235,7 @@
       "secundaria": {
         "rotulo": "Diastólica",
         "valorAtual": 88,
-        "variacao": 2,
+        "variacao": 3,
         "serie": [
           {
             "data": "2026-05-20",
@@ -340,7 +340,7 @@
       "unidade": "bpm",
       "valorAtual": 64,
       "medidoEm": "2026-07-25",
-      "variacao": -3,
+      "variacao": -4.0,
       "tendencia": "descendo",
       "nivel": "normal",
       "meta": null,
@@ -394,7 +394,7 @@
     "minutosAtivosSemana": 186,
     "treinosSemana": 3,
     "adesao": 86,
-    "variacaoPassos": 1180,
+    "variacaoPassos": 1350,
     "serie": [
       {
         "data": "2026-05-20",

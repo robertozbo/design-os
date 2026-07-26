@@ -22,6 +22,8 @@ interface Props {
   itensExtraidos?: ItemExtraido[]
   onAplicarItens?: (itens: ItemExtraido[]) => void
   onDescartarItens?: () => void
+  origemRevisao?: 'transcricao' | 'analise'
+  onAnalisar?: () => void
   medidas?: MedidasConsulta
   onMedida?: (campo: keyof MedidasConsulta, valor: string) => void
   resumoApp?: ResumoApp
@@ -139,6 +141,8 @@ export function ConsultaView(props: Props) {
             itensExtraidos={props.itensExtraidos}
             onAplicarItens={props.onAplicarItens}
             onDescartarItens={props.onDescartarItens}
+            origemRevisao={props.origemRevisao}
+            onAnalisar={props.onAnalisar}
             medidas={props.medidas}
             onMedida={props.onMedida}
           />
