@@ -17,9 +17,32 @@
     "nome": "Clínica Vida Endócrino & Metabólica",
     "cnpj": "31.204.556/0001-08",
     "plano": {
-      "nome": "Profissional",
-      "medicosUsados": 4,
-      "medicosLimite": 6
+      "nome": "Clínica · até 6 médicos",
+      "medicosUsados": 3,
+      "medicosLimite": 6,
+      "precoMensal": 229.9,
+      "faixas": [
+        {
+          "ateMedicos": 1,
+          "preco": 49.9
+        },
+        {
+          "ateMedicos": 3,
+          "preco": 129.9
+        },
+        {
+          "ateMedicos": 6,
+          "preco": 229.9
+        },
+        {
+          "ateMedicos": 12,
+          "preco": 399.9
+        },
+        {
+          "ateMedicos": null,
+          "preco": null
+        }
+      ]
     }
   },
   "filtroAtivo": {

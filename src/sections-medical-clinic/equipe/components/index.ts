@@ -1,2 +1,2 @@
 export { EquipeLista, LimiteAviso } from './EquipeLista'
-export { ConvidarMedicoDrawer } from './ConvidarMedicoDrawer'
+export { ConvidarMembroDrawer } from './ConvidarMembroDrawer'

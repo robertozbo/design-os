@@ -19,6 +19,13 @@ import type {
   PapelMedicalClinic,
 } from '@/../product-medical-clinic/sections/equipe/types'
 
+/** Rótulo da contagem por papel no card do plano — plural quando faz sentido. */
+const PAPEL_CONTAGEM: Record<PapelMedicalClinic, (n: number) => string> = {
+  medico: (n) => (n === 1 ? 'médico' : 'médicos'),
+  recepcao: () => 'recepção',
+  admin: (n) => (n === 1 ? 'admin' : 'admins'),
+}
+
 const PAPEL_LABEL: Record<PapelMedicalClinic, string> = {
   admin: 'Admin',
   medico: 'Médico',
@@ -77,7 +84,10 @@ export function EquipeLista({
   onEditarPapel,
   onRemoverMembro,
 }: Props) {
-  const { medicosUsados, medicosLimite, nome: planoNome } = clinica.plano
+  const { medicosUsados, medicosLimite, nome: planoNome, precoMensal, faixas } = clinica.plano
+  const brl = (n: number) => n.toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+  /** Próxima faixa — o que a clínica paga se contratar mais um médico além do limite. */
+  const proximaFaixa = faixas.find((f) => f.ateMedicos !== null && f.ateMedicos > medicosLimite)
   const pct = Math.min(100, Math.round((medicosUsados / medicosLimite) * 100))
   const noLimite = medicosUsados >= medicosLimite
   const barCor = noLimite
@@ -85,6 +95,15 @@ export function EquipeLista({
     : pct >= 80
       ? 'bg-amber-500'
       : 'bg-teal-500'
+
+  // Quantos seats de cada papel estão ativos — é o que define o preço do tier Clínica.
+  const porPapel = membros.reduce(
+    (acc, m) => {
+      if (m.status === 'ativo') acc[m.papel] = (acc[m.papel] ?? 0) + 1
+      return acc
+    },
+    {} as Record<PapelMedicalClinic, number>,
+  )
 
   const ativos = useMemo(
     () => membros.filter((m) => m.status !== 'convite-pendente'),
@@ -120,25 +139,44 @@ export function EquipeLista({
           <button
             type="button"
             onClick={onConvidar}
-            disabled={noLimite}
-            title={noLimite ? 'Limite do plano atingido' : undefined}
+            // Sem `disabled`: o limite do plano é de MÉDICOS — recepção e admin continuam
+            // convidáveis com o plano cheio (quem bloqueia por papel é o drawer).
+            title={noLimite ? 'Limite de médicos do plano atingido — recepção e admin seguem liberados' : undefined}
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <UserPlus className="h-4 w-4" strokeWidth={2} />
-            Convidar médico
+            Convidar membro
           </button>
-          <div className="w-full sm:w-56">
+          <div className="w-full sm:w-72">
             <div className="mb-1 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-              <span>
-                Plano {planoNome}
+              <span className="truncate">{planoNome}</span>
+              <span className="whitespace-nowrap font-medium text-slate-700 dark:text-slate-200">
+                R$ {brl(precoMensal)}/mês
               </span>
-              <span className="font-mono tabular-nums">
-                {medicosUsados}/{medicosLimite} médicos
-              </span>
+            </div>
+            <div className="mb-1 text-right font-mono text-[11px] tabular-nums text-slate-500 dark:text-slate-400">
+              {medicosUsados}/{medicosLimite} médicos
             </div>
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
               <div className={`h-full rounded-full ${barCor}`} style={{ width: `${pct}%` }} />
             </div>
+            <div className="mt-1.5 flex items-center gap-2.5 text-[11px] text-slate-500 dark:text-slate-400">
+              {(['medico', 'recepcao', 'admin'] as PapelMedicalClinic[]).map((papel) => (
+                <span key={papel} className="inline-flex items-baseline gap-1 whitespace-nowrap">
+                  <span className="font-mono tabular-nums font-medium text-slate-700 dark:text-slate-200">
+                    {porPapel[papel] ?? 0}
+                  </span>
+                  {PAPEL_CONTAGEM[papel](porPapel[papel] ?? 0)}
+                </span>
+              ))}
+              <span className="ml-auto text-slate-400">apoio é grátis</span>
+            </div>
+            {noLimite && proximaFaixa?.preco != null && (
+              <p className="mt-1 text-[11px] text-amber-600 dark:text-amber-400">
+                Próximo médico exige a faixa até {proximaFaixa.ateMedicos} · R${' '}
+                {brl(proximaFaixa.preco)}/mês
+              </p>
+            )}
           </div>
         </div>
       </div>

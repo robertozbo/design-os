@@ -8,7 +8,7 @@ import type {
   MembroEquipe,
 } from '@/../product-medical-clinic/sections/equipe/types'
 import { EquipeLista as EquipeListaView } from './components/EquipeLista'
-import { ConvidarMedicoDrawer } from './components/ConvidarMedicoDrawer'
+import { ConvidarMembroDrawer } from './components/ConvidarMembroDrawer'
 
 interface Toast {
   id: number
@@ -109,7 +109,7 @@ export default function EquipeListaPreview() {
       />
 
       {drawerOpen && (
-        <ConvidarMedicoDrawer
+        <ConvidarMembroDrawer
           key="convite-novo"
           limiteMedicosAtingido={noLimite}
           onClose={() => setDrawerOpen(false)}

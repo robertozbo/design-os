@@ -7,13 +7,16 @@ Gestão da equipe da clínica — a section onde o **Admin/Gestor** administra q
 
 ### Ver a equipe
 - Admin abre **Equipe**
-- Vê o header com nome da clínica + **barra de consumo do plano** ("4 de 6 médicos") e botão "Convidar médico"
+- Vê o header com nome da clínica + **barra de consumo do plano** ("3 de 6 médicos"), a mensalidade
+  vigente, a **composição da equipe por papel** (N médicos · N recepção · N admin) e o botão
+  "Convidar membro"
 - Vê a lista de membros agrupada/filtrável por papel (Admin · Médico · Recepção)
 - Cada membro: avatar/iniciais, nome, papel (badge), especialidade + CRM (se médico), status (ativo / convite pendente / inativo), e — pra médicos — indicadores (pacientes ativos, atendimentos no mês)
 - Busca por nome ou especialidade; filtro por papel e por status
 
 ### Convidar novo membro
-- Botão "Convidar médico" abre drawer à direita
+- Botão "Convidar membro" abre drawer à direita — o convite serve para **médico,
+  recepção ou admin**, por isso o rótulo não fala em médico
 - Form: email, papel (Admin/Médico/Recepção), especialidade (só quando papel = Médico)
 - Ao enviar: cria convite pendente (usa `workspace_invites`), dispara email, aparece na lista com status "convite pendente"
 - Bloqueia convite de médico se o limite do plano foi atingido → mostra aviso + CTA de upgrade
@@ -44,7 +47,9 @@ Gestão da equipe da clínica — a section onde o **Admin/Gestor** administra q
 - **Empty state** de convites: quando não há pendentes, some a seção
 
 ### Estados
-- Consumo no limite: barra fica âmbar/vermelha, botão "Convidar médico" fica desabilitado com tooltip "Limite do plano atingido"
+- Consumo no limite: barra fica âmbar/vermelha e aparece o preço da faixa seguinte. O botão
+  **continua habilitado** — o limite é de médicos, e recepção/admin seguem convidáveis; quem bloqueia
+  por papel é o drawer, só quando o papel escolhido é "Médico"
 - Loading/otimista: convite enviado aparece imediatamente com toast "Convite enviado para {email}"
 
 ### Comportamento
@@ -56,3 +61,19 @@ Gestão da equipe da clínica — a section onde o **Admin/Gestor** administra q
 - Reusa a identidade Nymos (teal, DM Sans), light/dark
 - Props-based: a view recebe `clinica`, `membros`, `convites` e callbacks; sem fetch interno
 - Badges de papel/status consistentes com o resto do produto
+
+## Plano e preço
+
+O tier **Clínica** é cobrado por **faixa de médicos** — só médico é seat pago; recepção e admin são
+ilimitados e gratuitos (ver `docs/modelo-monetizacao.md`).
+
+| Faixa | Mensalidade |
+|---|---|
+| até 1 médico | R$ 49,90 |
+| até 3 médicos | R$ 129,90 |
+| até 6 médicos | R$ 229,90 |
+| até 12 médicos | R$ 399,90 |
+| acima de 12 | sob consulta |
+
+Por isso a tela precisa expor a **contagem por papel**: é ela que determina a fatura. Convite pendente
+não consome seat — só membro `ativo` conta.

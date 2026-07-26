@@ -29,7 +29,7 @@ interface Props {
 
 const VAZIO: ConviteForm = { email: '', papel: 'medico', especialidade: 'Endocrinologia' }
 
-export function ConvidarMedicoDrawer({
+export function ConvidarMembroDrawer({
   limiteMedicosAtingido,
   onClose,
   onEnviar,
