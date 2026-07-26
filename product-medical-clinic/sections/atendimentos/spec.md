@@ -22,7 +22,7 @@ A lista de **consultas finalizadas (assinadas)** do médico logado — o histór
 - **Header**: "Atendimentos" + seletor de período (Hoje / Semana / Mês)
 - **Stats row** (5 cards): Consultas, Tempo médio, Prescrições, Exames solicitados, % com IA escriba — cada um valor + sublinha
 - **Barra de filtros**: busca por paciente + chips (modalidade, só IA)
-- **Lista**: linhas com hora/data, avatar+paciente (idade), motivo, badge de especialidade, modalidade (ícone), duração, flag "IA" quando assistido — hover destaca, clique abre
+- **Lista**: linhas com hora/data, avatar+paciente (idade), motivo, badge de especialidade, modalidade (ícone), duração, flag "IA" quando assistido e botão rotulado **"Prontuário"** à direita (não ícone — o destino é o prontuário do paciente, não o detalhe do atendimento) — hover destaca
 - **Rodapé**: contagem de resultados
 
 ### Estados & regras

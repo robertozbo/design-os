@@ -1,4 +1,4 @@
-import { Eye, Search, Sparkles, Video } from 'lucide-react'
+import { FileText, Search, Sparkles, Video } from 'lucide-react'
 import type {
   AtendimentoItem,
   AtendimentosData,
@@ -196,13 +196,13 @@ function AtendimentoRow({ item, onClick }: { item: AtendimentoItem; onClick: () 
         </div>
       </div>
 
-      {/* Visualizar */}
+      {/* Abrir no prontuário — botão rotulado: o ícone sozinho não dizia pra onde levava */}
       <button
         onClick={onClick}
-        title="Visualizar no prontuário"
-        className="mr-3 shrink-0 rounded-lg p-2 text-slate-400 transition hover:bg-slate-200 hover:text-teal-600 dark:hover:bg-slate-700 dark:hover:text-teal-400"
+        className="mr-3 inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 transition hover:border-teal-500 hover:bg-teal-50 hover:text-teal-700 dark:border-slate-700 dark:text-slate-300 dark:hover:border-teal-500 dark:hover:bg-teal-950/40 dark:hover:text-teal-300"
       >
-        <Eye className="h-4 w-4" />
+        <FileText className="h-3.5 w-3.5" strokeWidth={1.75} />
+        Prontuário
       </button>
     </li>
   )
