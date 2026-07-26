@@ -29,6 +29,13 @@ export default function InicioPreview() {
   }
 
   const encaminhamentos = base.encaminhamentos.filter((e) => !aceitos.has(e.id))
+  /**
+   * O contador do alerta vem da lista, não do dado fixo: `count` ficava em 2 depois de aceitar os
+   * dois, na mesma tela em que a lista já estava vazia.
+   */
+  const alertas = base.alertas.map((a) =>
+    a.tipo === 'encaminhamentos' ? { ...a, count: encaminhamentos.length } : a,
+  )
 
   const onAceitar = (e: EncaminhamentoRecebido) => {
     setAceitos((prev) => new Set(prev).add(e.id))
@@ -52,7 +59,7 @@ export default function InicioPreview() {
   return (
     <>
       <InicioView
-        dados={{ ...base, agendaDia, encaminhamentos }}
+        dados={{ ...base, agendaDia, encaminhamentos, alertas }}
         onIniciarConsulta={onIniciarConsulta}
         onAlerta={(a) => {
           if (a.href === '/medical-clinic/sections/inicio') return

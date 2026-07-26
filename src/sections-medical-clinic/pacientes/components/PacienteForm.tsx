@@ -43,7 +43,8 @@ const VAZIO: PacienteFormValues = {
   nome: '',
   idade: 30,
   genero: 'Feminino',
-  convenio: 'Particular',
+  // Vazio, não 'Particular': o convênio define quem paga, e assumir é errar a conta.
+  convenio: '',
   email: '',
   condicoesCronicas: [],
   enviarConvite: true,

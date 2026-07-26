@@ -106,8 +106,9 @@ export function RelatoriosView({ dados, onPeriodo, onExportar, onLinhaClick }: P
           <Fluxo label="A receber" valor={brl(fin.aReceber)} cor="text-amber-600 dark:text-amber-400" />
           <Fluxo label="Pago" valor={brl(fin.pago)} cor="text-slate-700 dark:text-slate-200" />
           <Fluxo label="A pagar" valor={brl(fin.aPagar)} cor="text-rose-600 dark:text-rose-400" />
+          {/* Não é caixa: é o líquido do período. Chamar de saldo assumiria caixa inicial zero. */}
           <Fluxo
-            label="Saldo em caixa"
+            label="Resultado do período"
             valor={brl(fin.recebido - fin.pago)}
             cor="text-teal-600 dark:text-teal-400"
           />

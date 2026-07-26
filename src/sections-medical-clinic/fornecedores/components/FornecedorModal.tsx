@@ -26,7 +26,8 @@ export function FornecedorModal({ fornecedor, dados, onSalvar, onFechar }: Props
   const [email, setEmail] = useState(fornecedor?.email ?? '')
   const [categoria, setCategoria] = useState(fornecedor?.categoria ?? dados.categorias[0] ?? '')
   const [cidade, setCidade] = useState(fornecedor?.cidade ?? '')
-  const [uf, setUf] = useState(fornecedor?.uf ?? 'SP')
+  // Sem UF informada o campo fica vazio: 'SP' afirmaria um estado que ninguém escolheu.
+  const [uf, setUf] = useState(fornecedor?.uf ?? '')
   const [ativo, setAtivo] = useState(fornecedor?.ativo ?? true)
   const [consultando, setConsultando] = useState(false)
   const [consultaMsg, setConsultaMsg] = useState('')

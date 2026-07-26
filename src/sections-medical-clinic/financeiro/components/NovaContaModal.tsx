@@ -32,7 +32,8 @@ export function NovaContaModal({ tipo, dados, onSalvar, onFechar }: Props) {
   const [categoria, setCategoria] = useState('')
   const [vencimento, setVencimento] = useState(dados.hoje)
   const [valor, setValor] = useState('')
-  const [metodo, setMetodo] = useState(metodos[0] ?? '')
+  // Vazio até escolherem: o 1º da lista afirmava um meio de pagamento que ninguém informou.
+  const [metodo, setMetodo] = useState('')
   const [recorrencia, setRecorrencia] = useState(dados.recorrencias[0] ?? '')
   const [status, setStatus] = useState<StatusConta>('aberto')
   const [tentou, setTentou] = useState(false)
@@ -68,7 +69,9 @@ export function NovaContaModal({ tipo, dados, onSalvar, onFechar }: Props) {
       valor: valorNum,
       metodo,
       status,
-      pagoEm: status === 'pago' ? vencimento : null,
+      // Quando nasce paga, o dinheiro se moveu HOJE — não no vencimento, que pode ser futuro
+      // ou passado. Assumir o vencimento inventaria a data do recebimento.
+      pagoEm: status === 'pago' ? dados.hoje : null,
       recorrencia,
     })
   }
@@ -310,6 +313,7 @@ export function NovaContaModal({ tipo, dados, onSalvar, onFechar }: Props) {
           <div className="grid grid-cols-2 gap-3">
             <Campo label="Método de pagamento">
               <select value={metodo} onChange={(e) => setMetodo(e.target.value)} className={cls(false)}>
+                <option value="">Não informado</option>
                 {metodos.map((m) => (
                   <option key={m} value={m}>
                     {m}

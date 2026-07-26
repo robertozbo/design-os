@@ -52,10 +52,9 @@ export function CobrancaView({ dados, onNova, onExportar, onCobranca }: Props) {
     [dados.cobrancas, filtro],
   )
 
-  const abrirNova = () => {
-    setNovaAberta(true)
-    onNova()
-  }
+  // Abrir o formulário não gera link — o toast de "link gerado" era afirmação de algo que
+  // ainda não aconteceu. Quem avisa é o envio, não a abertura.
+  const abrirNova = () => setNovaAberta(true)
 
   return (
     <div className="p-6 pl-16 lg:pl-6">

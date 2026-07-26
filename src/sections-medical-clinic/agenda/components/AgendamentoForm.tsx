@@ -307,7 +307,9 @@ const daEdicao = (a: Agendamento): AgendamentoFormValues => {
     modeloCobranca: fin?.modeloCobranca ?? 'sessao',
     formaPagamento: fin?.formaPagamento ?? 'Pix',
     parcelas: fin?.parcelas ?? 1,
-    diaVencimento: 5,
+    // Recupera o dia combinado da 1ª parcela — fixar 5 fazia a tela dizer "todo dia 5"
+    // enquanto o resumo logo abaixo listava as parcelas vencendo em outro dia.
+    diaVencimento: fin?.contas?.[0] ? Number(fin.contas[0].vencimento.slice(8, 10)) : 5,
   }
 }
 

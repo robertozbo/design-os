@@ -53,15 +53,10 @@ export function consultarCnpj(cnpj: string): Promise<Partial<Fornecedor> | null>
   return new Promise((resolve) => {
     setTimeout(() => {
       if (d.length !== 14) return resolve(null)
-      if (MOCK_CNPJ[d]) return resolve(MOCK_CNPJ[d])
-      // Fallback genérico (mock) para qualquer CNPJ válido.
-      resolve({
-        razaoSocial: `Empresa ${d.slice(0, 2)}${d.slice(8, 12)} Ltda`,
-        nomeFantasia: `Fornecedor ${d.slice(8, 12)}`,
-        telefone: '(11) 0000-0000',
-        cidade: 'São Paulo',
-        uf: 'SP',
-      })
+      // CNPJ desconhecido devolve `null` — o fallback antes inventava razão social, telefone e
+      // cidade, e a tela anunciava "dados preenchidos pela consulta" para dado fabricado. Sem o
+      // null, o estado "CNPJ não encontrado" era inalcançável e nunca seria desenhado.
+      resolve(MOCK_CNPJ[d] ?? null)
     }, 700)
   })
 }
