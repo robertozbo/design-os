@@ -184,7 +184,11 @@ export default function ConsultaPreview() {
         estado={estado}
         escribaTimer={escribaTimer}
         transcricaoVisivel={base.transcricaoMock.slice(0, transcricaoIdx)}
-        transcricaoCompleta={viaIA ? base.transcricaoMock : []}
+        // Só existe transcrição depois que o escriba rodou — antes disso o SOAP é registro manual,
+        // e creditar a IA por um texto que o médico digitou seria falso na assinatura.
+        transcricaoCompleta={
+          viaIA && (estado === 'rascunho' || estado === 'assinado') ? base.transcricaoMock : []
+        }
         soap={soap}
         assinatura={assinatura}
         onIniciar={iniciar}

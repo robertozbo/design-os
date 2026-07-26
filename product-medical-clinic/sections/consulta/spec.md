@@ -37,6 +37,14 @@ A tela de **atendimento** do médico — presencial e teleconsulta no mesmo flux
   - **Desde a última consulta**: as 3 métricas do app que mais variaram, com delta colorido pela
     direção desejável, e atalho para o Acompanhamento em painel sobreposto (só se o paciente for
     vinculado)
+- **Evolução sempre disponível**: o SOAP é um bloco próprio, aberto desde o início da consulta, com
+  ou sem escriba. O médico anota enquanto atende; a IA preenche quando é usada. O escriba é
+  acelerador, não porta de entrada — quem não usa (ou cujo paciente não consentiu) precisa poder
+  escrever mesmo assim
+- **Escriba compacto** no estado ocioso: uma linha com o convite e o botão, não um card de meia
+  tela. A evolução é que manda na hierarquia visual
+- **Crédito da IA vem da transcrição**, não do campo estar preenchido: texto digitado à mão nunca é
+  atribuído ao modelo, e a assinatura registra `assistidoPorIA` conforme o que de fato ocorreu
 - **Barra de ações** (rodapé): Prescrever · Solicitar exame · Encaminhar · Assinar e finalizar
 - **Prontuário sem sair da consulta**: depois de assinar, "Abrir prontuário do paciente" abre um
   **painel do tamanho da página por cima** da consulta (`PainelSobreposto`), com "Voltar à consulta",
