@@ -5,6 +5,7 @@ import type {
   EscribaEstado,
   Modalidade,
   SOAP,
+  ItemExtraido,
   MedidasConsulta,
   ResumoApp,
 } from '@/../product-medical-clinic/sections/consulta/types'
@@ -18,6 +19,9 @@ interface Props {
   dados: ConsultaData
   /** Delta do app desde a última consulta. Ausente = paciente não vinculado. */
   queixas: string[]
+  itensExtraidos?: ItemExtraido[]
+  onAplicarItens?: (itens: ItemExtraido[]) => void
+  onDescartarItens?: () => void
   medidas?: MedidasConsulta
   onMedida?: (campo: keyof MedidasConsulta, valor: string) => void
   resumoApp?: ResumoApp
@@ -132,6 +136,9 @@ export function ConsultaView(props: Props) {
             onAssinar={props.onAssinar}
             onAbrirProntuario={props.onAbrirProntuario}
             queixas={props.queixas}
+            itensExtraidos={props.itensExtraidos}
+            onAplicarItens={props.onAplicarItens}
+            onDescartarItens={props.onDescartarItens}
             medidas={props.medidas}
             onMedida={props.onMedida}
           />

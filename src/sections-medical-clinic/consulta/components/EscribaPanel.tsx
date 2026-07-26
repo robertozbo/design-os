@@ -19,9 +19,11 @@ import type {
   EscribaEstado,
   Modalidade,
   SOAP,
+  ItemExtraido,
   MedidasConsulta,
 } from '@/../product-medical-clinic/sections/consulta/types'
 import { formatTimer, SOAP_AJUDA, SOAP_LABEL } from './helpers'
+import { RevisaoIA } from './RevisaoIA'
 
 interface Props {
   estado: EscribaEstado
@@ -45,6 +47,10 @@ interface Props {
   queixas: string[]
   medidas?: MedidasConsulta
   onMedida?: (campo: keyof MedidasConsulta, valor: string) => void
+  /** Achados que a IA extraiu — o médico marca quais viram evolução. */
+  itensExtraidos?: ItemExtraido[]
+  onAplicarItens?: (itens: ItemExtraido[]) => void
+  onDescartarItens?: () => void
 }
 
 export function EscribaPanel(props: Props) {
@@ -88,6 +94,14 @@ export function EscribaPanel(props: Props) {
           />
         )}
         {estado === 'transcrevendo' && <Transcrevendo />}
+        {estado === 'revisao' && props.itensExtraidos && props.onAplicarItens && (
+          <RevisaoIA
+            itens={props.itensExtraidos}
+            modeloIA={props.modeloIA}
+            onAplicar={props.onAplicarItens}
+            onDescartar={props.onDescartarItens ?? (() => {})}
+          />
+        )}
       </div>
     </div>
 

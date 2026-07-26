@@ -7,8 +7,23 @@ export type EscribaEstado =
   | 'consentimento'
   | 'gravando'
   | 'transcrevendo'
+  /** A IA terminou e lista o que extraiu; nada entra no SOAP antes do médico marcar. */
+  | 'revisao'
   | 'rascunho'
   | 'assinado'
+
+/**
+ * Um achado que a IA extraiu da transcrição, ainda **fora** do prontuário.
+ *
+ * O escriba não escreve na evolução: propõe itens e o médico marca os que ficam. A diferença é de
+ * responsabilidade — em vez de caçar erro dentro de um parágrafo já escrito no registro que ele vai
+ * assinar, o médico aprova item a item, e o que não foi marcado nunca existiu no prontuário.
+ */
+export interface ItemExtraido {
+  id: string
+  campo: keyof SOAP
+  texto: string
+}
 
 export interface PacienteConsulta {
   id: string
@@ -102,6 +117,8 @@ export interface ConsultaData {
   soapSugerido: SOAP
   /** Trechos de transcrição parcial que aparecem durante a gravação (mock). */
   transcricaoMock: string[]
+  /** O que a IA extrai da transcrição, para o médico marcar antes de virar SOAP. */
+  itensExtraidos: ItemExtraido[]
   contexto: {
     medicacoes: MedicacaoAtiva[]
     exames: ExameRecente[]

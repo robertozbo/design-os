@@ -11,6 +11,9 @@ A tela de **atendimento** do médico — presencial e teleconsulta no mesmo flux
 3. Estado **gravando**: cronômetro correndo, aviso de captação de áudio, botão pausar/parar
 4. Ao parar → estado **transcrevendo** (IA processando) → gera o **rascunho SOAP** (S/O/A/P)
 5. Médico **edita** cada campo do SOAP (textarea), ajusta o que a IA sugeriu
+5b. **Revisão do que a IA extraiu** — a transcrição não vira evolução direto. O escriba lista os
+   achados separados por campo do SOAP, **todos desmarcados**, e o médico marca os que ficam.
+   "Aplicar" só habilita com pelo menos um marcado; "Descartar tudo" volta ao registro manual
 6. Clica em **Assinar e finalizar** → confirma autoria (click-to-attest) → evolução é assinada e vai pro prontuário
 
 ### Teleconsulta
@@ -45,6 +48,10 @@ A tela de **atendimento** do médico — presencial e teleconsulta no mesmo flux
   tela. A evolução é que manda na hierarquia visual
 - **Crédito da IA vem da transcrição**, não do campo estar preenchido: texto digitado à mão nunca é
   atribuído ao modelo, e a assinatura registra `assistidoPorIA` conforme o que de fato ocorreu
+- **A IA propõe, o médico dispõe**: nenhum texto entra na evolução sem marcação explícita. Se os
+  itens viessem pré-marcados, o médico estaria *removendo* o que a IA já escreveu no registro que ele
+  assina — aprovação por omissão. Desmarcado, cada linha que entra é um ato dele. O atalho "Marcar
+  todos" evita que a fricção vire teatro de conformidade quando a extração está boa
 - **Rótulo do SOAP explica o campo**: "Subjetivo" e "Objetivo" são jargão e não ensinam onde
   escrever o quê. Cada letra vem com a frase do que entra ali (relato do paciente · o que você mediu
   · sua interpretação · a conduta)

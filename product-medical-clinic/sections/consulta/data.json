@@ -101,5 +101,77 @@
     "Insônia",
     "Náusea",
     "Formigamento"
+  ],
+  "itensExtraidos": [
+    {
+      "id": "it-1",
+      "campo": "S",
+      "texto": "Paciente refere fadiga progressiva há 3 meses, ganho de 4 kg no período, intolerância ao frio e pele seca."
+    },
+    {
+      "id": "it-2",
+      "campo": "S",
+      "texto": "Nega palpitações."
+    },
+    {
+      "id": "it-3",
+      "campo": "S",
+      "texto": "Relata sonolência diurna e queda de cabelo."
+    },
+    {
+      "id": "it-4",
+      "campo": "S",
+      "texto": "Sem uso atual de levotiroxina."
+    },
+    {
+      "id": "it-5",
+      "campo": "O",
+      "texto": "PA 128/82 mmHg, FC 62 bpm, peso 88 kg, IMC 27,4."
+    },
+    {
+      "id": "it-6",
+      "campo": "O",
+      "texto": "Tireoide levemente aumentada, indolor à palpação, sem nódulos evidentes."
+    },
+    {
+      "id": "it-7",
+      "campo": "O",
+      "texto": "Reflexos com fase de relaxamento prolongada."
+    },
+    {
+      "id": "it-8",
+      "campo": "O",
+      "texto": "Pele seca ao exame."
+    },
+    {
+      "id": "it-9",
+      "campo": "A",
+      "texto": "Quadro clínico compatível com hipotireoidismo, provável tireoidite de Hashimoto."
+    },
+    {
+      "id": "it-10",
+      "campo": "A",
+      "texto": "Aguardando confirmação laboratorial (TSH, T4 livre, anti-TPO)."
+    },
+    {
+      "id": "it-11",
+      "campo": "P",
+      "texto": "Solicitados TSH, T4 livre e anti-TPO."
+    },
+    {
+      "id": "it-12",
+      "campo": "P",
+      "texto": "Iniciar levotiroxina 50 mcg/dia em jejum, reavaliar em 6 semanas com novo TSH."
+    },
+    {
+      "id": "it-13",
+      "campo": "P",
+      "texto": "Orientações sobre adesão e horário da medicação."
+    },
+    {
+      "id": "it-14",
+      "campo": "P",
+      "texto": "Retorno agendado."
+    }
   ]
 }

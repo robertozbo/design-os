@@ -154,8 +154,8 @@ export default function ConsultaPreview() {
   useEffect(() => {
     if (estado !== 'transcrevendo') return
     const id = setTimeout(() => {
-      setSoap(base.soapSugerido)
-      setEstado('rascunho')
+      // A IA não escreve na evolução: entrega achados para o médico marcar.
+      setEstado('revisao')
     }, 2200)
     return () => clearTimeout(id)
   }, [estado, base.soapSugerido])
@@ -217,6 +217,23 @@ export default function ConsultaPreview() {
         onAbrirProntuario={() => setPainel('prontuario')}
         onAcao={onAcao}
         queixas={(data as { queixasFrequentes?: string[] }).queixasFrequentes ?? []}
+        itensExtraidos={base.itensExtraidos}
+        onAplicarItens={(itens) => {
+          // Só o que foi marcado vira texto — o resto nunca existiu no prontuário.
+          const porCampo = { ...VAZIO }
+          for (const i of itens) {
+            porCampo[i.campo] = porCampo[i.campo] ? `${porCampo[i.campo]} ${i.texto}` : i.texto
+          }
+          setSoap(porCampo)
+          setEstado('rascunho')
+          pushToast(`${itens.length} achado(s) aplicados à evolução · revise antes de assinar`)
+        }}
+        onDescartarItens={() => {
+          setViaIA(false)
+          setSoap(VAZIO)
+          setEstado('rascunho')
+          pushToast('Achados descartados · evolução segue como registro manual')
+        }}
         medidas={medidas}
         onMedida={(campo, valor) => setMedidas((m) => ({ ...m, [campo]: valor }))}
         resumoApp={RESUMO_APP}
