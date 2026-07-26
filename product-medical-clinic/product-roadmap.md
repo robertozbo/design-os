@@ -66,6 +66,14 @@ Dois canais separados (LGPD): **admin** (paciente↔recepção) e **clínico** (
 - **Relatórios** (admin): produção por médico, ocupação de salas, receita por especialidade, no-show. `id: relatorios`.
 - **Configurações**: da clínica (`configuracoes-clinica` — workspace, integrações, consentimentos, audit log), do médico (`configuracoes-medico`), da recepção (`configuracoes-recepcao`). Perfil profissional (`perfil`).
 
+### 17. Acompanhamento `[V1]`
+O que o paciente compartilha pelo app entre as consultas, reunido para o médico: métricas de
+wearable, atividade, composição corporal, avaliações físicas e exames — sempre com a **fonte** do
+dado e a **variação desde a última consulta**. Lista também os escopos que o paciente **não**
+liberou, para o médico distinguir "não compartilhado" de "sem dado". Nested em Pacientes, só existe
+para paciente vinculado. É o elo entre o app e a clínica: sem ele o app vira diário pessoal.
+`id: acompanhamento`.
+
 ## V2
 
 - Faturamento de convênio (TUSS, SADT, glosa, recurso)

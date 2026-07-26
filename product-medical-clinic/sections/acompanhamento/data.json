@@ -1,0 +1,496 @@
+{
+  "_meta": {
+    "models": {
+      "pacienteRef": "O paciente acompanhado — identidade mínima.",
+      "vinculoApp": "Desde quando o paciente usa o app, última sincronização e dispositivos conectados.",
+      "consentimento": "O que o paciente autorizou compartilhar, e desde quando.",
+      "metrica": "Uma métrica com valor atual, variação desde a última consulta, meta e série temporal.",
+      "ponto": "Um ponto da série: data + valor.",
+      "atividade": "Resumo de atividade física do período: passos, minutos ativos, treinos e adesão.",
+      "bioimpedancia": "Uma medição de composição corporal.",
+      "avaliacaoFisica": "Uma avaliação com medidas corporais e quem mediu (null = o próprio paciente).",
+      "exameCompartilhado": "Exame que o paciente subiu pelo app e liberou para a clínica."
+    },
+    "relationships": [
+      "AcompanhamentoData pertence a um PacienteRef e tem um VinculoApp",
+      "AcompanhamentoData tem muitos Consentimento — um por escopo de dado",
+      "Metrica tem muitos Ponto (série temporal); variacao é sempre relativa a ultimaConsultaEm",
+      "AcompanhamentoData tem muitas Bioimpedancia, muitas AvaliacaoFisica e muitos ExameCompartilhado"
+    ]
+  },
+  "paciente": {
+    "id": "pct-001",
+    "nome": "Maria Silva Andrade",
+    "iniciais": "MA",
+    "idade": 45
+  },
+  "vinculo": {
+    "desde": "2026-03-15",
+    "ultimaSync": "2026-07-25T21:40:00",
+    "dispositivos": [
+      "Apple Watch Series 9",
+      "Balança Xiaomi Mi Body"
+    ]
+  },
+  "ultimaConsultaEm": "2026-07-10",
+  "consentimentos": [
+    {
+      "escopo": "Métricas",
+      "compartilhado": true,
+      "desde": "2026-03-15"
+    },
+    {
+      "escopo": "Atividades",
+      "compartilhado": true,
+      "desde": "2026-03-15"
+    },
+    {
+      "escopo": "Composição corporal",
+      "compartilhado": true,
+      "desde": "2026-04-02"
+    },
+    {
+      "escopo": "Exames",
+      "compartilhado": true,
+      "desde": "2026-03-15"
+    },
+    {
+      "escopo": "Diário alimentar",
+      "compartilhado": false,
+      "desde": null
+    },
+    {
+      "escopo": "Saúde mental",
+      "compartilhado": false,
+      "desde": null
+    }
+  ],
+  "metricas": [
+    {
+      "id": "m-peso",
+      "nome": "Peso",
+      "unidade": "kg",
+      "valorAtual": 78.4,
+      "medidoEm": "2026-07-24",
+      "variacao": -2.4,
+      "tendencia": "descendo",
+      "nivel": "normal",
+      "meta": 74.0,
+      "fonte": "Balança",
+      "serie": [
+        {
+          "data": "2026-05-20",
+          "valor": 81.0
+        },
+        {
+          "data": "2026-05-27",
+          "valor": 80.7
+        },
+        {
+          "data": "2026-06-03",
+          "valor": 80.4
+        },
+        {
+          "data": "2026-06-10",
+          "valor": 80.1
+        },
+        {
+          "data": "2026-06-17",
+          "valor": 79.8
+        },
+        {
+          "data": "2026-06-24",
+          "valor": 79.5
+        },
+        {
+          "data": "2026-07-01",
+          "valor": 79.3
+        },
+        {
+          "data": "2026-07-08",
+          "valor": 79.0
+        },
+        {
+          "data": "2026-07-15",
+          "valor": 78.7
+        },
+        {
+          "data": "2026-07-21",
+          "valor": 78.4
+        }
+      ]
+    },
+    {
+      "id": "m-glicemia",
+      "nome": "Glicemia de jejum",
+      "unidade": "mg/dL",
+      "valorAtual": 118,
+      "medidoEm": "2026-07-23",
+      "variacao": -9,
+      "tendencia": "descendo",
+      "nivel": "atencao",
+      "meta": 99,
+      "fonte": "Manual",
+      "serie": [
+        {
+          "data": "2026-05-20",
+          "valor": 131.0
+        },
+        {
+          "data": "2026-05-27",
+          "valor": 130.0
+        },
+        {
+          "data": "2026-06-03",
+          "valor": 128.0
+        },
+        {
+          "data": "2026-06-10",
+          "valor": 127.0
+        },
+        {
+          "data": "2026-06-17",
+          "valor": 125.0
+        },
+        {
+          "data": "2026-06-24",
+          "valor": 124.0
+        },
+        {
+          "data": "2026-07-01",
+          "valor": 123.0
+        },
+        {
+          "data": "2026-07-08",
+          "valor": 121.0
+        },
+        {
+          "data": "2026-07-15",
+          "valor": 120.0
+        },
+        {
+          "data": "2026-07-21",
+          "valor": 118.0
+        }
+      ]
+    },
+    {
+      "id": "m-pas",
+      "nome": "Pressão sistólica",
+      "unidade": "mmHg",
+      "valorAtual": 138,
+      "medidoEm": "2026-07-22",
+      "variacao": 4,
+      "tendencia": "subindo",
+      "nivel": "alterado",
+      "meta": 130,
+      "fonte": "Manual",
+      "serie": [
+        {
+          "data": "2026-05-20",
+          "valor": 132.0
+        },
+        {
+          "data": "2026-05-27",
+          "valor": 133.0
+        },
+        {
+          "data": "2026-06-03",
+          "valor": 133.0
+        },
+        {
+          "data": "2026-06-10",
+          "valor": 134.0
+        },
+        {
+          "data": "2026-06-17",
+          "valor": 135.0
+        },
+        {
+          "data": "2026-06-24",
+          "valor": 136.0
+        },
+        {
+          "data": "2026-07-01",
+          "valor": 136.0
+        },
+        {
+          "data": "2026-07-08",
+          "valor": 137.0
+        },
+        {
+          "data": "2026-07-15",
+          "valor": 138.0
+        },
+        {
+          "data": "2026-07-21",
+          "valor": 138.0
+        }
+      ]
+    },
+    {
+      "id": "m-sono",
+      "nome": "Sono",
+      "unidade": "h",
+      "valorAtual": 6.1,
+      "medidoEm": "2026-07-25",
+      "variacao": -0.7,
+      "tendencia": "descendo",
+      "nivel": "atencao",
+      "meta": 7.5,
+      "fonte": "Apple Health",
+      "serie": [
+        {
+          "data": "2026-05-20",
+          "valor": 6.9
+        },
+        {
+          "data": "2026-05-27",
+          "valor": 6.8
+        },
+        {
+          "data": "2026-06-03",
+          "valor": 6.7
+        },
+        {
+          "data": "2026-06-10",
+          "valor": 6.6
+        },
+        {
+          "data": "2026-06-17",
+          "valor": 6.5
+        },
+        {
+          "data": "2026-06-24",
+          "valor": 6.5
+        },
+        {
+          "data": "2026-07-01",
+          "valor": 6.4
+        },
+        {
+          "data": "2026-07-08",
+          "valor": 6.3
+        },
+        {
+          "data": "2026-07-15",
+          "valor": 6.2
+        },
+        {
+          "data": "2026-07-21",
+          "valor": 6.1
+        }
+      ]
+    },
+    {
+      "id": "m-fc",
+      "nome": "FC de repouso",
+      "unidade": "bpm",
+      "valorAtual": 64,
+      "medidoEm": "2026-07-25",
+      "variacao": -3,
+      "tendencia": "descendo",
+      "nivel": "normal",
+      "meta": null,
+      "fonte": "Apple Health",
+      "serie": [
+        {
+          "data": "2026-05-20",
+          "valor": 68.0
+        },
+        {
+          "data": "2026-05-27",
+          "valor": 68.0
+        },
+        {
+          "data": "2026-06-03",
+          "valor": 67.0
+        },
+        {
+          "data": "2026-06-10",
+          "valor": 67.0
+        },
+        {
+          "data": "2026-06-17",
+          "valor": 66.0
+        },
+        {
+          "data": "2026-06-24",
+          "valor": 66.0
+        },
+        {
+          "data": "2026-07-01",
+          "valor": 65.0
+        },
+        {
+          "data": "2026-07-08",
+          "valor": 65.0
+        },
+        {
+          "data": "2026-07-15",
+          "valor": 64.0
+        },
+        {
+          "data": "2026-07-21",
+          "valor": 64.0
+        }
+      ]
+    }
+  ],
+  "atividade": {
+    "passosMedia": 7420,
+    "minutosAtivosSemana": 186,
+    "treinosSemana": 3,
+    "adesao": 86,
+    "variacaoPassos": 1180,
+    "serie": [
+      {
+        "data": "2026-05-20",
+        "valor": 5900
+      },
+      {
+        "data": "2026-05-27",
+        "valor": 6070
+      },
+      {
+        "data": "2026-06-03",
+        "valor": 6240
+      },
+      {
+        "data": "2026-06-10",
+        "valor": 6410
+      },
+      {
+        "data": "2026-06-17",
+        "valor": 6580
+      },
+      {
+        "data": "2026-06-24",
+        "valor": 6750
+      },
+      {
+        "data": "2026-07-01",
+        "valor": 6920
+      },
+      {
+        "data": "2026-07-08",
+        "valor": 7090
+      },
+      {
+        "data": "2026-07-15",
+        "valor": 7260
+      },
+      {
+        "data": "2026-07-21",
+        "valor": 7430
+      }
+    ]
+  },
+  "bioimpedancias": [
+    {
+      "id": "bio-3",
+      "data": "2026-07-24",
+      "pesoKg": 78.4,
+      "gorduraPct": 33.1,
+      "massaMagraKg": 52.5,
+      "aguaPct": 48.2,
+      "imc": 28.8,
+      "fonte": "Balança"
+    },
+    {
+      "id": "bio-2",
+      "data": "2026-06-12",
+      "pesoKg": 80.1,
+      "gorduraPct": 34.6,
+      "massaMagraKg": 52.4,
+      "aguaPct": 47.5,
+      "imc": 29.4,
+      "fonte": "Balança"
+    },
+    {
+      "id": "bio-1",
+      "data": "2026-04-02",
+      "pesoKg": 81.9,
+      "gorduraPct": 35.8,
+      "massaMagraKg": 52.6,
+      "aguaPct": 46.9,
+      "imc": 30.1,
+      "fonte": "Clínica"
+    }
+  ],
+  "avaliacoes": [
+    {
+      "id": "av-2",
+      "data": "2026-07-24",
+      "avaliadoPor": null,
+      "medidas": [
+        {
+          "nome": "Cintura",
+          "valor": 94.0,
+          "unidade": "cm",
+          "variacao": -3.5
+        },
+        {
+          "nome": "Quadril",
+          "valor": 108.0,
+          "unidade": "cm",
+          "variacao": -1.5
+        },
+        {
+          "nome": "Braço",
+          "valor": 31.0,
+          "unidade": "cm",
+          "variacao": -0.5
+        }
+      ]
+    },
+    {
+      "id": "av-1",
+      "data": "2026-04-02",
+      "avaliadoPor": "Dra. Beatriz Nunes",
+      "medidas": [
+        {
+          "nome": "Cintura",
+          "valor": 97.5,
+          "unidade": "cm",
+          "variacao": 0.0
+        },
+        {
+          "nome": "Quadril",
+          "valor": 109.5,
+          "unidade": "cm",
+          "variacao": 0.0
+        },
+        {
+          "nome": "Braço",
+          "valor": 31.5,
+          "unidade": "cm",
+          "variacao": 0.0
+        }
+      ]
+    }
+  ],
+  "examesCompartilhados": [
+    {
+      "id": "ex-1",
+      "nome": "Hemoglobina glicada (HbA1c)",
+      "data": "2026-07-08",
+      "nivel": "atencao",
+      "resumo": "6,9% · queda de 7,4% em março"
+    },
+    {
+      "id": "ex-2",
+      "nome": "TSH",
+      "data": "2026-07-08",
+      "nivel": "normal",
+      "resumo": "2,1 mUI/L · dentro da faixa"
+    },
+    {
+      "id": "ex-3",
+      "nome": "Perfil lipídico",
+      "data": "2026-05-30",
+      "nivel": "alterado",
+      "resumo": "LDL 162 mg/dL · acima da meta"
+    }
+  ]
+}

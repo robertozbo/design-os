@@ -74,7 +74,7 @@ const NAV_GROUPS: NavGroup[] = [
 ]
 
 // Sections clínicas nested dentro de Pacientes — highlight "Pacientes" no nav.
-const NESTED_UNDER_PACIENTES = new Set(['consulta', 'prontuario'])
+const NESTED_UNDER_PACIENTES = new Set(['consulta', 'prontuario', 'acompanhamento'])
 
 function resolveActiveHref(sectionId: string | undefined): string {
   if (!sectionId) return '/medical-clinic'
@@ -102,7 +102,7 @@ const GRUPOS: Grupo[] = [
     label: 'Clínico',
     emoji: '📋',
     hint: 'Prontuário compartilhado · exames · receita',
-    sectionIds: ['prontuario', 'exames', 'prescricao', 'encaminhamento'],
+    sectionIds: ['prontuario', 'acompanhamento', 'exames', 'prescricao', 'encaminhamento'],
   },
   {
     label: 'Gestão',
