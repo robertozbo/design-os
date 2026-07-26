@@ -83,3 +83,22 @@ export interface ConsultaData {
     evolucoes: EvolucaoRecente[]
   }
 }
+
+/**
+ * Resumo do que o paciente compartilhou pelo app **desde a última consulta**, já formatado.
+ *
+ * Vem pronto de propósito: a regra de "direção desejável" (peso caindo é bom, sono subindo é bom)
+ * mora na section Acompanhamento — o painel de contexto só exibe, não interpreta.
+ */
+export interface ItemResumoApp {
+  label: string
+  valor: string
+  delta: string
+  tom: 'melhora' | 'piora' | 'neutro'
+}
+
+export interface ResumoApp {
+  /** ISO da última sincronização do app. */
+  ultimaSync: string
+  itens: ItemResumoApp[]
+}

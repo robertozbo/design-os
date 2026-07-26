@@ -7,6 +7,12 @@ import type {
   Modalidade,
   SOAP,
 } from '@/../product-medical-clinic/sections/consulta/types'
+import acompanhamentoData from '@/../product-medical-clinic/sections/acompanhamento/data.json'
+import type {
+  AcompanhamentoData,
+  Metrica,
+} from '@/../product-medical-clinic/sections/acompanhamento/types'
+import { AcompanhamentoView } from '../acompanhamento/components'
 import prontuarioData from '@/../product-medical-clinic/sections/prontuario/data.json'
 import type {
   AcessoAtual,
@@ -25,6 +31,38 @@ import {
   type MedItem,
   type SolicItem,
 } from './components'
+
+const acomp = acompanhamentoData as unknown as AcompanhamentoData
+
+/** Para onde o número deve ir. Cair é bom em peso/glicemia/pressão; subir é bom em sono. */
+const DIRECAO: Record<string, 'menor' | 'maior'> = {
+  'm-peso': 'menor',
+  'm-glicemia': 'menor',
+  'm-pas': 'menor',
+  'm-fc': 'menor',
+  'm-sono': 'maior',
+}
+
+function tomDa(m: Metrica): 'melhora' | 'piora' | 'neutro' {
+  const dir = DIRECAO[m.id]
+  if (!dir || m.variacao === 0) return 'neutro'
+  const melhorou = dir === 'menor' ? m.variacao < 0 : m.variacao > 0
+  return melhorou ? 'melhora' : 'piora'
+}
+
+/** As 3 métricas que mais se mexeram — em consulta de 27 min, ninguém lê cinco. */
+const RESUMO_APP = {
+  ultimaSync: acomp.vinculo.ultimaSync,
+  itens: [...acomp.metricas]
+    .sort((a, b) => Math.abs(b.variacao) - Math.abs(a.variacao))
+    .slice(0, 3)
+    .map((m) => ({
+      label: m.nome,
+      valor: `${m.valorAtual.toLocaleString('pt-BR')} ${m.unidade}`,
+      delta: `${m.variacao > 0 ? '+' : ''}${m.variacao.toLocaleString('pt-BR')}`,
+      tom: tomDa(m),
+    })),
+}
 
 interface Toast {
   id: number
@@ -47,7 +85,7 @@ export default function ConsultaPreview() {
   const [assinatura, setAssinatura] = useState<AssinaturaInfo | null>(null)
   const [modal, setModal] = useState<null | 'exame' | 'prescrever' | 'encaminhar'>(null)
   /** Painel aberto por cima da consulta — o SOAP continua montado atrás. */
-  const [painel, setPainel] = useState<null | 'prontuario'>(null)
+  const [painel, setPainel] = useState<null | 'prontuario' | 'acompanhamento'>(null)
   const [prescricoesSessao, setPrescricoesSessao] = useState<SolicItem[]>([])
   const [examesSessao, setExamesSessao] = useState<SolicItem[]>([])
   const [encaminhamentosSessao, setEncaminhamentosSessao] = useState<SolicItem[]>([])
@@ -163,6 +201,8 @@ export default function ConsultaPreview() {
         // Sobrepõe em vez de navegar: trocar de rota aqui descartaria a evolução não assinada.
         onAbrirProntuario={() => setPainel('prontuario')}
         onAcao={onAcao}
+        resumoApp={RESUMO_APP}
+        onAbrirAcompanhamento={() => setPainel('acompanhamento')}
         solicitacoes={solicitacoes}
       />
 
@@ -182,6 +222,17 @@ export default function ConsultaPreview() {
             onAbrirAudit={() => pushToast('Log de acesso disponível na section Prontuário')}
             onExportar={() => pushToast('PDF gerado · exportação registrada no log de acesso')}
           />
+        </PainelSobreposto>
+      )}
+
+      {painel === 'acompanhamento' && (
+        <PainelSobreposto
+          titulo={`Acompanhamento · ${base.paciente.nome}`}
+          subtitulo="O que o paciente compartilhou pelo app desde a última consulta"
+          voltarPara="Voltar à consulta"
+          onFechar={() => setPainel(null)}
+        >
+          <AcompanhamentoView dados={acomp} />
         </PainelSobreposto>
       )}
 

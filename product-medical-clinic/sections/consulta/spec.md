@@ -34,6 +34,9 @@ A tela de **atendimento** do médico — presencial e teleconsulta no mesmo flux
   - Medicações ativas (nome + quem prescreveu + especialidade)
   - Últimos exames (nome, data, valor/flag alterado)
   - Evoluções recentes (autor + especialidade + resumo) — cross-médico, sob escopo
+  - **Desde a última consulta**: as 3 métricas do app que mais variaram, com delta colorido pela
+    direção desejável, e atalho para o Acompanhamento em painel sobreposto (só se o paciente for
+    vinculado)
 - **Barra de ações** (rodapé): Prescrever · Solicitar exame · Encaminhar · Assinar e finalizar
 - **Prontuário sem sair da consulta**: depois de assinar, "Abrir prontuário do paciente" abre um
   **painel do tamanho da página por cima** da consulta (`PainelSobreposto`), com "Voltar à consulta",

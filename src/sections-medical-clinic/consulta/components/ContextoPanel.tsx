@@ -1,10 +1,54 @@
-import { AlertTriangle, FileText, Pill, Sparkles } from 'lucide-react'
-import type { ConsultaData } from '@/../product-medical-clinic/sections/consulta/types'
+import { AlertTriangle, ArrowRight, FileText, Pill, Smartphone, Sparkles } from 'lucide-react'
+import type { ConsultaData, ResumoApp } from '@/../product-medical-clinic/sections/consulta/types'
 import { AVATAR_COR, TEXTO_COR } from './helpers'
 
-export function ContextoPanel({ contexto }: { contexto: ConsultaData['contexto'] }) {
+const TOM_COR: Record<ResumoApp['itens'][number]['tom'], string> = {
+  melhora: 'text-emerald-600 dark:text-emerald-400',
+  piora: 'text-rose-600 dark:text-rose-400',
+  neutro: 'text-slate-500 dark:text-slate-400',
+}
+
+interface Props {
+  contexto: ConsultaData['contexto']
+  /** Ausente = paciente não usa o app. */
+  resumoApp?: ResumoApp
+  onAbrirAcompanhamento?: () => void
+}
+
+export function ContextoPanel({ contexto, resumoApp, onAbrirAcompanhamento }: Props) {
   return (
     <div className="space-y-4">
+      {/* Do app do paciente — só o delta; o resto vive na section Acompanhamento */}
+      {resumoApp && resumoApp.itens.length > 0 && (
+        <div className="rounded-xl border border-slate-200 p-3 dark:border-slate-800">
+          <div className="mb-2 flex items-center gap-1.5">
+            <Smartphone className="h-3.5 w-3.5 text-emerald-500 dark:text-emerald-400" />
+            <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              Desde a última consulta
+            </span>
+          </div>
+          <ul className="space-y-1.5">
+            {resumoApp.itens.map((i) => (
+              <li key={i.label} className="flex items-baseline justify-between gap-2 text-xs">
+                <span className="truncate text-slate-600 dark:text-slate-300">{i.label}</span>
+                <span className="shrink-0 tabular-nums text-slate-800 dark:text-slate-100">
+                  {i.valor}
+                  <span className={`ml-1.5 font-medium ${TOM_COR[i.tom]}`}>{i.delta}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          {onAbrirAcompanhamento && (
+            <button
+              onClick={onAbrirAcompanhamento}
+              className="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-slate-200 py-1.5 text-[11px] font-medium text-slate-600 transition hover:border-teal-500 hover:bg-teal-50 hover:text-teal-700 dark:border-slate-700 dark:text-slate-300 dark:hover:border-teal-500 dark:hover:bg-teal-950/40 dark:hover:text-teal-300"
+            >
+              Ver acompanhamento completo
+              <ArrowRight className="h-3 w-3" />
+            </button>
+          )}
+        </div>
+      )}
       {/* Medicações ativas */}
       <Bloco titulo="Medicações ativas" icon={<Pill className="h-3.5 w-3.5" />}>
         <ul className="space-y-2">

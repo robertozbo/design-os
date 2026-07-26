@@ -147,6 +147,7 @@ export default function PacientesListaPreview() {
         onClose={() => setAbertoId(null)}
         onEditar={abrirEditar}
         onAbrirProntuario={() => navigate('/medical-clinic/sections/prontuario')}
+        onAbrirAcompanhamento={() => navigate('/medical-clinic/sections/acompanhamento')}
         onConvidar={(id) => {
           const p = pacientes.find((x) => x.id === id)
           if (!p?.email) return

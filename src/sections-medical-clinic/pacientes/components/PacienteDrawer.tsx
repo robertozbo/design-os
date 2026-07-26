@@ -1,4 +1,4 @@
-import { CalendarPlus, FileText, Pencil, Send, X } from 'lucide-react'
+import { CalendarPlus, Smartphone, FileText, Pencil, Send, X } from 'lucide-react'
 import type { PacienteClinica } from '@/../product-medical-clinic/sections/pacientes/types'
 import { AVATAR_COR, BADGE_COR, STATUS_APP_META, dataCurta } from './helpers'
 
@@ -6,6 +6,7 @@ interface Props {
   paciente: PacienteClinica | null
   onClose: () => void
   onAbrirProntuario: (id: string) => void
+  onAbrirAcompanhamento: (id: string) => void
   onConvidar: (id: string) => void
   onNovaConsulta: (id: string) => void
   onEditar: (id: string) => void
@@ -15,6 +16,7 @@ export function PacienteDrawer({
   paciente,
   onClose,
   onAbrirProntuario,
+  onAbrirAcompanhamento,
   onConvidar,
   onNovaConsulta,
   onEditar,
@@ -155,6 +157,14 @@ export function PacienteDrawer({
           >
             <FileText className="h-4 w-4" /> Abrir prontuário compartilhado
           </button>
+          {p.statusApp === 'vinculado' && (
+            <button
+              onClick={() => onAbrirAcompanhamento(p.id)}
+              className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 py-2.5 text-sm font-medium text-slate-700 transition hover:border-teal-500 hover:bg-teal-50 hover:text-teal-700 dark:border-slate-700 dark:text-slate-200 dark:hover:border-teal-500 dark:hover:bg-teal-950/40 dark:hover:text-teal-300"
+            >
+              <Smartphone className="h-4 w-4" /> Acompanhamento do app
+            </button>
+          )}
           <div className="grid grid-cols-1 gap-2">
             <button
               onClick={() => onNovaConsulta(p.id)}

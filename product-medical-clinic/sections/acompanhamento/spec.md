@@ -13,8 +13,15 @@ profissional é o cérebro") depende de o profissional efetivamente enxergar o q
 ## User Flows
 
 ### Ver o que mudou desde a última consulta
-- Médico abre o paciente e entra em Acompanhamento (pela lista, pelo drawer ou pelo painel
-  sobreposto durante a consulta)
+Três entradas, com doses diferentes de informação:
+- **Drawer do paciente** — botão "Acompanhamento do app", só quando `statusApp === 'vinculado'`
+- **Consulta** — o `ContextoPanel` mostra as **3 métricas que mais se mexeram** (ordenadas por
+  variação absoluta) com o delta colorido, e "Ver acompanhamento completo" abre o painel sobreposto
+  **sem trocar de rota** — a consulta continua montada atrás
+- **Section completa** — a casa do dado: séries, comparações e histórico
+
+A regra de "direção desejável" fica na section; o painel de contexto recebe o resumo **já
+formatado** (`ResumoApp`) e só exibe. Assim a interpretação clínica não se duplica em dois lugares.
 - Toda variação exibida é **relativa à última consulta** (`ultimaConsultaEm`), não ao início do
   acompanhamento — é a pergunta que o médico realmente faz
 - Métricas em cards com valor atual, variação assinada, meta (quando combinada), fonte e sparkline

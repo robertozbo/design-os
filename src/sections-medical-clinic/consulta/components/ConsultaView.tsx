@@ -5,6 +5,7 @@ import type {
   EscribaEstado,
   Modalidade,
   SOAP,
+  ResumoApp,
 } from '@/../product-medical-clinic/sections/consulta/types'
 import { ContextoPanel } from './ContextoPanel'
 import { EscribaPanel } from './EscribaPanel'
@@ -14,6 +15,9 @@ import { formatTimer } from './helpers'
 
 interface Props {
   dados: ConsultaData
+  /** Delta do app desde a última consulta. Ausente = paciente não vinculado. */
+  resumoApp?: ResumoApp
+  onAbrirAcompanhamento?: () => void
   modalidade: Modalidade
   onModalidade: (m: Modalidade) => void
   consultaTimer: number
@@ -129,7 +133,11 @@ export function ConsultaView(props: Props) {
           <div className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
             Contexto do paciente
           </div>
-          <ContextoPanel contexto={dados.contexto} />
+          <ContextoPanel
+            contexto={dados.contexto}
+            resumoApp={props.resumoApp}
+            onAbrirAcompanhamento={props.onAbrirAcompanhamento}
+          />
         </div>
       </div>
 
