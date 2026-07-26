@@ -139,10 +139,18 @@ export function PacienteDrawer({
             </button>
             <button
               onClick={() => onConvidar(p.id)}
-              disabled={p.statusApp === 'vinculado'}
+              disabled={p.statusApp === 'vinculado' || !p.email}
+              title={
+                !p.email
+                  ? 'Cadastre o email do paciente para poder convidar'
+                  : p.statusApp === 'convite-pendente'
+                    ? `Reenviar convite para ${p.email}`
+                    : `Enviar convite para ${p.email}`
+              }
               className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
             >
-              <Send className="h-3.5 w-3.5" /> Convidar app
+              <Send className="h-3.5 w-3.5" />{' '}
+              {p.statusApp === 'convite-pendente' ? 'Reenviar convite' : 'Convidar app'}
             </button>
           </div>
         </div>

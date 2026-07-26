@@ -8,7 +8,11 @@ export interface PacienteFormValues {
   idade: number
   genero: string
   convenio: string
+  /** Canal do convite pro app — sem email o convite fica indisponível. */
+  email: string
   condicoesCronicas: string[]
+  /** Dispara o convite pro app junto do cadastro (padrão da vertical Personal). */
+  enviarConvite: boolean
 }
 
 interface Props {
@@ -40,7 +44,9 @@ const VAZIO: PacienteFormValues = {
   idade: 30,
   genero: 'Feminino',
   convenio: 'Particular',
+  email: '',
   condicoesCronicas: [],
+  enviarConvite: true,
 }
 
 export function PacienteForm({ paciente, onClose, onSalvar }: Props) {
@@ -51,7 +57,9 @@ export function PacienteForm({ paciente, onClose, onSalvar }: Props) {
           idade: paciente.idade,
           genero: paciente.genero,
           convenio: paciente.convenio,
+          email: paciente.email ?? '',
           condicoesCronicas: [...paciente.condicoesCronicas],
+          enviarConvite: false,
         }
       : VAZIO,
   )
@@ -59,6 +67,7 @@ export function PacienteForm({ paciente, onClose, onSalvar }: Props) {
 
   const editando = paciente !== null
   const nomeValido = form.nome.trim().length > 1
+  const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
 
   const adicionar = (valor: string) => {
     const c = valor.trim()
@@ -172,6 +181,43 @@ export function PacienteForm({ paciente, onClose, onSalvar }: Props) {
               className={inputCls}
             />
           </Campo>
+
+          {/* Email + convite pro app */}
+          <Campo label="Email">
+            <input
+              type="email"
+              value={form.email}
+              onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+              placeholder="paciente@email.com"
+              className={inputCls}
+            />
+          </Campo>
+
+          {!editando && (
+            <label
+              className={`flex items-start gap-2.5 rounded-xl border p-3 ${
+                emailValido
+                  ? 'cursor-pointer border-slate-200 dark:border-slate-800'
+                  : 'border-slate-200 opacity-50 dark:border-slate-800'
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={form.enviarConvite && emailValido}
+                disabled={!emailValido}
+                onChange={(e) => setForm((f) => ({ ...f, enviarConvite: e.target.checked }))}
+                className="mt-0.5 h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500 dark:border-slate-600"
+              />
+              <span className="text-xs text-slate-600 dark:text-slate-300">
+                Enviar convite do app agora
+                <span className="mt-0.5 block text-[11px] text-slate-400">
+                  {emailValido
+                    ? 'O paciente recebe o convite dentro do app e escolhe o que compartilhar antes de vincular.'
+                    : 'Informe um email válido para poder convidar.'}
+                </span>
+              </span>
+            </label>
+          )}
 
           {/* Condições crônicas */}
           <div>

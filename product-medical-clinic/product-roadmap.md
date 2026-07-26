@@ -35,7 +35,7 @@ Cadastro de salas/consultórios e recursos (equipamentos), disponibilidade, e v�
 Calendário multi-profissional compartilhado: visão por médico, por sala e por especialidade; presencial + teleconsulta; encaixes, bloqueios, status (pendente, confirmado, realizado, cancelado, faltou). Recepção agenda para qualquer médico; médico vê a própria. Paciente vê/agenda as próprias.
 
 ### 7. Pacientes `[V1]`
-**Pool compartilhado**: lista única de pacientes da clínica, busca, cadastro, **convite por código** (vincula ao app). Abrir paciente revela tabs (Resumo, Prontuário, Exames, Prescrição, Consulta, Financeiro). Médico vê clínico sob escopo; recepção vê só admin (nome, contato, convênio, financeiro). Mostra os médicos da clínica vinculados ao paciente.
+**Pool compartilhado**: lista única de pacientes da clínica, busca, cadastro, **convite por email** (paciente aceita no app e confirma permissões). Abrir paciente revela tabs (Resumo, Prontuário, Exames, Prescrição, Consulta, Financeiro). Médico vê clínico sob escopo; recepção vê só admin (nome, contato, convênio, financeiro). Mostra os médicos da clínica vinculados ao paciente.
 
 ### 8. Consulta `[V1]`
 Tela de atendimento (presencial + teleconsulta), fluxo único. **Escriba IA**: gravação com consentimento, transcrição, SOAP automático; médico revisa, edita e assina (click-to-attest V1). Painel de contexto (medicações ativas, últimos exames, evoluções recentes de qualquer médico da clínica — sob escopo). Nested em Pacientes. `id: consulta`.

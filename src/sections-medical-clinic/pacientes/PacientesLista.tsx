@@ -83,7 +83,16 @@ export default function PacientesListaPreview() {
       setPacientes((prev) =>
         prev.map((p) =>
           p.id === id
-            ? { ...p, ...values, iniciais: iniciaisDe(values.nome) }
+            ? {
+                ...p,
+                nome: values.nome,
+                iniciais: iniciaisDe(values.nome),
+                idade: values.idade,
+                genero: values.genero,
+                convenio: values.convenio,
+                email: values.email.trim() || undefined,
+                condicoesCronicas: values.condicoesCronicas,
+              }
             : p,
         ),
       )
@@ -96,16 +105,22 @@ export default function PacientesListaPreview() {
         idade: values.idade,
         genero: values.genero,
         convenio: values.convenio,
+        email: values.email.trim() || undefined,
         condicoesCronicas: values.condicoesCronicas,
         equipe: [],
         ultimaConsultaEm: null,
         ultimaEspecialidade: null,
         proximaConsultaEm: null,
         proximaEspecialidade: null,
-        statusApp: 'nao-convidado',
+        // O convite sai junto do cadastro quando o toggle está ligado (padrão da vertical Personal).
+        statusApp: values.enviarConvite && values.email ? 'convite-pendente' : 'nao-convidado',
       }
       setPacientes((prev) => [novo, ...prev])
-      pushToast(`${values.nome} adicionado ao pool da clínica`)
+      pushToast(
+        values.enviarConvite && values.email
+          ? `${values.nome} adicionado · convite enviado para ${values.email}`
+          : `${values.nome} adicionado ao pool da clínica`,
+      )
     }
     fecharForm()
   }
@@ -134,7 +149,15 @@ export default function PacientesListaPreview() {
         onAbrirProntuario={() => navigate('/medical-clinic/sections/prontuario')}
         onConvidar={(id) => {
           const p = pacientes.find((x) => x.id === id)
-          pushToast(`Convite gerado para ${p?.nome ?? 'paciente'}`)
+          if (!p?.email) return
+          const reenvio = p.statusApp === 'convite-pendente'
+          // O convite deixa o paciente pendente até ele aceitar e confirmar permissões no app.
+          setPacientes((prev) =>
+            prev.map((x) => (x.id === id ? { ...x, statusApp: 'convite-pendente' } : x)),
+          )
+          pushToast(
+            `Convite ${reenvio ? 'reenviado' : 'enviado'} para ${p.email} · aguardando o aceite no app`,
+          )
         }}
         onNovaConsulta={() => {
           setAbertoId(null)

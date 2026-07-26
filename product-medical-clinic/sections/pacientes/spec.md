@@ -14,10 +14,37 @@ O **pool compartilhado de pacientes** da clínica — a lista única de paciente
 ### Abrir um paciente
 - Clicar numa linha abre **drawer de resumo**: identidade, equipe de cuidado (nome + especialidade + principal), próxima consulta, status do app
 - Botão **"Abrir prontuário compartilhado"** leva ao prontuário (cross-especialidade + audit log)
-- Botão "Convidar pro app" (código) para paciente sem vínculo; "Nova consulta" agenda
+- Botão "Convidar app" para paciente sem vínculo (vira "Reenviar convite" se já pendente);
+  "Nova consulta" agenda
 
 ### Novo paciente
-- "+ Novo paciente" (mock): cadastro entra no pool da clínica; opcionalmente já vincula ao médico logado e dispara convite
+- "+ Novo paciente" (mock): cadastro entra no pool da clínica com nome, idade, gênero, convênio e
+  **email**, mais o toggle "Enviar convite do app agora" (default ligado, desabilitado sem email
+  válido)
+
+## Convite pro app
+
+**O convite vai por email** — mesmo padrão da vertical Personal (`product-personal/sections/alunos`),
+não por código digitado. O email é o identificador do paciente; sem email cadastrado o botão de
+convite fica desabilitado, com tooltip explicando.
+
+Fluxo completo, as duas pontas:
+
+1. Clínica cadastra o paciente com email, ou abre um já existente e clica "Convidar app"
+2. O paciente passa a `convite-pendente` e o convite chega **dentro do app** — em
+   `product-mobile/sections/profissionais` → aba **Convites → Recebidos**
+3. No app, "Aceitar" **não vincula na hora**: abre `PermissoesCompartilhamento`, onde o paciente
+   escolhe que dados a clínica verá. **É confirmar as permissões que cria o vínculo** — só então o
+   status vira `vinculado`
+4. Enquanto pendente, a clínica pode reenviar (o botão troca de rótulo)
+
+`statusApp` reflete isso o tempo todo: `nao-convidado` → `convite-pendente` → `vinculado`.
+
+> **Aberto:** o convite é da **clínica** (workspace), não de um médico específico — coerente com o
+> pool compartilhado e com a recepção podendo convidar. A equipe de cuidado se forma pelos
+> atendimentos, não pelo convite. O backend hoje modela `professional_patients` (profissional ↔
+> paciente), então esse vínculo no nível do workspace é o gap que o roadmap já aponta como o maior
+> a construir.
 
 ## UI Requirements
 

@@ -14,9 +14,19 @@
   "ctx": {
     "nome": "Clínica Vida Endócrino & Metabólica",
     "medicoLogadoId": "med-h",
-    "especialidades": ["Endocrinologia", "Cardiologia", "Nutrologia", "Clínica Geral"]
+    "especialidades": [
+      "Endocrinologia",
+      "Cardiologia",
+      "Nutrologia",
+      "Clínica Geral"
+    ]
   },
-  "filtroAtivo": { "busca": "", "escopo": "clinica", "especialidade": "todas", "statusApp": "todos" },
+  "filtroAtivo": {
+    "busca": "",
+    "escopo": "clinica",
+    "especialidade": "todas",
+    "statusApp": "todos"
+  },
   "pacientes": [
     {
       "id": "pct-001",
@@ -25,11 +35,37 @@
       "idade": 45,
       "genero": "feminino",
       "convenio": "Particular",
-      "condicoesCronicas": ["Diabetes tipo 2", "Hipotireoidismo", "Hipertensão"],
+      "email": "maria.andrade@email.com",
+      "condicoesCronicas": [
+        "Diabetes tipo 2",
+        "Hipotireoidismo",
+        "Hipertensão"
+      ],
       "equipe": [
-        { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "principal": true },
-        { "id": "med-m", "nome": "Dr. Marcos Vieira", "iniciais": "MV", "especialidade": "Cardiologia", "cor": "rose", "principal": false },
-        { "id": "med-b", "nome": "Dra. Beatriz Nunes", "iniciais": "BN", "especialidade": "Nutrologia", "cor": "violet", "principal": false }
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-m",
+          "nome": "Dr. Marcos Vieira",
+          "iniciais": "MV",
+          "especialidade": "Cardiologia",
+          "cor": "rose",
+          "principal": false
+        },
+        {
+          "id": "med-b",
+          "nome": "Dra. Beatriz Nunes",
+          "iniciais": "BN",
+          "especialidade": "Nutrologia",
+          "cor": "violet",
+          "principal": false
+        }
       ],
       "ultimaConsultaEm": "2026-07-10",
       "ultimaEspecialidade": "Endocrinologia",
@@ -44,9 +80,20 @@
       "idade": 58,
       "genero": "masculino",
       "convenio": "Unimed",
-      "condicoesCronicas": ["Insuficiência cardíaca", "Hipertensão"],
+      "email": "carlos.menezes@email.com",
+      "condicoesCronicas": [
+        "Insuficiência cardíaca",
+        "Hipertensão"
+      ],
       "equipe": [
-        { "id": "med-m", "nome": "Dr. Marcos Vieira", "iniciais": "MV", "especialidade": "Cardiologia", "cor": "rose", "principal": true }
+        {
+          "id": "med-m",
+          "nome": "Dr. Marcos Vieira",
+          "iniciais": "MV",
+          "especialidade": "Cardiologia",
+          "cor": "rose",
+          "principal": true
+        }
       ],
       "ultimaConsultaEm": "2026-07-21",
       "ultimaEspecialidade": "Cardiologia",
@@ -61,10 +108,27 @@
       "idade": 51,
       "genero": "masculino",
       "convenio": "Bradesco Saúde",
-      "condicoesCronicas": ["Diabetes tipo 2"],
+      "email": "joao.batista@email.com",
+      "condicoesCronicas": [
+        "Diabetes tipo 2"
+      ],
       "equipe": [
-        { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "principal": true },
-        { "id": "med-r", "nome": "Dr. Rafael Aoki", "iniciais": "RA", "especialidade": "Clínica Geral", "cor": "sky", "principal": false }
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-r",
+          "nome": "Dr. Rafael Aoki",
+          "iniciais": "RA",
+          "especialidade": "Clínica Geral",
+          "cor": "sky",
+          "principal": false
+        }
       ],
       "ultimaConsultaEm": "2026-06-15",
       "ultimaEspecialidade": "Endocrinologia",
@@ -79,9 +143,19 @@
       "idade": 34,
       "genero": "feminino",
       "convenio": "Particular",
-      "condicoesCronicas": ["Obesidade grau I"],
+      "email": "debora.alves@email.com",
+      "condicoesCronicas": [
+        "Obesidade grau I"
+      ],
       "equipe": [
-        { "id": "med-b", "nome": "Dra. Beatriz Nunes", "iniciais": "BN", "especialidade": "Nutrologia", "cor": "violet", "principal": true }
+        {
+          "id": "med-b",
+          "nome": "Dra. Beatriz Nunes",
+          "iniciais": "BN",
+          "especialidade": "Nutrologia",
+          "cor": "violet",
+          "principal": true
+        }
       ],
       "ultimaConsultaEm": "2026-05-30",
       "ultimaEspecialidade": "Nutrologia",
@@ -96,10 +170,28 @@
       "idade": 62,
       "genero": "masculino",
       "convenio": "Amil",
-      "condicoesCronicas": ["Arritmia", "Dislipidemia"],
+      "email": "paulo.tavares@email.com",
+      "condicoesCronicas": [
+        "Arritmia",
+        "Dislipidemia"
+      ],
       "equipe": [
-        { "id": "med-m", "nome": "Dr. Marcos Vieira", "iniciais": "MV", "especialidade": "Cardiologia", "cor": "rose", "principal": true },
-        { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "principal": false }
+        {
+          "id": "med-m",
+          "nome": "Dr. Marcos Vieira",
+          "iniciais": "MV",
+          "especialidade": "Cardiologia",
+          "cor": "rose",
+          "principal": true
+        },
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": false
+        }
       ],
       "ultimaConsultaEm": "2026-07-05",
       "ultimaEspecialidade": "Cardiologia",
@@ -114,9 +206,19 @@
       "idade": 49,
       "genero": "feminino",
       "convenio": "Particular",
-      "condicoesCronicas": ["Hipotireoidismo"],
+      "email": "sonia.reis@email.com",
+      "condicoesCronicas": [
+        "Hipotireoidismo"
+      ],
       "equipe": [
-        { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "principal": true }
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        }
       ],
       "ultimaConsultaEm": "2026-04-18",
       "ultimaEspecialidade": "Endocrinologia",
@@ -131,9 +233,17 @@
       "idade": 40,
       "genero": "masculino",
       "convenio": "SulAmérica",
+      "email": "igor.ramos@email.com",
       "condicoesCronicas": [],
       "equipe": [
-        { "id": "med-r", "nome": "Dr. Rafael Aoki", "iniciais": "RA", "especialidade": "Clínica Geral", "cor": "sky", "principal": true }
+        {
+          "id": "med-r",
+          "nome": "Dr. Rafael Aoki",
+          "iniciais": "RA",
+          "especialidade": "Clínica Geral",
+          "cor": "sky",
+          "principal": true
+        }
       ],
       "ultimaConsultaEm": "2026-07-21",
       "ultimaEspecialidade": "Clínica Geral",
@@ -148,10 +258,27 @@
       "idade": 29,
       "genero": "masculino",
       "convenio": "Particular",
-      "condicoesCronicas": ["Pré-diabetes"],
+      "email": "felipe.nunes@email.com",
+      "condicoesCronicas": [
+        "Pré-diabetes"
+      ],
       "equipe": [
-        { "id": "med-b", "nome": "Dra. Beatriz Nunes", "iniciais": "BN", "especialidade": "Nutrologia", "cor": "violet", "principal": true },
-        { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "principal": false }
+        {
+          "id": "med-b",
+          "nome": "Dra. Beatriz Nunes",
+          "iniciais": "BN",
+          "especialidade": "Nutrologia",
+          "cor": "violet",
+          "principal": true
+        },
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": false
+        }
       ],
       "ultimaConsultaEm": "2026-06-02",
       "ultimaEspecialidade": "Nutrologia",
