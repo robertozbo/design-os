@@ -35,12 +35,27 @@ convite fica desabilitado, com tooltip explicando.
 Fluxo completo, as duas pontas:
 
 1. Clínica cadastra o paciente com email, ou abre um já existente e clica "Convidar app"
-2. O paciente passa a `convite-pendente` e o convite chega **dentro do app** — em
-   `product-mobile/sections/profissionais` → aba **Convites → Recebidos**
+2. O paciente passa a `convite-pendente` e o convite é entregue por email **e** dentro do app
 3. No app, "Aceitar" **não vincula na hora**: abre `PermissoesCompartilhamento`, onde o paciente
    escolhe que dados a clínica verá. **É confirmar as permissões que cria o vínculo** — só então o
    status vira `vinculado`
 4. Enquanto pendente, a clínica pode reenviar (o botão troca de rótulo)
+
+### Os dois caminhos do convidado
+
+**Paciente que já usa o Nymos** — o convite aparece em `product-mobile/sections/profissionais` →
+aba **Convites → Recebidos**, com o card do profissional e os botões Aceitar/Recusar. Esse caminho
+já existe.
+
+**Paciente que ainda não tem o app** — é o caso majoritário quando uma clínica convida. O email
+precisa levar ao download, e **o convite pendente tem que aparecer no primeiro acesso**, logo após
+o cadastro, antes ou junto do onboarding. Sem isso o paciente instala, entra num app vazio, não
+entende por que foi convidado, e a clínica fica com "convite pendente" eterno — o vínculo morre no
+meio do caminho.
+
+> **Gap conhecido:** as specs de `onboarding`, `signup`, `welcome` e `onboarding-completo` do app
+> **não mencionam convite pendente**. O contrato acima é o que a implementação precisa cobrir; a
+> tela do primeiro acesso ainda não foi desenhada para ele.
 
 `statusApp` reflete isso o tempo todo: `nao-convidado` → `convite-pendente` → `vinculado`.
 
