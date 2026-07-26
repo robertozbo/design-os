@@ -191,15 +191,24 @@ function AtendimentoRow({ item, onClick }: { item: AtendimentoItem; onClick: () 
             </span>
           )}
         </div>
-        {item.pacienteVinculado && (
-          <span
-            title={`${item.paciente.nome} usa o app Nymos — dados compartilhados entre consultas`}
-            className="shrink-0 text-emerald-500 dark:text-emerald-400"
-          >
-            <Smartphone className="h-4 w-4" strokeWidth={1.75} />
-            <span className="sr-only">Paciente vinculado ao app</span>
+        {/* Sempre presente: apagado quando não conectado — ausência de ícone seria ambígua. */}
+        <span
+          title={
+            item.pacienteVinculado
+              ? `${item.paciente.nome} usa o app Nymos — dados compartilhados entre consultas`
+              : `${item.paciente.nome} não está conectado ao app`
+          }
+          className={`shrink-0 ${
+            item.pacienteVinculado
+              ? 'text-emerald-500 dark:text-emerald-400'
+              : 'text-slate-300 dark:text-slate-600'
+          }`}
+        >
+          <Smartphone className="h-4 w-4" strokeWidth={1.75} />
+          <span className="sr-only">
+            {item.pacienteVinculado ? 'Paciente vinculado ao app' : 'Paciente não conectado ao app'}
           </span>
-        )}
+        </span>
         <div className="w-12 shrink-0 text-right text-[11px] font-mono tabular-nums text-slate-400">
           {item.duracaoMin}min
         </div>
