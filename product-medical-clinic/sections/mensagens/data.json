@@ -1,0 +1,67 @@
+{
+  "clinica": "Clínica Nymos · Vila Mariana",
+  "medicoLogado": "Dra. Helena Prado",
+  "canalPadrao": "clinico",
+  "threads": [
+    {
+      "id": "t1",
+      "canal": "clinico",
+      "paciente": { "nome": "André Nogueira", "iniciais": "AN", "idade": 45, "condicoesCronicas": ["Hipotireoidismo"] },
+      "profissional": "Dra. Helena Prado",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "naoLidas": 2,
+      "ultimaEm": "09:12",
+      "mensagens": [
+        { "id": "m1", "autor": "profissional", "texto": "André, seus exames chegaram. O TSH veio um pouco alto, vamos iniciar a levotiroxina como conversamos.", "hora": "ontem 17:40", "dia": "Ontem" },
+        { "id": "m2", "autor": "paciente", "texto": "Certo, doutora. Tomo em jejum mesmo?", "hora": "ontem 18:05", "dia": "Ontem" },
+        { "id": "m3", "autor": "profissional", "texto": "Isso — 30 minutos antes do café, com água. Nada de café ou leite junto.", "hora": "ontem 18:20", "dia": "Ontem" },
+        { "id": "m4", "autor": "paciente", "texto": "Comecei hoje. Senti um leve mal-estar de manhã, é normal?", "hora": "09:10", "dia": "Hoje" },
+        { "id": "m5", "autor": "paciente", "texto": "Nada grave, só pra confirmar.", "hora": "09:12", "dia": "Hoje" }
+      ]
+    },
+    {
+      "id": "t2",
+      "canal": "clinico",
+      "paciente": { "nome": "Sônia Ribeiro", "iniciais": "SR", "idade": 64, "condicoesCronicas": ["Hipotireoidismo"] },
+      "profissional": "Dra. Helena Prado",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "naoLidas": 0,
+      "ultimaEm": "08:30",
+      "mensagens": [
+        { "id": "m1", "autor": "paciente", "texto": "Bom dia! O resultado do TSH já saiu?", "hora": "08:10", "dia": "Hoje" },
+        { "id": "m2", "autor": "profissional", "texto": "Bom dia, Sônia! Saiu sim, está dentro da faixa. Mantemos a dose atual. 🙂", "hora": "08:30", "dia": "Hoje" }
+      ]
+    },
+    {
+      "id": "t3",
+      "canal": "clinico",
+      "paciente": { "nome": "Marcos Vinícius Lima", "iniciais": "ML", "idade": 58, "condicoesCronicas": ["Diabetes tipo 2"] },
+      "profissional": "Dra. Helena Prado",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "naoLidas": 1,
+      "ultimaEm": "ontem",
+      "mensagens": [
+        { "id": "m1", "autor": "profissional", "texto": "Marcos, como estão as glicemias essa semana?", "hora": "seg 10:00", "dia": "Segunda" },
+        { "id": "m2", "autor": "paciente", "texto": "Melhoraram bastante depois do ajuste da insulina. Jejum tá em 110-120.", "hora": "ontem 14:30", "dia": "Ontem" }
+      ]
+    },
+    {
+      "id": "t4",
+      "canal": "clinico",
+      "paciente": { "nome": "Larissa Fontes", "iniciais": "LF", "idade": 33, "condicoesCronicas": ["SOP"] },
+      "profissional": "Dra. Helena Prado",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "naoLidas": 0,
+      "ultimaEm": "18 jul",
+      "mensagens": [
+        { "id": "m1", "autor": "paciente", "texto": "Doutora, a metformina pode dar enjoo? Senti um pouco no começo.", "hora": "18 jul 11:00", "dia": "18 jul" },
+        { "id": "m2", "autor": "profissional", "texto": "Pode sim, é comum nos primeiros dias. Tome sempre após as refeições que melhora. Se persistir depois de uma semana, me avise.", "hora": "18 jul 11:45", "dia": "18 jul" },
+        { "id": "m3", "autor": "paciente", "texto": "Perfeito, obrigada!", "hora": "18 jul 12:00", "dia": "18 jul" }
+      ]
+    }
+  ]
+}

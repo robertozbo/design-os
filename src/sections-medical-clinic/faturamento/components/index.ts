@@ -1,0 +1,1 @@
+export { FaturamentoView } from './FaturamentoView'

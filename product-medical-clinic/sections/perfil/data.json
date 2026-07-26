@@ -1,0 +1,90 @@
+{
+  "_meta": {
+    "models": {
+      "especialidade": "Especialidade com RQE opcional.",
+      "formacao": "Titulação/formação acadêmica do médico.",
+      "horarioDia": "Faixas de atendimento por dia da semana.",
+      "credencial": "Assinatura digital / certificado com status.",
+      "preferencia": "Toggle de preferência do médico (mock)."
+    },
+    "relationships": [
+      "PerfilData é o perfil do próprio médico logado (Dra. Helena Prado)",
+      "bio é o texto público que o paciente vê no app Nymos"
+    ]
+  },
+  "nome": "Dra. Helena Prado",
+  "iniciais": "HP",
+  "especialidadePrincipal": "Endocrinologia e Metabologia",
+  "crm": "456789",
+  "uf": "SP",
+  "especialidades": [
+    { "nome": "Endocrinologia e Metabologia", "rqe": "RQE 28451" },
+    { "nome": "Clínica Médica", "rqe": "RQE 12033" },
+    { "nome": "Nutrologia" }
+  ],
+  "bio": "Endocrinologista há 14 anos, com foco em diabetes tipo 2, tireoide e obesidade. Acredito em acompanhamento próximo e decisões compartilhadas com o paciente. Uso dados de wearables e exames integrados para ajustar o tratamento entre as consultas.",
+  "bioMax": 500,
+  "formacao": [
+    { "id": "f1", "titulo": "Graduação em Medicina", "instituicao": "Faculdade de Medicina da USP", "ano": "2009" },
+    { "id": "f2", "titulo": "Residência em Endocrinologia", "instituicao": "Hospital das Clínicas · FMUSP", "ano": "2013" },
+    { "id": "f3", "titulo": "Título de Especialista (TEEM)", "instituicao": "SBEM · AMB", "ano": "2014" },
+    { "id": "f4", "titulo": "Mestrado em Metabolismo", "instituicao": "UNIFESP", "ano": "2018" }
+  ],
+  "contato": {
+    "email": "helena.prado@clinicavida.com.br",
+    "telefone": "(11) 98765-4321",
+    "cidade": "São Paulo · SP"
+  },
+  "horarios": [
+    { "dia": "Segunda", "faixas": ["08:00 – 12:00", "14:00 – 18:00"] },
+    { "dia": "Terça", "faixas": ["08:00 – 12:00", "14:00 – 18:00"] },
+    { "dia": "Quarta", "faixas": ["14:00 – 18:00"] },
+    { "dia": "Quinta", "faixas": ["08:00 – 12:00", "14:00 – 18:00"] },
+    { "dia": "Sexta", "faixas": ["08:00 – 12:00"] },
+    { "dia": "Sábado", "faixas": ["09:00 – 12:00"] },
+    { "dia": "Domingo", "faixas": [] }
+  ],
+  "credenciais": [
+    {
+      "id": "c1",
+      "nome": "Assinatura click-to-attest",
+      "descricao": "Atesto eletrônico com carimbo de CRM em prescrições e documentos internos.",
+      "status": "ativo",
+      "detalhe": "Ativo desde 12/03/2026 · V1"
+    },
+    {
+      "id": "c2",
+      "nome": "Certificado ICP-Brasil (A3)",
+      "descricao": "Assinatura com validade jurídica plena para receitas controladas e atestados externos.",
+      "status": "pendente",
+      "detalhe": "Disponível no V2 · aguardando emissão"
+    },
+    {
+      "id": "c3",
+      "nome": "Vínculo com a clínica",
+      "descricao": "Credenciamento ativo na Clínica Vida Endócrino & Metabólica.",
+      "status": "ativo",
+      "detalhe": "Repasse 60% · desde 2021"
+    }
+  ],
+  "preferencias": [
+    {
+      "id": "p1",
+      "label": "Notificações de encaminhamento",
+      "descricao": "Receber aviso quando outro médico encaminhar um paciente para você.",
+      "ativo": true
+    },
+    {
+      "id": "p2",
+      "label": "Escriba IA por padrão",
+      "descricao": "Iniciar a consulta com o escriba de IA já ligado, gravando a evolução.",
+      "ativo": false
+    },
+    {
+      "id": "p3",
+      "label": "Perfil visível no app do paciente",
+      "descricao": "Exibir sua bio e especialidades para pacientes na busca do Nymos.",
+      "ativo": true
+    }
+  ]
+}

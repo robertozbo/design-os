@@ -1,0 +1,93 @@
+{
+  "clinica": "Clínica Nymos · Vila Mariana",
+  "medicoLogado": { "id": "med-helena", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "crm": "CRM 456789-SP" },
+  "recebidos": [
+    {
+      "id": "enc-r1",
+      "direcao": "recebido",
+      "contraparte": { "id": "med-paulo", "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky", "crm": "CRM 112233-SP" },
+      "paciente": { "id": "p-bia", "nome": "Beatriz Camargo", "iniciais": "BC", "idade": 39 },
+      "motivo": "Resistência à insulina",
+      "contexto": "Glicemia de jejum 118, HbA1c 6.1%, IMC 31. Acantose nigricans em região cervical. Solicito avaliação endócrina e conduta para pré-diabetes.",
+      "compartilhado": ["prontuario", "exames", "medicacoes"],
+      "consentimentoPaciente": true,
+      "status": "pendente",
+      "em": "há 2h"
+    },
+    {
+      "id": "enc-r2",
+      "direcao": "recebido",
+      "contraparte": { "id": "med-marina", "nome": "Dra. Marina Alves", "iniciais": "MA", "especialidade": "Ginecologia", "cor": "rose", "crm": "CRM 334455-SP" },
+      "paciente": { "id": "p-larissa", "nome": "Larissa Fontes", "iniciais": "LF", "idade": 33 },
+      "motivo": "Suspeita de SOP com componente metabólico",
+      "contexto": "Ciclos irregulares, acantose nigricans, testosterona no limite superior. USG com ovários policísticos. Avaliar resistência insulínica e conduta metabólica.",
+      "compartilhado": ["prontuario", "exames"],
+      "consentimentoPaciente": true,
+      "status": "pendente",
+      "em": "ontem"
+    },
+    {
+      "id": "enc-r3",
+      "direcao": "recebido",
+      "contraparte": { "id": "med-paulo", "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky", "crm": "CRM 112233-SP" },
+      "paciente": { "id": "p-eduardo", "nome": "Eduardo Prass", "iniciais": "EP", "idade": 47 },
+      "motivo": "Diabetes tipo 2 descompensado",
+      "contexto": "HbA1c 9.2% apesar de metformina. Paciente aderente. Necessária intensificação terapêutica.",
+      "compartilhado": ["prontuario", "exames", "medicacoes"],
+      "consentimentoPaciente": true,
+      "status": "aceito",
+      "em": "há 3 dias"
+    }
+  ],
+  "enviados": [
+    {
+      "id": "enc-e1",
+      "direcao": "enviado",
+      "contraparte": { "id": "med-carlos", "nome": "Dr. Carlos Menezes", "iniciais": "CM", "especialidade": "Cardiologia", "cor": "violet", "crm": "CRM 556677-SP" },
+      "paciente": { "id": "p-roberto", "nome": "Roberto Tavares", "iniciais": "RT", "idade": 71 },
+      "motivo": "Avaliação cardiológica pré-ajuste de dose",
+      "contexto": "Idoso com hipotireoidismo em compensação. FC de repouso 58. Solicito avaliação antes de intensificar levotiroxina.",
+      "compartilhado": ["prontuario", "medicacoes"],
+      "consentimentoPaciente": true,
+      "status": "aceito",
+      "em": "há 1 dia"
+    },
+    {
+      "id": "enc-e2",
+      "direcao": "enviado",
+      "contraparte": { "id": "med-marina", "nome": "Dra. Marina Alves", "iniciais": "MA", "especialidade": "Ginecologia", "cor": "rose", "crm": "CRM 334455-SP" },
+      "paciente": { "id": "p-fernanda", "nome": "Fernanda Quintela", "iniciais": "FQ", "idade": 29 },
+      "motivo": "SOP — acompanhamento ginecológico conjunto",
+      "contexto": "Diagnóstico de SOP confirmado. Iniciada metformina. Encaminho para manejo do componente reprodutivo e menstrual.",
+      "compartilhado": ["prontuario", "exames"],
+      "consentimentoPaciente": true,
+      "status": "pendente",
+      "em": "há 4h"
+    },
+    {
+      "id": "enc-e3",
+      "direcao": "enviado",
+      "contraparte": { "id": "med-carlos", "nome": "Dr. Carlos Menezes", "iniciais": "CM", "especialidade": "Cardiologia", "cor": "violet", "crm": "CRM 556677-SP" },
+      "paciente": { "id": "p-marcos", "nome": "Marcos Vinícius Lima", "iniciais": "ML", "idade": 58 },
+      "motivo": "Risco cardiovascular em diabético",
+      "contexto": "DM2 com dislipidemia. LDL 142 mesmo com estatina. Avaliar intensificação e rastreio de doença coronariana.",
+      "compartilhado": ["prontuario", "exames", "medicacoes"],
+      "consentimentoPaciente": false,
+      "status": "recusado",
+      "em": "há 5 dias"
+    }
+  ],
+  "colegas": [
+    { "id": "med-paulo", "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky", "crm": "CRM 112233-SP", "disponivel": true },
+    { "id": "med-marina", "nome": "Dra. Marina Alves", "iniciais": "MA", "especialidade": "Ginecologia", "cor": "rose", "crm": "CRM 334455-SP", "disponivel": true },
+    { "id": "med-carlos", "nome": "Dr. Carlos Menezes", "iniciais": "CM", "especialidade": "Cardiologia", "cor": "violet", "crm": "CRM 556677-SP", "disponivel": false },
+    { "id": "med-julia", "nome": "Dra. Júlia Ramos", "iniciais": "JR", "especialidade": "Nutrologia", "cor": "amber", "crm": "CRM 778899-SP", "disponivel": true },
+    { "id": "med-teo", "nome": "Dr. Téo Farias", "iniciais": "TF", "especialidade": "Nefrologia", "cor": "slate", "crm": "CRM 990011-SP", "disponivel": true }
+  ],
+  "pacientes": [
+    { "id": "p-andre", "nome": "André Nogueira", "iniciais": "AN", "idade": 45, "condicoesCronicas": ["Hipotireoidismo", "Sobrepeso"], "meuVinculo": true },
+    { "id": "p-marcos", "nome": "Marcos Vinícius Lima", "iniciais": "ML", "idade": 58, "condicoesCronicas": ["Diabetes tipo 2", "Dislipidemia"], "meuVinculo": true },
+    { "id": "p-larissa", "nome": "Larissa Fontes", "iniciais": "LF", "idade": 33, "condicoesCronicas": ["SOP"], "meuVinculo": true },
+    { "id": "p-sonia", "nome": "Sônia Ribeiro", "iniciais": "SR", "idade": 64, "condicoesCronicas": ["Hipotireoidismo"], "meuVinculo": true }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "_meta": {
+    "models": {
+      "pacienteRef": "Identidade do paciente no topo do prontuário.",
+      "acessoAtual": "Contexto do médico logado: via qual vínculo/consentimento está acessando.",
+      "medicoVinculo": "Um médico da clínica vinculado ao paciente (equipe de cuidado), com especialidade e cor.",
+      "evolucao": "Uma evolução (consulta finalizada) na timeline compartilhada, com autor + especialidade + SOAP.",
+      "medicacaoUso": "Medicação em uso, com quem prescreveu e especialidade (agregação cross-especialidade).",
+      "auditEvento": "Um evento no log de acesso: ator, papel/especialidade, ação, alvo, quando."
+    },
+    "relationships": [
+      "PacienteRef tem muitos MedicoVinculo (equipe de cuidado)",
+      "PacienteRef tem uma AnamneseCompartilhada e muitas Evolucao",
+      "Evolucao pertence a um médico (autor) de uma especialidade",
+      "MedicacaoUso referencia o médico que prescreveu",
+      "AuditEvento registra acesso de um ator ao prontuário"
+    ]
+  },
+  "paciente": {
+    "id": "pct-001",
+    "nome": "Maria Silva Andrade",
+    "iniciais": "MA",
+    "idade": 45,
+    "genero": "feminino",
+    "convenio": "Particular",
+    "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Hipotireoidismo", "Hipertensão"]
+  },
+  "acessoAtual": {
+    "medicoNome": "Dra. Helena Prado",
+    "especialidade": "Endocrinologia",
+    "viaVinculo": true,
+    "consentimento": "Tutela da saúde (LGPD Art. 11) · aceito em 15/03/2024"
+  },
+  "equipeCuidado": [
+    {
+      "id": "mem-002",
+      "nome": "Dra. Helena Prado",
+      "iniciais": "HP",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "crm": "CRM 456789-SP",
+      "ultimoAtendimentoEm": "2026-07-10",
+      "principal": true
+    },
+    {
+      "id": "mem-003",
+      "nome": "Dr. Marcos Vieira",
+      "iniciais": "MV",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "crm": "CRM 512340-SP",
+      "ultimoAtendimentoEm": "2026-06-28",
+      "principal": false
+    },
+    {
+      "id": "mem-004",
+      "nome": "Dra. Beatriz Nunes",
+      "iniciais": "BN",
+      "especialidade": "Nutrologia",
+      "cor": "violet",
+      "crm": "CRM 601288-SP",
+      "ultimoAtendimentoEm": "2026-05-30",
+      "principal": false
+    }
+  ],
+  "anamnese": {
+    "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Hipotireoidismo", "Hipertensão arterial"],
+    "medicacoesEmUso": [
+      {
+        "nome": "Levotiroxina 75mcg",
+        "prescritoPor": "Dra. Helena Prado",
+        "especialidade": "Endocrinologia",
+        "cor": "teal"
+      },
+      {
+        "nome": "Metformina 850mg 2x/dia",
+        "prescritoPor": "Dra. Helena Prado",
+        "especialidade": "Endocrinologia",
+        "cor": "teal"
+      },
+      {
+        "nome": "Losartana 50mg",
+        "prescritoPor": "Dr. Marcos Vieira",
+        "especialidade": "Cardiologia",
+        "cor": "rose"
+      },
+      {
+        "nome": "Ozempic 1mg/semana",
+        "prescritoPor": "Dra. Helena Prado",
+        "especialidade": "Endocrinologia",
+        "cor": "teal"
+      }
+    ],
+    "alergias": ["Dipirona (urticária)", "Sulfa (moderada)"],
+    "observacao": "Lista agregada dos vínculos ativos. Atenção a interações entre especialidades."
+  },
+  "evolucoes": [
+    {
+      "id": "evo-101",
+      "data": "2026-07-10",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "medicoNome": "Dra. Helena Prado",
+      "medicoIniciais": "HP",
+      "modalidade": "presencial",
+      "geradoPorIA": true,
+      "modeloIA": "claude-sonnet · escriba v2",
+      "doMedicoLogado": true,
+      "resumo": "HbA1c 6,9% (↓ de 7,4). Mantida Metformina + Ozempic. Reforço de adesão e dieta.",
+      "soap": {
+        "S": "Refere melhora da disposição, sem hipoglicemias. Aderente à medicação.",
+        "O": "Peso 78,2kg (↓1,3). PA 128x82. HbA1c 6,9%. TSH 2,1.",
+        "A": "DM2 em melhor controle. Hipotireoidismo compensado.",
+        "P": "Manter Metformina 850mg 2x, Ozempic 1mg/sem. Retorno em 90 dias com novo HbA1c."
+      }
+    },
+    {
+      "id": "evo-102",
+      "data": "2026-06-28",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "medicoNome": "Dr. Marcos Vieira",
+      "medicoIniciais": "MV",
+      "modalidade": "presencial",
+      "geradoPorIA": false,
+      "modeloIA": null,
+      "doMedicoLogado": false,
+      "resumo": "PA limítrofe, ajustada Losartana para 50mg. MAPA solicitado.",
+      "soap": {
+        "S": "Nega dor torácica, dispneia ou palpitações. Refere PA caseira ~140x90.",
+        "O": "PA consultório 142x88. FC 76. Ausculta cardíaca normal.",
+        "A": "HAS estágio 1, controle subótimo.",
+        "P": "Losartana 50mg 1x. Solicitado MAPA 24h. Retorno em 30 dias."
+      }
+    },
+    {
+      "id": "evo-103",
+      "data": "2026-05-30",
+      "especialidade": "Nutrologia",
+      "cor": "violet",
+      "medicoNome": "Dra. Beatriz Nunes",
+      "medicoIniciais": "BN",
+      "modalidade": "tele",
+      "geradoPorIA": true,
+      "modeloIA": "claude-sonnet · escriba v2",
+      "doMedicoLogado": false,
+      "resumo": "Plano alimentar hipocalórico + educação em carboidratos. Meta -4kg em 3 meses.",
+      "soap": {
+        "S": "Relata dificuldade com jantar e beliscar à noite.",
+        "O": "Peso 79,5kg. CA 96cm. Recordatório com excesso de ultraprocessados no período noturno.",
+        "A": "Obesidade grau I associada a DM2.",
+        "P": "Plano hipocalórico 1500kcal, contagem de carboidratos. Reavaliação em 60 dias."
+      }
+    }
+  ],
+  "auditLog": [
+    {
+      "id": "aud-1",
+      "ator": "Dra. Helena Prado",
+      "iniciais": "HP",
+      "papel": "Médico",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "acao": "editou",
+      "alvo": "Evolução 10/07",
+      "em": "2026-07-10T15:12:00"
+    },
+    {
+      "id": "aud-2",
+      "ator": "Dra. Helena Prado",
+      "iniciais": "HP",
+      "papel": "Médico",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "acao": "ia-inferencia",
+      "alvo": "Escriba SOAP · Evolução 10/07",
+      "em": "2026-07-10T15:05:00"
+    },
+    {
+      "id": "aud-3",
+      "ator": "Dr. Marcos Vieira",
+      "iniciais": "MV",
+      "papel": "Médico",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "acao": "visualizou",
+      "alvo": "Prontuário · anamnese + evoluções",
+      "em": "2026-06-28T09:40:00"
+    },
+    {
+      "id": "aud-4",
+      "ator": "Dr. Marcos Vieira",
+      "iniciais": "MV",
+      "papel": "Médico",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "acao": "prescreveu",
+      "alvo": "Losartana 50mg (Memed)",
+      "em": "2026-06-28T10:02:00"
+    },
+    {
+      "id": "aud-5",
+      "ator": "Carla Souza",
+      "iniciais": "CS",
+      "papel": "Recepção",
+      "especialidade": null,
+      "cor": "slate",
+      "acao": "visualizou",
+      "alvo": "Dados administrativos (sem conteúdo clínico)",
+      "em": "2026-06-28T08:15:00"
+    }
+  ]
+}

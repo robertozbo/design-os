@@ -1,0 +1,175 @@
+{
+  "clinica": "Clínica Nymos · Vila Mariana",
+  "medicoLogado": { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+  "kpis": { "ativas": 28, "precisaRenovar": 4, "expiradas": 6, "controladas": 3 },
+  "prescricoes": [
+    {
+      "id": "rx-marcos",
+      "paciente": { "nome": "Marcos Vinícius Lima", "iniciais": "ML", "idade": 58 },
+      "prescritor": { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+      "tipo": "continua",
+      "status": "ativa",
+      "dataEmissao": "22 abr 2026",
+      "validade": "22 jul 2026",
+      "diasAteVencer": 0,
+      "precisaRenovar": true,
+      "entregueNoApp": true,
+      "validadeICP": true,
+      "medicamentos": [
+        { "id": "m1", "nome": "Lantus 100 UI/mL", "principioAtivo": "Insulina glargina", "dose": "22 UI", "posologia": "1x/dia à noite, SC", "duracaoDias": 90, "continuo": true },
+        { "id": "m2", "nome": "Metformina XR 750 mg", "principioAtivo": "Cloridrato de metformina", "dose": "750 mg", "posologia": "2 comp./dia após refeições", "duracaoDias": 90, "continuo": true }
+      ],
+      "origemConsultaData": "22 abr 2026",
+      "historicoRenovacoes": [
+        { "id": "h1", "data": "22 jan 2026", "medicoNome": "Dra. Helena Prado", "tipo": "consulta" },
+        { "id": "h2", "data": "22 abr 2026", "medicoNome": "Dra. Helena Prado", "tipo": "renovacao" }
+      ],
+      "medicosAutorizados": [
+        { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+        { "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky" }
+      ],
+      "canceladaEm": null,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "rx-andre",
+      "paciente": { "nome": "André Nogueira", "iniciais": "AN", "idade": 45 },
+      "prescritor": { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+      "tipo": "continua",
+      "status": "ativa",
+      "dataEmissao": "22 jul 2026",
+      "validade": "22 out 2026",
+      "diasAteVencer": 92,
+      "precisaRenovar": false,
+      "entregueNoApp": true,
+      "validadeICP": true,
+      "medicamentos": [
+        { "id": "m1", "nome": "Puran T4 50 mcg", "principioAtivo": "Levotiroxina sódica", "dose": "50 mcg", "posologia": "1x/dia em jejum, 30 min antes do café", "duracaoDias": 90, "continuo": true }
+      ],
+      "origemConsultaData": "22 jul 2026",
+      "historicoRenovacoes": [
+        { "id": "h1", "data": "22 jul 2026", "medicoNome": "Dra. Helena Prado", "tipo": "consulta" }
+      ],
+      "medicosAutorizados": [
+        { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+        { "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky" }
+      ],
+      "canceladaEm": null,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "rx-larissa",
+      "paciente": { "nome": "Larissa Fontes", "iniciais": "LF", "idade": 33 },
+      "prescritor": { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+      "tipo": "comum",
+      "status": "ativa",
+      "dataEmissao": "19 jul 2026",
+      "validade": "26 jul 2026",
+      "diasAteVencer": 4,
+      "precisaRenovar": false,
+      "entregueNoApp": true,
+      "validadeICP": true,
+      "medicamentos": [
+        { "id": "m1", "nome": "Metformina 850 mg", "principioAtivo": "Cloridrato de metformina", "dose": "850 mg", "posologia": "1 comp./dia após o jantar", "duracaoDias": 60, "continuo": false }
+      ],
+      "origemConsultaData": null,
+      "historicoRenovacoes": [
+        { "id": "h1", "data": "19 jul 2026", "medicoNome": "Dra. Helena Prado", "tipo": "consulta" }
+      ],
+      "medicosAutorizados": [
+        { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+        { "nome": "Dra. Marina Alves", "iniciais": "MA", "especialidade": "Ginecologia", "cor": "rose" }
+      ],
+      "canceladaEm": null,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "rx-roberto",
+      "paciente": { "nome": "Roberto Tavares", "iniciais": "RT", "idade": 71 },
+      "prescritor": { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+      "tipo": "controlada",
+      "status": "ativa",
+      "dataEmissao": "10 jul 2026",
+      "validade": "09 ago 2026",
+      "diasAteVencer": 18,
+      "precisaRenovar": false,
+      "entregueNoApp": true,
+      "validadeICP": true,
+      "medicamentos": [
+        { "id": "m1", "nome": "Clonazepam 2 mg", "principioAtivo": "Clonazepam", "dose": "2 mg", "posologia": "1/2 comp. à noite", "duracaoDias": 30, "continuo": false }
+      ],
+      "origemConsultaData": "10 jul 2026",
+      "historicoRenovacoes": [
+        { "id": "h1", "data": "10 jul 2026", "medicoNome": "Dra. Helena Prado", "tipo": "consulta" }
+      ],
+      "medicosAutorizados": [
+        { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" }
+      ],
+      "canceladaEm": null,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "rx-sonia",
+      "paciente": { "nome": "Sônia Ribeiro", "iniciais": "SR", "idade": 64 },
+      "prescritor": { "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky" },
+      "tipo": "comum",
+      "status": "expirada",
+      "dataEmissao": "02 mai 2026",
+      "validade": "01 jun 2026",
+      "diasAteVencer": -51,
+      "precisaRenovar": false,
+      "entregueNoApp": true,
+      "validadeICP": true,
+      "medicamentos": [
+        { "id": "m1", "nome": "Losartana 50 mg", "principioAtivo": "Losartana potássica", "dose": "50 mg", "posologia": "1x/dia pela manhã", "duracaoDias": 30, "continuo": false }
+      ],
+      "origemConsultaData": "02 mai 2026",
+      "historicoRenovacoes": [
+        { "id": "h1", "data": "02 mai 2026", "medicoNome": "Dr. Paulo Sette", "tipo": "consulta" }
+      ],
+      "medicosAutorizados": [
+        { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+        { "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky" }
+      ],
+      "canceladaEm": null,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "rx-eduardo",
+      "paciente": { "nome": "Eduardo Prass", "iniciais": "EP", "idade": 47 },
+      "prescritor": { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+      "tipo": "comum",
+      "status": "cancelada",
+      "dataEmissao": "15 jul 2026",
+      "validade": "14 ago 2026",
+      "diasAteVencer": 23,
+      "precisaRenovar": false,
+      "entregueNoApp": false,
+      "validadeICP": true,
+      "medicamentos": [
+        { "id": "m1", "nome": "Empagliflozina 25 mg", "principioAtivo": "Empagliflozina", "dose": "25 mg", "posologia": "1x/dia pela manhã", "duracaoDias": 90, "continuo": true }
+      ],
+      "origemConsultaData": "15 jul 2026",
+      "historicoRenovacoes": [
+        { "id": "h1", "data": "15 jul 2026", "medicoNome": "Dra. Helena Prado", "tipo": "consulta" }
+      ],
+      "medicosAutorizados": [
+        { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" }
+      ],
+      "canceladaEm": "16 jul 2026",
+      "canceladaPor": "Dra. Helena Prado",
+      "motivoCancelamento": "mudanca_conduta"
+    }
+  ],
+  "pacientes": [
+    { "id": "p-andre", "nome": "André Nogueira", "iniciais": "AN", "idade": 45, "condicoesCronicas": ["Hipotireoidismo", "Sobrepeso"], "ultimaConsulta": "22 jul 2026" },
+    { "id": "p-beatriz", "nome": "Beatriz Camargo", "iniciais": "BC", "idade": 39, "condicoesCronicas": ["Resistência à insulina"], "ultimaConsulta": null },
+    { "id": "p-marcos", "nome": "Marcos Vinícius Lima", "iniciais": "ML", "idade": 58, "condicoesCronicas": ["Diabetes tipo 2"], "ultimaConsulta": "22 jul 2026" },
+    { "id": "p-larissa", "nome": "Larissa Fontes", "iniciais": "LF", "idade": 33, "condicoesCronicas": ["SOP (suspeita)"], "ultimaConsulta": "19 jul 2026" }
+  ]
+}

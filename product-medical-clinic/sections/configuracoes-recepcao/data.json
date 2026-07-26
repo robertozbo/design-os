@@ -1,0 +1,46 @@
+{
+  "_meta": {
+    "models": {
+      "contaRecepcao": "Dados pessoais da recepcionista logada (sem acesso clínico).",
+      "notificacaoRecepcao": "Alerta operacional que a recepção pode ligar/desligar.",
+      "agendaConfig": "Preferências de agenda; horário de funcionamento é read-only (pertence à clínica).",
+      "cobrancaConfig": "Padrões do link de pagamento e recibo.",
+      "mensagensConfig": "Assinatura e horário do canal administrativo.",
+      "aparenciaConfig": "Tema visual."
+    },
+    "relationships": [
+      "ConfiguracoesRecepcaoData é a preferência da persona Recepção (operacional, zero clínico)",
+      "horarioFuncionamento é gerenciado pela clínica — a recepção só visualiza"
+    ]
+  },
+  "conta": {
+    "nome": "Carla Menezes",
+    "email": "carla.menezes@vidaendocrino.com.br",
+    "persona": "Recepção",
+    "iniciais": "CM",
+    "doisFatores": true
+  },
+  "notificacoes": [
+    { "id": "novoAgendamento", "titulo": "Novo agendamento", "descricao": "Avisar quando um paciente marcar consulta.", "ativa": true },
+    { "id": "cancelamento", "titulo": "Cancelamento / no-show", "descricao": "Avisar quando uma consulta for cancelada ou o paciente faltar.", "ativa": true },
+    { "id": "mensagemAdmin", "titulo": "Nova mensagem administrativa", "descricao": "Avisar quando um paciente enviar mensagem no canal administrativo.", "ativa": true },
+    { "id": "cobrancaPendente", "titulo": "Cobrança pendente / vencida", "descricao": "Avisar quando um link de pagamento ficar pendente ou vencer.", "ativa": false }
+  ],
+  "agenda": {
+    "visaoPadrao": "medico",
+    "horarioFuncionamento": "Seg–Sex · 08h00–19h00 · Sáb 08h00–12h00",
+    "lembreteAtivo": true,
+    "antecedencia": "24h"
+  },
+  "cobranca": {
+    "formaPadrao": "pix",
+    "reciboAutomatico": true
+  },
+  "mensagens": {
+    "assinatura": "Recepção · Clínica Vida Endócrino & Metabólica",
+    "horarioAtendimento": "Seg–Sex · 08h00–18h00"
+  },
+  "aparencia": {
+    "tema": "sistema"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "models": {
+      "sala": "Sala/recurso da clínica com tipo, equipamentos, funcionamento e ocupação do dia.",
+      "proximaConsulta": "Próxima consulta agendada na sala (para o rodapé do card).",
+      "salasData": "Dia + lista de salas."
+    },
+    "relationships": [
+      "Sala é usada por muitos Agendamento na Agenda (visão Salas)",
+      "horasOcupadas/horasDisponiveis = ocupação do dia"
+    ]
+  },
+  "data": "2026-07-21",
+  "salas": [
+    {
+      "id": "sala-1",
+      "nome": "Sala 1",
+      "local": "Térreo",
+      "tipo": "consultorio",
+      "ativa": true,
+      "capacidade": 2,
+      "recursos": ["Maca", "Balança antropométrica", "Otoscópio"],
+      "funcionamento": "07h–19h",
+      "consultasHoje": 3,
+      "horasOcupadas": 2,
+      "horasDisponiveis": 12,
+      "proxima": { "inicio": "14:00", "medico": "Dra. Helena Prado", "especialidade": "Endocrinologia", "cor": "teal" }
+    },
+    {
+      "id": "sala-2",
+      "nome": "Sala 2",
+      "local": "Térreo",
+      "tipo": "consultorio",
+      "ativa": true,
+      "capacidade": 2,
+      "recursos": ["Maca", "ECG", "Monitor de PA"],
+      "funcionamento": "07h–19h",
+      "consultasHoje": 4,
+      "horasOcupadas": 11,
+      "horasDisponiveis": 12,
+      "proxima": { "inicio": "15:00", "medico": "Dr. Marcos Vieira", "especialidade": "Cardiologia", "cor": "rose" }
+    },
+    {
+      "id": "sala-3",
+      "nome": "Sala 3",
+      "local": "1º andar",
+      "tipo": "consultorio",
+      "ativa": true,
+      "capacidade": 3,
+      "recursos": ["Maca", "Bioimpedância", "Adipômetro"],
+      "funcionamento": "08h–18h",
+      "consultasHoje": 4,
+      "horasOcupadas": 6,
+      "horasDisponiveis": 10,
+      "proxima": { "inicio": "16:00", "medico": "Dra. Beatriz Nunes", "especialidade": "Nutrologia", "cor": "violet" }
+    },
+    {
+      "id": "sala-4",
+      "nome": "Sala de procedimentos",
+      "local": "1º andar",
+      "tipo": "procedimento",
+      "ativa": true,
+      "capacidade": 4,
+      "recursos": ["Maca cirúrgica", "Foco", "Carrinho de emergência", "Autoclave"],
+      "funcionamento": "08h–17h",
+      "consultasHoje": 0,
+      "horasOcupadas": 0,
+      "horasDisponiveis": 9,
+      "proxima": null
+    },
+    {
+      "id": "tele",
+      "nome": "Teleconsulta",
+      "local": "Remoto",
+      "tipo": "tele",
+      "ativa": true,
+      "capacidade": 99,
+      "recursos": ["Sala de vídeo", "Gravação opcional"],
+      "funcionamento": "07h–20h",
+      "consultasHoje": 3,
+      "horasOcupadas": 2,
+      "horasDisponiveis": 13,
+      "proxima": { "inicio": "17:00", "medico": "Dr. Rafael Aoki", "especialidade": "Clínica Geral", "cor": "sky" }
+    },
+    {
+      "id": "sala-5",
+      "nome": "Sala 4",
+      "local": "1º andar",
+      "tipo": "consultorio",
+      "ativa": false,
+      "capacidade": 2,
+      "recursos": ["Maca"],
+      "funcionamento": "—",
+      "consultasHoje": 0,
+      "horasOcupadas": 0,
+      "horasDisponiveis": 0,
+      "proxima": null
+    }
+  ]
+}

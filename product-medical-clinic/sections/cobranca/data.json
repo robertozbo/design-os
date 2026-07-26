@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "models": {
+      "kpiCobranca": "Indicador rápido do topo (recebido hoje, a receber; pendentes é contagem).",
+      "cobranca": "Uma cobrança individual: paciente, médico, valor, forma, status, data."
+    },
+    "relationships": [
+      "CobrancaData é a visão operacional da Recepção (criar/enviar/acompanhar cobrança)",
+      "Sem repasse por médico nem líquido — isso vive em faturamento (Admin)"
+    ]
+  },
+  "clinica": "Clínica Vida Endócrino & Metabólica",
+  "kpis": [
+    { "id": "hoje", "label": "Recebido hoje", "valor": 1200 },
+    { "id": "areceber", "label": "A receber", "valor": 1500, "destaque": true },
+    { "id": "pendentes", "label": "Pendentes", "valor": 4, "contagem": true }
+  ],
+  "cobrancas": [
+    { "id": "cob-1", "pacienteNome": "Maria Silva Andrade", "pacienteIniciais": "MA", "medico": "Dra. Helena Prado", "especialidade": "Endocrinologia", "cor": "teal", "valor": 350, "forma": "pix", "status": "pago", "data": "2026-07-23" },
+    { "id": "cob-2", "pacienteNome": "Carlos Menezes", "pacienteIniciais": "CM", "medico": "Dr. Marcos Vieira", "especialidade": "Cardiologia", "cor": "rose", "valor": 400, "forma": "convenio", "status": "pendente", "data": "2026-07-23", "convenio": "Unimed" },
+    { "id": "cob-3", "pacienteNome": "Débora Alves", "pacienteIniciais": "DA", "medico": "Dra. Beatriz Nunes", "especialidade": "Nutrologia", "cor": "violet", "valor": 250, "forma": "cartao", "status": "pago", "data": "2026-07-23" },
+    { "id": "cob-4", "pacienteNome": "Paulo Tavares", "pacienteIniciais": "PT", "medico": "Dr. Marcos Vieira", "especialidade": "Cardiologia", "cor": "rose", "valor": 400, "forma": "convenio", "status": "pendente", "data": "2026-07-22", "convenio": "Amil" },
+    { "id": "cob-5", "pacienteNome": "Sônia Reis", "pacienteIniciais": "SR", "medico": "Dra. Helena Prado", "especialidade": "Endocrinologia", "cor": "teal", "valor": 350, "forma": "pix", "status": "pago", "data": "2026-07-22" },
+    { "id": "cob-6", "pacienteNome": "Igor Ramos", "pacienteIniciais": "IR", "medico": "Dr. Rafael Aoki", "especialidade": "Clínica Geral", "cor": "sky", "valor": 200, "forma": "cartao", "status": "estornado", "data": "2026-07-21" },
+    { "id": "cob-7", "pacienteNome": "Felipe Nunes", "pacienteIniciais": "FN", "medico": "Dra. Beatriz Nunes", "especialidade": "Nutrologia", "cor": "violet", "valor": 250, "forma": "dinheiro", "status": "pago", "data": "2026-07-21" },
+    { "id": "cob-8", "pacienteNome": "João Batista", "pacienteIniciais": "JB", "medico": "Dra. Helena Prado", "especialidade": "Endocrinologia", "cor": "teal", "valor": 350, "forma": "convenio", "status": "pendente", "data": "2026-07-21", "convenio": "Bradesco Saúde" },
+    { "id": "cob-9", "pacienteNome": "Renata Lopes", "pacienteIniciais": "RL", "medico": "Dr. Rafael Aoki", "especialidade": "Clínica Geral", "cor": "sky", "valor": 200, "forma": "pix", "status": "pendente", "data": "2026-07-20" }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "clinica": "Clínica Nymos · Vila Mariana",
+  "exames": [
+    {
+      "id": "ex-andre-tsh",
+      "paciente": { "nome": "André Nogueira", "iniciais": "AN", "idade": 45 },
+      "tipo": "Perfil tireoidiano",
+      "categoria": "laboratorial",
+      "laboratorio": "Fleury",
+      "solicitante": { "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky" },
+      "dataColeta": "18 jul",
+      "recebidoEm": "há 3h",
+      "statusRevisao": "a-revisar",
+      "revisadoPor": null,
+      "compartilhadoCom": 2,
+      "destaque": { "nome": "TSH", "valor": "8,4 µUI/mL", "alertNivel": "alto", "tendencia": "subindo" }
+    },
+    {
+      "id": "ex-bia-glicemia",
+      "paciente": { "nome": "Beatriz Camargo", "iniciais": "BC", "idade": 39 },
+      "tipo": "Glicemia + HbA1c",
+      "categoria": "laboratorial",
+      "laboratorio": "Delboni",
+      "solicitante": { "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky" },
+      "dataColeta": "20 jul",
+      "recebidoEm": "há 1 dia",
+      "statusRevisao": "a-revisar",
+      "revisadoPor": null,
+      "compartilhadoCom": 2,
+      "destaque": { "nome": "HbA1c", "valor": "6,1 %", "alertNivel": "alto", "tendencia": "subindo" }
+    },
+    {
+      "id": "ex-marcos-lipid",
+      "paciente": { "nome": "Marcos Vinícius Lima", "iniciais": "ML", "idade": 58 },
+      "tipo": "Perfil lipídico",
+      "categoria": "laboratorial",
+      "laboratorio": "Fleury",
+      "solicitante": { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+      "dataColeta": "16 jul",
+      "recebidoEm": "há 4 dias",
+      "statusRevisao": "revisado",
+      "revisadoPor": "Dra. Helena Prado",
+      "compartilhadoCom": 3,
+      "destaque": { "nome": "LDL", "valor": "142 mg/dL", "alertNivel": "alto", "tendencia": "caindo" }
+    },
+    {
+      "id": "ex-larissa-usg",
+      "paciente": { "nome": "Larissa Fontes", "iniciais": "LF", "idade": 33 },
+      "tipo": "USG pélvica transvaginal",
+      "categoria": "imagem",
+      "laboratorio": "CDB",
+      "solicitante": { "nome": "Dra. Marina Alves", "iniciais": "MA", "especialidade": "Ginecologia", "cor": "rose" },
+      "dataColeta": "19 jul",
+      "recebidoEm": "há 2 dias",
+      "statusRevisao": "a-revisar",
+      "revisadoPor": null,
+      "compartilhadoCom": 2,
+      "destaque": null
+    },
+    {
+      "id": "ex-sonia-tsh",
+      "paciente": { "nome": "Sônia Ribeiro", "iniciais": "SR", "idade": 64 },
+      "tipo": "TSH + T4 livre",
+      "categoria": "laboratorial",
+      "laboratorio": "Fleury",
+      "solicitante": { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+      "dataColeta": "15 jul",
+      "recebidoEm": "há 5 dias",
+      "statusRevisao": "revisado",
+      "revisadoPor": "Dra. Helena Prado",
+      "compartilhadoCom": 1,
+      "destaque": { "nome": "TSH", "valor": "2,1 µUI/mL", "alertNivel": "normal", "tendencia": "estavel" }
+    }
+  ],
+  "detalhes": {
+    "ex-andre-tsh": {
+      "id": "ex-andre-tsh",
+      "paciente": {
+        "nome": "André Nogueira",
+        "iniciais": "AN",
+        "idade": 45,
+        "genero": "Masculino",
+        "convenio": "SulAmérica",
+        "condicoesCronicas": ["Hipotireoidismo", "Sobrepeso"]
+      },
+      "tipo": "Perfil tireoidiano",
+      "categoria": "laboratorial",
+      "laboratorio": "Fleury Medicina e Saúde",
+      "solicitante": { "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky" },
+      "dataColeta": "18 jul 2026",
+      "dataResultado": "19 jul 2026",
+      "recebidoEm": "há 3h",
+      "statusRevisao": "a-revisar",
+      "revisadoPor": null,
+      "revisadoEm": null,
+      "observacaoMedico": "",
+      "valoresConfirmados": false,
+      "laudoPaginas": 2,
+      "laudoTexto": "HORMÔNIO TIREOESTIMULANTE (TSH)\nMétodo: Eletroquimioluminescência\nResultado: 8,4 µUI/mL\nValores de referência (adultos): 0,45 a 4,50 µUI/mL\n\nT4 LIVRE\nResultado: 0,71 ng/dL\nValores de referência: 0,93 a 1,70 ng/dL\n\nANTI-TPO (Anticorpo antitireoperoxidase)\nResultado: 212 UI/mL\nValores de referência: inferior a 34 UI/mL\n\nOBSERVAÇÃO: Resultados compatíveis com hipotireoidismo primário. Anti-TPO elevado sugere etiologia autoimune (tireoidite de Hashimoto). Recomenda-se correlação clínica.",
+      "biomarkers": [
+        {
+          "nome": "TSH",
+          "nomeCompleto": "Hormônio tireoestimulante",
+          "valor": 8.4,
+          "unidade": "µUI/mL",
+          "faixaReferencia": "0,45 – 4,50",
+          "alertNivel": "alto",
+          "tendencia": "subindo",
+          "deltaPercent": 34,
+          "historico": [3.1, 4.2, 5.8, 6.9, 8.4]
+        },
+        {
+          "nome": "T4 livre",
+          "nomeCompleto": "Tiroxina livre",
+          "valor": 0.71,
+          "unidade": "ng/dL",
+          "faixaReferencia": "0,93 – 1,70",
+          "alertNivel": "baixo",
+          "tendencia": "caindo",
+          "deltaPercent": -18,
+          "historico": [1.1, 1.0, 0.9, 0.82, 0.71]
+        },
+        {
+          "nome": "Anti-TPO",
+          "nomeCompleto": "Anticorpo antitireoperoxidase",
+          "valor": 212,
+          "unidade": "UI/mL",
+          "faixaReferencia": "< 34",
+          "alertNivel": "critico",
+          "tendencia": "subindo",
+          "deltaPercent": 42,
+          "historico": [98, 140, 175, 212]
+        }
+      ],
+      "iaAnalise": {
+        "modeloIA": "Nymos Apoio · Opus 4.8",
+        "geradoEm": "há 3h",
+        "blocos": [
+          {
+            "tipo": "resumo-laudo",
+            "titulo": "Resumo do laudo",
+            "conteudo": "Hipotireoidismo primário confirmado: TSH elevado (8,4) com T4 livre baixo (0,71). Anti-TPO muito elevado (212) indica etiologia autoimune — padrão de tireoidite de Hashimoto.",
+            "fonte": "Laudo Fleury 19/07"
+          },
+          {
+            "tipo": "comparacao-historica",
+            "titulo": "Comparação histórica",
+            "conteudo": "TSH em ascensão consistente nos últimos 4 exames (3,1 → 8,4 em 8 meses). T4 livre caindo em paralelo. Progressão típica de tireoidite em fase de hipofunção.",
+            "fonte": "5 exames anteriores no prontuário"
+          },
+          {
+            "tipo": "cruzamento-queixa",
+            "titulo": "Cruzamento com a queixa",
+            "conteudo": "Sintomas relatados (fadiga, ganho de peso, intolerância ao frio, queda de cabelo) são coerentes com o hipotireoidismo laboratorial. Correlação clínico-laboratorial forte.",
+            "fonte": "Anamnese da consulta 22/07"
+          },
+          {
+            "tipo": "cruzamento-medicacao",
+            "titulo": "Cruzamento com medicação",
+            "conteudo": "Paciente sem levotiroxina em uso. Sinvastatina ativa — atenção: hipotireoidismo pode elevar CK e piorar dislipidemia; reavaliar lipídios após compensação tireoidiana.",
+            "fonte": "Medicações ativas do prontuário"
+          }
+        ]
+      },
+      "medicosAutorizados": [
+        { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+        { "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky" }
+      ],
+      "anamneseSintomas": ["Fadiga progressiva", "Ganho de peso", "Intolerância ao frio", "Queda de cabelo"],
+      "medicacaoAtiva": [
+        { "nome": "Sinvastatina 20 mg", "posologia": "1x/dia à noite", "prescritoPor": "Dr. Paulo Sette", "cor": "sky" }
+      ],
+      "dicomDisponivel": false
+    },
+    "ex-larissa-usg": {
+      "id": "ex-larissa-usg",
+      "paciente": {
+        "nome": "Larissa Fontes",
+        "iniciais": "LF",
+        "idade": 33,
+        "genero": "Feminino",
+        "convenio": "Particular",
+        "condicoesCronicas": ["SOP (suspeita)"]
+      },
+      "tipo": "USG pélvica transvaginal",
+      "categoria": "imagem",
+      "laboratorio": "CDB Diagnósticos",
+      "solicitante": { "nome": "Dra. Marina Alves", "iniciais": "MA", "especialidade": "Ginecologia", "cor": "rose" },
+      "dataColeta": "19 jul 2026",
+      "dataResultado": "19 jul 2026",
+      "recebidoEm": "há 2 dias",
+      "statusRevisao": "a-revisar",
+      "revisadoPor": null,
+      "revisadoEm": null,
+      "observacaoMedico": "",
+      "valoresConfirmados": false,
+      "laudoPaginas": 1,
+      "laudoTexto": "ÚTERO: dimensões normais, contornos regulares, miométrio homogêneo. Endométrio linear, espessura 6 mm.\n\nOVÁRIO DIREITO: volume aumentado (12,4 cm³), com mais de 12 microcistos periféricos de 2–8 mm, disposição em coroa.\n\nOVÁRIO ESQUERDO: volume aumentado (11,8 cm³), padrão semelhante.\n\nIMPRESSÃO: Achados ecográficos compatíveis com ovários policísticos. Correlacionar com quadro clínico e hormonal.",
+      "biomarkers": [],
+      "iaAnalise": {
+        "modeloIA": "Nymos Apoio · Opus 4.8",
+        "geradoEm": "há 2 dias",
+        "blocos": [
+          {
+            "tipo": "resumo-laudo",
+            "titulo": "Resumo do laudo",
+            "conteudo": "Ambos os ovários com volume aumentado (>10 cm³) e padrão policístico (>12 microcistos periféricos). Endométrio e útero sem alterações. Achado morfológico compatível com SOP.",
+            "fonte": "Laudo CDB 19/07"
+          },
+          {
+            "tipo": "cruzamento-queixa",
+            "titulo": "Cruzamento com a queixa",
+            "conteudo": "Consistente com a suspeita clínica (ciclos irregulares, acantose nigricans). Critérios de Rotterdam: com o achado ecográfico + irregularidade menstrual, avaliar hiperandrogenismo laboratorial para fechar diagnóstico.",
+            "fonte": "Encaminhamento da ginecologia"
+          }
+        ]
+      },
+      "medicosAutorizados": [
+        { "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal" },
+        { "nome": "Dra. Marina Alves", "iniciais": "MA", "especialidade": "Ginecologia", "cor": "rose" }
+      ],
+      "anamneseSintomas": ["Ciclos irregulares", "Acantose nigricans", "Testosterona no limite superior"],
+      "medicacaoAtiva": [],
+      "dicomDisponivel": true
+    }
+  }
+}

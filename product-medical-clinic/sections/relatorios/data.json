@@ -1,0 +1,258 @@
+{
+  "_meta": {
+    "models": {
+      "kpiRelatorio": "Indicador do topo, valor já formatado como string.",
+      "producaoMedico": "Produção do médico no período: atendimentos, teleconsultas, no-shows e receita gerada.",
+      "ocupacaoSala": "Percentual de ocupação de uma sala/consultório no período.",
+      "receitaEspecialidade": "Receita agregada por especialidade e sua fatia (%).",
+      "noShowMedico": "Quantidade e taxa de faltas por médico."
+    },
+    "relationships": [
+      "RelatoriosData agrega indicadores operacionais do período (zero dado clínico)",
+      "taxa de no-show = noShows / (atendimentos + noShows); receita por especialidade soma a receita dos médicos daquela especialidade"
+    ]
+  },
+  "clinica": "Clínica Vida Endócrino & Metabólica",
+  "periodo": "mes",
+  "kpis": [
+    {
+      "id": "atend",
+      "label": "Atendimentos",
+      "valor": "312"
+    },
+    {
+      "id": "tele",
+      "label": "Teleconsultas",
+      "valor": "74"
+    },
+    {
+      "id": "noshow",
+      "label": "Taxa de no-show",
+      "valor": "6,3%"
+    },
+    {
+      "id": "ocup",
+      "label": "Ocupação média",
+      "valor": "78%"
+    },
+    {
+      "id": "receita",
+      "label": "Receita total",
+      "valor": "R$ 84.600",
+      "destaque": true
+    }
+  ],
+  "producao": [
+    {
+      "id": "med-h",
+      "nome": "Dra. Helena Prado",
+      "iniciais": "HP",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "atendimentos": 96,
+      "teleconsultas": 28,
+      "noShows": 5,
+      "receita": 28800
+    },
+    {
+      "id": "med-m",
+      "nome": "Dr. Marcos Vieira",
+      "iniciais": "MV",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "atendimentos": 78,
+      "teleconsultas": 12,
+      "noShows": 7,
+      "receita": 24960
+    },
+    {
+      "id": "med-b",
+      "nome": "Dra. Beatriz Nunes",
+      "iniciais": "BN",
+      "especialidade": "Nutrologia",
+      "cor": "violet",
+      "atendimentos": 61,
+      "teleconsultas": 21,
+      "noShows": 3,
+      "receita": 15250
+    },
+    {
+      "id": "med-r",
+      "nome": "Dr. Rafael Aoki",
+      "iniciais": "RA",
+      "especialidade": "Clínica Geral",
+      "cor": "sky",
+      "atendimentos": 77,
+      "teleconsultas": 13,
+      "noShows": 6,
+      "receita": 15400
+    }
+  ],
+  "salas": [
+    {
+      "id": "sala-1",
+      "nome": "Consultório 1",
+      "pct": 91
+    },
+    {
+      "id": "sala-2",
+      "nome": "Consultório 2",
+      "pct": 84
+    },
+    {
+      "id": "sala-3",
+      "nome": "Consultório 3",
+      "pct": 72
+    },
+    {
+      "id": "sala-4",
+      "nome": "Sala de procedimentos",
+      "pct": 58
+    },
+    {
+      "id": "sala-5",
+      "nome": "Sala de coleta",
+      "pct": 63
+    }
+  ],
+  "porEspecialidade": [
+    {
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "valor": 28800,
+      "pct": 34
+    },
+    {
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "valor": 24960,
+      "pct": 30
+    },
+    {
+      "especialidade": "Nutrologia",
+      "cor": "violet",
+      "valor": 15250,
+      "pct": 18
+    },
+    {
+      "especialidade": "Clínica Geral",
+      "cor": "sky",
+      "valor": 15400,
+      "pct": 18
+    }
+  ],
+  "noShow": [
+    {
+      "id": "med-m",
+      "nome": "Dr. Marcos Vieira",
+      "cor": "rose",
+      "quantidade": 7,
+      "taxa": 8.2
+    },
+    {
+      "id": "med-r",
+      "nome": "Dr. Rafael Aoki",
+      "cor": "sky",
+      "quantidade": 6,
+      "taxa": 7.2
+    },
+    {
+      "id": "med-h",
+      "nome": "Dra. Helena Prado",
+      "cor": "teal",
+      "quantidade": 5,
+      "taxa": 5
+    },
+    {
+      "id": "med-b",
+      "nome": "Dra. Beatriz Nunes",
+      "cor": "violet",
+      "quantidade": 3,
+      "taxa": 4.7
+    }
+  ],
+  "financeiro": {
+    "receita": 74000,
+    "despesa": 36000,
+    "resultado": 38000,
+    "margem": 51.4,
+    "aReceber": 16000,
+    "recebido": 58000,
+    "aPagar": 12000,
+    "pago": 24000
+  },
+  "receitaPorTipo": [
+    {
+      "tipo": "Consultas",
+      "valor": 42000,
+      "pct": 56.8
+    },
+    {
+      "tipo": "Retornos",
+      "valor": 9600,
+      "pct": 13
+    },
+    {
+      "tipo": "Avaliações",
+      "valor": 8000,
+      "pct": 10.8
+    },
+    {
+      "tipo": "Teleconsulta",
+      "valor": 6600,
+      "pct": 8.9
+    },
+    {
+      "tipo": "Exames",
+      "valor": 4800,
+      "pct": 6.5
+    },
+    {
+      "tipo": "Procedimentos",
+      "valor": 3000,
+      "pct": 4.1
+    }
+  ],
+  "despesaComportamento": {
+    "fixa": 19000,
+    "variavel": 17000
+  },
+  "despesaPorGrupo": [
+    {
+      "grupo": "Pessoal",
+      "valor": 12800,
+      "pct": 35.6,
+      "comportamento": "fixa"
+    },
+    {
+      "grupo": "Operacional",
+      "valor": 7400,
+      "pct": 20.6,
+      "comportamento": "variavel"
+    },
+    {
+      "grupo": "Impostos & taxas",
+      "valor": 6800,
+      "pct": 18.9,
+      "comportamento": "variavel"
+    },
+    {
+      "grupo": "Ocupação",
+      "valor": 6200,
+      "pct": 17.2,
+      "comportamento": "fixa"
+    },
+    {
+      "grupo": "Marketing",
+      "valor": 2000,
+      "pct": 5.6,
+      "comportamento": "variavel"
+    },
+    {
+      "grupo": "Financeiro",
+      "valor": 800,
+      "pct": 2.2,
+      "comportamento": "variavel"
+    }
+  ]
+}

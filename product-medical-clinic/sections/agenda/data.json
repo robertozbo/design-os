@@ -1,0 +1,508 @@
+{
+  "_meta": {
+    "models": {
+      "medicoAgenda": "Um médico como coluna/recurso da agenda, com especialidade e cor.",
+      "salaAgenda": "Uma sala/consultório como coluna/recurso alternativo.",
+      "agendamento": "Uma consulta: paciente + médico + sala + dia + horário + modalidade + status.",
+      "agendaDia": "O dia completo: limites de hora, médicos, salas, catálogo de serviços, convênios, pacientes e agendamentos.",
+      "contaAgendamento": "Uma parcela a receber originada pelo agendamento — vira linha em Contas a Receber.",
+      "financeiroAgendamento": "A cobrança combinada no agendamento: valor total, forma, modelo, parcelas e as contas.",
+      "pacienteAgenda": "Um paciente do pool da clínica, para selecionar ao agendar.",
+      "servicoAgenda": "Serviço do cadastro: preço de tabela e duração padrão — fonte do valor da consulta.",
+      "convenioAgenda": "Convênio aceito e o percentual de desconto que aplica sobre a tabela."
+    },
+    "relationships": [
+      "AgendaDia tem muitos MedicoAgenda, muitas SalaAgenda, muitos ServicoAgenda, muitos ConvenioAgenda, muitos PacienteAgenda e muitos Agendamento",
+      "Agendamento referencia um MedicoAgenda e uma SalaAgenda (ocupa os dois)",
+      "Agendamento referencia um ServicoAgenda (preço/duração) e um ConvenioAgenda (desconto)",
+      "Agendamento tem no máximo um FinanceiroAgendamento, que tem muitas ContaAgendamento",
+      "Agendamentos de uma série recorrente compartilham serieId (id da 1ª ocorrência)",
+      "Um agendamento de retorno aponta a consulta de origem em retornoDe e não tem cobrança"
+    ]
+  },
+  "data": "2026-07-21",
+  "horaInicio": "07:00",
+  "horaFim": "19:00",
+  "medicos": [
+    {
+      "id": "med-h",
+      "nome": "Dra. Helena Prado",
+      "iniciais": "HP",
+      "especialidade": "Endocrinologia",
+      "cor": "teal"
+    },
+    {
+      "id": "med-m",
+      "nome": "Dr. Marcos Vieira",
+      "iniciais": "MV",
+      "especialidade": "Cardiologia",
+      "cor": "rose"
+    },
+    {
+      "id": "med-b",
+      "nome": "Dra. Beatriz Nunes",
+      "iniciais": "BN",
+      "especialidade": "Nutrologia",
+      "cor": "violet"
+    },
+    {
+      "id": "med-r",
+      "nome": "Dr. Rafael Aoki",
+      "iniciais": "RA",
+      "especialidade": "Clínica Geral",
+      "cor": "sky"
+    }
+  ],
+  "salas": [
+    {
+      "id": "sala-1",
+      "nome": "Sala 1",
+      "local": "Térreo"
+    },
+    {
+      "id": "sala-2",
+      "nome": "Sala 2",
+      "local": "Térreo"
+    },
+    {
+      "id": "sala-3",
+      "nome": "Sala 3",
+      "local": "1º andar"
+    },
+    {
+      "id": "tele",
+      "nome": "Teleconsulta",
+      "local": "Remoto"
+    }
+  ],
+  "pacientes": [
+    {
+      "id": "pac-1",
+      "nome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "idade": 45,
+      "convenio": "Unimed"
+    },
+    {
+      "id": "pac-2",
+      "nome": "João Batista",
+      "iniciais": "JB",
+      "idade": 51,
+      "convenio": "Bradesco Saúde"
+    },
+    {
+      "id": "pac-3",
+      "nome": "Ana Prado",
+      "iniciais": "AP",
+      "idade": 38,
+      "convenio": "Particular"
+    },
+    {
+      "id": "pac-4",
+      "nome": "Sônia Reis",
+      "iniciais": "SR",
+      "idade": 49,
+      "convenio": "SulAmérica"
+    },
+    {
+      "id": "pac-5",
+      "nome": "Carlos Menezes",
+      "iniciais": "CM",
+      "idade": 58,
+      "convenio": "Amil"
+    },
+    {
+      "id": "pac-6",
+      "nome": "Paulo Tavares",
+      "iniciais": "PT",
+      "idade": 62,
+      "convenio": "Unimed"
+    },
+    {
+      "id": "pac-7",
+      "nome": "Felipe Nunes",
+      "iniciais": "FN",
+      "idade": 29,
+      "convenio": "Particular"
+    },
+    {
+      "id": "pac-8",
+      "nome": "Débora Alves",
+      "iniciais": "DA",
+      "idade": 34,
+      "convenio": "Bradesco Saúde"
+    },
+    {
+      "id": "pac-9",
+      "nome": "Igor Ramos",
+      "iniciais": "IR",
+      "idade": 40,
+      "convenio": "SulAmérica"
+    },
+    {
+      "id": "pac-10",
+      "nome": "Lúcia Prado",
+      "iniciais": "LP",
+      "idade": 55,
+      "convenio": "Amil"
+    },
+    {
+      "id": "pac-11",
+      "nome": "Bruno Costa",
+      "iniciais": "BC",
+      "idade": 47,
+      "convenio": "Particular"
+    },
+    {
+      "id": "pac-12",
+      "nome": "André Nogueira",
+      "iniciais": "AN",
+      "idade": 45,
+      "convenio": "SulAmérica"
+    }
+  ],
+  "agendamentos": [
+    {
+      "id": "ag-1",
+      "medicoId": "med-h",
+      "salaId": "sala-1",
+      "pacienteNome": "Maria Silva Andrade",
+      "pacienteIniciais": "MA",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "data": "2026-07-21",
+      "inicio": "08:00",
+      "fim": "08:40",
+      "modalidade": "presencial",
+      "status": "confirmado",
+      "observacao": "revisão de HbA1c",
+      "financeiro": {
+        "valor": 129.6,
+        "formaPagamento": "Pix",
+        "modeloCobranca": "sessao",
+        "parcelas": 1,
+        "contas": [
+          {
+            "descricao": "Retorno",
+            "vencimento": "2026-07-21",
+            "valor": 129.6,
+            "pago": true
+          }
+        ]
+      },
+      "servicoId": "s4",
+      "convenio": "Unimed"
+    },
+    {
+      "id": "ag-2",
+      "medicoId": "med-h",
+      "salaId": "sala-1",
+      "pacienteNome": "João Batista",
+      "pacienteIniciais": "JB",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "data": "2026-07-21",
+      "inicio": "09:00",
+      "fim": "09:30",
+      "modalidade": "presencial",
+      "status": "pendente",
+      "servicoId": "s4",
+      "convenio": "Bradesco Saúde"
+    },
+    {
+      "id": "ag-3",
+      "medicoId": "med-h",
+      "salaId": "tele",
+      "pacienteNome": "Ana Prado",
+      "pacienteIniciais": "AP",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "data": "2026-07-21",
+      "inicio": "11:00",
+      "fim": "11:30",
+      "modalidade": "tele",
+      "status": "confirmado",
+      "observacao": "Ajuste de dose GLP-1",
+      "servicoId": "s5",
+      "convenio": "Particular"
+    },
+    {
+      "id": "ag-4",
+      "medicoId": "med-h",
+      "salaId": "sala-1",
+      "pacienteNome": "Sônia Reis",
+      "pacienteIniciais": "SR",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "data": "2026-07-21",
+      "inicio": "14:00",
+      "fim": "14:40",
+      "modalidade": "presencial",
+      "status": "confirmado",
+      "servicoId": "s1",
+      "convenio": "SulAmérica"
+    },
+    {
+      "id": "ag-5",
+      "medicoId": "med-m",
+      "salaId": "sala-2",
+      "pacienteNome": "Carlos Menezes",
+      "pacienteIniciais": "CM",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "data": "2026-07-21",
+      "inicio": "08:30",
+      "fim": "09:10",
+      "modalidade": "presencial",
+      "status": "realizado",
+      "servicoId": "s2",
+      "convenio": "Amil"
+    },
+    {
+      "id": "ag-6",
+      "medicoId": "med-m",
+      "salaId": "sala-2",
+      "pacienteNome": "Rita Lopes",
+      "pacienteIniciais": "RL",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "data": "2026-07-21",
+      "inicio": "10:00",
+      "fim": "10:40",
+      "modalidade": "presencial",
+      "status": "faltou",
+      "servicoId": "s2",
+      "convenio": "Particular"
+    },
+    {
+      "id": "ag-7",
+      "medicoId": "med-m",
+      "salaId": "sala-2",
+      "pacienteNome": "Paulo Tavares",
+      "pacienteIniciais": "PT",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "data": "2026-07-21",
+      "inicio": "15:00",
+      "fim": "15:40",
+      "modalidade": "presencial",
+      "status": "confirmado",
+      "observacao": "MAPA · resultado",
+      "servicoId": "s2",
+      "convenio": "Unimed"
+    },
+    {
+      "id": "ag-8",
+      "medicoId": "med-b",
+      "salaId": "tele",
+      "pacienteNome": "Maria Silva Andrade",
+      "pacienteIniciais": "MA",
+      "especialidade": "Nutrologia",
+      "cor": "violet",
+      "data": "2026-07-21",
+      "inicio": "09:30",
+      "fim": "10:00",
+      "modalidade": "tele",
+      "status": "confirmado",
+      "observacao": "Reavaliação plano alimentar",
+      "servicoId": "s5",
+      "convenio": "Unimed"
+    },
+    {
+      "id": "ag-9",
+      "medicoId": "med-b",
+      "salaId": "sala-3",
+      "pacienteNome": "Felipe Nunes",
+      "pacienteIniciais": "FN",
+      "especialidade": "Nutrologia",
+      "cor": "violet",
+      "data": "2026-07-21",
+      "inicio": "13:30",
+      "fim": "14:10",
+      "modalidade": "presencial",
+      "status": "pendente",
+      "servicoId": "s3",
+      "convenio": "Particular"
+    },
+    {
+      "id": "ag-10",
+      "medicoId": "med-b",
+      "salaId": "sala-3",
+      "pacienteNome": "Débora Alves",
+      "pacienteIniciais": "DA",
+      "especialidade": "Nutrologia",
+      "cor": "violet",
+      "data": "2026-07-21",
+      "inicio": "16:00",
+      "fim": "16:40",
+      "modalidade": "presencial",
+      "status": "confirmado",
+      "servicoId": "s3",
+      "convenio": "Bradesco Saúde"
+    },
+    {
+      "id": "ag-11",
+      "medicoId": "med-r",
+      "salaId": "sala-3",
+      "pacienteNome": "Igor Ramos",
+      "pacienteIniciais": "IR",
+      "especialidade": "Clínica Geral",
+      "cor": "sky",
+      "data": "2026-07-21",
+      "inicio": "08:00",
+      "fim": "08:30",
+      "modalidade": "presencial",
+      "status": "realizado",
+      "servicoId": "s11",
+      "convenio": "SulAmérica"
+    },
+    {
+      "id": "ag-12",
+      "medicoId": "med-r",
+      "salaId": "sala-3",
+      "pacienteNome": "Lúcia Prado",
+      "pacienteIniciais": "LP",
+      "especialidade": "Clínica Geral",
+      "cor": "sky",
+      "data": "2026-07-21",
+      "inicio": "10:30",
+      "fim": "11:00",
+      "modalidade": "presencial",
+      "status": "confirmado",
+      "servicoId": "s11",
+      "convenio": "Amil"
+    },
+    {
+      "id": "ag-13",
+      "medicoId": "med-r",
+      "salaId": "tele",
+      "pacienteNome": "Bruno Costa",
+      "pacienteIniciais": "BC",
+      "especialidade": "Clínica Geral",
+      "cor": "sky",
+      "data": "2026-07-21",
+      "inicio": "17:00",
+      "fim": "17:30",
+      "modalidade": "tele",
+      "status": "pendente",
+      "servicoId": "s5",
+      "convenio": "Particular"
+    },
+    {
+      "id": "ag-14",
+      "medicoId": "med-m",
+      "salaId": "sala-2",
+      "pacienteNome": "Encaixe · Nadir",
+      "pacienteIniciais": "NA",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "data": "2026-07-21",
+      "inicio": "11:30",
+      "fim": "11:50",
+      "modalidade": "presencial",
+      "status": "pendente",
+      "convenio": "Particular"
+    }
+  ],
+  "servicos": [
+    {
+      "id": "s1",
+      "nome": "Consulta · Endocrinologia",
+      "preco": 250,
+      "duracaoMin": 40,
+      "categoria": "Consultas"
+    },
+    {
+      "id": "s2",
+      "nome": "Consulta · Cardiologia",
+      "preco": 300,
+      "duracaoMin": 40,
+      "categoria": "Consultas"
+    },
+    {
+      "id": "s3",
+      "nome": "Consulta · Nutrologia",
+      "preco": 230,
+      "duracaoMin": 40,
+      "categoria": "Consultas"
+    },
+    {
+      "id": "s11",
+      "nome": "Consulta · Clínica Geral",
+      "preco": 200,
+      "duracaoMin": 30,
+      "categoria": "Consultas"
+    },
+    {
+      "id": "s4",
+      "nome": "Retorno",
+      "preco": 180,
+      "duracaoMin": 30,
+      "categoria": "Retornos"
+    },
+    {
+      "id": "s5",
+      "nome": "Teleconsulta",
+      "preco": 220,
+      "duracaoMin": 30,
+      "categoria": "Teleconsulta"
+    },
+    {
+      "id": "s6",
+      "nome": "Avaliação inicial",
+      "preco": 400,
+      "duracaoMin": 60,
+      "categoria": "Avaliações"
+    },
+    {
+      "id": "s7",
+      "nome": "Sessão de psicoterapia",
+      "preco": 200,
+      "duracaoMin": 50,
+      "categoria": "Consultas"
+    },
+    {
+      "id": "s8",
+      "nome": "Bioimpedância",
+      "preco": 120,
+      "duracaoMin": 30,
+      "categoria": "Exames"
+    },
+    {
+      "id": "s9",
+      "nome": "Procedimento ambulatorial",
+      "preco": 150,
+      "duracaoMin": 20,
+      "categoria": "Procedimentos"
+    },
+    {
+      "id": "s10",
+      "nome": "Pacote mensal (4 sessões)",
+      "preco": 720,
+      "duracaoMin": 50,
+      "categoria": "Pacotes"
+    }
+  ],
+  "convenios": [
+    {
+      "nome": "Particular",
+      "desconto": 0
+    },
+    {
+      "nome": "Unimed",
+      "desconto": 28
+    },
+    {
+      "nome": "Bradesco Saúde",
+      "desconto": 32
+    },
+    {
+      "nome": "SulAmérica",
+      "desconto": 30
+    },
+    {
+      "nome": "Amil",
+      "desconto": 35
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+export { CobrancaView } from './CobrancaView'

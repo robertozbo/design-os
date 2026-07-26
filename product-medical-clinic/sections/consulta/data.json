@@ -1,0 +1,87 @@
+{
+  "paciente": {
+    "id": "p-andre",
+    "nome": "André Nogueira",
+    "iniciais": "AN",
+    "idade": 45,
+    "genero": "Masculino",
+    "convenio": "SulAmérica",
+    "condicoesCronicas": ["Hipotireoidismo", "Sobrepeso"]
+  },
+  "motivo": "Tireoidite · primeira consulta",
+  "modalidade": "presencial",
+  "sala": "Consultório 2",
+  "consentimentoIAConcedido": false,
+  "modeloIA": "Nymos Escriba · Opus 4.8",
+  "soapSugerido": {
+    "S": "Paciente refere fadiga progressiva há 3 meses, ganho de 4 kg no período, intolerância ao frio e pele seca. Nega palpitações. Relata sonolência diurna e queda de cabelo. Sem uso atual de levotiroxina.",
+    "O": "PA 128/82 mmHg, FC 62 bpm, peso 88 kg, IMC 27,4. Tireoide levemente aumentada, indolor à palpação, sem nódulos evidentes. Reflexos com fase de relaxamento prolongada. Pele seca ao exame.",
+    "A": "Quadro clínico compatível com hipotireoidismo, provável tireoidite de Hashimoto. Aguardando confirmação laboratorial (TSH, T4 livre, anti-TPO).",
+    "P": "Solicitados TSH, T4 livre e anti-TPO. Iniciar levotiroxina 50 mcg/dia em jejum, reavaliar em 6 semanas com novo TSH. Orientações sobre adesão e horário da medicação. Retorno agendado."
+  },
+  "transcricaoMock": [
+    "Médico: Bom dia, André. O que te trouxe hoje?",
+    "Paciente: Doutora, ando muito cansado, sem energia nenhuma faz uns três meses…",
+    "Paciente: E engordei uns quatro quilos mesmo comendo igual. Sinto muito frio também.",
+    "Médico: Entendi. E o sono, como está? Notou queda de cabelo?",
+    "Paciente: Durmo demais e mesmo assim acordo cansado. O cabelo tá caindo bastante.",
+    "Médico: Vou examinar sua tireoide… ela está um pouco aumentada. Vamos pedir alguns exames."
+  ],
+  "contexto": {
+    "medicacoes": [
+      {
+        "id": "m1",
+        "nome": "Sinvastatina 20 mg",
+        "posologia": "1x/dia à noite",
+        "prescritoPor": "Dr. Paulo Sette",
+        "prescritoEm": "12 mai",
+        "especialidade": "Clínica Geral",
+        "cor": "sky"
+      },
+      {
+        "id": "m2",
+        "nome": "AAS 100 mg",
+        "posologia": "1x/dia após almoço",
+        "prescritoPor": "Dr. Paulo Sette",
+        "prescritoEm": "12 mai",
+        "especialidade": "Clínica Geral",
+        "cor": "sky"
+      }
+    ],
+    "exames": [
+      {
+        "id": "ex1",
+        "nome": "TSH",
+        "data": "18 jul",
+        "valor": "8,4 µUI/mL",
+        "alterado": true
+      },
+      {
+        "id": "ex2",
+        "nome": "Colesterol total",
+        "data": "18 jul",
+        "valor": "212 mg/dL",
+        "alterado": true
+      },
+      {
+        "id": "ex3",
+        "nome": "Hemograma",
+        "data": "18 jul",
+        "valor": "Normal",
+        "alterado": false
+      }
+    ],
+    "evolucoes": [
+      {
+        "id": "ev1",
+        "data": "02 jul",
+        "medicoNome": "Dr. Paulo Sette",
+        "medicoIniciais": "PS",
+        "especialidade": "Clínica Geral",
+        "cor": "sky",
+        "resumo": "Check-up de rotina. Dislipidemia em acompanhamento, mantida sinvastatina. Encaminhado à endocrinologia por TSH elevado e queixa de fadiga.",
+        "geradoPorIA": true
+      }
+    ]
+  }
+}

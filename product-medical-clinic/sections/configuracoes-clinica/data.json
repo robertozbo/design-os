@@ -1,0 +1,155 @@
+{
+  "_meta": {
+    "models": {
+      "dadosClinica": "Cadastro do workspace: razão social, CNPJ, endereço, contato, logo.",
+      "planoInfo": "Plano atual e limite de profissionais (X de max).",
+      "integracao": "Integração externa com toggle (Memed, Escriba IA, PIX, WhatsApp).",
+      "consentimento": "Template de consentimento LGPD com status, versão e data.",
+      "auditEvento": "Linha do audit log: ator, papel, ação, alvo, quando."
+    },
+    "relationships": [
+      "ConfiguracoesClinicaData agrega a administração do workspace (não-clínico, não-financeiro do dia a dia)",
+      "plano.profissionais <= plano.maxProfissionais; igualdade => barra em amber (no limite)",
+      "integracao.indisponivel => card esmaecido e toggle bloqueado (V2)"
+    ]
+  },
+  "clinica": {
+    "nome": "Clínica Vida Endócrino & Metabólica",
+    "cnpj": "41.238.905/0001-72",
+    "endereco": "Av. Paulista, 1842 · cj. 91 · Bela Vista · São Paulo/SP · 01310-200",
+    "telefone": "(11) 3255-4820",
+    "logoIniciais": "VE"
+  },
+  "plano": {
+    "nome": "Clínica Pro",
+    "descricao": "Prontuário, agenda, faturamento e IA para toda a equipe",
+    "profissionais": 4,
+    "maxProfissionais": 6,
+    "renovaEm": "2026-08-12"
+  },
+  "integracoes": [
+    {
+      "id": "memed",
+      "nome": "Memed",
+      "descricao": "Prescrição digital com assinatura ICP-Brasil",
+      "ativa": true
+    },
+    {
+      "id": "escriba",
+      "nome": "Escriba IA",
+      "descricao": "Transcrição da consulta e geração de nota SOAP",
+      "ativa": true,
+      "modelo": "escriba-med",
+      "versao": "v2.3"
+    },
+    {
+      "id": "pix",
+      "nome": "PIX / Pagamentos",
+      "descricao": "Cobrança por PIX e cartão direto no atendimento",
+      "ativa": true
+    },
+    {
+      "id": "whatsapp",
+      "nome": "WhatsApp",
+      "descricao": "Lembretes e confirmação de consulta pelo WhatsApp",
+      "ativa": false,
+      "indisponivel": true
+    }
+  ],
+  "consentimentos": [
+    {
+      "id": "cons-grav",
+      "titulo": "Gravação de consulta",
+      "descricao": "Autoriza gravar o áudio da consulta para transcrição e nota SOAP",
+      "status": "ativo",
+      "versao": "v1.4",
+      "atualizadoEm": "2026-06-30"
+    },
+    {
+      "id": "cons-compart",
+      "titulo": "Compartilhamento de prontuário entre médicos",
+      "descricao": "Permite que médicos da clínica acessem o prontuário do paciente em atendimento conjunto",
+      "status": "ativo",
+      "versao": "v2.0",
+      "atualizadoEm": "2026-07-05"
+    },
+    {
+      "id": "cons-ia",
+      "titulo": "Uso de IA no atendimento",
+      "descricao": "Autoriza inferências de IA (SOAP, sugestões) sobre os dados de saúde",
+      "status": "ativo",
+      "versao": "v1.1",
+      "atualizadoEm": "2026-07-14"
+    },
+    {
+      "id": "cons-telemed",
+      "titulo": "Teleconsulta",
+      "descricao": "Consentimento específico para atendimento por vídeo",
+      "status": "rascunho",
+      "versao": "v0.2",
+      "atualizadoEm": "2026-07-20"
+    }
+  ],
+  "auditoria": [
+    {
+      "id": "aud-1",
+      "ator": "Camila Duarte",
+      "iniciais": "CD",
+      "papel": "Admin",
+      "cor": "teal",
+      "acao": "editou",
+      "alvo": "Dados da clínica · telefone",
+      "em": "2026-07-23T09:12:00"
+    },
+    {
+      "id": "aud-2",
+      "ator": "Camila Duarte",
+      "iniciais": "CD",
+      "papel": "Admin",
+      "cor": "teal",
+      "acao": "integrou",
+      "alvo": "Ativou integração Escriba IA v2.3",
+      "em": "2026-07-22T16:40:00"
+    },
+    {
+      "id": "aud-3",
+      "ator": "Dr. Rafael Aoki",
+      "iniciais": "RA",
+      "papel": "Médico",
+      "cor": "sky",
+      "acao": "entrou",
+      "alvo": "Login · São Paulo/SP",
+      "em": "2026-07-22T08:03:00"
+    },
+    {
+      "id": "aud-4",
+      "ator": "Camila Duarte",
+      "iniciais": "CD",
+      "papel": "Admin",
+      "cor": "teal",
+      "acao": "convidou",
+      "alvo": "Convite enviado a dra.nunes@clinicavida.com.br",
+      "em": "2026-07-21T14:22:00"
+    },
+    {
+      "id": "aud-5",
+      "ator": "Camila Duarte",
+      "iniciais": "CD",
+      "papel": "Admin",
+      "cor": "teal",
+      "acao": "consentimento",
+      "alvo": "Publicou consentimento Uso de IA v1.1",
+      "em": "2026-07-14T11:05:00"
+    },
+    {
+      "id": "aud-6",
+      "ator": "Beatriz Nunes",
+      "iniciais": "BN",
+      "papel": "Recepção",
+      "cor": "violet",
+      "acao": "exportou",
+      "alvo": "Relatório de faturamento · junho/2026",
+      "em": "2026-07-08T18:31:00"
+    }
+  ]
+}

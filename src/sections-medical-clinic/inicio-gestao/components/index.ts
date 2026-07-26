@@ -1,0 +1,1 @@
+export { VisaoGeralView } from './VisaoGeralView'

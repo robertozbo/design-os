@@ -1,0 +1,406 @@
+{
+  "hoje": "2026-07-24",
+  "periodo": {
+    "de": "2026-07-01",
+    "ate": "2026-07-31"
+  },
+  "servicos": [
+    {
+      "nome": "Consulta · Endocrinologia",
+      "valor": 250
+    },
+    {
+      "nome": "Consulta · Cardiologia",
+      "valor": 300
+    },
+    {
+      "nome": "Consulta · Nutrologia",
+      "valor": 230
+    },
+    {
+      "nome": "Consulta · Clínica Geral",
+      "valor": 200
+    },
+    {
+      "nome": "Retorno",
+      "valor": 180
+    },
+    {
+      "nome": "Teleconsulta",
+      "valor": 220
+    },
+    {
+      "nome": "Avaliação inicial",
+      "valor": 400
+    },
+    {
+      "nome": "Sessão de psicoterapia",
+      "valor": 200
+    },
+    {
+      "nome": "Bioimpedância",
+      "valor": 120
+    },
+    {
+      "nome": "Procedimento ambulatorial",
+      "valor": 150
+    },
+    {
+      "nome": "Pacote mensal (4 sessões)",
+      "valor": 720
+    }
+  ],
+  "categoriasPagar": [
+    "Aluguel",
+    "Salários",
+    "Insumos",
+    "Equipamentos",
+    "Impostos",
+    "Contas fixas",
+    "Marketing"
+  ],
+  "metodosReceber": [
+    "Pix",
+    "Boleto",
+    "Cartão de crédito",
+    "Cartão de débito",
+    "Dinheiro",
+    "Convênio"
+  ],
+  "metodosPagar": [
+    "Pix",
+    "Boleto",
+    "Transferência",
+    "Cartão de crédito",
+    "Débito automático"
+  ],
+  "recorrencias": [
+    "Único (sem recorrência)",
+    "Semanal",
+    "Mensal",
+    "Anual"
+  ],
+  "pacientes": [
+    "Maria Silva Andrade",
+    "João Batista",
+    "Carlos Menezes",
+    "Sônia Reis",
+    "Paulo Tavares",
+    "Débora Alves",
+    "André Nogueira"
+  ],
+  "contas": [
+    {
+      "id": "r1",
+      "tipo": "receber",
+      "descricao": "Consulta · Endocrinologia",
+      "contraparte": "Maria Silva Andrade",
+      "categoria": null,
+      "vencimento": "2026-07-08",
+      "valor": 180.0,
+      "metodo": "Pix",
+      "status": "pago",
+      "pagoEm": "2026-07-08",
+      "recorrencia": "Único (sem recorrência)"
+    },
+    {
+      "id": "r2",
+      "tipo": "receber",
+      "descricao": "Retorno · ajuste de dose",
+      "contraparte": "João Batista",
+      "categoria": null,
+      "vencimento": "2026-07-22",
+      "valor": 122.4,
+      "metodo": "Boleto",
+      "status": "aberto",
+      "pagoEm": null,
+      "recorrencia": "Único (sem recorrência)"
+    },
+    {
+      "id": "r3",
+      "tipo": "receber",
+      "descricao": "Avaliação · parcela 1/2",
+      "contraparte": "Carlos Menezes",
+      "categoria": null,
+      "vencimento": "2026-07-15",
+      "valor": 200,
+      "metodo": "Cartão de crédito",
+      "status": "aberto",
+      "pagoEm": null,
+      "recorrencia": "Mensal"
+    },
+    {
+      "id": "r4",
+      "tipo": "receber",
+      "descricao": "Consulta · Endocrinologia",
+      "contraparte": "Sônia Reis",
+      "categoria": null,
+      "vencimento": "2026-07-12",
+      "valor": 175.0,
+      "metodo": "Pix",
+      "status": "vencido",
+      "pagoEm": null,
+      "recorrencia": "Único (sem recorrência)"
+    },
+    {
+      "id": "r5",
+      "tipo": "receber",
+      "descricao": "Teleconsulta · seguimento",
+      "contraparte": "Débora Alves",
+      "categoria": null,
+      "vencimento": "2026-07-28",
+      "valor": 149.6,
+      "metodo": "Convênio",
+      "status": "aberto",
+      "pagoEm": null,
+      "recorrencia": "Único (sem recorrência)"
+    },
+    {
+      "id": "r6",
+      "tipo": "receber",
+      "descricao": "Consulta · MAPA resultado",
+      "contraparte": "Paulo Tavares",
+      "categoria": null,
+      "vencimento": "2026-07-05",
+      "valor": 300,
+      "metodo": "Dinheiro",
+      "status": "pago",
+      "pagoEm": "2026-07-05",
+      "recorrencia": "Único (sem recorrência)"
+    },
+    {
+      "id": "p1",
+      "tipo": "pagar",
+      "descricao": "Aluguel do consultório",
+      "contraparte": "Imobiliária Prado",
+      "categoria": "Aluguel",
+      "vencimento": "2026-07-10",
+      "valor": 4500,
+      "metodo": "Boleto",
+      "status": "pago",
+      "pagoEm": "2026-07-10",
+      "recorrencia": "Mensal"
+    },
+    {
+      "id": "p2",
+      "tipo": "pagar",
+      "descricao": "Salário · Recepção",
+      "contraparte": "Ana Recepção",
+      "categoria": "Salários",
+      "vencimento": "2026-07-30",
+      "valor": 2200,
+      "metodo": "Transferência",
+      "status": "aberto",
+      "pagoEm": null,
+      "recorrencia": "Mensal"
+    },
+    {
+      "id": "p3",
+      "tipo": "pagar",
+      "descricao": "Insumos e materiais",
+      "contraparte": "MedSupply",
+      "categoria": "Insumos",
+      "vencimento": "2026-07-18",
+      "valor": 820,
+      "metodo": "Pix",
+      "status": "aberto",
+      "pagoEm": null,
+      "recorrencia": "Único (sem recorrência)"
+    },
+    {
+      "id": "p4",
+      "tipo": "pagar",
+      "descricao": "Energia elétrica",
+      "contraparte": "Concessionária",
+      "categoria": "Contas fixas",
+      "vencimento": "2026-07-15",
+      "valor": 640,
+      "metodo": "Débito automático",
+      "status": "vencido",
+      "pagoEm": null,
+      "recorrencia": "Mensal"
+    }
+  ],
+  "categoriasReceber": [
+    "Consultas",
+    "Retornos",
+    "Teleconsulta",
+    "Avaliações",
+    "Exames",
+    "Procedimentos",
+    "Pacotes",
+    "Convênios",
+    "Produtos",
+    "Outros"
+  ],
+  "tiposReceita": [
+    {
+      "grupo": "Atendimento",
+      "itens": [
+        "Consultas",
+        "Retornos",
+        "Teleconsulta",
+        "Sessões (psi/personal)",
+        "Avaliações (física/nutricional/psicológica)",
+        "Atestados, laudos e perícias",
+        "Plantões",
+        "Atendimento em grupo (treino, oficinas, grupos terapêuticos)"
+      ]
+    },
+    {
+      "grupo": "Exames",
+      "itens": [
+        "Exames"
+      ]
+    },
+    {
+      "grupo": "Procedimentos",
+      "itens": [
+        "Procedimentos",
+        "Aplicação de vacinas / imunização",
+        "Honorários hospitalares / cirurgias"
+      ]
+    },
+    {
+      "grupo": "Pacotes",
+      "itens": [
+        "Pacotes e mensalidades",
+        "Planos de treino/dieta"
+      ]
+    },
+    {
+      "grupo": "Produtos",
+      "itens": [
+        "Venda de produtos (suplementos, materiais)",
+        "Infoprodutos (e-books, cursos online)"
+      ]
+    },
+    {
+      "grupo": "Parcerias",
+      "itens": [
+        "Convênios",
+        "Aluguel de sala a colega",
+        "Palestras e workshops",
+        "Consultoria para empresas / food service",
+        "Comissão de afiliados / parcerias com marcas"
+      ]
+    }
+  ],
+  "tiposDespesa": [
+    {
+      "grupo": "Ocupação",
+      "itens": [
+        "Aluguel do espaço",
+        "Condomínio / IPTU",
+        "Sala por hora / coworking",
+        "Energia elétrica",
+        "Água",
+        "Internet e telefonia",
+        "Limpeza e conservação",
+        "Manutenção predial e instalações (caixa d'água, dedetização, hidráulica)"
+      ]
+    },
+    {
+      "grupo": "Pessoal",
+      "itens": [
+        "Salários e encargos",
+        "Pró-labore",
+        "Repasse / comissão a profissionais",
+        "Estagiários / freelancers",
+        "Previdência e seguro de vida (INSS/PGBL)"
+      ]
+    },
+    {
+      "grupo": "Operacional",
+      "itens": [
+        "Software e sistemas (prontuário, agenda, apps)",
+        "Insumos e materiais",
+        "EPI e descartáveis",
+        "Equipamentos (compra)",
+        "Aluguel de equipamentos",
+        "Manutenção de equipamentos",
+        "Exames terceirizados",
+        "Lavanderia (jalecos, lençóis)",
+        "Esterilização",
+        "Material de escritório / expediente",
+        "Frete e logística",
+        "Seguros (responsabilidade civil, patrimonial)",
+        "Medicamentos e imunobiológicos (vacinas)",
+        "Descarte de resíduos / lixo hospitalar (PGRSS)",
+        "Assinaturas e bases clínicas (UpToDate, periódicos)"
+      ]
+    },
+    {
+      "grupo": "Impostos & taxas",
+      "itens": [
+        "Impostos sobre faturamento (ISS, DAS/Simples)",
+        "Taxas de cartão / gateway",
+        "Contabilidade",
+        "Licenças e conselhos (CRM/CRP/CRN/CREF, alvará, vigilância)",
+        "Tarifas bancárias",
+        "Taxas de plataforma (Doctoralia, Zenklub, Vittude)"
+      ]
+    },
+    {
+      "grupo": "Marketing",
+      "itens": [
+        "Tráfego pago / anúncios",
+        "Agência / ferramentas de marketing",
+        "Materiais gráficos",
+        "Comissões (vendas / indicações)"
+      ]
+    },
+    {
+      "grupo": "Formação",
+      "itens": [
+        "Supervisão clínica",
+        "Cursos e congressos",
+        "Certificações e anuidades",
+        "Análise pessoal / terapia do profissional"
+      ]
+    },
+    {
+      "grupo": "Deslocamento",
+      "itens": [
+        "Combustível / transporte",
+        "Manutenção do veículo",
+        "Estacionamento / pedágio / transporte por app"
+      ]
+    },
+    {
+      "grupo": "Financeiro",
+      "itens": [
+        "Juros e multas",
+        "Empréstimos / financiamentos",
+        "Glosas de convênio"
+      ]
+    }
+  ],
+  "fornecedores": [
+    {
+      "nome": "Imobiliária Prado",
+      "cnpj": "12.345.678/0001-90",
+      "categoria": "Aluguel"
+    },
+    {
+      "nome": "MedSupply",
+      "cnpj": "98.765.432/0001-10",
+      "categoria": "Insumos e materiais"
+    },
+    {
+      "nome": "TechSaúde",
+      "cnpj": "45.111.222/0001-33",
+      "categoria": "Software e sistemas (prontuário, agenda, apps)"
+    },
+    {
+      "nome": "Contabilidade Silva",
+      "cnpj": "23.456.789/0001-55",
+      "categoria": "Contabilidade"
+    },
+    {
+      "nome": "CleanPro",
+      "cnpj": "34.567.890/0001-12",
+      "categoria": "Limpeza e conservação"
+    }
+  ]
+}

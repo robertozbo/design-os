@@ -1,0 +1,1 @@
+export { ConfiguracoesClinicaView } from './ConfiguracoesClinicaView'

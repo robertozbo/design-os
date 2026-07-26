@@ -1,0 +1,163 @@
+{
+  "_meta": {
+    "models": {
+      "pacienteClinica": "Paciente do POOL da clínica, com equipe de cuidado multi-especialidade.",
+      "medicoVinculo": "Um médico vinculado ao paciente (equipe de cuidado), com especialidade/cor.",
+      "clinicaCtx": "Contexto: clínica, médico logado (pra 'Meus pacientes') e lista de especialidades."
+    },
+    "relationships": [
+      "PacienteClinica pertence à clínica (pool), não a um médico",
+      "PacienteClinica tem muitos MedicoVinculo (equipe de cuidado)",
+      "'Meus pacientes' = pacientes cuja equipe inclui clinicaCtx.medicoLogadoId"
+    ]
+  },
+  "ctx": {
+    "nome": "Clínica Vida Endócrino & Metabólica",
+    "medicoLogadoId": "med-h",
+    "especialidades": ["Endocrinologia", "Cardiologia", "Nutrologia", "Clínica Geral"]
+  },
+  "filtroAtivo": { "busca": "", "escopo": "clinica", "especialidade": "todas", "statusApp": "todos" },
+  "pacientes": [
+    {
+      "id": "pct-001",
+      "nome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "idade": 45,
+      "genero": "feminino",
+      "convenio": "Particular",
+      "condicoesCronicas": ["Diabetes tipo 2", "Hipotireoidismo", "Hipertensão"],
+      "equipe": [
+        { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "principal": true },
+        { "id": "med-m", "nome": "Dr. Marcos Vieira", "iniciais": "MV", "especialidade": "Cardiologia", "cor": "rose", "principal": false },
+        { "id": "med-b", "nome": "Dra. Beatriz Nunes", "iniciais": "BN", "especialidade": "Nutrologia", "cor": "violet", "principal": false }
+      ],
+      "ultimaConsultaEm": "2026-07-10",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-07-21",
+      "proximaEspecialidade": "Nutrologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-002",
+      "nome": "Carlos Menezes",
+      "iniciais": "CM",
+      "idade": 58,
+      "genero": "masculino",
+      "convenio": "Unimed",
+      "condicoesCronicas": ["Insuficiência cardíaca", "Hipertensão"],
+      "equipe": [
+        { "id": "med-m", "nome": "Dr. Marcos Vieira", "iniciais": "MV", "especialidade": "Cardiologia", "cor": "rose", "principal": true }
+      ],
+      "ultimaConsultaEm": "2026-07-21",
+      "ultimaEspecialidade": "Cardiologia",
+      "proximaConsultaEm": "2026-08-18",
+      "proximaEspecialidade": "Cardiologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-003",
+      "nome": "João Batista",
+      "iniciais": "JB",
+      "idade": 51,
+      "genero": "masculino",
+      "convenio": "Bradesco Saúde",
+      "condicoesCronicas": ["Diabetes tipo 2"],
+      "equipe": [
+        { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "principal": true },
+        { "id": "med-r", "nome": "Dr. Rafael Aoki", "iniciais": "RA", "especialidade": "Clínica Geral", "cor": "sky", "principal": false }
+      ],
+      "ultimaConsultaEm": "2026-06-15",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-07-21",
+      "proximaEspecialidade": "Endocrinologia",
+      "statusApp": "convite-pendente"
+    },
+    {
+      "id": "pct-004",
+      "nome": "Débora Alves",
+      "iniciais": "DA",
+      "idade": 34,
+      "genero": "feminino",
+      "convenio": "Particular",
+      "condicoesCronicas": ["Obesidade grau I"],
+      "equipe": [
+        { "id": "med-b", "nome": "Dra. Beatriz Nunes", "iniciais": "BN", "especialidade": "Nutrologia", "cor": "violet", "principal": true }
+      ],
+      "ultimaConsultaEm": "2026-05-30",
+      "ultimaEspecialidade": "Nutrologia",
+      "proximaConsultaEm": "2026-07-21",
+      "proximaEspecialidade": "Nutrologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-005",
+      "nome": "Paulo Tavares",
+      "iniciais": "PT",
+      "idade": 62,
+      "genero": "masculino",
+      "convenio": "Amil",
+      "condicoesCronicas": ["Arritmia", "Dislipidemia"],
+      "equipe": [
+        { "id": "med-m", "nome": "Dr. Marcos Vieira", "iniciais": "MV", "especialidade": "Cardiologia", "cor": "rose", "principal": true },
+        { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "principal": false }
+      ],
+      "ultimaConsultaEm": "2026-07-05",
+      "ultimaEspecialidade": "Cardiologia",
+      "proximaConsultaEm": "2026-07-21",
+      "proximaEspecialidade": "Cardiologia",
+      "statusApp": "nao-convidado"
+    },
+    {
+      "id": "pct-006",
+      "nome": "Sônia Reis",
+      "iniciais": "SR",
+      "idade": 49,
+      "genero": "feminino",
+      "convenio": "Particular",
+      "condicoesCronicas": ["Hipotireoidismo"],
+      "equipe": [
+        { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "principal": true }
+      ],
+      "ultimaConsultaEm": "2026-04-18",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-07-21",
+      "proximaEspecialidade": "Endocrinologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-007",
+      "nome": "Igor Ramos",
+      "iniciais": "IR",
+      "idade": 40,
+      "genero": "masculino",
+      "convenio": "SulAmérica",
+      "condicoesCronicas": [],
+      "equipe": [
+        { "id": "med-r", "nome": "Dr. Rafael Aoki", "iniciais": "RA", "especialidade": "Clínica Geral", "cor": "sky", "principal": true }
+      ],
+      "ultimaConsultaEm": "2026-07-21",
+      "ultimaEspecialidade": "Clínica Geral",
+      "proximaConsultaEm": null,
+      "proximaEspecialidade": null,
+      "statusApp": "convite-pendente"
+    },
+    {
+      "id": "pct-008",
+      "nome": "Felipe Nunes",
+      "iniciais": "FN",
+      "idade": 29,
+      "genero": "masculino",
+      "convenio": "Particular",
+      "condicoesCronicas": ["Pré-diabetes"],
+      "equipe": [
+        { "id": "med-b", "nome": "Dra. Beatriz Nunes", "iniciais": "BN", "especialidade": "Nutrologia", "cor": "violet", "principal": true },
+        { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "principal": false }
+      ],
+      "ultimaConsultaEm": "2026-06-02",
+      "ultimaEspecialidade": "Nutrologia",
+      "proximaConsultaEm": "2026-07-21",
+      "proximaEspecialidade": "Nutrologia",
+      "statusApp": "vinculado"
+    }
+  ]
+}

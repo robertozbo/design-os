@@ -1,0 +1,1 @@
+export { RelatoriosView } from './RelatoriosView'

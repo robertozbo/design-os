@@ -1,0 +1,111 @@
+{
+  "medico": "Dra. Helena Prado",
+  "periodo": "semana",
+  "stats": [
+    { "id": "s1", "label": "Consultas", "valor": "34", "sub": "assinadas nesta semana" },
+    { "id": "s2", "label": "Tempo médio", "valor": "27 min", "sub": "por atendimento" },
+    { "id": "s3", "label": "Prescrições", "valor": "41", "sub": "emitidas (Memed)" },
+    { "id": "s4", "label": "Exames", "valor": "23", "sub": "solicitados" },
+    { "id": "s5", "label": "Com IA escriba", "valor": "79%", "sub": "27 de 34" }
+  ],
+  "atendimentos": [
+    {
+      "id": "a1",
+      "data": "22 jul",
+      "hora": "08:40",
+      "paciente": { "nome": "Sônia Ribeiro", "iniciais": "SR", "idade": 64 },
+      "motivo": "Resultado TSH",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "modalidade": "tele",
+      "duracaoMin": 18,
+      "geradoPorIA": true,
+      "prescricoes": 1,
+      "examesSolicitados": 0
+    },
+    {
+      "id": "a2",
+      "data": "22 jul",
+      "hora": "08:00",
+      "paciente": { "nome": "Marcos Vinícius Lima", "iniciais": "ML", "idade": 58 },
+      "motivo": "Retorno · ajuste de insulina",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "modalidade": "presencial",
+      "duracaoMin": 32,
+      "geradoPorIA": true,
+      "prescricoes": 2,
+      "examesSolicitados": 1
+    },
+    {
+      "id": "a3",
+      "data": "21 jul",
+      "hora": "16:20",
+      "paciente": { "nome": "Cláudia Bernardes", "iniciais": "CB", "idade": 51 },
+      "motivo": "Nódulo tireoidiano · seguimento",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "modalidade": "presencial",
+      "duracaoMin": 25,
+      "geradoPorIA": true,
+      "prescricoes": 0,
+      "examesSolicitados": 2
+    },
+    {
+      "id": "a4",
+      "data": "21 jul",
+      "hora": "15:00",
+      "paciente": { "nome": "Eduardo Prass", "iniciais": "EP", "idade": 47 },
+      "motivo": "Diabetes tipo 2 · revisão",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "modalidade": "presencial",
+      "duracaoMin": 30,
+      "geradoPorIA": false,
+      "prescricoes": 3,
+      "examesSolicitados": 1
+    },
+    {
+      "id": "a5",
+      "data": "21 jul",
+      "hora": "10:40",
+      "paciente": { "nome": "Fernanda Quintela", "iniciais": "FQ", "idade": 29 },
+      "motivo": "SOP · primeira consulta",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "modalidade": "tele",
+      "duracaoMin": 40,
+      "geradoPorIA": true,
+      "prescricoes": 1,
+      "examesSolicitados": 3
+    },
+    {
+      "id": "a6",
+      "data": "19 jul",
+      "hora": "09:10",
+      "paciente": { "nome": "Roberto Tavares", "iniciais": "RT", "idade": 71 },
+      "motivo": "Renovação de receita contínua",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "modalidade": "tele",
+      "duracaoMin": 12,
+      "geradoPorIA": false,
+      "prescricoes": 2,
+      "examesSolicitados": 0
+    },
+    {
+      "id": "a7",
+      "data": "18 jul",
+      "hora": "14:30",
+      "paciente": { "nome": "Juliana Setúbal", "iniciais": "JS", "idade": 36 },
+      "motivo": "Hipotireoidismo gestacional",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "modalidade": "presencial",
+      "duracaoMin": 35,
+      "geradoPorIA": true,
+      "prescricoes": 1,
+      "examesSolicitados": 2
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "categorias": [
+    "Aluguel",
+    "Insumos e materiais",
+    "Equipamentos (compra)",
+    "Software e sistemas (prontuário, agenda, apps)",
+    "Contabilidade",
+    "Limpeza e conservação",
+    "Manutenção de equipamentos",
+    "Marketing",
+    "Contas fixas",
+    "Outros"
+  ],
+  "fornecedores": [
+    {
+      "id": "f1",
+      "razaoSocial": "Imobiliária Prado Ltda",
+      "nomeFantasia": "Imobiliária Prado",
+      "cnpj": "12.345.678/0001-90",
+      "telefone": "(11) 3255-4010",
+      "email": "contato@imobprado.com.br",
+      "categoria": "Aluguel",
+      "cidade": "São Paulo",
+      "uf": "SP",
+      "ativo": true
+    },
+    {
+      "id": "f2",
+      "razaoSocial": "MedSupply Distribuidora de Materiais Médicos S.A.",
+      "nomeFantasia": "MedSupply",
+      "cnpj": "98.765.432/0001-10",
+      "telefone": "(11) 4002-8922",
+      "email": "vendas@medsupply.com.br",
+      "categoria": "Insumos e materiais",
+      "cidade": "Guarulhos",
+      "uf": "SP",
+      "ativo": true
+    },
+    {
+      "id": "f3",
+      "razaoSocial": "TechSaúde Sistemas Ltda",
+      "nomeFantasia": "TechSaúde",
+      "cnpj": "45.111.222/0001-33",
+      "telefone": "(11) 3030-1200",
+      "email": "suporte@techsaude.com.br",
+      "categoria": "Software e sistemas (prontuário, agenda, apps)",
+      "cidade": "São Paulo",
+      "uf": "SP",
+      "ativo": true
+    },
+    {
+      "id": "f4",
+      "razaoSocial": "Silva & Associados Contabilidade",
+      "nomeFantasia": "Contabilidade Silva",
+      "cnpj": "23.456.789/0001-55",
+      "telefone": "(11) 3567-8080",
+      "email": "fiscal@silvacontabil.com.br",
+      "categoria": "Contabilidade",
+      "cidade": "São Paulo",
+      "uf": "SP",
+      "ativo": true
+    },
+    {
+      "id": "f5",
+      "razaoSocial": "CleanPro Serviços de Limpeza Eireli",
+      "nomeFantasia": "CleanPro",
+      "cnpj": "34.567.890/0001-12",
+      "telefone": "(11) 2101-3344",
+      "email": "atendimento@cleanpro.com.br",
+      "categoria": "Limpeza e conservação",
+      "cidade": "São Paulo",
+      "uf": "SP",
+      "ativo": true
+    }
+  ]
+}

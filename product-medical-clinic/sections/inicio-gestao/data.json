@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "models": {
+      "kpi": "Indicador do topo com valor, delta vs período anterior e sublinha.",
+      "barraDia": "Atendimentos de um dia (mini bar chart da semana).",
+      "producaoMedico": "Produção de um médico: atendimentos, receita e ocupação.",
+      "receitaEspecialidade": "Fatia de receita por especialidade.",
+      "ocupacaoSala": "Ocupação % de uma sala hoje.",
+      "pendencia": "Item acionável (convite/agendamento/sala) com contagem e link."
+    },
+    "relationships": [
+      "GestaoData agrega tudo do painel do Admin — só dados de negócio, zero clínico"
+    ]
+  },
+  "clinica": "Clínica Vida Endócrino & Metabólica",
+  "periodo": "semana",
+  "kpis": [
+    { "id": "atend", "label": "Atendimentos", "valor": "312", "delta": "+8%", "tendencia": "up", "sub": "esta semana" },
+    { "id": "receita", "label": "Receita", "valor": "R$ 84,6 mil", "delta": "+12%", "tendencia": "up", "sub": "no mês" },
+    { "id": "ocupacao", "label": "Ocupação de salas", "valor": "71%", "delta": "+5pp", "tendencia": "up", "sub": "média do dia" },
+    { "id": "medicos", "label": "Médicos ativos", "valor": "4", "delta": "+1", "tendencia": "up", "sub": "de 6 do plano" },
+    { "id": "noshow", "label": "Taxa de no-show", "valor": "6,4%", "delta": "+1,1pp", "tendencia": "up", "invertido": true, "sub": "esta semana" },
+    { "id": "pacientes", "label": "Pacientes ativos", "valor": "1.284", "delta": "+34", "tendencia": "up", "sub": "no pool" }
+  ],
+  "atendimentosSemana": [
+    { "dia": "Seg", "atendimentos": 58 },
+    { "dia": "Ter", "atendimentos": 64 },
+    { "dia": "Qua", "atendimentos": 51 },
+    { "dia": "Qui", "atendimentos": 69 },
+    { "dia": "Sex", "atendimentos": 62 },
+    { "dia": "Sáb", "atendimentos": 8 }
+  ],
+  "producao": [
+    { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "atendimentos": 96, "receita": 28800, "ocupacaoPct": 82 },
+    { "id": "med-m", "nome": "Dr. Marcos Vieira", "iniciais": "MV", "especialidade": "Cardiologia", "cor": "rose", "atendimentos": 78, "receita": 24960, "ocupacaoPct": 76 },
+    { "id": "med-b", "nome": "Dra. Beatriz Nunes", "iniciais": "BN", "especialidade": "Nutrologia", "cor": "violet", "atendimentos": 61, "receita": 15250, "ocupacaoPct": 64 },
+    { "id": "med-r", "nome": "Dr. Rafael Aoki", "iniciais": "RA", "especialidade": "Clínica Geral", "cor": "sky", "atendimentos": 77, "receita": 15400, "ocupacaoPct": 70 }
+  ],
+  "receitaPorEspecialidade": [
+    { "especialidade": "Endocrinologia", "cor": "teal", "valor": 28800, "pct": 34 },
+    { "especialidade": "Cardiologia", "cor": "rose", "valor": 24960, "pct": 30 },
+    { "especialidade": "Clínica Geral", "cor": "sky", "valor": 15400, "pct": 18 },
+    { "especialidade": "Nutrologia", "cor": "violet", "valor": 15250, "pct": 18 }
+  ],
+  "ocupacaoSalas": [
+    { "nome": "Sala 1", "pct": 58 },
+    { "nome": "Sala 2", "pct": 92 },
+    { "nome": "Sala 3", "pct": 60 },
+    { "nome": "Sala de procedimentos", "pct": 0 },
+    { "nome": "Teleconsulta", "pct": 40 }
+  ],
+  "pendencias": [
+    { "id": "p1", "tipo": "convite", "label": "Convites de equipe aguardando aceite", "count": 2, "href": "/medical-clinic/sections/equipe" },
+    { "id": "p2", "tipo": "agendamento", "label": "Agendamentos pendentes de confirmação", "count": 5, "href": "/medical-clinic/sections/agenda" },
+    { "id": "p3", "tipo": "sala", "label": "Salas ociosas hoje", "count": 1, "href": "/medical-clinic/sections/salas" }
+  ]
+}

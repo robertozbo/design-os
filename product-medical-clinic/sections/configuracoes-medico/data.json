@@ -1,0 +1,71 @@
+{
+  "medico": {
+    "nome": "Dra. Helena Prado",
+    "iniciais": "HP",
+    "especialidade": "Endocrinologista",
+    "crm": "CRM 456789-SP",
+    "email": "helena.prado@nymosclinica.com.br",
+    "ultimoAcesso": "2026-07-23"
+  },
+  "conta": {
+    "doisFatores": true,
+    "ultimaTrocaSenha": "2026-05-14"
+  },
+  "notificacoes": [
+    {
+      "id": "encaminhamento",
+      "titulo": "Novo encaminhamento recebido",
+      "descricao": "Quando outro médico encaminha um paciente para você",
+      "email": true,
+      "push": true
+    },
+    {
+      "id": "mensagem",
+      "titulo": "Nova mensagem de paciente",
+      "descricao": "Mensagens no chat seguro do paciente",
+      "email": false,
+      "push": true
+    },
+    {
+      "id": "exame",
+      "titulo": "Exame novo pra revisar",
+      "descricao": "Resultado de exame anexado aguardando sua revisão",
+      "email": true,
+      "push": true
+    },
+    {
+      "id": "agenda",
+      "titulo": "Resumo diário da agenda",
+      "descricao": "E-mail às 7h com os atendimentos do dia",
+      "email": true,
+      "push": false
+    }
+  ],
+  "atendimento": {
+    "escribaPadrao": true,
+    "teleconsulta": true,
+    "templateAnamnese": "endocrinologia",
+    "templatesDisponiveis": [
+      { "value": "endocrinologia", "label": "Endocrinologia" },
+      { "value": "clinica-geral", "label": "Clínica geral" },
+      { "value": "cardiologia", "label": "Cardiologia" },
+      { "value": "nutrologia", "label": "Nutrologia" }
+    ],
+    "duracaoConsulta": "40",
+    "duracoesDisponiveis": [
+      { "value": "20", "label": "20 minutos" },
+      { "value": "30", "label": "30 minutos" },
+      { "value": "40", "label": "40 minutos" },
+      { "value": "60", "label": "60 minutos" }
+    ]
+  },
+  "prescricao": {
+    "memedVinculada": true,
+    "memedConta": "helena.prado@memed",
+    "assinaturaAttest": true
+  },
+  "privacidade": {
+    "confirmarGravacaoPorConsulta": true
+  },
+  "tema": "sistema"
+}
