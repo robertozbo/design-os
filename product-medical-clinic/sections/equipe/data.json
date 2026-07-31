@@ -14,7 +14,7 @@
     ]
   },
   "clinica": {
-    "nome": "Clínica Vida Endócrino & Metabólica",
+    "nome": "Clínica Nymos · Vila Mariana",
     "cnpj": "31.204.556/0001-08",
     "plano": {
       "nome": "Clínica · até 6 médicos",
@@ -55,7 +55,7 @@
       "id": "mem-001",
       "nome": "Roberto Dias",
       "iniciais": "RD",
-      "email": "roberto@clinicavida.com.br",
+      "email": "roberto@nymosclinica.com.br",
       "papel": "admin",
       "status": "ativo",
       "ativoDesde": "2024-08-01",
@@ -65,7 +65,7 @@
       "id": "mem-002",
       "nome": "Dra. Helena Prado",
       "iniciais": "HP",
-      "email": "helena.prado@clinicavida.com.br",
+      "email": "helena.prado@nymosclinica.com.br",
       "papel": "medico",
       "status": "ativo",
       "especialidade": "Endocrinologia",
@@ -77,9 +77,9 @@
     },
     {
       "id": "mem-003",
-      "nome": "Dr. Marcos Vieira",
-      "iniciais": "MV",
-      "email": "marcos.vieira@clinicavida.com.br",
+      "nome": "Dr. Otávio Serrano",
+      "iniciais": "OS",
+      "email": "otavio.serrano@nymosclinica.com.br",
       "papel": "medico",
       "status": "ativo",
       "especialidade": "Cardiologia",
@@ -91,9 +91,9 @@
     },
     {
       "id": "mem-004",
-      "nome": "Dra. Beatriz Nunes",
-      "iniciais": "BN",
-      "email": "beatriz.nunes@clinicavida.com.br",
+      "nome": "Dra. Vera Nakamura",
+      "iniciais": "VN",
+      "email": "vera.nakamura@nymosclinica.com.br",
       "papel": "medico",
       "status": "ativo",
       "especialidade": "Nutrologia",
@@ -107,7 +107,7 @@
       "id": "mem-005",
       "nome": "Carla Souza",
       "iniciais": "CS",
-      "email": "carla.souza@clinicavida.com.br",
+      "email": "carla.souza@nymosclinica.com.br",
       "papel": "recepcao",
       "status": "ativo",
       "ativoDesde": "2024-08-05",
@@ -117,7 +117,7 @@
       "id": "mem-006",
       "nome": "Dr. André Lopes",
       "iniciais": "AL",
-      "email": "andre.lopes@clinicavida.com.br",
+      "email": "andre.lopes@nymosclinica.com.br",
       "papel": "medico",
       "status": "convite-pendente",
       "especialidade": "Endocrinologia",
@@ -127,7 +127,7 @@
   "convites": [
     {
       "id": "inv-001",
-      "email": "andre.lopes@clinicavida.com.br",
+      "email": "andre.lopes@nymosclinica.com.br",
       "papel": "medico",
       "especialidade": "Endocrinologia",
       "enviadoEm": "2026-07-16",
@@ -136,7 +136,7 @@
     },
     {
       "id": "inv-002",
-      "email": "juliana.recepcao@clinicavida.com.br",
+      "email": "juliana.recepcao@nymosclinica.com.br",
       "papel": "recepcao",
       "enviadoEm": "2026-07-18",
       "expiraEm": "2026-07-25",

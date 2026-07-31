@@ -38,7 +38,7 @@
       "consultasHoje": 4,
       "horasOcupadas": 11,
       "horasDisponiveis": 12,
-      "proxima": { "inicio": "15:00", "medico": "Dr. Marcos Vieira", "especialidade": "Cardiologia", "cor": "rose" }
+      "proxima": { "inicio": "15:00", "medico": "Dr. Otávio Serrano", "especialidade": "Cardiologia", "cor": "rose" }
     },
     {
       "id": "sala-3",
@@ -52,7 +52,7 @@
       "consultasHoje": 4,
       "horasOcupadas": 6,
       "horasDisponiveis": 10,
-      "proxima": { "inicio": "16:00", "medico": "Dra. Beatriz Nunes", "especialidade": "Nutrologia", "cor": "violet" }
+      "proxima": { "inicio": "16:00", "medico": "Dra. Vera Nakamura", "especialidade": "Nutrologia", "cor": "violet" }
     },
     {
       "id": "sala-4",

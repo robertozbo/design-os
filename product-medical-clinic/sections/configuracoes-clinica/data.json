@@ -14,7 +14,7 @@
     ]
   },
   "clinica": {
-    "nome": "Clínica Vida Endócrino & Metabólica",
+    "nome": "Clínica Nymos · Vila Mariana",
     "cnpj": "41.238.905/0001-72",
     "endereco": "Av. Paulista, 1842 · cj. 91 · Bela Vista · São Paulo/SP · 01310-200",
     "telefone": "(11) 3255-4820",
@@ -128,7 +128,7 @@
       "papel": "Admin",
       "cor": "teal",
       "acao": "convidou",
-      "alvo": "Convite enviado a dra.nunes@clinicavida.com.br",
+      "alvo": "Convite enviado a dra.nakamura@nymosclinica.com.br",
       "em": "2026-07-21T14:22:00"
     },
     {
@@ -143,7 +143,7 @@
     },
     {
       "id": "aud-6",
-      "ator": "Beatriz Nunes",
+      "ator": "Vera Nakamura",
       "iniciais": "BN",
       "papel": "Recepção",
       "cor": "violet",

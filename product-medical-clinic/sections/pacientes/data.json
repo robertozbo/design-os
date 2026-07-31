@@ -12,13 +12,14 @@
     ]
   },
   "ctx": {
-    "nome": "Clínica Vida Endócrino & Metabólica",
+    "nome": "Clínica Nymos · Vila Mariana",
     "medicoLogadoId": "med-h",
     "especialidades": [
       "Endocrinologia",
       "Cardiologia",
       "Nutrologia",
-      "Clínica Geral"
+      "Clínica Geral",
+      "Ginecologia"
     ]
   },
   "filtroAtivo": {
@@ -52,16 +53,16 @@
         },
         {
           "id": "med-m",
-          "nome": "Dr. Marcos Vieira",
-          "iniciais": "MV",
+          "nome": "Dr. Otávio Serrano",
+          "iniciais": "OS",
           "especialidade": "Cardiologia",
           "cor": "rose",
           "principal": false
         },
         {
           "id": "med-b",
-          "nome": "Dra. Beatriz Nunes",
-          "iniciais": "BN",
+          "nome": "Dra. Vera Nakamura",
+          "iniciais": "VN",
           "especialidade": "Nutrologia",
           "cor": "violet",
           "principal": false
@@ -88,8 +89,8 @@
       "equipe": [
         {
           "id": "med-m",
-          "nome": "Dr. Marcos Vieira",
-          "iniciais": "MV",
+          "nome": "Dr. Otávio Serrano",
+          "iniciais": "OS",
           "especialidade": "Cardiologia",
           "cor": "rose",
           "principal": true
@@ -150,8 +151,8 @@
       "equipe": [
         {
           "id": "med-b",
-          "nome": "Dra. Beatriz Nunes",
-          "iniciais": "BN",
+          "nome": "Dra. Vera Nakamura",
+          "iniciais": "VN",
           "especialidade": "Nutrologia",
           "cor": "violet",
           "principal": true
@@ -165,12 +166,12 @@
     },
     {
       "id": "pct-005",
-      "nome": "Paulo Tavares",
-      "iniciais": "PT",
+      "nome": "Paulo Bandeira",
+      "iniciais": "PB",
       "idade": 62,
       "genero": "masculino",
       "convenio": "Amil",
-      "email": "paulo.tavares@email.com",
+      "email": "paulo.bandeira@email.com",
       "condicoesCronicas": [
         "Arritmia",
         "Dislipidemia"
@@ -178,8 +179,8 @@
       "equipe": [
         {
           "id": "med-m",
-          "nome": "Dr. Marcos Vieira",
-          "iniciais": "MV",
+          "nome": "Dr. Otávio Serrano",
+          "iniciais": "OS",
           "especialidade": "Cardiologia",
           "cor": "rose",
           "principal": true
@@ -201,12 +202,12 @@
     },
     {
       "id": "pct-006",
-      "nome": "Sônia Reis",
-      "iniciais": "SR",
+      "nome": "Solange Amaral",
+      "iniciais": "SA",
       "idade": 49,
       "genero": "feminino",
       "convenio": "Particular",
-      "email": "sonia.reis@email.com",
+      "email": "solange.amaral@email.com",
       "condicoesCronicas": [
         "Hipotireoidismo"
       ],
@@ -265,8 +266,8 @@
       "equipe": [
         {
           "id": "med-b",
-          "nome": "Dra. Beatriz Nunes",
-          "iniciais": "BN",
+          "nome": "Dra. Vera Nakamura",
+          "iniciais": "VN",
           "especialidade": "Nutrologia",
           "cor": "violet",
           "principal": true
@@ -285,6 +286,477 @@
       "proximaConsultaEm": "2026-07-21",
       "proximaEspecialidade": "Nutrologia",
       "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-009",
+      "nome": "Marcos Vinícius Lima",
+      "iniciais": "ML",
+      "idade": 58,
+      "genero": "masculino",
+      "convenio": "Bradesco Saúde",
+      "email": "marcos.lima@email.com",
+      "condicoesCronicas": [
+        "Diabetes tipo 2",
+        "Hipertensão"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-p",
+          "nome": "Dr. Paulo Sette",
+          "iniciais": "PS",
+          "especialidade": "Clínica Geral",
+          "cor": "sky",
+          "principal": false
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-22",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-07-28",
+      "proximaEspecialidade": "Endocrinologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-010",
+      "nome": "Sônia Ribeiro",
+      "iniciais": "SR",
+      "idade": 64,
+      "genero": "feminino",
+      "convenio": "Particular",
+      "email": "sonia.ribeiro@email.com",
+      "condicoesCronicas": [
+        "Hipotireoidismo"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-p",
+          "nome": "Dr. Paulo Sette",
+          "iniciais": "PS",
+          "especialidade": "Clínica Geral",
+          "cor": "sky",
+          "principal": false
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-22",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-08-05",
+      "proximaEspecialidade": "Endocrinologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-011",
+      "nome": "André Nogueira",
+      "iniciais": "AN",
+      "idade": 45,
+      "genero": "masculino",
+      "convenio": "SulAmérica",
+      "email": "andre.nogueira@email.com",
+      "condicoesCronicas": [
+        "Hipotireoidismo",
+        "Sobrepeso"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-b",
+          "nome": "Dra. Vera Nakamura",
+          "iniciais": "VN",
+          "especialidade": "Nutrologia",
+          "cor": "violet",
+          "principal": false
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-22",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-08-19",
+      "proximaEspecialidade": "Nutrologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-012",
+      "nome": "Larissa Fontes",
+      "iniciais": "LF",
+      "idade": 33,
+      "genero": "feminino",
+      "convenio": "Particular",
+      "email": "larissa.fontes@email.com",
+      "condicoesCronicas": [
+        "SOP"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-a",
+          "nome": "Dra. Marina Alves",
+          "iniciais": "MA",
+          "especialidade": "Ginecologia",
+          "cor": "amber",
+          "principal": false
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-19",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-07-31",
+      "proximaEspecialidade": "Ginecologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-013",
+      "nome": "Roberto Tavares",
+      "iniciais": "RT",
+      "idade": 71,
+      "genero": "masculino",
+      "convenio": "Bradesco Saúde",
+      "email": "roberto.tavares@email.com",
+      "condicoesCronicas": [
+        "Insônia crônica",
+        "Hipertensão"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-m",
+          "nome": "Dr. Otávio Serrano",
+          "iniciais": "OS",
+          "especialidade": "Cardiologia",
+          "cor": "rose",
+          "principal": false
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-10",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-08-12",
+      "proximaEspecialidade": "Cardiologia",
+      "statusApp": "nao-convidado"
+    },
+    {
+      "id": "pct-014",
+      "nome": "Beatriz Camargo",
+      "iniciais": "BC",
+      "idade": 39,
+      "genero": "feminino",
+      "convenio": "Amil",
+      "email": "beatriz.camargo@email.com",
+      "condicoesCronicas": [
+        "Resistência à insulina",
+        "Obesidade grau I"
+      ],
+      "equipe": [
+        {
+          "id": "med-p",
+          "nome": "Dr. Paulo Sette",
+          "iniciais": "PS",
+          "especialidade": "Clínica Geral",
+          "cor": "sky",
+          "principal": true
+        },
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": false
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-15",
+      "ultimaEspecialidade": "Clínica Geral",
+      "proximaConsultaEm": "2026-07-22",
+      "proximaEspecialidade": "Endocrinologia",
+      "statusApp": "convite-pendente"
+    },
+    {
+      "id": "pct-015",
+      "nome": "Eduardo Prass",
+      "iniciais": "EP",
+      "idade": 47,
+      "genero": "masculino",
+      "convenio": "Unimed",
+      "email": "eduardo.prass@email.com",
+      "condicoesCronicas": [
+        "Diabetes tipo 2"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-p",
+          "nome": "Dr. Paulo Sette",
+          "iniciais": "PS",
+          "especialidade": "Clínica Geral",
+          "cor": "sky",
+          "principal": false
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-20",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-08-03",
+      "proximaEspecialidade": "Endocrinologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-016",
+      "nome": "Fernanda Quintela",
+      "iniciais": "FQ",
+      "idade": 29,
+      "genero": "feminino",
+      "convenio": "Particular",
+      "email": "fernanda.quintela@email.com",
+      "condicoesCronicas": [
+        "SOP"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-a",
+          "nome": "Dra. Marina Alves",
+          "iniciais": "MA",
+          "especialidade": "Ginecologia",
+          "cor": "amber",
+          "principal": false
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-21",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-08-04",
+      "proximaEspecialidade": "Ginecologia",
+      "statusApp": "convite-pendente"
+    },
+    {
+      "id": "pct-017",
+      "nome": "Cláudia Bernardes",
+      "iniciais": "CB",
+      "idade": 51,
+      "genero": "feminino",
+      "convenio": "SulAmérica",
+      "email": "claudia.bernardes@email.com",
+      "condicoesCronicas": [
+        "Nódulo tireoidiano"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-17",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-08-14",
+      "proximaEspecialidade": "Endocrinologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-018",
+      "nome": "Juliana Setúbal",
+      "iniciais": "JS",
+      "idade": 36,
+      "genero": "feminino",
+      "convenio": "Unimed",
+      "email": "juliana.setubal@email.com",
+      "condicoesCronicas": [
+        "Hipotireoidismo gestacional"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-a",
+          "nome": "Dra. Marina Alves",
+          "iniciais": "MA",
+          "especialidade": "Ginecologia",
+          "cor": "amber",
+          "principal": false
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-16",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-07-30",
+      "proximaEspecialidade": "Ginecologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-019",
+      "nome": "Ana Prado",
+      "iniciais": "AP",
+      "idade": 38,
+      "genero": "feminino",
+      "convenio": "Unimed",
+      "email": "ana.prado@email.com",
+      "condicoesCronicas": [
+        "Ansiedade"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-14",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-07-22",
+      "proximaEspecialidade": "Endocrinologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-020",
+      "nome": "Bruno Costa",
+      "iniciais": "BC",
+      "idade": 47,
+      "genero": "masculino",
+      "convenio": "Particular",
+      "email": "bruno.costa@email.com",
+      "condicoesCronicas": [
+        "Dislipidemia"
+      ],
+      "equipe": [
+        {
+          "id": "med-m",
+          "nome": "Dr. Otávio Serrano",
+          "iniciais": "OS",
+          "especialidade": "Cardiologia",
+          "cor": "rose",
+          "principal": true
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-13",
+      "ultimaEspecialidade": "Cardiologia",
+      "proximaConsultaEm": "2026-07-22",
+      "proximaEspecialidade": "Cardiologia",
+      "statusApp": "nao-convidado"
+    },
+    {
+      "id": "pct-021",
+      "nome": "Lúcia Prado",
+      "iniciais": "LP",
+      "idade": 55,
+      "genero": "feminino",
+      "convenio": "Bradesco Saúde",
+      "email": "lucia.prado@email.com",
+      "condicoesCronicas": [
+        "Osteoporose",
+        "Hipotireoidismo"
+      ],
+      "equipe": [
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        },
+        {
+          "id": "med-b",
+          "nome": "Dra. Vera Nakamura",
+          "iniciais": "VN",
+          "especialidade": "Nutrologia",
+          "cor": "violet",
+          "principal": false
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-09",
+      "ultimaEspecialidade": "Endocrinologia",
+      "proximaConsultaEm": "2026-07-22",
+      "proximaEspecialidade": "Nutrologia",
+      "statusApp": "vinculado"
+    },
+    {
+      "id": "pct-022",
+      "nome": "Renata Lopes",
+      "iniciais": "RL",
+      "idade": 44,
+      "genero": "feminino",
+      "convenio": "Amil",
+      "email": "renata.lopes@email.com",
+      "condicoesCronicas": [
+        "Pré-diabetes"
+      ],
+      "equipe": [
+        {
+          "id": "med-r",
+          "nome": "Dr. Rafael Aoki",
+          "iniciais": "RA",
+          "especialidade": "Clínica Geral",
+          "cor": "sky",
+          "principal": true
+        },
+        {
+          "id": "med-h",
+          "nome": "Dra. Helena Prado",
+          "iniciais": "HP",
+          "especialidade": "Endocrinologia",
+          "cor": "teal",
+          "principal": true
+        }
+      ],
+      "ultimaConsultaEm": "2026-07-08",
+      "ultimaEspecialidade": "Clínica Geral",
+      "proximaConsultaEm": "2026-07-23",
+      "proximaEspecialidade": "Endocrinologia",
+      "statusApp": "convite-pendente"
     }
   ]
 }

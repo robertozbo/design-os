@@ -15,7 +15,7 @@
   },
   "conta": {
     "nome": "Carla Menezes",
-    "email": "carla.menezes@vidaendocrino.com.br",
+    "email": "carla.menezes@nymosclinica.com.br",
     "persona": "Recepção",
     "iniciais": "CM",
     "doisFatores": true
@@ -57,7 +57,7 @@
     "reciboAutomatico": true
   },
   "mensagens": {
-    "assinatura": "Recepção · Clínica Vida Endócrino & Metabólica",
+    "assinatura": "Recepção · Clínica Nymos · Vila Mariana",
     "horarioAtendimento": "Seg–Sex · 08h00–18h00"
   },
   "aparencia": {

@@ -23,7 +23,11 @@
     "idade": 45,
     "genero": "feminino",
     "convenio": "Particular",
-    "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Hipotireoidismo", "Hipertensão"]
+    "condicoesCronicas": [
+      "Diabetes Mellitus tipo 2",
+      "Hipotireoidismo",
+      "Hipertensão"
+    ]
   },
   "acessoAtual": {
     "medicoNome": "Dra. Helena Prado",
@@ -44,8 +48,8 @@
     },
     {
       "id": "mem-003",
-      "nome": "Dr. Marcos Vieira",
-      "iniciais": "MV",
+      "nome": "Dr. Otávio Serrano",
+      "iniciais": "OS",
       "especialidade": "Cardiologia",
       "cor": "rose",
       "crm": "CRM 512340-SP",
@@ -54,8 +58,8 @@
     },
     {
       "id": "mem-004",
-      "nome": "Dra. Beatriz Nunes",
-      "iniciais": "BN",
+      "nome": "Dra. Vera Nakamura",
+      "iniciais": "VN",
       "especialidade": "Nutrologia",
       "cor": "violet",
       "crm": "CRM 601288-SP",
@@ -64,7 +68,11 @@
     }
   ],
   "anamnese": {
-    "condicoesCronicas": ["Diabetes Mellitus tipo 2", "Hipotireoidismo", "Hipertensão arterial"],
+    "condicoesCronicas": [
+      "Diabetes Mellitus tipo 2",
+      "Hipotireoidismo",
+      "Hipertensão arterial"
+    ],
     "medicacoesEmUso": [
       {
         "nome": "Levotiroxina 75mcg",
@@ -80,7 +88,7 @@
       },
       {
         "nome": "Losartana 50mg",
-        "prescritoPor": "Dr. Marcos Vieira",
+        "prescritoPor": "Dr. Otávio Serrano",
         "especialidade": "Cardiologia",
         "cor": "rose"
       },
@@ -91,7 +99,10 @@
         "cor": "teal"
       }
     ],
-    "alergias": ["Dipirona (urticária)", "Sulfa (moderada)"],
+    "alergias": [
+      "Dipirona (urticária)",
+      "Sulfa (moderada)"
+    ],
     "observacao": "Lista agregada dos vínculos ativos. Atenção a interações entre especialidades."
   },
   "evolucoes": [
@@ -119,7 +130,7 @@
       "data": "2026-06-28",
       "especialidade": "Cardiologia",
       "cor": "rose",
-      "medicoNome": "Dr. Marcos Vieira",
+      "medicoNome": "Dr. Otávio Serrano",
       "medicoIniciais": "MV",
       "modalidade": "presencial",
       "geradoPorIA": false,
@@ -138,7 +149,7 @@
       "data": "2026-05-30",
       "especialidade": "Nutrologia",
       "cor": "violet",
-      "medicoNome": "Dra. Beatriz Nunes",
+      "medicoNome": "Dra. Vera Nakamura",
       "medicoIniciais": "BN",
       "modalidade": "tele",
       "geradoPorIA": true,
@@ -178,7 +189,7 @@
     },
     {
       "id": "aud-3",
-      "ator": "Dr. Marcos Vieira",
+      "ator": "Dr. Otávio Serrano",
       "iniciais": "MV",
       "papel": "Médico",
       "especialidade": "Cardiologia",
@@ -189,7 +200,7 @@
     },
     {
       "id": "aud-4",
-      "ator": "Dr. Marcos Vieira",
+      "ator": "Dr. Otávio Serrano",
       "iniciais": "MV",
       "papel": "Médico",
       "especialidade": "Cardiologia",

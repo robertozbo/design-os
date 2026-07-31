@@ -33,15 +33,15 @@
     },
     {
       "id": "med-m",
-      "nome": "Dr. Marcos Vieira",
-      "iniciais": "MV",
+      "nome": "Dr. Otávio Serrano",
+      "iniciais": "OS",
       "especialidade": "Cardiologia",
       "cor": "rose"
     },
     {
       "id": "med-b",
-      "nome": "Dra. Beatriz Nunes",
-      "iniciais": "BN",
+      "nome": "Dra. Vera Nakamura",
+      "iniciais": "VN",
       "especialidade": "Nutrologia",
       "cor": "violet"
     },
@@ -99,8 +99,8 @@
     },
     {
       "id": "pac-4",
-      "nome": "Sônia Reis",
-      "iniciais": "SR",
+      "nome": "Solange Amaral",
+      "iniciais": "SA",
       "idade": 49,
       "convenio": "SulAmérica"
     },
@@ -113,8 +113,8 @@
     },
     {
       "id": "pac-6",
-      "nome": "Paulo Tavares",
-      "iniciais": "PT",
+      "nome": "Paulo Bandeira",
+      "iniciais": "PB",
       "idade": 62,
       "convenio": "Unimed"
     },
@@ -230,7 +230,7 @@
       "id": "ag-4",
       "medicoId": "med-h",
       "salaId": "sala-1",
-      "pacienteNome": "Sônia Reis",
+      "pacienteNome": "Solange Amaral",
       "pacienteIniciais": "SR",
       "especialidade": "Endocrinologia",
       "cor": "teal",
@@ -262,7 +262,7 @@
       "id": "ag-6",
       "medicoId": "med-m",
       "salaId": "sala-2",
-      "pacienteNome": "Rita Lopes",
+      "pacienteNome": "Renata Lopes",
       "pacienteIniciais": "RL",
       "especialidade": "Cardiologia",
       "cor": "rose",
@@ -278,7 +278,7 @@
       "id": "ag-7",
       "medicoId": "med-m",
       "salaId": "sala-2",
-      "pacienteNome": "Paulo Tavares",
+      "pacienteNome": "Paulo Bandeira",
       "pacienteIniciais": "PT",
       "especialidade": "Cardiologia",
       "cor": "rose",

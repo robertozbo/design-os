@@ -12,7 +12,7 @@
       "taxa de no-show = noShows / (atendimentos + noShows); receita por especialidade soma a receita dos médicos daquela especialidade"
     ]
   },
-  "clinica": "Clínica Vida Endócrino & Metabólica",
+  "clinica": "Clínica Nymos · Vila Mariana",
   "periodo": "mes",
   "kpis": [
     {
@@ -56,8 +56,8 @@
     },
     {
       "id": "med-m",
-      "nome": "Dr. Marcos Vieira",
-      "iniciais": "MV",
+      "nome": "Dr. Otávio Serrano",
+      "iniciais": "OS",
       "especialidade": "Cardiologia",
       "cor": "rose",
       "atendimentos": 78,
@@ -67,8 +67,8 @@
     },
     {
       "id": "med-b",
-      "nome": "Dra. Beatriz Nunes",
-      "iniciais": "BN",
+      "nome": "Dra. Vera Nakamura",
+      "iniciais": "VN",
       "especialidade": "Nutrologia",
       "cor": "violet",
       "atendimentos": 61,
@@ -144,7 +144,7 @@
   "noShow": [
     {
       "id": "med-m",
-      "nome": "Dr. Marcos Vieira",
+      "nome": "Dr. Otávio Serrano",
       "cor": "rose",
       "quantidade": 7,
       "taxa": 8.2
@@ -165,7 +165,7 @@
     },
     {
       "id": "med-b",
-      "nome": "Dra. Beatriz Nunes",
+      "nome": "Dra. Vera Nakamura",
       "cor": "violet",
       "quantidade": 3,
       "taxa": 4.7

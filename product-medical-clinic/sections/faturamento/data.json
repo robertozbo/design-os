@@ -11,35 +11,207 @@
       "repasseValor = receitaBruta * repassePct; liquidoClinica = receitaBruta - repasseValor"
     ]
   },
-  "clinica": "Clínica Vida Endócrino & Metabólica",
+  "clinica": "Clínica Nymos · Vila Mariana",
   "periodo": "mes",
   "kpis": [
-    { "id": "bruta", "label": "Receita bruta", "valor": 84600 },
-    { "id": "recebido", "label": "Recebido", "valor": 71300 },
-    { "id": "areceber", "label": "A receber", "valor": 13300 },
-    { "id": "repasse", "label": "Repasse médicos", "valor": 50760 },
-    { "id": "liquido", "label": "Líquido clínica", "valor": 33840, "destaque": true }
+    {
+      "id": "bruta",
+      "label": "Receita bruta",
+      "valor": 84600
+    },
+    {
+      "id": "recebido",
+      "label": "Recebido",
+      "valor": 71300
+    },
+    {
+      "id": "areceber",
+      "label": "A receber",
+      "valor": 13300
+    },
+    {
+      "id": "repasse",
+      "label": "Repasse médicos",
+      "valor": 50760
+    },
+    {
+      "id": "liquido",
+      "label": "Líquido clínica",
+      "valor": 33840,
+      "destaque": true
+    }
   ],
   "repasses": [
-    { "id": "med-h", "nome": "Dra. Helena Prado", "iniciais": "HP", "especialidade": "Endocrinologia", "cor": "teal", "atendimentos": 96, "receitaBruta": 28800, "repassePct": 60, "repasseValor": 17280, "liquidoClinica": 11520 },
-    { "id": "med-m", "nome": "Dr. Marcos Vieira", "iniciais": "MV", "especialidade": "Cardiologia", "cor": "rose", "atendimentos": 78, "receitaBruta": 24960, "repassePct": 60, "repasseValor": 14976, "liquidoClinica": 9984 },
-    { "id": "med-b", "nome": "Dra. Beatriz Nunes", "iniciais": "BN", "especialidade": "Nutrologia", "cor": "violet", "atendimentos": 61, "receitaBruta": 15250, "repassePct": 60, "repasseValor": 9150, "liquidoClinica": 6100 },
-    { "id": "med-r", "nome": "Dr. Rafael Aoki", "iniciais": "RA", "especialidade": "Clínica Geral", "cor": "sky", "atendimentos": 77, "receitaBruta": 15400, "repassePct": 60, "repasseValor": 9240, "liquidoClinica": 6160 }
+    {
+      "id": "med-h",
+      "nome": "Dra. Helena Prado",
+      "iniciais": "HP",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "atendimentos": 96,
+      "receitaBruta": 28800,
+      "repassePct": 60,
+      "repasseValor": 17280,
+      "liquidoClinica": 11520
+    },
+    {
+      "id": "med-m",
+      "nome": "Dr. Otávio Serrano",
+      "iniciais": "OS",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "atendimentos": 78,
+      "receitaBruta": 24960,
+      "repassePct": 60,
+      "repasseValor": 14976,
+      "liquidoClinica": 9984
+    },
+    {
+      "id": "med-b",
+      "nome": "Dra. Vera Nakamura",
+      "iniciais": "VN",
+      "especialidade": "Nutrologia",
+      "cor": "violet",
+      "atendimentos": 61,
+      "receitaBruta": 15250,
+      "repassePct": 60,
+      "repasseValor": 9150,
+      "liquidoClinica": 6100
+    },
+    {
+      "id": "med-r",
+      "nome": "Dr. Rafael Aoki",
+      "iniciais": "RA",
+      "especialidade": "Clínica Geral",
+      "cor": "sky",
+      "atendimentos": 77,
+      "receitaBruta": 15400,
+      "repassePct": 60,
+      "repasseValor": 9240,
+      "liquidoClinica": 6160
+    }
   ],
   "cobrancas": [
-    { "id": "cob-1", "pacienteNome": "Maria Silva Andrade", "pacienteIniciais": "MA", "medico": "Dra. Helena Prado", "especialidade": "Endocrinologia", "cor": "teal", "valor": 350, "forma": "pix", "status": "pago", "data": "2026-07-10" },
-    { "id": "cob-2", "pacienteNome": "Carlos Menezes", "pacienteIniciais": "CM", "medico": "Dr. Marcos Vieira", "especialidade": "Cardiologia", "cor": "rose", "valor": 400, "forma": "convenio", "status": "pendente", "data": "2026-07-21", "convenio": "Unimed" },
-    { "id": "cob-3", "pacienteNome": "Débora Alves", "pacienteIniciais": "DA", "medico": "Dra. Beatriz Nunes", "especialidade": "Nutrologia", "cor": "violet", "valor": 250, "forma": "cartao", "status": "pago", "data": "2026-07-19" },
-    { "id": "cob-4", "pacienteNome": "Paulo Tavares", "pacienteIniciais": "PT", "medico": "Dr. Marcos Vieira", "especialidade": "Cardiologia", "cor": "rose", "valor": 400, "forma": "convenio", "status": "pendente", "data": "2026-07-21", "convenio": "Amil" },
-    { "id": "cob-5", "pacienteNome": "Sônia Reis", "pacienteIniciais": "SR", "medico": "Dra. Helena Prado", "especialidade": "Endocrinologia", "cor": "teal", "valor": 350, "forma": "pix", "status": "pago", "data": "2026-07-18" },
-    { "id": "cob-6", "pacienteNome": "Igor Ramos", "pacienteIniciais": "IR", "medico": "Dr. Rafael Aoki", "especialidade": "Clínica Geral", "cor": "sky", "valor": 200, "forma": "cartao", "status": "estornado", "data": "2026-07-15" },
-    { "id": "cob-7", "pacienteNome": "Felipe Nunes", "pacienteIniciais": "FN", "medico": "Dra. Beatriz Nunes", "especialidade": "Nutrologia", "cor": "violet", "valor": 250, "forma": "pix", "status": "pago", "data": "2026-07-12" },
-    { "id": "cob-8", "pacienteNome": "João Batista", "pacienteIniciais": "JB", "medico": "Dra. Helena Prado", "especialidade": "Endocrinologia", "cor": "teal", "valor": 350, "forma": "convenio", "status": "pendente", "data": "2026-07-21", "convenio": "Bradesco Saúde" }
+    {
+      "id": "cob-1",
+      "pacienteNome": "Maria Silva Andrade",
+      "pacienteIniciais": "MA",
+      "medico": "Dra. Helena Prado",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "valor": 350,
+      "forma": "pix",
+      "status": "pago",
+      "data": "2026-07-10"
+    },
+    {
+      "id": "cob-2",
+      "pacienteNome": "Carlos Menezes",
+      "pacienteIniciais": "CM",
+      "medico": "Dr. Otávio Serrano",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "valor": 400,
+      "forma": "convenio",
+      "status": "pendente",
+      "data": "2026-07-21",
+      "convenio": "Unimed"
+    },
+    {
+      "id": "cob-3",
+      "pacienteNome": "Débora Alves",
+      "pacienteIniciais": "DA",
+      "medico": "Dra. Vera Nakamura",
+      "especialidade": "Nutrologia",
+      "cor": "violet",
+      "valor": 250,
+      "forma": "cartao",
+      "status": "pago",
+      "data": "2026-07-19"
+    },
+    {
+      "id": "cob-4",
+      "pacienteNome": "Paulo Bandeira",
+      "pacienteIniciais": "PT",
+      "medico": "Dr. Otávio Serrano",
+      "especialidade": "Cardiologia",
+      "cor": "rose",
+      "valor": 400,
+      "forma": "convenio",
+      "status": "pendente",
+      "data": "2026-07-21",
+      "convenio": "Amil"
+    },
+    {
+      "id": "cob-5",
+      "pacienteNome": "Solange Amaral",
+      "pacienteIniciais": "SR",
+      "medico": "Dra. Helena Prado",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "valor": 350,
+      "forma": "pix",
+      "status": "pago",
+      "data": "2026-07-18"
+    },
+    {
+      "id": "cob-6",
+      "pacienteNome": "Igor Ramos",
+      "pacienteIniciais": "IR",
+      "medico": "Dr. Rafael Aoki",
+      "especialidade": "Clínica Geral",
+      "cor": "sky",
+      "valor": 200,
+      "forma": "cartao",
+      "status": "estornado",
+      "data": "2026-07-15"
+    },
+    {
+      "id": "cob-7",
+      "pacienteNome": "Felipe Nunes",
+      "pacienteIniciais": "FN",
+      "medico": "Dra. Vera Nakamura",
+      "especialidade": "Nutrologia",
+      "cor": "violet",
+      "valor": 250,
+      "forma": "pix",
+      "status": "pago",
+      "data": "2026-07-12"
+    },
+    {
+      "id": "cob-8",
+      "pacienteNome": "João Batista",
+      "pacienteIniciais": "JB",
+      "medico": "Dra. Helena Prado",
+      "especialidade": "Endocrinologia",
+      "cor": "teal",
+      "valor": 350,
+      "forma": "convenio",
+      "status": "pendente",
+      "data": "2026-07-21",
+      "convenio": "Bradesco Saúde"
+    }
   ],
   "porConvenio": [
-    { "nome": "Particular", "valor": 48200, "pct": 57 },
-    { "nome": "Unimed", "valor": 16400, "pct": 19 },
-    { "nome": "Bradesco Saúde", "valor": 11600, "pct": 14 },
-    { "nome": "Amil", "valor": 8400, "pct": 10 }
+    {
+      "nome": "Particular",
+      "valor": 48200,
+      "pct": 57
+    },
+    {
+      "nome": "Unimed",
+      "valor": 16400,
+      "pct": 19
+    },
+    {
+      "nome": "Bradesco Saúde",
+      "valor": 11600,
+      "pct": 14
+    },
+    {
+      "nome": "Amil",
+      "valor": 8400,
+      "pct": 10
+    }
   ]
 }

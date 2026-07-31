@@ -31,7 +31,7 @@
     { "id": "f4", "titulo": "Mestrado em Metabolismo", "instituicao": "UNIFESP", "ano": "2018" }
   ],
   "contato": {
-    "email": "helena.prado@clinicavida.com.br",
+    "email": "helena.prado@nymosclinica.com.br",
     "telefone": "(11) 98765-4321",
     "cidade": "São Paulo · SP"
   },
@@ -62,7 +62,7 @@
     {
       "id": "c3",
       "nome": "Vínculo com a clínica",
-      "descricao": "Credenciamento ativo na Clínica Vida Endócrino & Metabólica.",
+      "descricao": "Credenciamento ativo na Clínica Nymos · Vila Mariana.",
       "status": "ativo",
       "detalhe": "Repasse 60% · desde 2021"
     }
