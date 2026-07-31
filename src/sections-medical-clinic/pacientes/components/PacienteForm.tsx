@@ -112,6 +112,7 @@ export function PacienteForm({ paciente, onClose, onSalvar }: Props) {
             {editando ? 'Editar cadastro' : 'Novo paciente'}
           </h2>
           <button
+            aria-label="Fechar"
             onClick={onClose}
             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
           >
@@ -262,6 +263,7 @@ export function PacienteForm({ paciente, onClose, onSalvar }: Props) {
                 className={`flex-1 ${inputCls}`}
               />
               <button
+                aria-label="Adicionar condição"
                 onClick={addCondicao}
                 className="rounded-lg border border-slate-200 px-2.5 text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800"
               >

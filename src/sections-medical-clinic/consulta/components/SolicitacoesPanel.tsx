@@ -3,6 +3,8 @@ import { FlaskConical, Pill, Share2 } from 'lucide-react'
 export interface SolicItem {
   titulo: string
   sub?: string
+  /** Indicação clínica / justificativa que acompanha a solicitação (vai ao laboratório e ao convênio). */
+  indicacao?: string
   /** true = criado nesta consulta (ao vivo); false = de consultas anteriores. */
   nesta: boolean
 }
@@ -77,6 +79,11 @@ function Coluna({
                 )}
               </div>
               {it.sub && <div className="mt-0.5 truncate text-[10px] text-slate-400">{it.sub}</div>}
+              {it.indicacao && (
+                <div className="mt-0.5 text-[10px] italic text-slate-500 dark:text-slate-400">
+                  Indicação: {it.indicacao}
+                </div>
+              )}
             </li>
           ))}
         </ul>

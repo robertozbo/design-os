@@ -21,6 +21,7 @@ A tela de **atendimento** do médico — presencial e teleconsulta no mesmo flux
 
 ### Ações clínicas
 - Botões: **Prescrever** (abre Prescrição/Memed), **Solicitar exame**, **Encaminhar** (colega da equipe) — mock no protótipo
+- A **indicação clínica** digitada ao solicitar exame não é descartada: acompanha cada exame no painel "Solicitações do paciente" (`Indicação: …`). É o que o laboratório e o convênio exigem para justificar o pedido — solicitação sem indicação é glosa.
 
 ## UI Requirements
 

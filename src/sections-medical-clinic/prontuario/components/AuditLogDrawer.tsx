@@ -31,6 +31,7 @@ export function AuditLogDrawer({ open, eventos, onClose }: Props) {
             </h2>
           </div>
           <button
+            aria-label="Fechar"
             type="button"
             onClick={onClose}
             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"

@@ -44,7 +44,7 @@ export default function PrescricaoListaPreview() {
   const drawerPrescricao = prescricoes.find((p) => p.id === drawerId) ?? null
   const cancelPrescricao = prescricoes.find((p) => p.id === cancelId) ?? null
 
-  const confirmarCancelamento = (motivo: MotivoCancelamento, _justificativa: string) => {
+  const confirmarCancelamento = (motivo: MotivoCancelamento, justificativa: string) => {
     if (!cancelId) return
     setPrescricoes((prev) =>
       prev.map((p) =>
@@ -55,6 +55,7 @@ export default function PrescricaoListaPreview() {
               canceladaEm: '22 jul 2026',
               canceladaPor: 'Dra. Helena Prado',
               motivoCancelamento: motivo,
+              justificativaCancelamento: justificativa.trim() || null,
             }
           : p,
       ),

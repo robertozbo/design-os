@@ -220,6 +220,7 @@ function IconBtn({
     <button
       onClick={onClick}
       title={title}
+      aria-label={title}
       className={`rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 ${className}`}
     >
       {children}

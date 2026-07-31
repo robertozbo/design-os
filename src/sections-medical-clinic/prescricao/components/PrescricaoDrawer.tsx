@@ -48,6 +48,7 @@ export function PrescricaoDrawer({ p, onFechar, onRenovar, onCancelar, onAbrirPd
             </div>
           </div>
           <button
+            aria-label="Fechar"
             onClick={onFechar}
             className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
           >
@@ -76,6 +77,11 @@ export function PrescricaoDrawer({ p, onFechar, onRenovar, onCancelar, onAbrirPd
               <div className="text-rose-600/80 dark:text-rose-300/80">
                 {p.canceladaPor} · {p.motivoCancelamento && MOTIVO_LABEL[p.motivoCancelamento]}
               </div>
+              {p.justificativaCancelamento && (
+                <div className="mt-1.5 border-t border-rose-200 pt-1.5 text-rose-600/80 dark:border-rose-900/50 dark:text-rose-300/80">
+                  “{p.justificativaCancelamento}”
+                </div>
+              )}
             </div>
           )}
 

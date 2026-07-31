@@ -19,7 +19,7 @@ Emissão e acompanhamento de **prescrições digitais** via **Memed** (validade 
 
 ### Detalhe / cancelar
 - Abre o drawer da prescrição → itens completos, histórico de renovações, PDF Memed, prescritor
-- **Cancela** com motivo (erro, mudança de conduta, reação adversa) — registrado no audit
+- **Cancela** com motivo (erro, mudança de conduta, reação adversa) **+ justificativa em texto livre** — motivo e justificativa ficam em `motivoCancelamento` / `justificativaCancelamento` e vão para o audit log. O drawer da prescrição cancelada mostra a justificativa citada, abaixo de quem/quando/por quê.
 
 ## UI Requirements
 

@@ -54,6 +54,7 @@ export function PrescreverModal({ pacienteNome, medicoNome, onEmitir, onFechar }
             </div>
           </div>
           <button
+            aria-label="Fechar"
             onClick={onFechar}
             className="rounded-lg p-1 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
           >

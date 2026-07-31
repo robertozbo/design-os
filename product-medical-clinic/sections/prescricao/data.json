@@ -85,7 +85,8 @@
       ],
       "canceladaEm": null,
       "canceladaPor": null,
-      "motivoCancelamento": null
+      "motivoCancelamento": null,
+      "justificativaCancelamento": null
     },
     {
       "id": "rx-andre",
@@ -144,7 +145,8 @@
       ],
       "canceladaEm": null,
       "canceladaPor": null,
-      "motivoCancelamento": null
+      "motivoCancelamento": null,
+      "justificativaCancelamento": null
     },
     {
       "id": "rx-larissa",
@@ -203,7 +205,8 @@
       ],
       "canceladaEm": null,
       "canceladaPor": null,
-      "motivoCancelamento": null
+      "motivoCancelamento": null,
+      "justificativaCancelamento": null
     },
     {
       "id": "rx-roberto",
@@ -256,7 +259,8 @@
       ],
       "canceladaEm": null,
       "canceladaPor": null,
-      "motivoCancelamento": null
+      "motivoCancelamento": null,
+      "justificativaCancelamento": null
     },
     {
       "id": "rx-sonia",
@@ -315,7 +319,8 @@
       ],
       "canceladaEm": null,
       "canceladaPor": null,
-      "motivoCancelamento": null
+      "motivoCancelamento": null,
+      "justificativaCancelamento": null
     },
     {
       "id": "rx-eduardo",
@@ -368,7 +373,8 @@
       ],
       "canceladaEm": "16 jul 2026",
       "canceladaPor": "Dra. Helena Prado",
-      "motivoCancelamento": "mudanca_conduta"
+      "motivoCancelamento": "mudanca_conduta",
+      "justificativaCancelamento": "Paciente relatou sonolência diurna intensa; troca para trazodona 50 mg discutida em consulta."
     }
   ],
   "pacientes": [

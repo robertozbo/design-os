@@ -40,6 +40,7 @@ export function ServicoModal({ servico, dados, onSalvar, onFechar }: Props) {
             {editando ? 'Editar serviço' : 'Novo serviço'}
           </h2>
           <button
+            aria-label="Fechar"
             onClick={onFechar}
             className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
           >

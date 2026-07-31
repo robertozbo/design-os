@@ -71,6 +71,7 @@ export function EncaminharModal({ pacienteNome, onEnviar, onFechar }: Props) {
             </div>
           </div>
           <button
+            aria-label="Fechar"
             onClick={onFechar}
             className="rounded-lg p-1 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
           >

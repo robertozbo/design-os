@@ -56,6 +56,8 @@ export interface PrescricaoItem {
   canceladaEm: string | null
   canceladaPor: string | null
   motivoCancelamento: MotivoCancelamento | null
+  /** Texto livre que o médico escreveu ao cancelar. Vai para o audit log. */
+  justificativaCancelamento: string | null
 }
 
 export interface PrescricaoKpis {

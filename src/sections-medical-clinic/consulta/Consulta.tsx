@@ -355,12 +355,13 @@ export default function ConsultaPreview() {
         <SolicitarExameModal
           pacienteNome={base.paciente.nome}
           onFechar={() => setModal(null)}
-          onSolicitar={(exames, urgencia, _indicacao) => {
+          onSolicitar={(exames, urgencia, indicacao) => {
             setModal(null)
             setExamesSessao((prev) => [
               ...exames.map((nome) => ({
                 titulo: nome,
                 sub: urgencia === 'urgente' ? 'hoje · urgente' : 'hoje · rotina',
+                indicacao: indicacao.trim() || undefined,
                 nesta: true,
               })),
               ...prev,

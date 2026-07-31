@@ -10,7 +10,7 @@
 > **Relação com Nymos Clínico:** o produto `clinico` (1 médico + secretária) continua como vertical própria. `clinica` **reusa** as sections clínicas (Consulta, Prontuário, Exames, Prescrição) e adiciona a camada multi-profissional (equipe, salas, prontuário compartilhado, gestão).
 > **Base já existente no backend:** `workspaces` (workspaceType `clinic`, `maxProfessionals`), `workspace_invites`, `professional_patients` + `professional_patient_scopes`. **Maior gap a construir:** compartilhamento de paciente/prontuário no nível do workspace (hoje é isolado por profissional).
 
-## V1 — 16 sections
+## V1 — 26 sections
 
 ### 1. Shell `[V1]`
 Três shells por persona, identidade Nymos (teal, DM Sans):
@@ -62,11 +62,22 @@ Dois canais separados (LGPD): **admin** (paciente↔recepção) e **clínico** (
 - **Cobrança** (recepção): link PIX/cartão, recibo, histórico, convênio como tracking textual, export CSV. `id: cobranca`.
 - **Faturamento** (admin): visão agregada, **produção/repasse por médico**, receita por especialidade. `id: faturamento`.
 
-### 16. Relatórios & Configurações `[V1]`
+### 16. Financeiro — contas `[V1]`
+Grupo Financeiro do Admin, alimentado pelo "Gerar financeiro" do agendamento (cada parcela vira uma conta a receber):
+- **Contas a receber** (`id: contas-receber`): recebimentos de pacientes/convênios, KPIs, filtro por período/status, confirmar pagamento, nova conta a partir do catálogo de serviços.
+- **Contas a pagar** (`id: contas-pagar`): despesas da clínica (fornecedor, aluguel, salários, insumos, impostos), mesmos KPIs/filtros, confirmar pagamento, recorrência.
+- Ambas compartilham tipos e componentes em `financeiro/` (módulo interno, sem rota própria).
+
+### 17. Cadastros do financeiro `[V1]`
+- **Serviços** (`id: servicos`): cadastro-mãe do faturamento — nome, **preço** e **duração**, vinculado a um tipo de receita. Popula duração/valor no agendamento e o valor em Contas a receber.
+- **Tipos de conta** (`id: categorias-financeiras`): categorias de receita e de despesa (fixa/variável), pré-carregadas; tipos de fábrica desativam em vez de excluir.
+- **Fornecedores** (`id: fornecedores`): cadastro com consulta de CNPJ (mock no protótipo), telefone, categoria padrão de despesa; usado no select de Contas a pagar.
+
+### 18. Relatórios & Configurações `[V1]`
 - **Relatórios** (admin): produção por médico, ocupação de salas, receita por especialidade, no-show. `id: relatorios`.
 - **Configurações**: da clínica (`configuracoes-clinica` — workspace, integrações, consentimentos, audit log), do médico (`configuracoes-medico`), da recepção (`configuracoes-recepcao`). Perfil profissional (`perfil`).
 
-### 17. Acompanhamento `[V1]`
+### 19. Acompanhamento `[V1]`
 O que o paciente compartilha pelo app entre as consultas, reunido para o médico: métricas de
 wearable, atividade, composição corporal, avaliações físicas e exames — sempre com a **fonte** do
 dado e a **variação desde a última consulta**. Lista também os escopos que o paciente **não**
