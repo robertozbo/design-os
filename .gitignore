@@ -30,6 +30,7 @@ product/
 # Tracked sections live in src/sections-mobile/, src/sections-personal/, etc.
 
 # Generated exports (regenerated via /export-product)
+product-plan-medical-clinic/
 product-plan-mobile/
 product-plan-nutri/
 product-plan-paciente/
@@ -37,6 +38,7 @@ product-plan-personal/
 product-plan-psychology/
 product-plan-sst/
 product-plan-sst-nr1/
+product-plan-medical-clinic.zip
 product-plan-mobile.zip
 product-plan-nutri.zip
 product-plan-paciente.zip
