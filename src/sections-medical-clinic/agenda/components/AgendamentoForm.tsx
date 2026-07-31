@@ -1314,19 +1314,25 @@ export function AgendamentoForm({
                         )}
                       </div>
 
-                      {/* Observação */}
-                      <div>
-                        <Label>Observação</Label>
-                        <textarea
-                          value={form.observacao}
-                          onChange={(e) => set({ observacao: e.target.value })}
-                          rows={2}
-                          placeholder="Opcional — preparo, encaixe, cobrança…"
-                          className={`${inputCls} resize-none`}
-                        />
-                      </div>
                     </>
                   )}
+
+                  {/*
+                    Observação fica FORA do ramo de cobrança de propósito: ela descreve o
+                    agendamento (preparo, encaixe, motivo), não a fatura. Dentro do `if`, desligar
+                    "gerar financeiro" sumia com o campo — e, em edição, escondia uma observação já
+                    escrita, que continuava sendo salva sem ninguém conseguir ler ou corrigir.
+                  */}
+                  <div>
+                    <Label>Observação</Label>
+                    <textarea
+                      value={form.observacao}
+                      onChange={(e) => set({ observacao: e.target.value })}
+                      rows={2}
+                      placeholder="Opcional — preparo, encaixe, motivo…"
+                      className={`${inputCls} resize-none`}
+                    />
+                  </div>
                 </>
               )}
 
