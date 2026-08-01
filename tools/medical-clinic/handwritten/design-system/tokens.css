@@ -1,0 +1,18 @@
+/* Design Tokens — Nymos Clínica
+ *
+ * As cores são nomes de paleta do Tailwind, não hex: os componentes usam as utilities
+ * (`bg-teal-500`, `text-slate-600`) direto, então não há custom colors para declarar.
+ * Estas variáveis existem para o que estiver fora do Tailwind no seu app.
+ */
+
+:root {
+  /* Cores — paletas Tailwind */
+  --color-primary: theme('colors.teal.500');
+  --color-secondary: theme('colors.emerald.500');
+  --color-neutral: theme('colors.slate.500');
+
+  /* Tipografia */
+  --font-heading: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
