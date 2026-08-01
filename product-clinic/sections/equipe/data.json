@@ -1,0 +1,146 @@
+{
+  "_meta": {
+    "models": {
+      "clinicaResumo": "Cabeçalho da clínica: nome, CNPJ e plano com consumo de médicos.",
+      "membroEquipe": "Uma pessoa vinculada ao workspace da clínica com papel e status. Médico traz especialidade/CRM + mini-stats.",
+      "conviteEquipe": "Convite pendente enviado por email (mapeia workspace_invites), com validade.",
+      "planoClinic": "Plano da clínica com nº de médicos usados vs. limite (maxProfessionals)."
+    },
+    "relationships": [
+      "ClinicResumo tem um PlanoClinic",
+      "ClinicResumo tem muitos MembroEquipe",
+      "ConviteEquipe vira MembroEquipe (status ativo) quando aceito",
+      "PlanoClinic.medicosUsados = MembroEquipe com papel=medico e status=ativo"
+    ]
+  },
+  "clinica": {
+    "nome": "Clínica Nymos · Vila Mariana",
+    "cnpj": "31.204.556/0001-08",
+    "plano": {
+      "nome": "Clínica · até 6 médicos",
+      "medicosUsados": 3,
+      "medicosLimite": 6,
+      "precoMensal": 229.9,
+      "faixas": [
+        {
+          "ateMedicos": 1,
+          "preco": 49.9
+        },
+        {
+          "ateMedicos": 3,
+          "preco": 129.9
+        },
+        {
+          "ateMedicos": 6,
+          "preco": 229.9
+        },
+        {
+          "ateMedicos": 12,
+          "preco": 399.9
+        },
+        {
+          "ateMedicos": null,
+          "preco": null
+        }
+      ]
+    }
+  },
+  "filtroAtivo": {
+    "busca": "",
+    "papel": "todos",
+    "status": "todos"
+  },
+  "membros": [
+    {
+      "id": "mem-001",
+      "nome": "Roberto Dias",
+      "iniciais": "RD",
+      "email": "roberto@nymosclinica.com.br",
+      "papel": "admin",
+      "status": "ativo",
+      "ativoDesde": "2024-08-01",
+      "avatarCor": "amber"
+    },
+    {
+      "id": "mem-002",
+      "nome": "Dra. Helena Prado",
+      "iniciais": "HP",
+      "email": "helena.prado@nymosclinica.com.br",
+      "papel": "medico",
+      "status": "ativo",
+      "especialidade": "Endocrinologia",
+      "crm": "CRM 456789-SP",
+      "pacientesAtivos": 182,
+      "atendimentosMes": 96,
+      "ativoDesde": "2024-08-05",
+      "avatarCor": "teal"
+    },
+    {
+      "id": "mem-003",
+      "nome": "Dr. Otávio Serrano",
+      "iniciais": "OS",
+      "email": "otavio.serrano@nymosclinica.com.br",
+      "papel": "medico",
+      "status": "ativo",
+      "especialidade": "Cardiologia",
+      "crm": "CRM 512340-SP",
+      "pacientesAtivos": 143,
+      "atendimentosMes": 78,
+      "ativoDesde": "2024-09-12",
+      "avatarCor": "sky"
+    },
+    {
+      "id": "mem-004",
+      "nome": "Dra. Vera Nakamura",
+      "iniciais": "VN",
+      "email": "vera.nakamura@nymosclinica.com.br",
+      "papel": "medico",
+      "status": "ativo",
+      "especialidade": "Nutrologia",
+      "crm": "CRM 601288-SP",
+      "pacientesAtivos": 97,
+      "atendimentosMes": 61,
+      "ativoDesde": "2025-01-20",
+      "avatarCor": "violet"
+    },
+    {
+      "id": "mem-005",
+      "nome": "Carla Souza",
+      "iniciais": "CS",
+      "email": "carla.souza@nymosclinica.com.br",
+      "papel": "recepcao",
+      "status": "ativo",
+      "ativoDesde": "2024-08-05",
+      "avatarCor": "slate"
+    },
+    {
+      "id": "mem-006",
+      "nome": "Dr. André Lopes",
+      "iniciais": "AL",
+      "email": "andre.lopes@nymosclinica.com.br",
+      "papel": "medico",
+      "status": "convite-pendente",
+      "especialidade": "Endocrinologia",
+      "avatarCor": "teal"
+    }
+  ],
+  "convites": [
+    {
+      "id": "inv-001",
+      "email": "andre.lopes@nymosclinica.com.br",
+      "papel": "medico",
+      "especialidade": "Endocrinologia",
+      "enviadoEm": "2026-07-16",
+      "expiraEm": "2026-07-23",
+      "enviadoPor": "Roberto Dias"
+    },
+    {
+      "id": "inv-002",
+      "email": "juliana.recepcao@nymosclinica.com.br",
+      "papel": "recepcao",
+      "enviadoEm": "2026-07-18",
+      "expiraEm": "2026-07-25",
+      "enviadoPor": "Roberto Dias"
+    }
+  ]
+}

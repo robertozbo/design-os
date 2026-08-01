@@ -201,7 +201,7 @@ Bottom-nav: Início, Agenda, Diário, Mensagens, Perfil.
 
 Após aprovação deste spec, opções de continuação:
 
-1. **Gerar artefatos Design OS** em `product-clinico/` (segue convenção multi-produto Design OS — já existem `product/` para Nutri, `product-personal/`, `product-psicologo/`):
+1. **Gerar artefatos Design OS** em `product-doctor/` (segue convenção multi-produto Design OS — já existem `product/` para Nutri, `product-personal/`, `product-psicologo/`):
    - `product-overview.md`
    - `product-roadmap.md` (12 sections)
    - `data-shape/data-shape.md`

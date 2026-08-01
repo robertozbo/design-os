@@ -10,11 +10,11 @@ import { ExportPage } from '@/components/ExportPage'
 import { MobileSectionsPage, MobileSectionPage } from '@/components/MobilePage'
 import { PsicologoSectionsPage, PsicologoSectionPage } from '@/components/PsicologoPage'
 import { PersonalSectionsPage, PersonalSectionPage } from '@/components/PersonalPage'
-import { ClinicoSectionsPage, ClinicoSectionPage } from '@/components/ClinicoPage'
+import { DoctorSectionsPage, DoctorSectionPage } from '@/components/DoctorPage'
 import { FisioSectionsPage, FisioSectionPage } from '@/components/FisioPage'
-import { MedicalClinicSectionsPage, MedicalClinicSectionPage } from '@/components/MedicalClinicPage'
-import ClinicoShellPreview from '@/shell-clinico/ShellPreview'
-import MedicalClinicShellPreview from '@/shell-medical-clinic/ShellPreview'
+import { ClinicSectionsPage, ClinicSectionPage } from '@/components/ClinicPage'
+import DoctorShellPreview from '@/shell-doctor/ShellPreview'
+import ClinicShellPreview from '@/shell-clinic/ShellPreview'
 
 export const router = createBrowserRouter([
   {
@@ -82,28 +82,28 @@ export const router = createBrowserRouter([
     element: <PersonalSectionPage />,
   },
   {
-    path: '/clinico',
-    element: <ClinicoSectionsPage />,
+    path: '/doctor',
+    element: <DoctorSectionsPage />,
   },
   {
-    path: '/clinico/shell',
-    element: <ClinicoShellPreview />,
+    path: '/doctor/shell',
+    element: <DoctorShellPreview />,
   },
   {
-    path: '/clinico/sections/:sectionId',
-    element: <ClinicoSectionPage />,
+    path: '/doctor/sections/:sectionId',
+    element: <DoctorSectionPage />,
   },
   {
-    path: '/medical-clinic',
-    element: <MedicalClinicSectionsPage />,
+    path: '/clinic',
+    element: <ClinicSectionsPage />,
   },
   {
-    path: '/medical-clinic/shell',
-    element: <MedicalClinicShellPreview />,
+    path: '/clinic/shell',
+    element: <ClinicShellPreview />,
   },
   {
-    path: '/medical-clinic/sections/:sectionId',
-    element: <MedicalClinicSectionPage />,
+    path: '/clinic/sections/:sectionId',
+    element: <ClinicSectionPage />,
   },
   {
     path: '/fisio',

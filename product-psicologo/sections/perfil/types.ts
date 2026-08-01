@@ -1,6 +1,6 @@
 /**
  * Tipos do Perfil do psicólogo.
- * Espelho adaptado de product-clinico/perfil/types.ts (CRM → CRP,
+ * Espelho adaptado de product-doctor/perfil/types.ts (CRM → CRP,
  * RQE removido, papéis mudaram pra realidade psi).
  */
 

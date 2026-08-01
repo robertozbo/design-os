@@ -177,7 +177,7 @@ iPad sections use the **same** design tokens as `product-mobile`:
 - Colors: slate background palette, teal-400/500 primary, sky/violet/rose/cyan/amber/emerald accents (same as mobile spec).
 - Typography: DM Sans for UI, IBM Plex Mono for numbers (tabular-nums on all values).
 
-`product-ipad/design-system/colors.json` and `typography.json` are byte-identical copies of `product-mobile/design-system/*`. Keeping them as separate files (vs symlink/import) follows the existing pattern in `product-fisio` and `product-clinico`.
+`product-ipad/design-system/colors.json` and `typography.json` are byte-identical copies of `product-mobile/design-system/*`. Keeping them as separate files (vs symlink/import) follows the existing pattern in `product-fisio` and `product-doctor`.
 
 ## Screenshot Pipeline
 

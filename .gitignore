@@ -23,14 +23,14 @@ dist/
 npm-debug.log*
 
 # Design OS prototype work — Builder template legacy (master mix)
-# Tracked products live in product-mobile/, product-personal/, product-psicologo/, product-clinico/
+# Tracked products live in product-mobile/, product-personal/, product-psicologo/, product-doctor/
 product/
 
 # Prototype section components — Builder template legacy
 # Tracked sections live in src/sections-mobile/, src/sections-personal/, etc.
 
 # Generated exports (regenerated via /export-product)
-product-plan-medical-clinic/
+product-plan-clinic/
 product-plan-mobile/
 product-plan-nutri/
 product-plan-paciente/
@@ -38,7 +38,7 @@ product-plan-personal/
 product-plan-psychology/
 product-plan-sst/
 product-plan-sst-nr1/
-product-plan-medical-clinic.zip
+product-plan-clinic.zip
 product-plan-mobile.zip
 product-plan-nutri.zip
 product-plan-paciente.zip
