@@ -1,81 +1,20 @@
 import { useEffect, useState, type ComponentType } from 'react'
 import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom'
 import {
-  ArrowDownCircle,
-  ArrowUpCircle,
-  BarChart3,
-  Calendar,
-  ClipboardList,
-  CreditCard,
-  DoorOpen,
-  FlaskConical,
-  Home,
-  MessageSquare,
-  Pill,
-  Settings as SettingsIcon,
-  Stethoscope,
-  Tag,
-  Tags,
-  Truck,
-  Users,
-} from 'lucide-react'
-import {
   getAllMedicalClinicSectionIds,
   loadMedicalClinicSectionData,
   loadMedicalClinicScreenDesignComponent,
 } from '@/lib/medical-clinic-section-loader'
-import { AppShell, type NavGroup } from '@/shell-medical-clinic/components'
+import { AppShell } from '@/shell-medical-clinic/components'
 import type { ScreenDesignInfo } from '@/types/section'
+import {
+  NAV_POR_PERSONA,
+  PERSONA_DA_SECTION,
+  NESTED_UNDER_PACIENTES,
+  USER_POR_PERSONA,
+} from '@/shell-medical-clinic/navs'
 
 // Nav do browser de sections — usa a visão do MÉDICO como default.
-const NAV_GROUPS: NavGroup[] = [
-  {
-    label: 'Atendimento',
-    items: [
-      { label: 'Início', href: '/medical-clinic/sections/inicio', icon: Home },
-      { label: 'Agenda', href: '/medical-clinic/sections/agenda', icon: Calendar },
-      { label: 'Pacientes', href: '/medical-clinic/sections/pacientes', icon: Users },
-    ],
-  },
-  {
-    label: 'Clínico',
-    items: [
-      { label: 'Atendimentos', href: '/medical-clinic/sections/atendimentos', icon: ClipboardList },
-      { label: 'Exames', href: '/medical-clinic/sections/exames', icon: FlaskConical },
-      { label: 'Prescrições', href: '/medical-clinic/sections/prescricao', icon: Pill },
-    ],
-  },
-  {
-    label: 'Gestão',
-    items: [
-      { label: 'Equipe', href: '/medical-clinic/sections/equipe', icon: Stethoscope },
-      { label: 'Salas & recursos', href: '/medical-clinic/sections/salas', icon: DoorOpen },
-      { label: 'Faturamento', href: '/medical-clinic/sections/faturamento', icon: CreditCard },
-      { label: 'Relatórios', href: '/medical-clinic/sections/relatorios', icon: BarChart3 },
-    ],
-  },
-  {
-    label: 'Financeiro',
-    items: [
-      { label: 'Serviços', href: '/medical-clinic/sections/servicos', icon: Tag },
-      { label: 'Fornecedores', href: '/medical-clinic/sections/fornecedores', icon: Truck },
-      { label: 'Contas a receber', href: '/medical-clinic/sections/contas-receber', icon: ArrowUpCircle },
-      { label: 'Contas a pagar', href: '/medical-clinic/sections/contas-pagar', icon: ArrowDownCircle },
-      { label: 'Tipos de conta', href: '/medical-clinic/sections/categorias-financeiras', icon: Tags },
-    ],
-  },
-  {
-    label: 'Operacional',
-    items: [
-      { label: 'Mensagens', href: '/medical-clinic/sections/mensagens', icon: MessageSquare },
-      { label: 'Configurações', href: '/medical-clinic/sections/configuracoes-clinica', icon: SettingsIcon },
-    ],
-  },
-]
-
-// Sections clínicas nested dentro de Pacientes — highlight "Pacientes" no nav.
-const NESTED_UNDER_PACIENTES = new Set(['consulta', 'prontuario', 'acompanhamento'])
-
 function resolveActiveHref(sectionId: string | undefined): string {
   if (!sectionId) return '/medical-clinic'
   if (NESTED_UNDER_PACIENTES.has(sectionId)) {
@@ -137,8 +76,6 @@ const GRUPOS: Grupo[] = [
   },
 ]
 
-const SHELL_USER = { name: 'Dra. Helena Prado', role: 'Endocrinologista · CRM 456789-SP' }
-
 export function MedicalClinicSectionsPage() {
   const navigate = useNavigate()
   const allIds = getAllMedicalClinicSectionIds()
@@ -148,9 +85,9 @@ export function MedicalClinicSectionsPage() {
 
   return (
     <AppShell
-      navigationGroups={NAV_GROUPS}
+      navigationGroups={NAV_POR_PERSONA.medico}
       activeHref="/medical-clinic"
-      user={SHELL_USER}
+      user={USER_POR_PERSONA.medico}
       persona="medico"
       onNavigate={(href) => navigate(href)}
       onLogout={() => navigate('/')}
@@ -268,6 +205,9 @@ export function MedicalClinicSectionPage() {
   const designs = data?.screenDesigns ?? []
   const activeDesign = resolverDesign(designs, designParam)?.componentName
   const chave = `${sectionId ?? ''}:${activeDesign ?? ''}`
+  // Cada section é exibida sob a navegação de quem tem permissão de abri-la: mostrar Faturamento e
+  // Contas a pagar na barra do médico ensinaria o RBAC errado a quem for implementar.
+  const persona = (sectionId && PERSONA_DA_SECTION[sectionId]) || 'medico'
 
   // Guarda a chave junto do componente: enquanto ela não bater com a atual, é "carregando" —
   // assim nunca renderizamos o componente da section anterior sob o header da nova.
@@ -304,10 +244,10 @@ export function MedicalClinicSectionPage() {
 
   return (
     <AppShell
-      navigationGroups={NAV_GROUPS}
+      navigationGroups={NAV_POR_PERSONA[persona]}
       activeHref={resolveActiveHref(sectionId)}
-      user={SHELL_USER}
-      persona="medico"
+      user={USER_POR_PERSONA[persona]}
+      persona={persona}
       onNavigate={(href) => navigate(href)}
       onLogout={() => navigate('/medical-clinic')}
       onProfileClick={() => navigate('/medical-clinic/sections/perfil')}

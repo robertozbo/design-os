@@ -20,11 +20,20 @@ A **Agenda é outra coisa**: o calendário compartilhado da clínica, multi-prof
 
 > Prontuário, Consulta e Prescrição do paciente NÃO são top-level: o médico abre o paciente e navega pelas facetas dele (contexto ativo).
 
+> **Cada section pertence a uma persona** e o preview a exibe sob a navegação de quem pode abri-la
+> (mapa em `src/shell-medical-clinic/navs.ts`). Não é detalhe de preview: os screenshots do handoff
+> são lidos como especificação, e uma tela de Faturamento com o menu do médico ensina o RBAC errado.
+
 ### Admin/Gestor (web — side-nav)
 Gestão do negócio. **Nunca** vê conteúdo clínico de paciente.
 - **Gestão**: Visão geral, Equipe, Salas & recursos
-- **Financeiro**: Faturamento, Relatórios
+- **Financeiro**: Faturamento, Relatórios, Contas a receber, Contas a pagar
+- **Cadastros**: Serviços, Fornecedores, Tipos de conta
 - **Operacional**: Agenda (visão de ocupação), Configurações da clínica
+
+> Preço de serviço, categorias financeiras, fornecedores, contas e convites de equipe são **do
+> Admin**. O médico não vê nem edita nenhum deles — ele consome o resultado (o serviço já
+> precificado aparece no wizard de agendamento), não o cadastro.
 
 ### Recepção (web — side-nav reduzida)
 Operacional puro. Abre direto em Agenda. Sem acesso clínico.
