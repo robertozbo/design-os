@@ -205,9 +205,9 @@ export function UploadModal({
   }
 
   const aiEnabled = examType?.aiProcessorType !== 'none'
-  const category = (examType?.category as ExamCategoryId) ?? 'outros'
+  const category = (examType?.category as ExamCategoryId) ?? 'all'
   const CatIcon = CATEGORY_ICON[category] ?? FileText
-  const catTheme = CATEGORY_THEME[category] ?? CATEGORY_THEME.outros
+  const catTheme = CATEGORY_THEME[category] ?? CATEGORY_THEME.all
 
   if (!open || !examType) return null
 

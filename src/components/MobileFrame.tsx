@@ -1,5 +1,7 @@
 import { type ReactNode } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Wifi, Signal, BatteryFull, Bell, Settings, Watch, Activity, Target, Home, Camera, LayoutGrid, ChevronLeft } from 'lucide-react'
+import { ShellInvocationIcon } from '@/sections/assistente-nymos/components/ShellInvocationIcon'
 
 interface MobileFrameProps {
   children: ReactNode
@@ -31,6 +33,10 @@ interface MobileFrameProps {
   hideBackButton?: boolean
   /** Full-frame overlay (modals, sheets) rendered on top of header/content/tab bar */
   overlay?: ReactNode
+  /** When true, renders the Nymos voice assistant FAB above the tab bar (bottom-right) */
+  showNymosFab?: boolean
+  /** When true, the FAB shows a pending proactive suggestion (amber scanner + badge) */
+  nymosHasProactive?: boolean
 }
 
 const TABS: Array<{
@@ -61,9 +67,12 @@ export function MobileFrame({
   subPageRightAction,
   hideBackButton = false,
   overlay,
+  showNymosFab = true,
+  nymosHasProactive = false,
 }: MobileFrameProps) {
   const isSubPage = !!subPageTitle
   const scale = 0.75
+  const navigate = useNavigate()
   return (
     <div className="flex justify-center bg-stone-100 dark:bg-stone-900 py-6">
       <div style={{ width: 390 * scale, height: 844 * scale }}>
@@ -134,7 +143,11 @@ export function MobileFrame({
           <div className="absolute top-12 inset-x-0 h-[68px] z-20 flex items-center justify-between gap-2 px-3">
             <div className="flex items-center gap-3 min-w-0 flex-1">
               {!hideBackButton && (
-                <button className="w-10 h-10 rounded-xl bg-slate-800/60 flex items-center justify-center text-slate-200 hover:text-white shrink-0">
+                <button
+                  onClick={() => navigate(-1)}
+                  aria-label="Voltar"
+                  className="w-10 h-10 rounded-xl bg-slate-800/60 flex items-center justify-center text-slate-200 hover:text-white active:scale-95 transition shrink-0"
+                >
                   <ChevronLeft size={20} strokeWidth={2.2} />
                 </button>
               )}
@@ -165,6 +178,16 @@ export function MobileFrame({
         >
           {children}
         </div>
+
+        {/* Nymos voice assistant FAB — floats above the tab bar (skipped when the assistant itself is in fullscreen mode) */}
+        {showNymosFab && showTabBar && (
+          <div className="absolute right-3 z-30" style={{ bottom: 96 }}>
+            <ShellInvocationIcon
+              hasProactiveSuggestion={nymosHasProactive}
+              size={50}
+            />
+          </div>
+        )}
 
         {/* Full-frame overlay (highest z) */}
         {overlay && (

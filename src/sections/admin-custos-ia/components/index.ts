@@ -1,0 +1,1 @@
+export { AdminCustosIa } from './AdminCustosIa'

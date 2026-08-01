@@ -5,7 +5,7 @@ import type {
   FinanceiroData,
   StatusConta,
   TipoConta,
-} from '@/../product-medical-clinic/sections/financeiro/types'
+} from '@/../product-medical-clinic/sections/_contas/types'
 import { mascaraMoeda, moeda, parseValorBR } from './helpers'
 
 interface Props {

@@ -209,7 +209,7 @@ export function ExamCard({
   onOpen,
 }: ExamCardProps) {
   const Icon = CATEGORY_ICON[category] ?? FileText
-  const theme = CATEGORY_THEME[category] ?? CATEGORY_THEME.outros
+  const theme = CATEGORY_THEME[category] ?? CATEGORY_THEME.all
 
   // Status derivado: pending + isPolling → 'processing' (estado sintético da UI)
   const cardStatus: CardStatus =

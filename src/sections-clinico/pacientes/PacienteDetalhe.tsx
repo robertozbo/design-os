@@ -45,7 +45,13 @@ export default function PacienteDetalhePreview() {
         onAgendar={() => console.log('agendar')}
         onExportarPDF={() => console.log('exportar PDF')}
         onAbrirAtendimento={(id) => setAtendimentoId(id)}
-        onAbrirExame={(id) => console.log('abrir exame:', id)}
+        onAbrirExame={(id) =>
+          navigate(
+            id === 'exm-imagem-novo'
+              ? '/clinico/sections/exames?design=ExameImagemDetalhe'
+              : '/clinico/sections/exames?design=ExameDetalhe',
+          )
+        }
         onAbrirMemed={() => console.log('abrir Memed')}
       />
 

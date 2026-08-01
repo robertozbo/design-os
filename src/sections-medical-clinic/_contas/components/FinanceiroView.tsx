@@ -17,7 +17,7 @@ import type {
   FinanceiroData,
   StatusConta,
   TipoConta,
-} from '@/../product-medical-clinic/sections/financeiro/types'
+} from '@/../product-medical-clinic/sections/_contas/types'
 import { STATUS_META, dataBR, moeda, statusEfetivo } from './helpers'
 
 export interface FiltroFinanceiro {

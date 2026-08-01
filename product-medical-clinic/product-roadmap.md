@@ -66,7 +66,7 @@ Dois canais separados (LGPD): **admin** (paciente↔recepção) e **clínico** (
 Grupo Financeiro do Admin, alimentado pelo "Gerar financeiro" do agendamento (cada parcela vira uma conta a receber):
 - **Contas a receber** (`id: contas-receber`): recebimentos de pacientes/convênios, KPIs, filtro por período/status, confirmar pagamento, nova conta a partir do catálogo de serviços.
 - **Contas a pagar** (`id: contas-pagar`): despesas da clínica (fornecedor, aluguel, salários, insumos, impostos), mesmos KPIs/filtros, confirmar pagamento, recorrência.
-- Ambas compartilham tipos e componentes em `financeiro/` (módulo interno, sem rota própria).
+- Ambas compartilham tipos e componentes em `_contas/` — módulo interno, sem rota nem spec; o `_` marca que não é section.
 
 ### 17. Cadastros do financeiro `[V1]`
 - **Serviços** (`id: servicos`): cadastro-mãe do faturamento — nome, **preço** e **duração**, vinculado a um tipo de receita. Popula duração/valor no agendamento e o valor em Contas a receber.

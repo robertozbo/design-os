@@ -139,7 +139,11 @@ export function PacienteDetalhe({
             />
           )}
           {tabAtiva === 'exames' && (
-            <ExamesTab exames={paciente.examesRecentes} onAbrirExame={onAbrirExame} />
+            <ExamesTab
+              exames={paciente.examesRecentes}
+              pacienteNome={paciente.nome}
+              onAbrirExame={onAbrirExame}
+            />
           )}
           {tabAtiva === 'prescricoes' && (
             <PrescricoesTab

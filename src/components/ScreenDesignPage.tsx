@@ -305,11 +305,41 @@ export function ScreenDesignFullscreen() {
               })
             : []
 
-          const navigationItems = items.map(({ label, href, isActive }) => ({
-            label,
-            href,
-            isActive,
-          }))
+          // Split items: admin/* go to a separate secondary group so the
+          // sidebar visually distinguishes "interno · Admin" from the
+          // patient/professional navigation.
+          const isAdminItem = (it: Item) =>
+            (it.sectionId?.startsWith('admin-') ?? false) ||
+            it.href.includes('/admin-')
+
+          // When viewing an admin section, swap to an admin-only sidebar
+          // so the operator's flow isn't polluted with patient nav.
+          const isAdminContext = sectionId?.startsWith('admin-') ?? false
+
+          const navigationItems = isAdminContext
+            ? items
+                .filter(isAdminItem)
+                .map(({ label, href, isActive }) => ({
+                  label: label.replace(/^Admin\s+/, ''),
+                  href,
+                  isActive,
+                }))
+            : items
+                .filter((it) => !isAdminItem(it))
+                .map(({ label, href, isActive }) => ({ label, href, isActive }))
+
+          const secondaryItems = isAdminContext
+            ? []
+            : items
+                .filter(isAdminItem)
+                .map(({ label, href, isActive }) => ({
+                  // Strip "Admin " prefix so the sidebar shows just the area
+                  // (e.g. "Custos IA" instead of "Admin Custos IA"); the group
+                  // label below already establishes context.
+                  label: label.replace(/^Admin\s+/, ''),
+                  href,
+                  isActive,
+                }))
 
           const defaultUser = {
             name: 'Demo User',
@@ -333,7 +363,10 @@ export function ScreenDesignFullscreen() {
           // Pass props dynamically - the shell component decides what it needs
           return (
             <ShellComponent
+              productName={isAdminContext ? 'Nymos · Admin' : 'Nymos'}
               navigationItems={navigationItems}
+              secondaryItems={secondaryItems}
+              secondaryLabel={secondaryItems.length > 0 ? 'Admin · Nymos' : undefined}
               user={defaultUser}
               onNavigate={handleNavigate}
               onLogout={() => {}}

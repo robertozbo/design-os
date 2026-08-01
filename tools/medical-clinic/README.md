@@ -26,7 +26,7 @@ tools/medical-clinic/capture-screenshots.sh '[{"section":"agenda","design":"Agen
 | Origem | O que sai |
 |---|---|
 | `product-medical-clinic/` + `src/sections-medical-clinic/` | componentes (imports reescritos), types, sample-data, screenshots, README e tests.md de cada section, as 27 instruções de milestone, `data-shapes/overview.ts` e `divergencias.md`, README do pacote |
-| `handwritten/` | `product-overview.md`, os dois prompts, `design-system/*`, `data-shapes/README.md`, `shell/README.md`, `sections/financeiro/README.md` |
+| `handwritten/` | `product-overview.md`, os dois prompts, `design-system/*`, `data-shapes/README.md`, `shell/README.md`, `sections/_contas/README.md` |
 
 **Edite `handwritten/`, nunca o pacote** — `build-export.sh` começa com `rm -rf` no destino.
 
@@ -47,7 +47,7 @@ com uma instância isolada do Chrome (o perfil padrão do Chrome 136+ ignora
 `src/shell-medical-clinic/navs.ts` (`PERSONA_DA_SECTION` e `PERSONA_DO_DESIGN`). Não é cosmético:
 uma tela de Faturamento com o menu do médico ensina o RBAC errado a quem for implementar.
 
-**`sections/financeiro/` não é uma section.** É o módulo que Contas a receber e Contas a pagar
+**`sections/_contas/` não é uma section.** É o módulo que Contas a receber e Contas a pagar
 compartilham; entra no pacote por um passo próprio do script porque não tem `spec.md`.
 
 ## Ao adicionar uma section

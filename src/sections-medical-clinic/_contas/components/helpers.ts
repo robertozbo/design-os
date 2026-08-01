@@ -1,4 +1,4 @@
-import type { Conta, StatusConta } from '@/../product-medical-clinic/sections/financeiro/types'
+import type { Conta, StatusConta } from '@/../product-medical-clinic/sections/_contas/types'
 
 export const STATUS_META: Record<StatusConta, { label: string; badge: string }> = {
   aberto: {

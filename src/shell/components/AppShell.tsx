@@ -20,6 +20,7 @@ export interface AppShellProps {
   children: React.ReactNode
   navigationItems: NavigationItem[]
   secondaryItems?: NavigationItem[]
+  secondaryLabel?: string
   user?: AppShellUser
   productName?: string
   onNavigate?: (href: string) => void
@@ -30,6 +31,7 @@ export function AppShell({
   children,
   navigationItems,
   secondaryItems = [],
+  secondaryLabel,
   user,
   productName = 'Nymos',
   onNavigate,
@@ -81,6 +83,7 @@ export function AppShell({
           productName={productName}
           navigationItems={navigationItems}
           secondaryItems={secondaryItems}
+          secondaryLabel={secondaryLabel}
           user={user}
           isCollapsed={isCollapsed}
           onToggleCollapse={() => setIsCollapsed((v) => !v)}

@@ -6,6 +6,7 @@ export interface MainNavProps {
   productName: string
   navigationItems: NavigationItem[]
   secondaryItems: NavigationItem[]
+  secondaryLabel?: string
   user?: AppShellUser
   isCollapsed: boolean
   onToggleCollapse: () => void
@@ -24,6 +25,7 @@ export function MainNav({
   productName,
   navigationItems,
   secondaryItems,
+  secondaryLabel,
   user,
   isCollapsed,
   onToggleCollapse,
@@ -72,6 +74,11 @@ export function MainNav({
         {secondaryItems.length > 0 && (
           <>
             <div className="my-3 mx-3 border-t border-slate-200 dark:border-slate-800" />
+            {secondaryLabel && !isCollapsed && (
+              <div className="px-4 pb-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
+                {secondaryLabel}
+              </div>
+            )}
             <ul className="space-y-0.5 px-2">
               {secondaryItems.map((item) => (
                 <NavItemRow

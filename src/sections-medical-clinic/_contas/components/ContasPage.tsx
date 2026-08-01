@@ -3,7 +3,7 @@ import type {
   Conta,
   FinanceiroData,
   TipoConta,
-} from '@/../product-medical-clinic/sections/financeiro/types'
+} from '@/../product-medical-clinic/sections/_contas/types'
 import { ConfirmarPagamentoModal } from './ConfirmarPagamentoModal'
 import { FinanceiroView, type FiltroFinanceiro } from './FinanceiroView'
 import { NovaContaModal } from './NovaContaModal'

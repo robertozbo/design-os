@@ -5,7 +5,7 @@ resumo = json.loads((OUT / '_resumo.json').read_text())['resumo']
 
 linhas = []
 for r in resumo:
-    comps = 'via `financeiro`' if r['comps'] == 0 else str(r['comps'])
+    comps = 'via `_contas`' if r['comps'] == 0 else str(r['comps'])
     linhas.append(f"| {r['milestone']:02d} | {r['titulo']} | `{r['section']}` | {comps} |")
 tabela = '\n'.join(linhas)
 
@@ -65,9 +65,9 @@ inteira: admin e recepção não podem ver conteúdo clínico; todo acesso a dad
 (inclusive inferência de IA); exclusão é lógica, nunca física. A navegação já reflete o primeiro
 ponto, mas **esconder item de menu não é controle de acesso** — proteja no servidor.
 
-**2. `sections/financeiro/` não é uma section.** É o módulo que Contas a receber e Contas a pagar
+**2. `sections/_contas/` não é uma section.** É o módulo que Contas a receber e Contas a pagar
 compartilham — as duas telas são a mesma `ContasPage` configurada por props. Não tem rota nem
-screenshot, e as duas sections **não compilam sem ele**. Copie as três juntas.
+screenshot, e as duas sections **não compilam sem ele**. Copie as três juntas — o `_` no nome existe para ela não parecer uma section pela metade.
 
 **3. Leia `data-shapes/divergencias.md` antes de derivar o schema.** 15 nomes de tipo aparecem em
 mais de uma section com definições diferentes, porque as telas foram desenhadas uma a uma. No

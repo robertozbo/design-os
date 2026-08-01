@@ -1,5 +1,15 @@
 import { useState } from 'react'
-import { Bone, Brain, CheckCircle2, CloudUpload, ExternalLink, ScanSearch, Waves } from 'lucide-react'
+import {
+  Bone,
+  Brain,
+  CheckCircle2,
+  ClipboardCheck,
+  CloudUpload,
+  ExternalLink,
+  FileImage,
+  ScanSearch,
+  Waves,
+} from 'lucide-react'
 import type {
   ImagemRecente,
   ModalidadeImagem,
@@ -7,7 +17,12 @@ import type {
 } from '@/../product-clinico/sections/consulta/types'
 import type { ExameImagemDetalhe } from '@/../product-clinico/sections/exames/types'
 import { ImagemMedicaMock } from '@/sections-clinico/exames/components/ImagemMedicaMock'
-import { UploadImagemSection } from '@/sections-clinico/exames/components/UploadImagemSection'
+import {
+  AnalisarIADrawer,
+  UploadImagemSection,
+  type ExameUploadForm,
+  type UploadFile,
+} from '@/sections-clinico/exames/components/UploadImagemSection'
 import { ImagemViewerInline } from '@/sections-clinico/exames/components/ImagemViewerInline'
 import { formatDataBR } from './helpers'
 
@@ -15,8 +30,6 @@ interface Props {
   imagens: ImagemRecente[]
   /** Pré-preenche o paciente no upload — vem do paciente da consulta. */
   pacienteNomeAtual?: string
-  /** Iniciais do paciente — usadas no header do viewer inline. */
-  pacienteIniciaisAtual?: string
   /** Lookup pra trazer o detalhe completo do exame quando o médico clica numa imagem. */
   getExameImagemDetalhe?: (imagemId: string) => ExameImagemDetalhe | null
   onAbrirImagem?: (id: string) => void
@@ -76,7 +89,6 @@ const SIG_LABEL: Record<SignificanciaImagem, string> = {
 export function ImagensTab({
   imagens,
   pacienteNomeAtual,
-  pacienteIniciaisAtual,
   getExameImagemDetalhe,
   onAbrirImagem,
   onCarregarImagem,
@@ -85,6 +97,17 @@ export function ImagensTab({
 }: Props) {
   const [mode, setMode] = useState<'lista' | 'upload' | 'view'>('lista')
   const [imagemAbertaId, setImagemAbertaId] = useState<string | null>(null)
+  // Exame cadastrado nesta sessão (protótipo — sem persistência real)
+  const [novoExame, setNovoExame] = useState<{
+    form: ExameUploadForm
+    files: UploadFile[]
+  } | null>(null)
+  const [salvoAgora, setSalvoAgora] = useState(false)
+  // Análise é fluxo separado do cadastro — abre só pelo botão "Analisar"
+  const [emAnalise, setEmAnalise] = useState<{
+    form: ExameUploadForm
+    files: UploadFile[]
+  } | null>(null)
 
   const detalhe = imagemAbertaId
     ? (getExameImagemDetalhe?.(imagemAbertaId) ?? null)
@@ -96,15 +119,16 @@ export function ImagensTab({
         pacienteNome={pacienteNomeAtual}
         onVoltar={() => setMode('lista')}
         onSalvo={(form, files) => {
-          console.log('exame salvo:', form, files)
+          // Cadastro termina aqui: volta pra lista com o exame visível "a revisar".
+          setNovoExame({ form, files })
+          setSalvoAgora(true)
+          setMode('lista')
           onCarregarImagem?.({
             tipo: form.tipo,
             modalidade: form.modalidade,
             arquivos: files.length,
           })
         }}
-        onAnalisadoComIA={(form) => console.log('IA concluída pra:', form.tipo)}
-        onVerDetalhe={() => setMode('lista')}
       />
     )
   }
@@ -159,12 +183,16 @@ export function ImagensTab({
             Imagens
           </h2>
           <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-            {imagens.length} {imagens.length === 1 ? 'exame de imagem' : 'exames de imagem'} —
+            {imagens.length + (novoExame ? 1 : 0)}{' '}
+            {imagens.length + (novoExame ? 1 : 0) === 1 ? 'exame de imagem' : 'exames de imagem'} —
             raio-X, ultrassonografia, ressonância. Clique pra abrir o viewer com IA de apoio.
           </p>
         </div>
         <button
-          onClick={() => setMode('upload')}
+          onClick={() => {
+            setSalvoAgora(false)
+            setMode('upload')
+          }}
           className="
             inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-teal-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-colors
             hover:bg-teal-500
@@ -176,9 +204,22 @@ export function ImagensTab({
         </button>
       </div>
 
-      {imagens.length === 0 ? (
+      {/* Confirmação pós-cadastro — o exame já está na lista abaixo */}
+      {salvoAgora && novoExame && (
+        <div className="mt-4 flex items-center gap-2.5 rounded-xl border border-emerald-200/70 bg-emerald-50/50 px-4 py-2.5 text-xs text-emerald-900 dark:border-emerald-900/40 dark:bg-emerald-950/20 dark:text-emerald-100">
+          <CheckCircle2 className="size-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+          <span>
+            <strong>Exame salvo</strong> — já está na lista abaixo como "a revisar".
+          </span>
+        </div>
+      )}
+
+      {imagens.length === 0 && !novoExame ? (
         <button
-          onClick={() => setMode('upload')}
+          onClick={() => {
+            setSalvoAgora(false)
+            setMode('upload')
+          }}
           className="
             mt-5 flex w-full flex-col items-center gap-3 rounded-xl border-2 border-dashed border-slate-300 bg-slate-50/40 p-10 text-center transition-colors
             hover:border-teal-400 hover:bg-teal-50/40
@@ -198,6 +239,45 @@ export function ImagensTab({
         </button>
       ) : (
         <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+          {novoExame && (
+            <li>
+              <article className="flex h-full flex-col rounded-xl border border-teal-300/80 bg-white p-4 shadow-sm dark:border-teal-800 dark:bg-slate-900">
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-sm font-semibold text-slate-900 dark:text-slate-50">
+                    {novoExame.form.tipo}
+                  </p>
+                  <span className="shrink-0 rounded-full bg-rose-100 px-2 py-px text-[10px] font-bold uppercase tracking-wide text-rose-700 dark:bg-rose-950/50 dark:text-rose-300">
+                    Novo · a revisar
+                  </span>
+                </div>
+                <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                  {novoExame.form.laboratorio} · {formatDataBR(novoExame.form.dataColeta)}
+                </p>
+                <ul className="mt-3 flex flex-wrap gap-1.5">
+                  {novoExame.files.map((f) => (
+                    <li
+                      key={f.id}
+                      className="inline-flex items-center gap-1.5 rounded-md border border-slate-200/60 bg-slate-50/40 px-2 py-1 text-[11px] text-slate-600 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-300"
+                    >
+                      <FileImage className="size-3 text-slate-400" />
+                      <span className="font-mono">{f.nome}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={() => setEmAnalise(novoExame)}
+                  className="
+                    mt-4 inline-flex w-fit items-center gap-1 rounded-md bg-teal-600 px-2.5 py-1 text-xs font-semibold text-white shadow-sm transition-colors
+                    hover:bg-teal-500
+                    focus:outline-none focus:ring-2 focus:ring-teal-500/40
+                  "
+                >
+                  <ClipboardCheck className="size-3" />
+                  Analisar
+                </button>
+              </article>
+            </li>
+          )}
           {imagens.map((img) => {
             const Icon = MODALIDADE_ICONE[img.modalidade]
             const analiseSalva = analisesSalvasPorImagem?.[img.id]
@@ -277,6 +357,20 @@ export function ImagensTab({
             )
           })}
         </ul>
+      )}
+
+      {/* Análise — fluxo separado do cadastro, sempre iniciado pelo profissional */}
+      {emAnalise && (
+        <AnalisarIADrawer
+          form={emAnalise.form}
+          files={emAnalise.files}
+          setForm={(form) => {
+            setEmAnalise({ ...emAnalise, form })
+            setNovoExame((prev) => (prev ? { ...prev, form } : prev))
+          }}
+          onAnalisar={() => setEmAnalise(null)}
+          onClose={() => setEmAnalise(null)}
+        />
       )}
     </div>
   )

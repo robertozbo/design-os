@@ -1,0 +1,1 @@
+export { AdminProfissionais } from './AdminProfissionais'

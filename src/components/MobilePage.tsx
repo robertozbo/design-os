@@ -6,6 +6,7 @@ import {
   getAllMobileSectionIds,
   loadMobileSectionData,
   loadMobileScreenDesignComponent,
+  mobileSectionUsesShell,
 } from '@/lib/mobile-section-loader'
 
 interface SubPageConfig {
@@ -137,11 +138,14 @@ const SUB_PAGE_CONFIG: Record<string, SubPageConfig> = {
     title: 'Métricas',
     subtitle: 'Suas medidas no detalhe',
     rightAction: 'search-and-add',
+    // Mostra a seta de voltar à esquerda do título (volta pra home),
+    // mesmo sendo aba — pedido de UX.
   },
   objetivos: {
     title: 'Objetivos',
     subtitle: 'Onde você quer chegar',
     rightAction: 'search-and-add',
+    isTabPage: true,
   },
 }
 
@@ -175,7 +179,7 @@ const GRUPOS: Grupo[] = [
     label: 'Métricas',
     emoji: '📊',
     hint: 'Tab Métricas',
-    sectionIds: ['metricas'],
+    sectionIds: ['metricas', 'metricas-detalhe', 'metricas-adicionar'],
   },
   {
     label: 'Objetivos',
@@ -330,11 +334,14 @@ export function MobileSectionPage() {
 
   const data = loadMobileSectionData(sectionId)
   const title = data.specParsed?.title.replace(/ Specification$/, '') ?? sectionId
+  const usesShell = mobileSectionUsesShell(sectionId)
 
   // Map sectionId to active tab
   const tabMap: Record<string, 'metricas' | 'objetivos' | 'inicio' | 'ia' | 'mais'> = {
     inicio: 'inicio',
     metricas: 'metricas',
+    'metricas-detalhe': 'metricas',
+    'metricas-adicionar': 'metricas',
     objetivos: 'objetivos',
     ia: 'ia',
     'chat-ia': 'ia',
@@ -417,10 +424,13 @@ export function MobileSectionPage() {
         wearableConectado={
           (data.data?.usuario as { wearableConectado?: boolean } | undefined)?.wearableConectado ?? true
         }
-        subPageTitle={subPageConfig?.title}
-        subPageSubtitle={subPageConfig?.subtitle}
-        subPageRightAction={subPageRightAction}
+        subPageTitle={usesShell ? subPageConfig?.title : undefined}
+        subPageSubtitle={usesShell ? subPageConfig?.subtitle : undefined}
+        subPageRightAction={usesShell ? subPageRightAction : null}
         hideBackButton={subPageConfig?.isTabPage}
+        showStatusBar={usesShell}
+        showHeader={usesShell}
+        showTabBar={usesShell}
         overlay={overlay}
       >
         {loading ? (

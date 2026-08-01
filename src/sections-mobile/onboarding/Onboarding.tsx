@@ -17,6 +17,11 @@ import {
   Apple,
   Send,
   Sparkles,
+  MoreVertical,
+  X,
+  RotateCcw,
+  LogOut,
+  Check,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -190,6 +195,8 @@ export default function OnboardingPreview() {
   const [perguntaIdx, setPerguntaIdx] = useState(0)
   const [digitando, setDigitando] = useState(false)
   const [historico, setHistorico] = useState<MessageItem[]>([])
+  const [menuAberto, setMenuAberto] = useState(false)
+  const [confirmacao, setConfirmacao] = useState<null | 'recomecar' | 'sair'>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
 
@@ -262,7 +269,33 @@ export default function OnboardingPreview() {
     setTimeout(() => fazerPergunta(next), 350)
   }
 
+  const recomecar = () => {
+    setRespostas({})
+    setPerguntaIdx(0)
+    setHistorico([
+      makeAssistantMessage('intro-1', 'Sem problema, vamos do início. 👋'),
+      makeAssistantMessage('intro-2', 'Suas respostas anteriores foram limpas.'),
+    ])
+    setMenuAberto(false)
+    setConfirmacao(null)
+    setTimeout(() => fazerPergunta(0), 800)
+  }
+
+  const sair = () => {
+    // No protótipo só simula. Em produção dispara logout.
+    setMenuAberto(false)
+    setConfirmacao(null)
+    window.location.href = '/mobile/sections/login'
+  }
+
   const perguntaAtual = QUESTIONS[perguntaIdx] ?? null
+  const respondidas = QUESTIONS.filter((q) => respostas[q.id]).map((q) => ({
+    id: q.id,
+    pergunta: q.pergunta,
+    resposta: respostas[q.id].display,
+    icon: q.icon,
+    cor: q.cor,
+  }))
 
   return (
     <>
@@ -280,7 +313,7 @@ export default function OnboardingPreview() {
         [data-nymos-mobile] .no-scrollbar::-webkit-scrollbar { display: none; }
         [data-nymos-mobile] .no-scrollbar { scrollbar-width: none; }
       `}</style>
-      <div data-nymos-mobile="true" className="min-h-full bg-slate-950 flex flex-col">
+      <div data-nymos-mobile="true" className="min-h-full bg-slate-950 flex flex-col relative">
         <div className="px-4 pt-4 pb-2 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-sky-500 flex items-center justify-center text-white shrink-0">
@@ -293,6 +326,13 @@ export default function OnboardingPreview() {
                 {perguntaIdx < QUESTIONS.length ? `${perguntaIdx} de ${QUESTIONS.length} respondidas` : 'Concluído'}
               </div>
             </div>
+            <button
+              onClick={() => setMenuAberto(true)}
+              aria-label="Abrir menu de progresso"
+              className="w-9 h-9 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-300 hover:text-white hover:border-slate-700 active:scale-95 transition-all shrink-0"
+            >
+              <MoreVertical size={16} strokeWidth={2.2} />
+            </button>
           </div>
           <div className="mt-3 h-1 rounded-full bg-slate-800 overflow-hidden">
             <div
@@ -317,6 +357,24 @@ export default function OnboardingPreview() {
             <div className="h-12" />
           )}
         </div>
+
+        {menuAberto && (
+          <ProgressoSheet
+            respondidas={respondidas}
+            total={QUESTIONS.length}
+            onClose={() => setMenuAberto(false)}
+            onRecomecar={() => setConfirmacao('recomecar')}
+            onSair={() => setConfirmacao('sair')}
+          />
+        )}
+
+        {confirmacao && (
+          <ConfirmacaoDialog
+            tipo={confirmacao}
+            onCancelar={() => setConfirmacao(null)}
+            onConfirmar={confirmacao === 'recomecar' ? recomecar : sair}
+          />
+        )}
       </div>
     </>
   )
@@ -509,6 +567,175 @@ function DeviceResponseInput({ q, onResponder, onPular }: { q: DeviceQuestion; o
           Conectar depois
         </button>
       )}
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Menu de Progresso (bottom sheet)
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface RespondidaItem {
+  id: string
+  pergunta: string
+  resposta: string
+  icon: LucideIcon
+  cor: Cor
+}
+
+function ProgressoSheet({
+  respondidas,
+  total,
+  onClose,
+  onRecomecar,
+  onSair,
+}: {
+  respondidas: RespondidaItem[]
+  total: number
+  onClose: () => void
+  onRecomecar: () => void
+  onSair: () => void
+}) {
+  return (
+    <div className="absolute inset-0 z-40 flex flex-col">
+      {/* Backdrop */}
+      <button
+        onClick={onClose}
+        aria-label="Fechar menu"
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+      />
+
+      {/* Sheet */}
+      <div className="mt-auto relative bg-slate-900 border-t border-slate-800 rounded-t-3xl shadow-2xl max-h-[78%] flex flex-col animate-in slide-in-from-bottom duration-300">
+        {/* Grabber + Close */}
+        <div className="flex items-center justify-between px-5 pt-3 pb-1">
+          <div className="w-10 h-1 rounded-full bg-slate-700 mx-auto absolute left-0 right-0 top-2" />
+          <div className="text-slate-100 font-semibold text-[14px] mt-1">Seu Progresso</div>
+          <button
+            onClick={onClose}
+            aria-label="Fechar"
+            className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white"
+          >
+            <X size={14} strokeWidth={2.4} />
+          </button>
+        </div>
+
+        {/* Contador */}
+        <div className="px-5 pb-3 pt-1">
+          <div className="text-emerald-400 text-[11.5px] flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            {respondidas.length} de {total} respondidas
+          </div>
+        </div>
+
+        {/* Lista de respondidas */}
+        <div className="flex-1 overflow-y-auto px-5 pb-3 space-y-2.5 no-scrollbar">
+          {respondidas.length === 0 ? (
+            <div className="py-6 text-center text-slate-500 text-[12px]">
+              Nada respondido ainda — comece pela primeira pergunta.
+            </div>
+          ) : (
+            respondidas.map((item) => {
+              const Icon = item.icon
+              const corCls = COR_BG[item.cor]
+              return (
+                <div key={item.id} className="flex items-start gap-3 py-1">
+                  <div className={`w-7 h-7 rounded-lg ${corCls} flex items-center justify-center shrink-0 mt-0.5`}>
+                    <Icon size={13} strokeWidth={2.4} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-slate-400 text-[11px] leading-tight line-clamp-1">
+                      {item.pergunta}
+                    </div>
+                    <div className="text-slate-100 text-[13px] font-medium mt-0.5 break-words">
+                      {item.resposta}
+                    </div>
+                  </div>
+                  <Check size={14} className="text-emerald-400 shrink-0 mt-1.5" strokeWidth={2.4} />
+                </div>
+              )
+            })
+          )}
+        </div>
+
+        {/* Ações */}
+        <div className="px-5 pt-3 pb-5 border-t border-slate-800 space-y-2">
+          <button
+            onClick={onRecomecar}
+            className="w-full h-11 rounded-full bg-slate-800 border border-slate-700 text-slate-200 text-[13px] font-semibold flex items-center justify-center gap-2 hover:border-amber-500/40 hover:text-amber-300 active:scale-[0.98] transition-all"
+          >
+            <RotateCcw size={14} strokeWidth={2.4} />
+            Recomeçar do zero
+          </button>
+          <button
+            onClick={onSair}
+            className="w-full h-11 rounded-full bg-transparent text-slate-400 text-[13px] font-medium flex items-center justify-center gap-2 hover:text-rose-300 active:scale-[0.98] transition-all"
+          >
+            <LogOut size={14} strokeWidth={2.4} />
+            Sair do onboarding
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Diálogo de Confirmação (recomeçar / sair)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function ConfirmacaoDialog({
+  tipo,
+  onCancelar,
+  onConfirmar,
+}: {
+  tipo: 'recomecar' | 'sair'
+  onCancelar: () => void
+  onConfirmar: () => void
+}) {
+  const isRecomecar = tipo === 'recomecar'
+  return (
+    <div className="absolute inset-0 z-50 flex items-end justify-center animate-in fade-in duration-150">
+      <button
+        onClick={onCancelar}
+        aria-label="Cancelar"
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+      />
+      <div className="relative w-full max-w-sm mx-4 mb-6 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-2xl animate-in slide-in-from-bottom-4 duration-200">
+        <div className="flex items-start gap-3">
+          <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${isRecomecar ? 'bg-amber-500/15 text-amber-300' : 'bg-rose-500/15 text-rose-300'}`}>
+            {isRecomecar ? <RotateCcw size={16} strokeWidth={2.4} /> : <LogOut size={16} strokeWidth={2.4} />}
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-slate-100 font-semibold text-[14px]">
+              {isRecomecar ? 'Recomeçar do zero?' : 'Sair do onboarding?'}
+            </div>
+            <div className="text-slate-400 text-[12px] mt-1 leading-snug">
+              {isRecomecar
+                ? 'Todas as suas respostas serão apagadas e você voltará à primeira pergunta.'
+                : 'Seu progresso fica salvo. Você pode continuar mais tarde de onde parou.'}
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-2 mt-5">
+          <button
+            onClick={onCancelar}
+            className="h-10 rounded-full bg-slate-800 text-slate-300 text-[12.5px] font-semibold hover:text-white active:scale-[0.98] transition-all"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={onConfirmar}
+            className={`h-10 rounded-full text-white text-[12.5px] font-semibold active:scale-[0.98] transition-all ${
+              isRecomecar
+                ? 'bg-amber-500 hover:bg-amber-400'
+                : 'bg-rose-500 hover:bg-rose-400'
+            }`}
+          >
+            {isRecomecar ? 'Recomeçar' : 'Sair'}
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

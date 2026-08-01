@@ -69,6 +69,8 @@
 */
 :root {
   --radius: 0.5rem;
+  /* Native form controls (date/time picker icon, scrollbars) follow the theme */
+  color-scheme: light;
   /* Backgrounds & Foregrounds - Stone palette for warmth */
   --background: oklch(0.985 0.001 106.424); /* stone-50 #FAFAF9 */
   --foreground: oklch(0.216 0.006 56.043); /* stone-900 #1C1917 */
@@ -115,6 +117,8 @@
   Dark theme - Warm Stone dark palette
 */
 .dark {
+  /* Native form controls (date/time picker icon, scrollbars) follow the theme */
+  color-scheme: dark;
   /* Backgrounds & Foregrounds - Stone dark */
   --background: oklch(0.216 0.006 56.043); /* stone-900 #1C1917 */
   --foreground: oklch(0.985 0.001 106.424); /* stone-50 */

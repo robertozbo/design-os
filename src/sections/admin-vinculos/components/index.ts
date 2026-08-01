@@ -1,0 +1,1 @@
+export { AdminVinculos } from './AdminVinculos'

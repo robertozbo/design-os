@@ -1,7 +1,5 @@
-import { useState } from 'react'
 import {
   ChevronRight,
-  CloudUpload,
   FileQuestion,
   FlaskConical,
   Image as ImageIcon,
@@ -20,7 +18,6 @@ import {
   TENDENCIA_LABEL,
 } from './helpers'
 import { Sparkline } from './Sparkline'
-import { UploadImagemSection } from './UploadImagemSection'
 
 const STATUS_OPCOES: { id: StatusRevisao; label: string }[] = [
   { id: 'todos', label: 'Todos' },
@@ -40,7 +37,6 @@ export function ExamesLista({
   onLimparFiltros,
   onAbrirExame,
 }: ExamesListaProps) {
-  const [mode, setMode] = useState<'lista' | 'upload'>('lista')
   const setBusca = (busca: string) => onAplicarFiltro?.({ ...filtroAtivo, busca })
   const setStatus = (status: StatusRevisao) =>
     onAplicarFiltro?.({ ...filtroAtivo, statusRevisao: status })
@@ -71,29 +67,6 @@ export function ExamesLista({
     filtroAtivo.tipos.length > 0 ||
     filtroAtivo.statusRevisao !== 'todos'
 
-  if (mode === 'upload') {
-    return (
-      <div
-        data-clinico-exames-upload
-        className="
-          relative min-h-screen
-          bg-gradient-to-b from-slate-50 via-white to-slate-100/60
-          text-slate-900
-          dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 dark:text-slate-100
-        "
-      >
-        <div className="mx-auto w-full max-w-[1100px] px-4 py-8 sm:px-6 lg:px-10">
-          <UploadImagemSection
-            onVoltar={() => setMode('lista')}
-            onSalvo={(form, files) => console.log('exame salvo:', form, files)}
-            onAnalisadoComIA={(form) => console.log('IA concluída pra:', form.tipo)}
-            onVerDetalhe={() => setMode('lista')}
-          />
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div
       data-clinico-exames-lista
@@ -121,17 +94,6 @@ export function ExamesLista({
               )}
             </p>
           </div>
-          <button
-            onClick={() => setMode('upload')}
-            className="
-              inline-flex items-center gap-1.5 rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors
-              hover:bg-teal-500
-              focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950
-            "
-          >
-            <CloudUpload className="size-4" />
-            Carregar imagem
-          </button>
         </header>
 
         {/* Filtros */}

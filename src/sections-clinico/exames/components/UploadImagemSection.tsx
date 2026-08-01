@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import {
   ArrowLeft,
   CheckCircle2,
@@ -8,6 +9,7 @@ import {
   FileText,
   Info,
   Loader2,
+  Lock,
   MessageSquare,
   Pill,
   Plus,
@@ -17,33 +19,45 @@ import {
   TrendingUp,
   X,
 } from 'lucide-react'
-import type { ImagemSerie, ModalidadeImagem } from '@/../product-clinico/sections/exames/types'
+import type {
+  ImagemSerie,
+  LaudoOriginal,
+  ModalidadeImagem,
+} from '@/../product-clinico/sections/exames/types'
 import { ImagemMedicaMock } from './ImagemMedicaMock'
+import { LaudoViewer } from './LaudoViewer'
 
-interface UploadFile {
+export interface UploadFile {
   id: string
   nome: string
   tamanhoKb: number
   tipo: 'pdf' | 'imagem' | 'dicom'
 }
 
-interface FormData {
+export interface ExameUploadForm {
   pacienteNome: string
   tipo: string
   modalidade: ModalidadeImagem
   dataColeta: string
   laboratorio: string
   observacao: string
+  /** Queixas selecionadas via chips no passo de análise IA. */
+  queixas: string[]
+  /** Queixa em texto livre ("Outro"). */
+  queixaOutro: string
 }
 
 type Stage = 'form' | 'saved' | 'analyzing' | 'analyzed'
 
 interface UploadImagemSectionProps {
-  /** Pré-preenche o paciente quando vem da Consulta. */
+  /**
+   * Pré-preenche e TRAVA o paciente quando vem de um contexto onde ele já está
+   * resolvido (Consulta · Detalhe do Paciente). Upload nunca nasce sem contexto.
+   */
   pacienteNome?: string
   onVoltar?: () => void
-  onSalvo?: (form: FormData, files: UploadFile[]) => void
-  onAnalisadoComIA?: (form: FormData, files: UploadFile[]) => void
+  onSalvo?: (form: ExameUploadForm, files: UploadFile[]) => void
+  onAnalisadoComIA?: (form: ExameUploadForm, files: UploadFile[]) => void
   onVerDetalhe?: () => void
 }
 
@@ -63,6 +77,18 @@ const TIPOS_SUGERIDOS: Record<ModalidadeImagem, string[]> = {
   cintilografia: ['Cintilografia tireoidiana', 'PAAF tireoide com cintilo'],
 }
 
+/** Sintomas comuns no contexto endócrino — tooltip explica a relevância clínica. */
+const QUEIXAS_PRESET: { label: string; tooltip: string }[] = [
+  { label: 'Febre', tooltip: 'Processo infeccioso/inflamatório — relevante pra tireoidite subaguda' },
+  { label: 'Tontura', tooltip: 'Pode indicar hipoglicemia, hipotensão postural ou descompensação' },
+  { label: 'Vômitos', tooltip: 'Atenção a cetoacidose diabética e intolerância a GLP-1' },
+  { label: 'Cansaço físico', tooltip: 'Sugestivo de hipotireoidismo, anemia ou descompensação glicêmica' },
+  { label: 'Dor abdominal', tooltip: 'Atenção a pancreatite (GLP-1) e cetoacidose' },
+  { label: 'Palpitações', tooltip: 'Sugestivo de hipertireoidismo ou hipoglicemia' },
+  { label: 'Perda de peso', tooltip: 'Sugestivo de hipertireoidismo ou DM descompensado' },
+  { label: 'Ganho de peso', tooltip: 'Sugestivo de hipotireoidismo ou efeito de medicação' },
+]
+
 const MOCK_FILES: Record<UploadFile['tipo'], string[]> = {
   pdf: ['laudo-radiologista.pdf'],
   imagem: ['rxtorax-pa.jpg', 'rxtorax-perfil.jpg'],
@@ -79,15 +105,19 @@ export function UploadImagemSection({
   const [stage, setStage] = useState<Stage>('form')
   const [files, setFiles] = useState<UploadFile[]>([])
   const [dragOver, setDragOver] = useState(false)
-  const [form, setForm] = useState<FormData>({
+  const [form, setForm] = useState<ExameUploadForm>({
     pacienteNome: pacienteNome ?? '',
     tipo: '',
     modalidade: 'raio-x',
     dataColeta: new Date().toISOString().slice(0, 10),
     laboratorio: '',
     observacao: '',
+    queixas: [],
+    queixaOutro: '',
   })
   const fileInputRef = useRef<HTMLInputElement>(null)
+  /** Etapa 2 — drawer de análise IA (queixas + miniatura + confirmar). */
+  const [drawerIAAberto, setDrawerIAAberto] = useState(false)
 
   useEffect(() => {
     setForm((f) => ({ ...f, pacienteNome: pacienteNome ?? f.pacienteNome }))
@@ -119,6 +149,7 @@ export function UploadImagemSection({
   }
 
   const analisar = () => {
+    setDrawerIAAberto(false)
     setStage('analyzing')
     setTimeout(() => {
       setStage('analyzed')
@@ -136,6 +167,8 @@ export function UploadImagemSection({
       dataColeta: new Date().toISOString().slice(0, 10),
       laboratorio: '',
       observacao: '',
+      queixas: [],
+      queixaOutro: '',
     })
   }
 
@@ -158,28 +191,18 @@ export function UploadImagemSection({
               Carregar exame de imagem
             </h2>
             <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-              Raio-X, USG, RM ou TC. <strong>Análise por IA é uma etapa separada</strong> — você
-              pode salvar agora e analisar depois.
+              Raio-X, USG, RM ou TC. Salve e o exame entra na lista do paciente — análise por IA
+              é opcional, direto no exame.
             </p>
           </div>
         </div>
-        {/* Step indicator */}
-        <ol className="hidden items-center gap-1.5 sm:flex">
-          <Step n={1} label="Upload" ativo={stage === 'form'} concluido={stage !== 'form'} />
-          <span className="h-px w-6 bg-slate-300 dark:bg-slate-700" />
-          <Step
-            n={2}
-            label="IA (opcional)"
-            ativo={stage === 'analyzing' || stage === 'saved'}
-            concluido={stage === 'analyzed'}
-          />
-        </ol>
       </div>
 
       {stage === 'form' && (
         <FormStage
           files={files}
           form={form}
+          pacienteTravado={!!pacienteNome}
           dragOver={dragOver}
           tiposSugeridos={tiposSugeridos}
           fileInputRef={fileInputRef}
@@ -197,7 +220,7 @@ export function UploadImagemSection({
         <SavedStage
           form={form}
           files={files}
-          onAnalisar={analisar}
+          onAnalisar={() => setDrawerIAAberto(true)}
           onVoltarLista={onVoltar}
           onCarregarOutra={novoUpload}
         />
@@ -216,8 +239,18 @@ export function UploadImagemSection({
               files: files.length,
               em: new Date().toISOString(),
             })
-            analisar()
+            setDrawerIAAberto(true)
           }}
+        />
+      )}
+
+      {drawerIAAberto && (
+        <AnalisarIADrawer
+          form={form}
+          files={files}
+          setForm={setForm}
+          onAnalisar={analisar}
+          onClose={() => setDrawerIAAberto(false)}
         />
       )}
     </div>
@@ -229,6 +262,7 @@ export function UploadImagemSection({
 function FormStage({
   files,
   form,
+  pacienteTravado,
   dragOver,
   tiposSugeridos,
   fileInputRef,
@@ -241,13 +275,14 @@ function FormStage({
   onCancelar,
 }: {
   files: UploadFile[]
-  form: FormData
+  form: ExameUploadForm
+  pacienteTravado: boolean
   dragOver: boolean
   tiposSugeridos: string[]
-  fileInputRef: React.RefObject<HTMLInputElement>
+  fileInputRef: React.RefObject<HTMLInputElement | null>
   valido: boolean
   setDragOver: (v: boolean) => void
-  setForm: (v: FormData) => void
+  setForm: (v: ExameUploadForm) => void
   addMockFiles: (t: UploadFile['tipo']) => void
   removerFile: (id: string) => void
   onSalvar: () => void
@@ -362,13 +397,20 @@ function FormStage({
         </p>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="Paciente" required>
-            <input
-              type="text"
-              value={form.pacienteNome}
-              onChange={(e) => setForm({ ...form, pacienteNome: e.target.value })}
-              placeholder="Buscar paciente…"
-              className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30 dark:border-slate-700 dark:bg-slate-950"
-            />
+            {pacienteTravado ? (
+              <div className="flex w-full items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+                <Lock className="size-3.5 shrink-0 text-slate-400" aria-hidden />
+                <span className="truncate font-medium">{form.pacienteNome}</span>
+              </div>
+            ) : (
+              <input
+                type="text"
+                value={form.pacienteNome}
+                onChange={(e) => setForm({ ...form, pacienteNome: e.target.value })}
+                placeholder="Buscar paciente…"
+                className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30 dark:border-slate-700 dark:bg-slate-950"
+              />
+            )}
           </Field>
 
           <Field label="Modalidade" required>
@@ -423,78 +465,14 @@ function FormStage({
           </Field>
         </div>
 
-        {/* Indicação clínica — full-width, textarea, com hint contextual + sugestões */}
-        <div className="mt-4">
-          <Field
-            label="Indicação clínica"
-            hint="Opcional — quanto mais contexto, melhor o cruzamento da IA"
-          >
-            <div className="relative">
-              <textarea
-                value={form.observacao}
-                onChange={(e) => setForm({ ...form, observacao: e.target.value })}
-                rows={3}
-                maxLength={500}
-                placeholder="ex: Investigação de cansaço persistente há 6 semanas, ganho ponderal de 3kg sem mudança alimentar, intolerância ao frio. Paciente em uso de Levotiroxina 50mcg há 2 anos."
-                className="
-                  w-full resize-y rounded-md border border-slate-200 bg-white px-3 py-2 pr-16 text-sm leading-relaxed
-                  focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30
-                  dark:border-slate-700 dark:bg-slate-950
-                "
-              />
-              <span className="pointer-events-none absolute bottom-2 right-2 font-mono text-[10px] text-slate-400 tabular-nums">
-                {form.observacao.length}/500
-              </span>
-            </div>
-            {/* Sugestões rápidas — chips de queixas comuns endócrino */}
-            <div className="mt-2 flex flex-wrap items-center gap-1.5">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400">
-                Sugestões:
-              </span>
-              {[
-                'Investigação de tireoidopatia',
-                'Acompanhamento DM2',
-                'Avaliação de adenoma hipofisário',
-                'Investigação de obesidade',
-                'Acompanhamento osteoporose',
-              ].map((sug) => (
-                <button
-                  key={sug}
-                  type="button"
-                  onClick={() =>
-                    setForm({
-                      ...form,
-                      observacao: form.observacao
-                        ? `${form.observacao.trim()} · ${sug}`
-                        : sug,
-                    })
-                  }
-                  className="
-                    inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[10.5px] text-slate-600 transition-colors
-                    hover:border-teal-300 hover:bg-teal-50 hover:text-teal-800
-                    dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-teal-700 dark:hover:bg-teal-950/40 dark:hover:text-teal-300
-                  "
-                >
-                  + {sug}
-                </button>
-              ))}
-            </div>
-            <p className="mt-2 flex items-start gap-1.5 text-[10.5px] leading-relaxed text-emerald-700 dark:text-emerald-400">
-              <Sparkles className="mt-0.5 size-3 shrink-0" />
-              Esse texto vira contexto pro bloco{' '}
-              <strong className="font-semibold">"Cruzamento com queixa atual"</strong> da IA.
-              Anamnese pré-consulta também é considerada.
-            </p>
-          </Field>
-        </div>
       </div>
 
       {/* CTA */}
       <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-200/80 bg-slate-50/40 p-3 dark:border-slate-800 dark:bg-slate-900/40">
         <p className="flex items-center gap-2 text-[11px] text-slate-600 dark:text-slate-300">
           <Info className="size-3.5 shrink-0 text-slate-400" />
-          Ao salvar, o exame entra como <strong>"a revisar"</strong> sem IA. Análise por IA é
-          opcional e fica disponível na próxima etapa.
+          Ao salvar, o exame entra como <strong>"a revisar"</strong> na lista. Análise por IA é
+          opcional, direto no exame salvo.
         </p>
         <div className="flex items-center gap-2">
           <button
@@ -524,6 +502,438 @@ function FormStage({
   )
 }
 
+/**
+ * Drawer "Analisar exame" — a análise é DO PROFISSIONAL.
+ * IA entra como auxílio opcional ("Insights com IA"): gera uma sugestão a partir
+ * do laudo + queixas; o profissional decide se insere no campo da própria análise.
+ * IA é apoio à interpretação — NUNCA diagnóstico (não-SaMD).
+ */
+export function AnalisarIADrawer({
+  form,
+  files,
+  laudo,
+  setForm,
+  onAnalisar,
+  onClose,
+}: {
+  form: ExameUploadForm
+  files: UploadFile[]
+  /** Laudo original do laboratório — quando presente, a lateral mostra o documento (estilo ExameDetalhe). */
+  laudo?: LaudoOriginal
+  setForm: (v: ExameUploadForm) => void
+  /** Chamado ao salvar a análise do profissional. */
+  onAnalisar: () => void
+  onClose: () => void
+}) {
+  const mockImagem = mockImagemPorModalidade(form.modalidade, form.tipo)
+  const [insightStage, setInsightStage] = useState<'idle' | 'gerando' | 'pronto'>('idle')
+  const [insightTexto, setInsightTexto] = useState('')
+  const [insightInserido, setInsightInserido] = useState(false)
+  /** Snapshot do contexto usado na geração — transparência sobre o que a IA analisou. */
+  const [insightContexto, setInsightContexto] = useState<{
+    queixas: string[]
+    outro: string
+  } | null>(null)
+
+  const toggleQueixa = (q: string) =>
+    setForm({
+      ...form,
+      queixas: form.queixas.includes(q)
+        ? form.queixas.filter((x) => x !== q)
+        : [...form.queixas, q],
+    })
+
+  const gerarInsights = () => {
+    setInsightStage('gerando')
+    setInsightInserido(false)
+    setInsightContexto({ queixas: [...form.queixas], outro: form.queixaOutro.trim() })
+    console.log('[IA audit] insights gerados', { tipo: form.tipo, em: new Date().toISOString() })
+    setTimeout(() => {
+      const queixasTxt = [...form.queixas, form.queixaOutro.trim()]
+        .filter(Boolean)
+        .join(', ')
+        .toLowerCase()
+      setInsightTexto(
+        `${form.tipo} (${form.laboratorio}): em comparação com o histórico do paciente, os valores indicam tendência de alteração discreta, sem sinal de alarme identificado.` +
+          (queixasTxt
+            ? ` As queixas relatadas (${queixasTxt}) são compatíveis com os achados e merecem correlação clínica.`
+            : '') +
+          ' Sugere-se reavaliação no próximo retorno.',
+      )
+      setInsightStage('pronto')
+    }, 1800)
+  }
+
+  const inserirNaAnalise = () => {
+    setForm({
+      ...form,
+      observacao: form.observacao.trim()
+        ? `${form.observacao.trim()}\n\n[Insight IA — revisado pelo profissional] ${insightTexto}`
+        : `[Insight IA — revisado pelo profissional] ${insightTexto}`,
+    })
+    setInsightInserido(true)
+  }
+
+  // Esc fecha o drawer
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [onClose])
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-50 flex"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="analisar-ia-title"
+    >
+      <button
+        type="button"
+        aria-label="Fechar"
+        onClick={onClose}
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] dark:bg-slate-950/70"
+      />
+
+      {/* Largura limitada pra manter a sidebar de navegação do app visível */}
+      <aside className="relative ml-auto flex h-full w-full max-w-[min(72rem,calc(100vw-340px))] flex-col border-l border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-950 max-lg:max-w-full">
+        {/* Header — voltar à esquerda, mesma estratégia do detalhe do laudo */}
+        <header className="flex shrink-0 items-center gap-3 border-b border-slate-200/80 bg-gradient-to-r from-teal-50/60 to-white px-5 py-4 dark:border-slate-800/80 dark:from-teal-950/30 dark:to-slate-950">
+          <button
+            onClick={onClose}
+            className="
+              -ml-1 inline-flex items-center gap-1 rounded-md p-1.5 text-xs font-medium text-slate-500
+              transition-colors hover:bg-slate-100 hover:text-slate-900
+              dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100
+            "
+          >
+            <ArrowLeft className="size-3.5" />
+            Exames
+          </button>
+
+          <div className="hidden h-4 w-px bg-slate-200 dark:bg-slate-700 sm:block" />
+
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-teal-100 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300">
+              <Sparkles className="size-4" />
+            </span>
+            <div className="min-w-0">
+              <h2
+                id="analisar-ia-title"
+                className="truncate text-sm font-semibold text-slate-900 dark:text-slate-50"
+              >
+                Analisar exame
+              </h2>
+              <p className="mt-0.5 truncate text-[11px] text-slate-500 dark:text-slate-400">
+                {form.tipo} · {form.pacienteNome}
+              </p>
+            </div>
+          </div>
+        </header>
+
+        {/* Conteúdo scrollável — 3 colunas: laudo · análise do profissional · IA */}
+        <div className="flex-1 overflow-y-auto px-5 py-4">
+          <div className="grid gap-5 lg:grid-cols-[300px_1fr_320px] lg:items-start">
+          {/* Coluna lateral — laudo original ou miniatura da imagem (sticky) */}
+          <section className="lg:sticky lg:top-0">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Exame a analisar
+            </p>
+            {laudo ? (
+              /* Laboratorial — documento do laudo, mesmo viewer do ExameDetalhe */
+              <div className="mt-2 h-[26rem]">
+                <LaudoViewer
+                  laudo={laudo}
+                  laboratorio={form.laboratorio}
+                  dataResultado={form.dataColeta}
+                />
+              </div>
+            ) : (
+              /* Imagem — miniatura + arquivos */
+              <div className="mt-2 overflow-hidden rounded-xl border border-slate-200/80 dark:border-slate-800">
+                {files.some((f) => f.tipo !== 'pdf') && <ImagemMedicaMock imagem={mockImagem} />}
+                <ul className="divide-y divide-slate-100 border-t border-slate-100 first:border-t-0 dark:divide-slate-800 dark:border-slate-800">
+                  {files.map((f) => (
+                    <li
+                      key={f.id}
+                      className="flex items-center gap-2 px-3 py-1.5 text-[11px] text-slate-600 dark:text-slate-300"
+                    >
+                      {f.tipo === 'pdf' ? (
+                        <FileText className="size-3.5 shrink-0 text-slate-400" />
+                      ) : (
+                        <FileImage className="size-3.5 shrink-0 text-slate-400" />
+                      )}
+                      <span className="truncate font-mono">{f.nome}</span>
+                      <span className="ml-auto shrink-0 font-mono text-[10px] tabular-nums text-slate-400">
+                        {f.tamanhoKb >= 1000
+                          ? `${(f.tamanhoKb / 1000).toFixed(1)} MB`
+                          : `${f.tamanhoKb} KB`}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <p className="mt-2 px-1 text-[10px] leading-relaxed text-slate-400 dark:text-slate-500">
+              {form.laboratorio} · coletado{' '}
+              {new Date(form.dataColeta + 'T12:00:00').toLocaleDateString('pt-BR')}
+            </p>
+          </section>
+
+          {/* Coluna principal — queixas + análise do profissional + IA */}
+          <div className="min-w-0 space-y-4">
+          {/* Queixas pré-definidas */}
+          <section>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Queixas atuais do paciente
+            </p>
+            <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+              Opcional — a IA cruza os sintomas com os achados do exame.
+            </p>
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              {QUEIXAS_PRESET.map((q) => {
+                const ativo = form.queixas.includes(q.label)
+                return (
+                  <button
+                    key={q.label}
+                    type="button"
+                    onClick={() => toggleQueixa(q.label)}
+                    title={q.tooltip}
+                    aria-pressed={ativo}
+                    className={`
+                      rounded-full border px-2.5 py-1 text-[11px] font-medium transition-colors
+                      ${
+                        ativo
+                          ? 'border-teal-600 bg-teal-600 text-white dark:border-teal-500 dark:bg-teal-600'
+                          : 'border-slate-200 bg-white text-slate-600 hover:border-teal-400 hover:text-teal-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-teal-500 dark:hover:text-teal-300'
+                      }
+                    `}
+                  >
+                    {q.label}
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+
+          {/* Preenchimento manual */}
+          <section>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Outras queixas — texto livre
+            </p>
+            <textarea
+              value={form.queixaOutro}
+              onChange={(e) => setForm({ ...form, queixaOutro: e.target.value })}
+              placeholder="ex: Tosse seca há 2 semanas, pior à noite…"
+              maxLength={400}
+              rows={5}
+              className="
+                mt-2 w-full resize-y rounded-md border border-slate-200 bg-white px-3 py-2 text-xs leading-relaxed
+                placeholder:text-slate-400
+                focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30
+                dark:border-slate-700 dark:bg-slate-950 dark:placeholder:text-slate-500
+              "
+            />
+          </section>
+
+          {/* Sua análise — o registro é do profissional */}
+          <section>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Sua análise <span className="text-rose-500">*</span>
+            </p>
+            <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+              Interpretação e conduta — registro oficial do profissional.
+            </p>
+            <textarea
+              value={form.observacao}
+              onChange={(e) => setForm({ ...form, observacao: e.target.value })}
+              placeholder="ex: TSH em elevação progressiva com T4 livre limítrofe. Manter Levotiroxina 50mcg e repetir perfil em 8 semanas…"
+              maxLength={1000}
+              rows={5}
+              className="
+                mt-2 w-full resize-y rounded-md border border-slate-200 bg-white px-3 py-2 text-xs leading-relaxed
+                placeholder:text-slate-400
+                focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30
+                dark:border-slate-700 dark:bg-slate-950 dark:placeholder:text-slate-500
+              "
+            />
+            <p className="mt-1 text-right font-mono text-[10px] tabular-nums text-slate-400">
+              {form.observacao.length}/1000
+            </p>
+          </section>
+
+          </div>
+
+          {/* Coluna direita — Insights com IA (auxílio opcional, nunca diagnóstico) */}
+          <section className="rounded-xl border border-teal-200/60 bg-gradient-to-b from-teal-50/40 to-white p-4 dark:border-teal-900/40 dark:from-teal-950/20 dark:to-slate-950 lg:sticky lg:top-0">
+            <div className="flex items-start gap-2.5">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-teal-100 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300">
+                <Sparkles className="size-3.5" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold text-slate-900 dark:text-slate-50">
+                  Insights com IA
+                </p>
+                <p className="mt-0.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+                  <strong>Auxílio à interpretação — não é diagnóstico.</strong> A IA resume o
+                  laudo, compara com o histórico e cruza com as queixas. Se achar correto, você
+                  insere na sua análise.
+                </p>
+              </div>
+            </div>
+
+            {insightStage === 'idle' && (
+              <button
+                onClick={gerarInsights}
+                className="
+                  mt-3 inline-flex items-center gap-1.5 rounded-lg border border-teal-300/70 bg-white px-3 py-1.5 text-xs font-semibold text-teal-700 shadow-sm transition-colors
+                  hover:bg-teal-50
+                  dark:border-teal-800/60 dark:bg-slate-900 dark:text-teal-300 dark:hover:bg-teal-950/40
+                "
+              >
+                <Sparkles className="size-3.5" />
+                Gerar insights com IA
+              </button>
+            )}
+
+            {insightStage === 'gerando' && (
+              <p className="mt-3 flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400">
+                <Loader2 className="size-3.5 animate-spin text-teal-600 dark:text-teal-400" />
+                Lendo laudo, comparando histórico e cruzando queixas…
+              </p>
+            )}
+
+            {insightStage === 'pronto' && (
+              <div className="mt-3">
+                {/* O que foi analisado — transparência do contexto enviado à IA */}
+                <div className="mb-2.5 rounded-lg bg-white/60 p-2.5 dark:bg-slate-900/40">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    O que foi analisado
+                  </p>
+                  <ul className="mt-1.5 space-y-1 text-[11px] text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-1.5">
+                      <CheckCircle2 className="mt-px size-3 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                      <span>
+                        Laudo: <strong>{form.tipo}</strong> ({form.laboratorio})
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <CheckCircle2 className="mt-px size-3 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                      <span>Histórico de exames do paciente</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <CheckCircle2 className="mt-px size-3 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                      <span className="min-w-0">
+                        Queixas:{' '}
+                        {insightContexto &&
+                        (insightContexto.queixas.length > 0 || insightContexto.outro) ? (
+                          <span className="inline-flex flex-wrap gap-1 align-middle">
+                            {insightContexto.queixas.map((q) => (
+                              <span
+                                key={q}
+                                className="rounded-full border border-teal-300/60 bg-teal-50 px-1.5 py-px text-[10px] font-medium text-teal-800 dark:border-teal-800/60 dark:bg-teal-950/40 dark:text-teal-300"
+                              >
+                                {q}
+                              </span>
+                            ))}
+                            {insightContexto.outro && (
+                              <span className="rounded-full border border-teal-300/60 bg-teal-50 px-1.5 py-px text-[10px] italic text-teal-800 dark:border-teal-800/60 dark:bg-teal-950/40 dark:text-teal-300">
+                                "{insightContexto.outro}"
+                              </span>
+                            )}
+                          </span>
+                        ) : (
+                          <em className="text-slate-400">nenhuma informada</em>
+                        )}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+
+                <blockquote className="rounded-lg border-l-2 border-teal-500 bg-white/80 p-3 text-[11px] leading-relaxed text-slate-700 dark:bg-slate-900/60 dark:text-slate-200">
+                  {insightTexto}
+                  <span className="mt-1.5 block font-mono text-[9px] uppercase tracking-wider text-slate-400">
+                    claude-opus-4-7 · sugestão de IA · decisão clínica é sua
+                  </span>
+                </blockquote>
+                <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                  <button
+                    onClick={inserirNaAnalise}
+                    disabled={insightInserido}
+                    className="
+                      inline-flex items-center gap-1 rounded-md bg-teal-600 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm transition-colors
+                      hover:bg-teal-500 disabled:cursor-default disabled:bg-emerald-600
+                    "
+                  >
+                    {insightInserido ? (
+                      <>
+                        <CheckCircle2 className="size-3" />
+                        Inserido na análise
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="size-3" />
+                        Inserir na minha análise
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={gerarInsights}
+                    className="rounded-md px-2.5 py-1 text-[11px] font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                  >
+                    Re-gerar
+                  </button>
+                  <button
+                    onClick={() => {
+                      setInsightStage('idle')
+                      setInsightTexto('')
+                    }}
+                    className="rounded-md px-2.5 py-1 text-[11px] font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                  >
+                    Descartar
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <p className="mt-3 flex items-start gap-1.5 border-t border-teal-200/40 pt-2.5 text-[10px] leading-relaxed text-slate-400 dark:border-teal-900/30">
+              <Info className="mt-px size-3 shrink-0" />
+              Inferência registrada no audit log (LGPD). O insight só entra no prontuário se o
+              profissional inserir na análise.
+            </p>
+          </section>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <footer className="flex shrink-0 items-center justify-end gap-2 border-t border-slate-200/80 bg-slate-50/60 px-5 py-3.5 dark:border-slate-800/80 dark:bg-slate-900/40">
+          <button
+            onClick={onClose}
+            className="rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={onAnalisar}
+            disabled={!form.observacao.trim()}
+            className="
+              inline-flex items-center gap-1.5 rounded-lg bg-teal-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors
+              hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-40
+              focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950
+            "
+          >
+            <CheckCircle2 className="size-3.5" />
+            Salvar análise
+          </button>
+        </footer>
+      </aside>
+    </div>,
+    document.body,
+  )
+}
+
 function SavedStage({
   form,
   files,
@@ -531,7 +941,7 @@ function SavedStage({
   onVoltarLista,
   onCarregarOutra,
 }: {
-  form: FormData
+  form: ExameUploadForm
   files: UploadFile[]
   onAnalisar: () => void
   onVoltarLista?: () => void
@@ -585,7 +995,7 @@ function SavedStage({
             "
           >
             <Sparkles className="size-3.5" />
-            Analisar com IA agora
+            Analisar com IA
           </button>
           <button
             onClick={onVoltarLista}
@@ -606,7 +1016,7 @@ function SavedStage({
   )
 }
 
-function AnalyzingStage({ form }: { form: FormData }) {
+function AnalyzingStage({ form }: { form: ExameUploadForm }) {
   const mockImagem = mockImagemPorModalidade(form.modalidade, form.tipo)
   return (
     <div className="rounded-2xl border border-slate-200/80 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
@@ -749,7 +1159,7 @@ function AnalyzedStage({
   onVoltarLista,
   onReanalisar,
 }: {
-  form: FormData
+  form: ExameUploadForm
   onVerDetalhe?: () => void
   onVoltarLista?: () => void
   onReanalisar?: () => void
@@ -771,6 +1181,26 @@ function AnalyzedStage({
             IA produziu {blocos.length} blocos pra <strong>{form.tipo}</strong> · revise abaixo
             antes de salvar no prontuário
           </p>
+          {(form.queixas.length > 0 || form.queixaOutro.trim()) && (
+            <div className="mt-1.5 flex flex-wrap items-center gap-1">
+              <span className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Queixas cruzadas:
+              </span>
+              {form.queixas.map((q) => (
+                <span
+                  key={q}
+                  className="rounded-full border border-emerald-300/60 bg-white px-2 py-px text-[10px] font-medium text-emerald-800 dark:border-emerald-800/60 dark:bg-slate-900 dark:text-emerald-300"
+                >
+                  {q}
+                </span>
+              ))}
+              {form.queixaOutro.trim() && (
+                <span className="rounded-full border border-emerald-300/60 bg-white px-2 py-px text-[10px] italic text-emerald-800 dark:border-emerald-800/60 dark:bg-slate-900 dark:text-emerald-300">
+                  "{form.queixaOutro.trim()}"
+                </span>
+              )}
+            </div>
+          )}
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button
@@ -1082,46 +1512,6 @@ function Field({
       </span>
       {children}
     </label>
-  )
-}
-
-function Step({
-  n,
-  label,
-  ativo,
-  concluido,
-}: {
-  n: number
-  label: string
-  ativo?: boolean
-  concluido?: boolean
-}) {
-  return (
-    <div className="flex items-center gap-1.5">
-      <span
-        className={`
-          flex size-5 items-center justify-center rounded-full text-[10px] font-semibold
-          ${
-            concluido
-              ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
-              : ativo
-                ? 'bg-teal-600 text-white'
-                : 'bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
-          }
-        `}
-      >
-        {concluido ? <CheckCircle2 className="size-3" /> : n}
-      </span>
-      <span
-        className={`text-[11px] font-medium ${
-          ativo || concluido
-            ? 'text-slate-900 dark:text-slate-100'
-            : 'text-slate-400 dark:text-slate-500'
-        }`}
-      >
-        {label}
-      </span>
-    </div>
   )
 }
 

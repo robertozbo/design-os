@@ -1,11 +1,13 @@
-# Financeiro — módulo compartilhado
+# `_contas` — módulo compartilhado
 
-**Isto não é uma section com rota própria.** É o módulo que **Contas a receber** (milestone 18) e
+**O `_` no nome é o aviso: isto não é uma section.** É o módulo que **Contas a receber** (milestone 18) e
 **Contas a pagar** (milestone 19) compartilham: as duas telas são a mesma `ContasPage` configurada
 por props, porque só diferem no tipo de conta, no rótulo e na contraparte (paciente vs. fornecedor).
 
-Não existe rota `/financeiro` e não existe screenshot deste diretório — as duas telas que ele
-produz estão em `sections/contas-receber/` e `sections/contas-pagar/`.
+Não existe rota, spec, dado de exemplo nem screenshot aqui — as duas telas que este módulo produz
+estão em `sections/contas-receber/` e `sections/contas-pagar/`, cada uma com os seus. Chamava-se
+`financeiro/` e foi renomeado porque, sem `spec.md`, parecia uma section pela metade para quem
+varria as pastas.
 
 ## Por que está aqui
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Check, CreditCard, X } from 'lucide-react'
-import type { Conta } from '@/../product-medical-clinic/sections/financeiro/types'
+import type { Conta } from '@/../product-medical-clinic/sections/_contas/types'
 import { moeda } from './helpers'
 
 interface Props {

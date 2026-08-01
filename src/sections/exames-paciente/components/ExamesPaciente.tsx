@@ -13,7 +13,6 @@ import {
 } from 'lucide-react'
 import type {
   CreateExamPayload,
-  Exam,
   ExamCategoryId,
   ExamResultInput,
   ExamStatus,
@@ -102,7 +101,7 @@ function resolveCategory(
   examTypes: ExamTypeInfo[],
 ): ExamCategoryId {
   const t = examTypes.find((x) => x.value === examTypeId)
-  return (t?.category as ExamCategoryId) ?? 'outros'
+  return (t?.category as ExamCategoryId) ?? 'all'
 }
 
 interface ExamTypeCardProps {
@@ -111,9 +110,9 @@ interface ExamTypeCardProps {
 }
 
 function ExamTypeCard({ examType, onSelect }: ExamTypeCardProps) {
-  const category = (examType.category as ExamCategoryId) ?? 'outros'
+  const category = (examType.category as ExamCategoryId) ?? 'all'
   const Icon = CATEGORY_ICON[category] ?? FileText
-  const theme = CATEGORY_THEME[category] ?? CATEGORY_THEME.outros
+  const theme = CATEGORY_THEME[category] ?? CATEGORY_THEME.all
   return (
     <button
       type="button"
@@ -189,7 +188,7 @@ export function ExamesPaciente({
 
   const filteredExams = useMemo(() => {
     return exams.filter((e) => {
-      const cat = categoryByExamId.get(e.id) ?? 'outros'
+      const cat = categoryByExamId.get(e.id) ?? 'all'
       if (internalCategory !== 'all' && cat !== internalCategory) return false
       if (internalStatus !== 'all' && e.status !== internalStatus) return false
       return true
@@ -418,7 +417,7 @@ export function ExamesPaciente({
               <ExamCard
                 key={exam.id}
                 exam={exam}
-                category={categoryByExamId.get(exam.id) ?? 'outros'}
+                category={categoryByExamId.get(exam.id) ?? 'all'}
                 isPolling={processingIdSet.has(exam.id)}
                 confirmedResults={resultsByExamId?.[exam.id]}
                 onOpen={() => openExam(exam.id)}
@@ -461,4 +460,3 @@ export function ExamesPaciente({
     </div>
   )
 }
-

@@ -4,4 +4,4 @@ export type {
   Conta,
   Servico,
   FinanceiroData,
-} from '../financeiro/types'
+} from '../_contas/types'

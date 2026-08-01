@@ -115,6 +115,14 @@ export function hasMobileSectionSpec(sectionId: string): boolean {
   return `/product-mobile/sections/${sectionId}/spec.md` in specFiles
 }
 
+export function mobileSectionUsesShell(sectionId: string): boolean {
+  const specPath = `/product-mobile/sections/${sectionId}/spec.md`
+  const specContent = specFiles[specPath]
+  if (!specContent) return true
+  const parsed = parseSpec(specContent)
+  return parsed?.useShell ?? true
+}
+
 export function hasMobileSectionData(sectionId: string): boolean {
   return `/product-mobile/sections/${sectionId}/data.json` in dataFiles
 }

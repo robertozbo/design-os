@@ -13,7 +13,7 @@ cd "$RAIZ"
 OUT=product-plan-medical-clinic
 
 rm -rf $OUT $OUT.zip
-mkdir -p $OUT/{prompts,instructions/incremental,design-system,data-shapes,shell/components,sections/financeiro/components}
+mkdir -p $OUT/{prompts,instructions/incremental,design-system,data-shapes,shell/components,sections/_contas/components}
 
 # 1. sections: componentes com imports reescritos, types, sample-data, screenshots, README, tests
 node "$AQUI/scripts/export.mjs"
@@ -22,16 +22,16 @@ node "$AQUI/scripts/export.mjs"
 cp src/shell-medical-clinic/components/*.tsx src/shell-medical-clinic/components/index.ts $OUT/shell/components/
 cp product-medical-clinic/design-system/*.json $OUT/design-system/
 
-# 3. módulo financeiro (compartilhado por contas-receber/pagar, não tem spec própria)
+# 3. módulo _contas (compartilhado por contas-receber/pagar; o `_` marca que não é section)
 python3 - <<'PY'
 import re, pathlib, shutil
 rw = lambda c, s: re.sub(r"@/\.\./product-medical-clinic/sections/([^/']+)/types",
         lambda m: '../types' if m.group(1)==s else f"../../{m.group(1)}/types", c)
-src=pathlib.Path('src/sections-medical-clinic/financeiro/components')
-dst=pathlib.Path('product-plan-medical-clinic/sections/financeiro/components')
-for f in src.iterdir(): dst.joinpath(f.name).write_text(rw(f.read_text(),'financeiro'))
-shutil.copy('product-medical-clinic/sections/financeiro/types.ts',
-            'product-plan-medical-clinic/sections/financeiro/types.ts')
+src=pathlib.Path('src/sections-medical-clinic/_contas/components')
+dst=pathlib.Path('product-plan-medical-clinic/sections/_contas/components')
+for f in src.iterdir(): dst.joinpath(f.name).write_text(rw(f.read_text(),'_contas'))
+shutil.copy('product-medical-clinic/sections/_contas/types.ts',
+            'product-plan-medical-clinic/sections/_contas/types.ts')
 PY
 
 # 4. docs escritos à mão
@@ -40,7 +40,7 @@ cp "$AQUI/handwritten/prompts/"*.md                  $OUT/prompts/
 cp "$AQUI/handwritten/design-system/"*               $OUT/design-system/
 cp "$AQUI/handwritten/data-shapes/README.md"         $OUT/data-shapes/
 cp "$AQUI/handwritten/shell/README.md"               $OUT/shell/
-cp "$AQUI/handwritten/sections-financeiro/README.md" $OUT/sections/financeiro/
+cp "$AQUI/handwritten/sections-contas/README.md" $OUT/sections/_contas/
 
 # 5. derivados que dependem dos anteriores
 node "$AQUI/scripts/shapes.mjs"   # overview.ts + divergencias.md
