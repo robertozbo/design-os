@@ -1,7 +1,7 @@
 # Início (Médico) Specification
 
 ## Overview
-A home do **médico** ao entrar no sistema. Centraliza o dia dele: a **agenda do dia** (suas consultas, presencial + teleconsulta), os **alertas acionáveis** (mensagens não lidas do canal clínico, exames novos aguardando revisão, encaminhamentos recebidos de colegas) e os **encaminhamentos internos** que colegas enviaram e aguardam aceite. **Escopo = só os pacientes/atendimentos do próprio médico + o que lhe foi encaminhado** (RBAC: não vê a agenda dos outros médicos). É a contraparte clínica da "Visão geral" do Admin.
+O **dashboard de trabalho do médico** — a página dele, de onde opera o dia inteiro. Centraliza o dia dele: a **agenda do dia** (suas consultas, presencial + teleconsulta), os **alertas acionáveis** (mensagens não lidas do canal clínico, exames novos aguardando revisão, encaminhamentos recebidos de colegas) e os **encaminhamentos internos** que colegas enviaram e aguardam aceite. **Escopo = só os pacientes/atendimentos do próprio médico + o que lhe foi encaminhado** (RBAC: não vê a agenda dos outros médicos). É a contraparte clínica da "Visão geral" do Admin.
 
 ## User Flows
 

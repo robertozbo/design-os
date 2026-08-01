@@ -3,6 +3,8 @@
 ## Overview
 Agenda **multi-profissional** da clínica — o calendário compartilhado onde recepção e médicos veem, num só lugar, as consultas de **todos os médicos** e a ocupação das **salas**. É o 3º pilar do produto Clínica: diferente do consultório individual, aqui há disputa por horários, salas e recursos entre várias especialidades. Visão em colunas por **médico** ou por **sala**, com blocos de consulta posicionados por horário, presencial + teleconsulta no mesmo grid.
 
+**Ela é ferramenta de coordenação, não a lista de trabalho do médico.** Mostra a clínica inteira para qualquer persona, de propósito: é assim que se enxerga disputa de horário, de sala e de recurso entre especialidades. O recorte "as minhas consultas de hoje" vive no **Início**, que é o dashboard de trabalho do médico — por isso a Agenda não tem toggle "Meus/Todos" como Pacientes tem. Recepção agenda para qualquer médico; o médico agenda para si e consulta o dia da clínica.
+
 ## User Flows
 
 ### Ver o dia

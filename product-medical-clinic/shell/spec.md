@@ -9,7 +9,11 @@ Preview interativo (toggle de persona): `/medical-clinic/shell`.
 ## Personas e Navegação
 
 ### Médico (web — side-nav)
-Foco no fluxo clínico centrado no paciente. Vê a **própria** agenda + encaminhamentos recebidos; acessa o **prontuário compartilhado** dos pacientes da clínica sob escopo (com audit log).
+Foco no fluxo clínico centrado no paciente. Acessa o **prontuário compartilhado** dos pacientes da clínica sob escopo (com audit log).
+
+**O Início é o dashboard de trabalho do médico** — é dali que ele opera o dia: as **próprias** consultas em ordem cronológica, com a atual destacada e o CTA para abrir/continuar o atendimento, mais os alertas acionáveis (mensagens, exames a revisar) e os encaminhamentos recebidos aguardando aceite. Escopo = só os pacientes e atendimentos dele + o que lhe foi encaminhado.
+
+A **Agenda é outra coisa**: o calendário compartilhado da clínica, multi-profissional, em colunas por médico ou por sala. Serve para enxergar disputa de horário, sala e recurso entre as especialidades — é ferramenta de coordenação, não a lista de trabalho do médico. Ele a consulta para marcar e para se situar no dia da clínica; para atender, usa o Início.
 - **Atendimento**: Início, Agenda, Pacientes
 - **Clínico**: Atendimentos, Exames, Prescrições
 - **Operacional**: Mensagens (canal clínico), Configurações
