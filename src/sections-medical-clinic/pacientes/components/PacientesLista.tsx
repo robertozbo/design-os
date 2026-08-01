@@ -8,8 +8,19 @@ import type {
 } from '@/../product-medical-clinic/sections/pacientes/types'
 import { AVATAR_COR, STATUS_APP_META, dataCurta } from './helpers'
 
+/**
+ * O que a persona logada pode ver desta tela.
+ *
+ * `clinico` = médico: a lista inteira. `administrativo` = recepção, que cadastra e agenda mas
+ * **não pode ver diagnóstico** (LGPD Art. 11) — condição crônica sai da linha, da busca e do
+ * cadastro. O resto da tela é idêntico, por isso é um recorte e não uma segunda tela.
+ */
+export type EscopoPacientes = 'clinico' | 'administrativo'
+
 interface Props {
   ctx: ClinicaCtx
+  /** Default `clinico`: quem não passa escopo é o médico. */
+  escopo?: EscopoPacientes
   pacientes: PacienteClinica[]
   filtro: FiltroPacientes
   onFiltro: (f: FiltroPacientes) => void
@@ -25,6 +36,7 @@ interface Props {
 
 export function PacientesLista({
   ctx,
+  escopo = 'clinico',
   pacientes,
   filtro,
   onFiltro,
@@ -37,6 +49,8 @@ export function PacientesLista({
   onVerArquivados,
   onNovo,
 }: Props) {
+  const clinico = escopo === 'clinico'
+
   const totalArquivados = useMemo(
     () => pacientes.filter((p) => arquivados.has(p.id)).length,
     [pacientes, arquivados],
@@ -56,12 +70,11 @@ export function PacientesLista({
         return false
       if (filtro.statusApp !== 'todos' && p.statusApp !== filtro.statusApp) return false
       if (!q) return true
-      return (
-        p.nome.toLowerCase().includes(q) ||
-        p.condicoesCronicas.some((c) => c.toLowerCase().includes(q))
-      )
+      if (p.nome.toLowerCase().includes(q)) return true
+      // Buscar por condição revelaria o diagnóstico pelo resultado, mesmo sem exibi-lo na linha.
+      return clinico && p.condicoesCronicas.some((c) => c.toLowerCase().includes(q))
     })
-  }, [pacientes, filtro, ctx.medicoLogadoId, arquivados, verArquivados])
+  }, [pacientes, filtro, ctx.medicoLogadoId, arquivados, verArquivados, clinico])
 
   return (
     <div className="p-6 pl-16 lg:pl-6">
@@ -92,7 +105,7 @@ export function PacientesLista({
             <input
               value={filtro.busca}
               onChange={(e) => onFiltro({ ...filtro, busca: e.target.value })}
-              placeholder="Buscar por nome ou condição…"
+              placeholder={clinico ? 'Buscar por nome ou condição…' : 'Buscar por nome…'}
               className="w-full rounded-lg border border-slate-200 bg-white py-2 pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
             />
           </div>
@@ -155,6 +168,7 @@ export function PacientesLista({
                       </span>
                       <span className="text-xs text-slate-400">{p.idade}a</span>
                     </div>
+                    {clinico && (
                     <div className="mt-0.5 flex flex-wrap items-center gap-1">
                       {p.condicoesCronicas.length > 0 ? (
                         p.condicoesCronicas.slice(0, 2).map((c) => (
@@ -172,6 +186,7 @@ export function PacientesLista({
                         <span className="text-[10px] text-slate-400">+{p.condicoesCronicas.length - 2}</span>
                       )}
                     </div>
+                    )}
                   </div>
 
                   {/* Equipe de cuidado */}

@@ -6,7 +6,7 @@ O **pool compartilhado de pacientes** da clínica — a lista única de paciente
 ## User Flows
 
 ### Ver o pool
-- Médico/recepção abre Pacientes → lista de pacientes da clínica
+- Médico/recepção abre Pacientes → lista de pacientes da clínica (a recepção sob escopo administrativo — ver abaixo)
 - Cada linha: paciente (nome, idade, condições), **equipe de cuidado** (avatares dos médicos vinculados, com +N), última consulta (com especialidade), próxima consulta, status do app
 - Busca por nome/CPF/condição; filtros por **especialidade vinculada**, status do app
 - Toggle **Toda a clínica / Meus pacientes** (o médico logado filtra pra onde está na equipe)
@@ -25,6 +25,30 @@ O **pool compartilhado de pacientes** da clínica — a lista única de paciente
 - "+ Novo paciente" (mock): cadastro entra no pool da clínica com nome, idade, gênero, convênio e
   **email**, mais o toggle "Enviar convite do app agora" (default ligado, desabilitado sem email
   válido)
+
+## Escopo por persona — dois screen designs
+
+A tela serve **médico e recepção**: as duas personas cadastram paciente e enviam convite. Mas a
+recepção não pode ver diagnóstico (LGPD Art. 11), então o componente aceita
+`escopo: 'clinico' | 'administrativo'` — é o mesmo componente recortado, não uma segunda tela.
+
+| | `clinico` (médico) | `administrativo` (recepção) |
+|---|---|---|
+| Condições crônicas na linha | ✅ | oculto |
+| Condições no drawer e no cadastro | ✅ | oculto |
+| Busca por condição | ✅ | só por nome |
+| Nome, idade, convênio, status do app, convite | ✅ | ✅ |
+| Equipe de cuidado e especialidade da próxima consulta | ✅ | ✅ |
+
+Screen designs: `PacientesLista` (médico) e `PacientesAdmin` (recepção).
+
+**Ao editar no escopo administrativo, as condições já registradas são preservadas** — o campo some,
+o dado não. A recepção não apaga o que não vê.
+
+**O que continua visível para a recepção, de propósito:** os médicos vinculados e a especialidade da
+próxima consulta. Revelam área de saúde por inferência, mas o balcão não agenda sem isso — e a
+alternativa (esconder) tornaria a tela inútil para quem mais a usa. Diagnóstico é a linha; a agenda
+não é.
 
 ## Convite pro app
 

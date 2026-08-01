@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Plus, UserPlus, X } from 'lucide-react'
 import type { PacienteClinica } from '@/../product-medical-clinic/sections/pacientes/types'
 import { iniciaisDe } from './helpers'
+import type { EscopoPacientes } from './PacientesLista'
 
 export interface PacienteFormValues {
   nome: string
@@ -18,6 +19,12 @@ export interface PacienteFormValues {
 interface Props {
   /** Paciente em edição — `null` = modo criar. */
   paciente: PacienteClinica | null
+  /**
+   * `administrativo` (recepção) esconde o bloco de condições crônicas: ela cadastra e agenda, mas
+   * não registra nem lê diagnóstico. Ao editar, as condições já existentes são **preservadas** —
+   * some o campo, não o dado. Default `clinico`.
+   */
+  escopo?: EscopoPacientes
   onClose: () => void
   /** `id` é `null` no modo criar. */
   onSalvar: (values: PacienteFormValues, id: string | null) => void
@@ -50,7 +57,8 @@ const VAZIO: PacienteFormValues = {
   enviarConvite: true,
 }
 
-export function PacienteForm({ paciente, onClose, onSalvar }: Props) {
+export function PacienteForm({ paciente, escopo = 'clinico', onClose, onSalvar }: Props) {
+  const clinico = escopo === 'clinico'
   const [form, setForm] = useState<PacienteFormValues>(() =>
     paciente
       ? {
@@ -221,7 +229,8 @@ export function PacienteForm({ paciente, onClose, onSalvar }: Props) {
             </label>
           )}
 
-          {/* Condições crônicas */}
+          {/* Condições crônicas — só no escopo clínico */}
+          {clinico && (
           <div>
             <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
               Condições crônicas
@@ -291,6 +300,7 @@ export function PacienteForm({ paciente, onClose, onSalvar }: Props) {
               </div>
             )}
           </div>
+          )}
         </div>
 
         {/* Rodapé */}

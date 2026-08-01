@@ -11,6 +11,7 @@ import {
   NAV_POR_PERSONA,
   PERSONA_DA_SECTION,
   NESTED_UNDER_PACIENTES,
+  PERSONA_DO_DESIGN,
   USER_POR_PERSONA,
 } from '@/shell-medical-clinic/navs'
 
@@ -207,7 +208,10 @@ export function MedicalClinicSectionPage() {
   const chave = `${sectionId ?? ''}:${activeDesign ?? ''}`
   // Cada section é exibida sob a navegação de quem tem permissão de abri-la: mostrar Faturamento e
   // Contas a pagar na barra do médico ensinaria o RBAC errado a quem for implementar.
-  const persona = (sectionId && PERSONA_DA_SECTION[sectionId]) || 'medico'
+  const persona =
+    PERSONA_DO_DESIGN[`${sectionId}:${activeDesign}`] ??
+    (sectionId && PERSONA_DA_SECTION[sectionId]) ??
+    'medico'
 
   // Guarda a chave junto do componente: enquanto ela não bater com a atual, é "carregando" —
   // assim nunca renderizamos o componente da section anterior sob o header da nova.

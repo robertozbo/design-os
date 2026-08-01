@@ -1,8 +1,11 @@
 import { CalendarPlus, Smartphone, FileText, Pencil, Send, X } from 'lucide-react'
+import type { EscopoPacientes } from './PacientesLista'
 import type { PacienteClinica } from '@/../product-medical-clinic/sections/pacientes/types'
 import { AVATAR_COR, BADGE_COR, STATUS_APP_META, dataCurta } from './helpers'
 
 interface Props {
+  /** `administrativo` (recepção) não vê condição crônica. Default `clinico`. */
+  escopo?: EscopoPacientes
   paciente: PacienteClinica | null
   onClose: () => void
   onAbrirProntuario: (id: string) => void
@@ -19,8 +22,7 @@ export function PacienteDrawer({
   onAbrirAcompanhamento,
   onConvidar,
   onNovaConsulta,
-  onEditar,
-}: Props) {
+  onEditar, escopo = 'clinico' }: Props) {
   if (!paciente) return null
   const p = paciente
 
@@ -67,7 +69,7 @@ export function PacienteDrawer({
           </div>
 
           {/* Condições */}
-          {p.condicoesCronicas.length > 0 && (
+          {escopo === 'clinico' && p.condicoesCronicas.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {p.condicoesCronicas.map((c) => (
                 <span

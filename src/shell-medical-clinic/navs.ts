@@ -165,5 +165,13 @@ export const PERSONA_DA_SECTION: Record<string, Persona> = {
   'configuracoes-recepcao': 'recepcao',
 }
 
+/**
+ * Screen designs que pertencem a outra persona que não a da section.
+ * Chave: `<sectionId>:<ComponentName>`. Hoje só Pacientes tem duas visões da mesma tela.
+ */
+export const PERSONA_DO_DESIGN: Record<string, Persona> = {
+  'pacientes:PacientesAdmin': 'recepcao',
+}
+
 /** Sections clínicas nested dentro de Pacientes — o nav destaca "Pacientes". */
 export const NESTED_UNDER_PACIENTES = new Set(['consulta', 'prontuario', 'acompanhamento'])

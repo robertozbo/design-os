@@ -11,6 +11,7 @@ import {
   PacienteDrawer,
   PacienteForm,
   type PacienteFormValues,
+  type EscopoPacientes,
 } from './components'
 import { iniciaisDe } from './components/helpers'
 
@@ -21,7 +22,9 @@ interface Toast {
 let toastSeq = 0
 let novoPacienteSeq = 0
 
-export default function PacientesListaPreview() {
+export default function PacientesListaPreview({
+  escopo = 'clinico',
+}: { escopo?: EscopoPacientes } = {}) {
   const navigate = useNavigate()
   const ctx = data.ctx as ClinicaCtx
 
@@ -128,6 +131,7 @@ export default function PacientesListaPreview() {
   return (
     <>
       <PacientesListaView
+          escopo={escopo}
         ctx={ctx}
         pacientes={pacientes}
         filtro={filtro}
@@ -143,6 +147,7 @@ export default function PacientesListaPreview() {
       />
 
       <PacienteDrawer
+          escopo={escopo}
         paciente={aberto}
         onClose={() => setAbertoId(null)}
         onEditar={abrirEditar}
@@ -168,6 +173,7 @@ export default function PacientesListaPreview() {
 
       {formAberto && (
         <PacienteForm
+          escopo={escopo}
           key={editId ?? 'novo'}
           paciente={emEdicao}
           onClose={fecharForm}
