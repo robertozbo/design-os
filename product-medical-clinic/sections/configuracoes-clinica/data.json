@@ -21,9 +21,9 @@
     "logoIniciais": "VE"
   },
   "plano": {
-    "nome": "Clínica Pro",
+    "nome": "Clínica · até 6 médicos",
     "descricao": "Prontuário, agenda, faturamento e IA para toda a equipe",
-    "profissionais": 4,
+    "profissionais": 3,
     "maxProfissionais": 6,
     "renovaEm": "2026-08-12"
   },
