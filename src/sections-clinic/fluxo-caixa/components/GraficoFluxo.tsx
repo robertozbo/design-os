@@ -23,6 +23,19 @@ function passoDaGrade(amplitude: number): number {
   return [1, 2, 2.5, 5, 10].map((m) => m * magnitude).find((p) => p >= bruto) ?? magnitude * 10
 }
 
+/**
+ * Barra com canto arredondado **só na ponta do dado**. O manual pede 4px no topo, e arredondar os
+ * quatro cantos (o que `rx` faz) descola a barra da linha de zero — a base tem que ser reta, senão
+ * o olho perde onde o valor começa.
+ */
+function barra(x: number, largura: number, zero: number, ponta: number, r = 4): string {
+  const h = Math.abs(ponta - zero)
+  const raio = Math.min(r, h, largura / 2)
+  return ponta < zero
+    ? `M ${x} ${zero} L ${x} ${ponta + raio} Q ${x} ${ponta} ${x + raio} ${ponta} L ${x + largura - raio} ${ponta} Q ${x + largura} ${ponta} ${x + largura} ${ponta + raio} L ${x + largura} ${zero} Z`
+    : `M ${x} ${zero} L ${x} ${ponta - raio} Q ${x} ${ponta} ${x + raio} ${ponta} L ${x + largura - raio} ${ponta} Q ${x + largura} ${ponta} ${x + largura} ${ponta - raio} L ${x + largura} ${zero} Z`
+}
+
 function escala(valores: number[], altura: number, topo: number) {
   const passo = passoDaGrade(Math.max(...valores) - Math.min(...valores))
   const max = Math.ceil(Math.max(...valores, 0) / passo) * passo
@@ -121,7 +134,7 @@ export function GraficoFluxo({ dias, hoje }: Props) {
 
           {/* ---- painel 1: movimento do dia ---- */}
           <text x={MARGEM.esq} y={topoBarras - 3} className="fill-slate-400 text-[9px] uppercase tracking-wide dark:fill-slate-500">
-            movimento do dia
+            movimento do dia · R$
           </text>
           {eBarras.ticks.map((t) => (
             <g key={`b${t}`}>
@@ -158,24 +171,16 @@ export function GraficoFluxo({ dias, hoje }: Props) {
                   className={ativo === i ? 'fill-slate-500/[0.07]' : 'fill-transparent'}
                 />
                 {d.entradas > 0 && (
-                  <rect
-                    x={x(i) - BARRA - 1}
-                    y={zeroBarras - hIn}
-                    width={BARRA}
-                    height={hIn}
-                    rx="3"
+                  <path
+                    d={barra(x(i) - BARRA - 1, BARRA, zeroBarras, zeroBarras - hIn)}
                     fill={prev ? 'url(#fc-in)' : undefined}
                     strokeWidth={prev ? 1.25 : 0}
                     className={prev ? 'stroke-teal-600' : 'fill-teal-600'}
                   />
                 )}
                 {d.saidas > 0 && (
-                  <rect
-                    x={x(i) + 1}
-                    y={zeroBarras}
-                    width={BARRA}
-                    height={hOut}
-                    rx="3"
+                  <path
+                    d={barra(x(i) + 1, BARRA, zeroBarras, zeroBarras + hOut)}
                     fill={prev ? 'url(#fc-out)' : undefined}
                     strokeWidth={prev ? 1.25 : 0}
                     className={prev ? 'stroke-rose-600 dark:stroke-rose-500' : 'fill-rose-600 dark:fill-rose-500'}
@@ -187,7 +192,7 @@ export function GraficoFluxo({ dias, hoje }: Props) {
 
           {/* ---- painel 2: saldo acumulado ---- */}
           <text x={MARGEM.esq} y={topoSaldo - 5} className="fill-slate-400 text-[9px] uppercase tracking-wide dark:fill-slate-500">
-            saldo acumulado
+            saldo acumulado · R$
           </text>
           {eSaldo.min < 0 && (
             <rect
