@@ -145,10 +145,9 @@ export function ClinicSectionsPage() {
             </p>
           </div>
         ) : (
-          {/* 6 colunas no xl, não 5: o board é uma leitura de UMA olhada — a
-              coluna que quebra para a segunda linha deixa de ser lida como par
-              das outras e vira "o resto". Ao somar Automação, o `xl:grid-cols-5`
-              empurrava justamente a coluna nova para baixo. */}
+          // 6 colunas no xl, não 5: o board é uma leitura de UMA olhada — a coluna que quebra para
+          // a segunda linha deixa de ser lida como par das outras e vira "o resto". Ao somar
+          // Automação, o `xl:grid-cols-5` empurrava justamente a coluna nova para baixo.
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 items-start">
             {GRUPOS.map((g) => {
               const ids = g.sectionIds.filter((id) => allIdsSet.has(id))
