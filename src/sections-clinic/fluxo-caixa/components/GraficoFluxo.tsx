@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { DiaFluxo } from '@/../product-clinic/sections/fluxo-caixa/types'
 import { moeda, moedaComSinal } from './helpers'
 
@@ -8,7 +8,8 @@ interface Props {
   hoje: string
 }
 
-const LARGURA_DIA = 38
+const LARGURA_MIN = 30
+const LARGURA_MAX = 64
 const MARGEM = { topo: 14, esq: 62, dir: 12, base: 26 }
 const H_BARRAS = 168
 const H_SALDO = 86
@@ -34,6 +35,19 @@ function escala(valores: number[], altura: number, topo: number) {
 
 export function GraficoFluxo({ dias, hoje }: Props) {
   const [ativo, setAtivo] = useState<number | null>(null)
+  const caixaRef = useRef<HTMLDivElement>(null)
+  const [larguraCaixa, setLarguraCaixa] = useState(0)
+
+  // Mede o card e distribui os dias nele. Sem isso o SVG tem largura fixa e sobra um vão morto à
+  // direita que parece gráfico quebrado. Assinar o ResizeObserver é ler um sistema externo — não é o
+  // caso de setState-em-effect que a regra proíbe.
+  useEffect(() => {
+    const el = caixaRef.current
+    if (!el) return
+    const obs = new ResizeObserver(([entrada]) => setLarguraCaixa(entrada.contentRect.width))
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
 
   if (dias.length === 0) {
     return (
@@ -47,6 +61,13 @@ export function GraficoFluxo({ dias, hoje }: Props) {
   // R$ 0 a R$ 22 mil; espremer o saldo acumulado no mesmo eixo achatava as barras típicas em 6px e o
   // gráfico deixava de mostrar justamente o que o título promete. Duas escalas no mesmo plot seria
   // pior ainda: inventaria uma correlação que o dado não tem.
+  // Ocupa a linha toda quando cabe; abaixo do mínimo legível, volta a rolar na horizontal.
+  const disponivel = Math.max(0, larguraCaixa - MARGEM.esq - MARGEM.dir)
+  const LARGURA_DIA = Math.min(
+    LARGURA_MAX,
+    Math.max(LARGURA_MIN, disponivel > 0 ? disponivel / dias.length : LARGURA_MIN),
+  )
+
   const topoBarras = MARGEM.topo
   const topoSaldo = MARGEM.topo + H_BARRAS + VAO
 
@@ -74,7 +95,7 @@ export function GraficoFluxo({ dias, hoje }: Props) {
     v === 0 ? '0' : Math.abs(v) >= 1000 ? `${(v / 1000).toLocaleString('pt-BR')}k` : String(v)
 
   return (
-    <div className="relative">
+    <div className="relative" ref={caixaRef}>
       <div className="overflow-x-auto">
         <svg
           width={largura}
@@ -247,7 +268,7 @@ export function GraficoFluxo({ dias, hoje }: Props) {
 
           {/* Eixo X compartilhado — um rótulo a cada dois dias, senão colide */}
           {dias.map((d, i) =>
-            i % 2 === 0 || ativo === i ? (
+            LARGURA_DIA >= 42 || i % 2 === 0 || ativo === i ? (
               <text
                 key={d.data}
                 x={x(i)}
