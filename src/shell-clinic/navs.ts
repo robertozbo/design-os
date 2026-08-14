@@ -18,6 +18,7 @@ import {
   DoorOpen,
   FlaskConical,
   Home,
+  LineChart,
   MessageCircle,
   MessageSquare,
   Pill,
@@ -78,6 +79,7 @@ export const NAV_ADMIN: NavGroup[] = [
       { label: 'Relatórios', href: s('relatorios'), icon: BarChart3 },
       { label: 'Contas a receber', href: s('contas-receber'), icon: ArrowUpCircle },
       { label: 'Contas a pagar', href: s('contas-pagar'), icon: ArrowDownCircle },
+      { label: 'Fluxo de caixa', href: s('fluxo-caixa'), icon: LineChart },
     ],
   },
   {
@@ -157,6 +159,7 @@ export const PERSONA_DA_SECTION: Record<string, Persona> = {
   relatorios: 'admin',
   'contas-receber': 'admin',
   'contas-pagar': 'admin',
+  'fluxo-caixa': 'admin',
   servicos: 'admin',
   fornecedores: 'admin',
   'categorias-financeiras': 'admin',

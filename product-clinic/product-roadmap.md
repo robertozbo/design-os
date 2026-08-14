@@ -10,7 +10,7 @@
 > **Relação com Nymos Clínico:** o produto `clinico` (1 médico + secretária) continua como vertical própria. `clinica` **reusa** as sections clínicas (Consulta, Prontuário, Exames, Prescrição) e adiciona a camada multi-profissional (equipe, salas, prontuário compartilhado, gestão).
 > **Base já existente no backend:** `workspaces` (workspaceType `clinic`, `maxProfessionals`), `workspace_invites`, `professional_patients` + `professional_patient_scopes`. **Maior gap a construir:** compartilhamento de paciente/prontuário no nível do workspace (hoje é isolado por profissional).
 
-## V1 — 27 sections
+## V1 — 28 sections
 
 ### 1. Shell `[V1]`
 Três shells por persona, identidade Nymos (teal, DM Sans):
@@ -85,7 +85,15 @@ liberou, para o médico distinguir "não compartilhado" de "sem dado". Nested em
 para paciente vinculado. É o elo entre o app e a clínica: sem ele o app vira diário pessoal.
 `id: acompanhamento`.
 
-### 20. Agendamento por WhatsApp `[V1]`
+### 20. Fluxo de caixa `[V1]`
+A visão de **caixa** do Admin: quanto entrou, quanto saiu e **em que dia o saldo projetado fica
+negativo**. Difere de Contas a receber/pagar pelo **regime** — lá vale o vencimento (competência),
+aqui vale quando o dinheiro se move; o que venceu e não foi pago é **reprojetado para hoje**, porque
+continua pendurado. Dois painéis com o mesmo eixo X (movimento do dia e saldo acumulado), tabela dia
+a dia expansível e faixa de alerta no topo. Lê os mesmos lançamentos de `_contas` — não edita nem
+confirma pagamento. `id: fluxo-caixa`.
+
+### 21. Agendamento por WhatsApp `[V1]`
 O canal de auto-agendamento no WhatsApp, visto pela **Recepção/Admin**: simulador do chat numa moldura
 de celular, configuração do bot (saudação, serviços expostos, antecedência, janela) e a **fila** de
 pré-agendamentos e leads que ele gerou. O bot é **determinístico** — botões e listas, sem texto gerado.
