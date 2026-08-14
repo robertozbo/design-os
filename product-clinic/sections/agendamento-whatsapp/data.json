@@ -5,55 +5,142 @@
       "servicos": "Espelho do cadastro de Serviços, com o toggle que decide se o serviço aparece na lista do bot. Duração e preço vêm de lá, não são digitados aqui.",
       "profissionais": "Quem o bot pode oferecer, e quais serviços cada um atende — é o que permite pular o passo quando só um profissional atende o serviço escolhido.",
       "passos": "A máquina de estados do chat. Cada passo tem as bolhas que o bot envia, o tipo de menu (3 botões ou lista de até 10 linhas) e para onde cada opção leva.",
-      "preAgendamentos": "O que o bot produziu e a recepção ainda não validou. Nunca nasce confirmado.",
-      "leads": "Telefones que não casaram com o pool. O bot coleta nome e nascimento e para — cadastrar é decisão humana.",
+      "preAgendamentos": "Horários que o bot reservou para pacientes JÁ no pool e a recepção ainda não validou. Nunca nasce confirmado.",
+      "leads": "Telefones que NÃO casaram com o pool. Aqui o bot para: coleta nome e nascimento e encerra, sem marcar nada. Quem não está cadastrado não sai com horário — a Agenda não aceita nome livre.",
       "regras": "O que o bot se recusa a responder, o que faz no lugar e a mensagem exata que o paciente recebe.",
       "faq": "Respostas administrativas do ramo Dúvidas. Nada clínico entra aqui.",
-      "usosIa": "Os três usos de IA previstos para a V2, exibidos no card desabilitado."
+      "usosIa": "Os três usos de IA previstos para a V2, exibidos no card desabilitado.",
+      "agendaDoDia": "A agenda real do dia, copiada da section Agenda: horário de funcionamento e os blocos JÁ ocupados por médico. Os horários que o bot oferece são CALCULADOS daqui — ele nunca tem lista própria de horário."
     },
     "relationships": [
       "Cada Passo aponta para o próximo por `opcoes[].proximo`; `passoInicial` é a entrada do simulador.",
       "ProfissionalBot.servicos referencia ServicoExposto.id — só profissionais que atendem o serviço escolhido entram na lista.",
       "PreAgendamento nasce do passo final do fluxo e vira consulta na Agenda só quando a recepção confirma.",
-      "Lead nasce do ramo em que o telefone não é reconhecido; ele não entra no pool de pacientes sozinho.",
-      "ServicoExposto espelha o cadastro de Serviços (duracaoMin, preco); esta section não define preço nem duração."
+      "ServicoExposto espelha o cadastro de Serviços (duracaoMin, preco); esta section não define preço nem duração.",
+      "agendaDoDia.ocupados usa o mesmo `medicoId` de ProfissionalBot.id e os mesmos blocos da section Agenda — se a agenda muda, os horários do bot mudam junto.",
+      "Os passos `servico`, `profissional` e `hora` têm opções CALCULADAS: serviço vem do cadastro exposto, profissional de quem atende aquele serviço, e hora dos vãos livres da agenda. O que está no JSON é só o escape de cada passo.",
+      "Lead e PreAgendamento são excludentes: quem vira lead não gera pré-agendamento, porque o bot interrompe o fluxo antes de oferecer horário."
     ]
   },
-
   "clinica": "Clínica Nymos · Vila Mariana",
   "telefoneClinica": "+55 11 3555-0142",
   "statusCanal": "mock",
-
   "config": {
     "saudacao": "Oi! Aqui é a Clínica Nymos 👋 Posso te ajudar com agendamento ou tirar uma dúvida. O que você prefere?",
     "antecedenciaMinHoras": 4,
     "janelaMaxDias": 30,
-    "horarioAtendimento": { "inicio": "07:00", "fim": "20:00" },
+    "horarioAtendimento": {
+      "inicio": "07:00",
+      "fim": "20:00"
+    },
     "mensagemAusencia": "Nosso atendimento é das 7h às 20h. Deixe sua mensagem que a recepção responde no próximo horário comercial. Em caso de emergência, procure o pronto-socorro mais próximo ou ligue 192.",
     "criaComoPendente": true,
     "geraCobranca": false,
     "iaHabilitada": false
   },
-
   "servicos": [
-    { "id": "s1", "nome": "Consulta clínica geral", "duracaoMin": 30, "preco": 320, "exposto": true },
-    { "id": "s2", "nome": "Consulta endocrinologia", "duracaoMin": 40, "preco": 450, "exposto": true },
-    { "id": "s3", "nome": "Consulta dermatologia", "duracaoMin": 30, "preco": 420, "exposto": true },
-    { "id": "s4", "nome": "Retorno", "duracaoMin": 20, "preco": 0, "exposto": true },
-    { "id": "s5", "nome": "Check-up executivo", "duracaoMin": 90, "preco": 1280, "exposto": true },
-    { "id": "s6", "nome": "Consulta cardiologia", "duracaoMin": 40, "preco": 460, "exposto": false },
-    { "id": "s7", "nome": "Infiltração articular", "duracaoMin": 60, "preco": 890, "exposto": false }
+    {
+      "id": "s11",
+      "nome": "Consulta · Clínica Geral",
+      "duracaoMin": 30,
+      "preco": 200,
+      "exposto": true
+    },
+    {
+      "id": "s1",
+      "nome": "Consulta · Endocrinologia",
+      "duracaoMin": 40,
+      "preco": 250,
+      "exposto": true
+    },
+    {
+      "id": "s2",
+      "nome": "Consulta · Cardiologia",
+      "duracaoMin": 40,
+      "preco": 300,
+      "exposto": true
+    },
+    {
+      "id": "s3",
+      "nome": "Consulta · Nutrologia",
+      "duracaoMin": 40,
+      "preco": 230,
+      "exposto": true
+    },
+    {
+      "id": "s4",
+      "nome": "Retorno",
+      "duracaoMin": 30,
+      "preco": 180,
+      "exposto": true
+    },
+    {
+      "id": "s5",
+      "nome": "Teleconsulta",
+      "duracaoMin": 30,
+      "preco": 220,
+      "exposto": true
+    },
+    {
+      "id": "s6",
+      "nome": "Avaliação inicial",
+      "duracaoMin": 60,
+      "preco": 400,
+      "exposto": false
+    },
+    {
+      "id": "s8",
+      "nome": "Bioimpedância",
+      "duracaoMin": 30,
+      "preco": 120,
+      "exposto": false
+    }
   ],
-
   "profissionais": [
-    { "id": "p1", "nome": "Dra. Helena Prado", "especialidade": "Endocrinologia", "servicos": ["s2", "s4"] },
-    { "id": "p2", "nome": "Dr. Marcelo Ferraz", "especialidade": "Clínica geral", "servicos": ["s1", "s4", "s5"] },
-    { "id": "p3", "nome": "Dra. Camila Bastos", "especialidade": "Dermatologia", "servicos": ["s3", "s4"] },
-    { "id": "p4", "nome": "Dr. Ricardo Amorim", "especialidade": "Clínica geral", "servicos": ["s1", "s4"] }
+    {
+      "id": "med-h",
+      "nome": "Dra. Helena Prado",
+      "especialidade": "Endocrinologia",
+      "servicos": [
+        "s1",
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "med-m",
+      "nome": "Dr. Otávio Serrano",
+      "especialidade": "Cardiologia",
+      "servicos": [
+        "s2",
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "med-b",
+      "nome": "Dra. Vera Nakamura",
+      "especialidade": "Nutrologia",
+      "servicos": [
+        "s3",
+        "s4",
+        "s5",
+        "s8"
+      ]
+    },
+    {
+      "id": "med-r",
+      "nome": "Dr. Rafael Aoki",
+      "especialidade": "Clínica Geral",
+      "servicos": [
+        "s11",
+        "s4",
+        "s5",
+        "s6"
+      ]
+    }
   ],
-
   "passoInicial": "saudacao",
-
   "passos": [
     {
       "id": "saudacao",
@@ -64,8 +151,16 @@
       "tipo": "botoes",
       "limite": "3 botões",
       "opcoes": [
-        { "id": "o1", "rotulo": "Agendar consulta", "proximo": "identificacao" },
-        { "id": "o2", "rotulo": "Tirar uma dúvida", "proximo": "duvidas" }
+        {
+          "id": "o1",
+          "rotulo": "Agendar consulta",
+          "proximo": "identificacao"
+        },
+        {
+          "id": "o2",
+          "rotulo": "Tirar uma dúvida",
+          "proximo": "duvidas"
+        }
       ]
     },
     {
@@ -77,69 +172,94 @@
       "tipo": "botoes",
       "limite": "3 botões",
       "opcoes": [
-        { "id": "o1", "rotulo": "Sou eu", "proximo": "servico" },
-        { "id": "o2", "rotulo": "Não sou eu", "proximo": "lead-dados" }
+        {
+          "id": "o1",
+          "rotulo": "Sou eu",
+          "proximo": "servico"
+        },
+        {
+          "id": "o2",
+          "rotulo": "Não sou eu",
+          "proximo": "lead-dados"
+        }
       ]
     },
     {
       "id": "servico",
-      "bot": ["Perfeito, Maria 🙂", "Do que você precisa?"],
+      "bot": [
+        "Perfeito, Maria 🙂",
+        "Do que você precisa?"
+      ],
       "tipo": "lista",
       "titulo": "Escolha o atendimento",
       "limite": "até 10 linhas",
       "opcoes": [
-        { "id": "o1", "rotulo": "Consulta clínica geral", "descricao": "30 min · R$ 320", "proximo": "profissional" },
-        { "id": "o2", "rotulo": "Consulta endocrinologia", "descricao": "40 min · R$ 450", "proximo": "profissional" },
-        { "id": "o3", "rotulo": "Consulta dermatologia", "descricao": "30 min · R$ 420", "proximo": "profissional" },
-        { "id": "o4", "rotulo": "Retorno", "descricao": "20 min · sem custo", "proximo": "profissional" },
-        { "id": "o5", "rotulo": "Check-up executivo", "descricao": "90 min · R$ 1.280", "proximo": "profissional" },
-        { "id": "o6", "rotulo": "Não achei o que preciso", "descricao": "Falar com a recepção", "proximo": "humano" }
+        {
+          "id": "escape",
+          "rotulo": "Não achei o que preciso",
+          "descricao": "Falar com a recepção",
+          "proximo": "humano"
+        }
       ]
     },
     {
       "id": "profissional",
-      "bot": ["Clínica geral, 30 minutos ✅", "Prefere algum profissional?"],
+      "bot": [
+        "Anotado ✅",
+        "Prefere algum profissional?"
+      ],
       "tipo": "lista",
       "titulo": "Com quem você quer ser atendida",
       "limite": "até 10 linhas",
-      "opcoes": [
-        { "id": "o1", "rotulo": "Primeiro horário disponível", "descricao": "Qualquer profissional — o mais cedo possível", "proximo": "data" },
-        { "id": "o2", "rotulo": "Dr. Marcelo Ferraz", "descricao": "Clínica geral", "proximo": "data" },
-        { "id": "o3", "rotulo": "Dr. Ricardo Amorim", "descricao": "Clínica geral", "proximo": "data" }
-      ]
+      "opcoes": []
     },
     {
       "id": "data",
-      "bot": ["Tenho estes dias com vaga:"],
+      "bot": [
+        "Tenho estes dias com vaga:"
+      ],
       "tipo": "botoes",
       "limite": "3 botões",
       "opcoes": [
-        { "id": "o1", "rotulo": "seg, 17 ago", "proximo": "hora" },
-        { "id": "o2", "rotulo": "ter, 18 ago", "proximo": "hora" },
-        { "id": "o3", "rotulo": "Outra data", "proximo": "hora" }
+        {
+          "id": "o1",
+          "rotulo": "ter, 21 jul",
+          "proximo": "hora"
+        },
+        {
+          "id": "o2",
+          "rotulo": "qua, 22 jul",
+          "proximo": "hora"
+        },
+        {
+          "id": "o3",
+          "rotulo": "Outra data",
+          "proximo": "hora"
+        }
       ]
     },
     {
       "id": "hora",
-      "bot": ["Segunda, 17 de agosto. Estes horários estão livres:"],
+      "bot": [
+        "Estes horários estão livres:"
+      ],
       "tipo": "lista",
-      "titulo": "Horários de segunda, 17 ago",
+      "titulo": "Horários disponíveis",
       "limite": "até 10 linhas",
       "opcoes": [
-        { "id": "o1", "rotulo": "08:00", "descricao": "Dr. Marcelo Ferraz", "proximo": "confirmacao" },
-        { "id": "o2", "rotulo": "08:30", "descricao": "Dr. Marcelo Ferraz", "proximo": "confirmacao" },
-        { "id": "o3", "rotulo": "10:00", "descricao": "Dr. Ricardo Amorim", "proximo": "confirmacao" },
-        { "id": "o4", "rotulo": "11:30", "descricao": "Dr. Marcelo Ferraz", "proximo": "confirmacao" },
-        { "id": "o5", "rotulo": "14:00", "descricao": "Dr. Ricardo Amorim", "proximo": "confirmacao" },
-        { "id": "o6", "rotulo": "16:30", "descricao": "Dr. Marcelo Ferraz", "proximo": "confirmacao" },
-        { "id": "o7", "rotulo": "Ver outro dia", "descricao": "Voltar para a escolha de data", "proximo": "data" }
+        {
+          "id": "outro-dia",
+          "rotulo": "Ver outro dia",
+          "descricao": "Voltar para a escolha de data",
+          "proximo": "data"
+        }
       ]
     },
     {
       "id": "confirmacao",
       "bot": [
         "Anotei aqui 📋",
-        "Consulta clínica geral · segunda, 17 de agosto, às 08:00 · Dr. Marcelo Ferraz",
+        "{{resumo}}",
         "A recepção confirma e te avisa por aqui. Até lá o horário fica reservado como **pendente**. Qualquer coisa é só chamar!"
       ],
       "tipo": "final",
@@ -149,11 +269,13 @@
       "id": "lead-dados",
       "bot": [
         "Sem problema! Pra te cadastrar preciso de duas coisas:",
-        "Nome completo e data de nascimento."
+        "Seu nome completo e sua data de nascimento. Pode mandar tudo numa mensagem só."
       ],
-      "tipo": "botoes",
-      "limite": "3 botões",
-      "opcoes": [{ "id": "o1", "rotulo": "Enviei os dados", "proximo": "lead-fim" }]
+      "tipo": "entrada",
+      "limite": "texto livre",
+      "placeholder": "Ex.: Ana Paula Ribeiro, 14/03/1988",
+      "proximo": "lead-fim",
+      "opcoes": []
     },
     {
       "id": "lead-fim",
@@ -166,16 +288,43 @@
     },
     {
       "id": "duvidas",
-      "bot": ["Claro! Sobre o que é sua dúvida?"],
+      "bot": [
+        "Claro! Sobre o que é sua dúvida?"
+      ],
       "tipo": "lista",
       "titulo": "Dúvidas frequentes",
       "limite": "até 10 linhas",
       "opcoes": [
-        { "id": "o1", "rotulo": "Endereço e estacionamento", "descricao": "Onde ficamos e como chegar", "proximo": "faq-resposta" },
-        { "id": "o2", "rotulo": "Convênios aceitos", "descricao": "Quais planos atendemos", "proximo": "faq-resposta" },
-        { "id": "o3", "rotulo": "Preparo para exames", "descricao": "Jejum e orientações", "proximo": "faq-resposta" },
-        { "id": "o4", "rotulo": "Estou com um sintoma", "descricao": "Dúvida sobre saúde", "proximo": "escalona" },
-        { "id": "o5", "rotulo": "Falar com a recepção", "descricao": "Atendimento humano", "proximo": "humano" }
+        {
+          "id": "o1",
+          "rotulo": "Endereço e estacionamento",
+          "descricao": "Onde ficamos e como chegar",
+          "proximo": "faq-resposta"
+        },
+        {
+          "id": "o2",
+          "rotulo": "Convênios aceitos",
+          "descricao": "Quais planos atendemos",
+          "proximo": "faq-resposta"
+        },
+        {
+          "id": "o3",
+          "rotulo": "Preparo para exames",
+          "descricao": "Jejum e orientações",
+          "proximo": "faq-resposta"
+        },
+        {
+          "id": "o4",
+          "rotulo": "Estou com um sintoma",
+          "descricao": "Dúvida sobre saúde",
+          "proximo": "escalona"
+        },
+        {
+          "id": "o5",
+          "rotulo": "Falar com a recepção",
+          "descricao": "Atendimento humano",
+          "proximo": "humano"
+        }
       ]
     },
     {
@@ -188,9 +337,21 @@
       "tipo": "botoes",
       "limite": "3 botões",
       "opcoes": [
-        { "id": "o1", "rotulo": "Agendar consulta", "proximo": "identificacao" },
-        { "id": "o2", "rotulo": "Outra dúvida", "proximo": "duvidas" },
-        { "id": "o3", "rotulo": "Falar com a recepção", "proximo": "humano" }
+        {
+          "id": "o1",
+          "rotulo": "Agendar consulta",
+          "proximo": "identificacao"
+        },
+        {
+          "id": "o2",
+          "rotulo": "Outra dúvida",
+          "proximo": "duvidas"
+        },
+        {
+          "id": "o3",
+          "rotulo": "Falar com a recepção",
+          "proximo": "humano"
+        }
       ]
     },
     {
@@ -213,89 +374,81 @@
       "opcoes": []
     }
   ],
-
   "preAgendamentos": [
     {
       "id": "pa1",
-      "paciente": "Maria Aparecida Lima",
+      "paciente": "Maria Silva Andrade",
       "telefone": "+55 11 98812-4471",
-      "servico": "Consulta clínica geral",
-      "profissional": "Dr. Marcelo Ferraz",
-      "data": "seg, 17 ago",
-      "hora": "08:00",
+      "servico": "Consulta · Endocrinologia",
+      "profissional": "Dra. Helena Prado",
+      "data": "ter, 21 jul",
+      "hora": "07:00",
       "criadoEm": "há 6 min",
-      "status": "pendente",
-      "novoPaciente": false
+      "status": "pendente"
     },
     {
       "id": "pa2",
-      "paciente": "Thiago Menezes",
+      "paciente": "Igor Ramos",
       "telefone": "+55 11 99630-1188",
-      "servico": "Consulta dermatologia",
-      "profissional": "Dra. Camila Bastos",
-      "data": "ter, 18 ago",
-      "hora": "14:30",
+      "servico": "Consulta · Clínica Geral",
+      "profissional": "Dr. Rafael Aoki",
+      "data": "ter, 21 jul",
+      "hora": "11:30",
       "criadoEm": "há 41 min",
-      "status": "pendente",
-      "novoPaciente": true
+      "status": "pendente"
     },
     {
       "id": "pa3",
-      "paciente": "Sônia Ribeiro",
+      "paciente": "Solange Amaral",
       "telefone": "+55 11 97722-0904",
       "servico": "Retorno",
-      "profissional": "Dra. Helena Prado",
-      "data": "qua, 19 ago",
-      "hora": "09:20",
+      "profissional": "Dra. Vera Nakamura",
+      "data": "qua, 22 jul",
+      "hora": "10:30",
       "criadoEm": "há 2 h",
-      "status": "pendente",
-      "novoPaciente": false
+      "status": "pendente"
     },
     {
       "id": "pa4",
-      "paciente": "Eduardo Sampaio Vasconcelos",
+      "paciente": "Carlos Menezes",
       "telefone": "+55 11 98104-7765",
-      "servico": "Check-up executivo",
-      "profissional": "Dr. Marcelo Ferraz",
-      "data": "qui, 20 ago",
-      "hora": "07:00",
+      "servico": "Consulta · Cardiologia",
+      "profissional": "Dr. Otávio Serrano",
+      "data": "qua, 22 jul",
+      "hora": "13:00",
       "criadoEm": "há 3 h",
-      "status": "pendente",
-      "novoPaciente": true
+      "status": "pendente"
     },
     {
       "id": "pa5",
-      "paciente": "André Nogueira",
+      "paciente": "Lúcia Prado",
       "telefone": "+55 11 99418-3320",
-      "servico": "Consulta endocrinologia",
+      "servico": "Teleconsulta",
       "profissional": "Dra. Helena Prado",
-      "data": "sex, 21 ago",
+      "data": "qui, 23 jul",
       "hora": "16:00",
       "criadoEm": "ontem, 18:42",
-      "status": "confirmado",
-      "novoPaciente": false
+      "status": "confirmado"
     },
     {
       "id": "pa6",
-      "paciente": "Rafaela Duarte",
+      "paciente": "Felipe Nunes",
       "telefone": "+55 11 98877-5510",
-      "servico": "Consulta clínica geral",
-      "profissional": "Dr. Ricardo Amorim",
-      "data": "seg, 17 ago",
-      "hora": "10:00",
+      "servico": "Consulta · Nutrologia",
+      "profissional": "Dra. Vera Nakamura",
+      "data": "ter, 21 jul",
+      "hora": "09:30",
       "criadoEm": "ontem, 09:15",
-      "status": "recusado",
-      "novoPaciente": false
+      "status": "recusado"
     }
   ],
-
   "leads": [
     {
       "id": "l1",
       "nome": "Juliana Castro Belmiro",
       "telefone": "+55 11 97401-2288",
       "nascimento": "12/03/1991",
-      "pedido": "Quer marcar dermatologia; disse que é a primeira vez na clínica e que veio por indicação da irmã, que já é paciente da Dra. Camila.",
+      "pedido": "Quer marcar Consulta · Nutrologia; disse que é a primeira vez na clínica e que veio por indicação da irmã, que já é paciente da Dra. Vera.",
       "recebidoEm": "há 22 min"
     },
     {
@@ -303,7 +456,7 @@
       "nome": "Paulo Henrique Mota",
       "telefone": "+55 11 99205-6633",
       "nascimento": "04/11/1978",
-      "pedido": "Check-up executivo",
+      "pedido": "Avaliação inicial",
       "recebidoEm": "há 1 h"
     },
     {
@@ -311,11 +464,10 @@
       "nome": "Beatriz Antunes",
       "telefone": "+55 11 98330-1047",
       "nascimento": "27/07/2001",
-      "pedido": "Clínica geral",
+      "pedido": "Consulta · Clínica Geral",
       "recebidoEm": "ontem, 20:11"
     }
   ],
-
   "regras": [
     {
       "id": "r1",
@@ -353,7 +505,6 @@
       "severidade": "administrativo"
     }
   ],
-
   "faq": [
     {
       "id": "f1",
@@ -376,7 +527,6 @@
       "resposta": "É só me avisar por aqui com pelo menos 4 horas de antecedência que eu passo pra recepção."
     }
   ],
-
   "usosIa": [
     {
       "id": "ia1",
@@ -393,5 +543,83 @@
       "titulo": "Rascunhar a resposta da recepção",
       "descricao": "Sugere o texto e classifica a urgência da mensagem; quem envia é sempre a pessoa. Já previsto no roadmap como 'Triagem de mensagens por IA'."
     }
-  ]
+  ],
+  "agendaDoDia": {
+    "data": "2026-07-21",
+    "rotuloData": "ter, 21 jul",
+    "horaInicio": "07:00",
+    "horaFim": "19:00",
+    "ocupados": [
+      {
+        "medicoId": "med-h",
+        "inicio": "08:00",
+        "fim": "08:40"
+      },
+      {
+        "medicoId": "med-h",
+        "inicio": "09:00",
+        "fim": "09:30"
+      },
+      {
+        "medicoId": "med-h",
+        "inicio": "11:00",
+        "fim": "11:30"
+      },
+      {
+        "medicoId": "med-h",
+        "inicio": "14:00",
+        "fim": "14:40"
+      },
+      {
+        "medicoId": "med-m",
+        "inicio": "08:30",
+        "fim": "09:10"
+      },
+      {
+        "medicoId": "med-m",
+        "inicio": "10:00",
+        "fim": "10:40"
+      },
+      {
+        "medicoId": "med-m",
+        "inicio": "15:00",
+        "fim": "15:40"
+      },
+      {
+        "medicoId": "med-b",
+        "inicio": "09:30",
+        "fim": "10:00"
+      },
+      {
+        "medicoId": "med-b",
+        "inicio": "13:30",
+        "fim": "14:10"
+      },
+      {
+        "medicoId": "med-b",
+        "inicio": "16:00",
+        "fim": "16:40"
+      },
+      {
+        "medicoId": "med-r",
+        "inicio": "08:00",
+        "fim": "08:30"
+      },
+      {
+        "medicoId": "med-r",
+        "inicio": "10:30",
+        "fim": "11:00"
+      },
+      {
+        "medicoId": "med-r",
+        "inicio": "17:00",
+        "fim": "17:30"
+      },
+      {
+        "medicoId": "med-m",
+        "inicio": "11:30",
+        "fim": "11:50"
+      }
+    ]
+  }
 }

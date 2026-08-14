@@ -1,4 +1,12 @@
-import type { Passo, ServicoExposto, StatusPreAgendamento, SeveridadeRegra } from '@/../product-clinic/sections/agendamento-whatsapp/types'
+import type {
+  AgendaDoDia,
+  HorarioLivre,
+  Passo,
+  ProfissionalBot,
+  ServicoExposto,
+  SeveridadeRegra,
+  StatusPreAgendamento,
+} from '@/../product-clinic/sections/agendamento-whatsapp/types'
 
 /** Bolha do chat: uma linha do bot ou a escolha do paciente ecoada. */
 export interface Bolha {
@@ -51,6 +59,50 @@ export function moeda(valor: number): string {
 /** Linha de resumo de um serviço, como o bot escreveria. */
 export function resumoServico(s: ServicoExposto): string {
   return s.preco === 0 ? `${s.duracaoMin} min · sem custo` : `${s.duracaoMin} min · R$ ${moeda(s.preco)}`
+}
+
+function paraMinutos(hhmm: string): number {
+  const [h, m] = hhmm.split(':').map(Number)
+  return h * 60 + m
+}
+
+function paraHora(minutos: number): string {
+  return `${String(Math.floor(minutos / 60)).padStart(2, '0')}:${String(minutos % 60).padStart(2, '0')}`
+}
+
+/**
+ * Vãos livres da agenda para um serviço, em passos de 30 min.
+ *
+ * O bot **não tem lista própria de horário**: ele varre o expediente e descarta tudo que colide com
+ * um bloco já ocupado do médico. Trocar o serviço muda a duração e, com ela, os vãos que cabem —
+ * é por isso que o serviço vem antes da data no fluxo.
+ *
+ * `medicosElegiveis` é quem atende aquele serviço; quando o paciente escolhe "Primeiro horário
+ * disponível" entram todos, e cada horário sai com o nome de quem está livre nele.
+ */
+export function horariosLivres(
+  agenda: AgendaDoDia,
+  duracaoMin: number,
+  medicosElegiveis: ProfissionalBot[],
+  maximo = 8,
+): HorarioLivre[] {
+  const abre = paraMinutos(agenda.horaInicio)
+  const fecha = paraMinutos(agenda.horaFim)
+  const livres: HorarioLivre[] = []
+
+  for (let inicio = abre; inicio + duracaoMin <= fecha && livres.length < maximo; inicio += 30) {
+    const fim = inicio + duracaoMin
+    const disponivel = medicosElegiveis.find((m) =>
+      agenda.ocupados
+        .filter((o) => o.medicoId === m.id)
+        .every((o) => fim <= paraMinutos(o.inicio) || inicio >= paraMinutos(o.fim)),
+    )
+    if (disponivel) {
+      livres.push({ hora: paraHora(inicio), medicoId: disponivel.id, medicoNome: disponivel.nome })
+    }
+  }
+
+  return livres
 }
 
 export const CORES_STATUS: Record<StatusPreAgendamento, string> = {

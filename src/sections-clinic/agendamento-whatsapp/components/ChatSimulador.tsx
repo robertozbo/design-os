@@ -10,6 +10,7 @@ import {
   Paperclip,
   Phone,
   RotateCcw,
+  Send,
   Signal,
   Smile,
   Video,
@@ -25,22 +26,37 @@ interface Props {
   /** Passo corrente; `undefined` enquanto o fluxo não tem próxima parada. */
   passo?: Passo
   onEscolher: (opcao: OpcaoPasso) => void
+  onEnviarTexto: (texto: string) => void
   onReiniciar: () => void
 }
 
-export function ChatSimulador({ clinica, telefone, bolhas, passo, onEscolher, onReiniciar }: Props) {
+export function ChatSimulador({
+  clinica,
+  telefone,
+  bolhas,
+  passo,
+  onEscolher,
+  onEnviarTexto,
+  onReiniciar,
+}: Props) {
   // Guarda em QUAL passo o painel foi aberto: assim ele se fecha sozinho quando o passo muda,
   // sem precisar de um effect que chama setState.
   const [abertaEm, setAbertaEm] = useState<string | null>(null)
   const listaAberta = abertaEm !== null && abertaEm === passo?.id
-  const fimRef = useRef<HTMLDivElement>(null)
+  const corpoRef = useRef<HTMLDivElement>(null)
 
   // Passo final não tem menu: a conversa simplesmente termina, como no WhatsApp. Reiniciar é
-  // controle do Design OS e vive fora do aparelho.
-  const temMenu = !!passo && passo.tipo !== 'final' && passo.opcoes.length > 0
+  // controle do Design OS e vive fora do aparelho. `entrada` também não tem menu — ali o paciente
+  // digita, e o campo de mensagem é que fica vivo.
+  const temMenu = !!passo && (passo.tipo === 'botoes' || passo.tipo === 'lista') && passo.opcoes.length > 0
+  const digitavel = passo?.tipo === 'entrada'
 
+  // Rola o container direto pelo `scrollTop`. `scrollIntoView` num sentinela não movia o scroller
+  // (o miolo está ancorado por `mt-auto`) e `scrollTo` com `behavior: smooth` não completava quando
+  // a altura do conteúdo mudava no mesmo frame — a mensagem nova ficava abaixo da dobra, invisível.
   useEffect(() => {
-    fimRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+    const corpo = corpoRef.current
+    if (corpo) corpo.scrollTop = corpo.scrollHeight
   }, [passo?.id, bolhas.length])
 
   return (
@@ -93,75 +109,77 @@ export function ChatSimulador({ clinica, telefone, bolhas, passo, onEscolher, on
 
           {/* Conversa — o papel de parede pontilhado é o do WhatsApp, bem discreto */}
           <div className="bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.05)_1px,transparent_0)] [background-size:14px_14px] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.04)_1px,transparent_0)]">
-            <div className="flex max-h-[26rem] min-h-[8rem] flex-col gap-1.5 overflow-y-auto px-3 py-3">
-              {bolhas.map((b, i) => (
-                <BolhaChat key={b.id} bolha={b} colada={ehUltimaDoBot(bolhas, i) && temMenu} />
-              ))}
+            {/* Altura FIXA: o aparelho não cresce conforme a conversa anda — quem rola é o chat,
+                como num celular de verdade. O `mt-auto` do miolo encosta as mensagens embaixo (é
+                onde o WhatsApp as ancora); `justify-end` no scroller cortaria o topo ao rolar. */}
+            <div ref={corpoRef} className="flex h-[24rem] flex-col overflow-y-auto px-3 py-3">
+              <div className="mt-auto flex flex-col gap-1.5">
+                {bolhas.map((b, i) => (
+                  <BolhaChat key={b.id} bolha={b} colada={ehUltimaDoBot(bolhas, i) && temMenu} />
+                ))}
 
-              {/* As opções são parte da última mensagem do bot — no WhatsApp elas vêm coladas
-                  embaixo da bolha, com divisória fina, não soltas no rodapé da conversa. */}
-              {temMenu && passo && (
-                <div className="-mt-1.5 flex justify-start">
-                  <div className="w-[85%] overflow-hidden rounded-b-lg bg-white shadow-sm dark:bg-[#202c33]">
-                    {passo.tipo === 'botoes' ? (
-                      passo.opcoes.map((o) => (
-                        <button
-                          key={o.id}
-                          onClick={() => onEscolher(o)}
-                          className="block w-full border-t border-slate-200/70 px-4 py-2 text-center text-[13px] font-medium text-[#0b7a5a] transition-colors hover:bg-[#25d366]/10 dark:border-white/10 dark:text-[#7ee2b8] dark:hover:bg-white/5"
-                        >
-                          {o.rotulo}
-                        </button>
-                      ))
-                    ) : (
-                      <>
-                        <button
-                          onClick={() => setAbertaEm(listaAberta ? null : (passo.id ?? null))}
-                          className="flex w-full items-center justify-center gap-2 border-t border-slate-200/70 px-4 py-2 text-[13px] font-medium text-[#0b7a5a] transition-colors hover:bg-[#25d366]/10 dark:border-white/10 dark:text-[#7ee2b8] dark:hover:bg-white/5"
-                        >
-                          <List className="h-4 w-4" /> {passo.titulo ?? 'Ver opções'}
-                        </button>
-                        {listaAberta && (
-                          <ul className="max-h-56 overflow-y-auto border-t border-slate-200/70 dark:border-white/10">
-                            {passo.opcoes.map((o) => (
-                              <li key={o.id} className="border-b border-slate-100 last:border-0 dark:border-white/5">
-                                <button
-                                  onClick={() => onEscolher(o)}
-                                  className="w-full px-3 py-2 text-left transition-colors hover:bg-slate-50 dark:hover:bg-white/5"
+                {/* As opções são parte da última mensagem do bot — no WhatsApp elas vêm coladas
+                    embaixo da bolha, com divisória fina, não soltas no rodapé da conversa. */}
+                {temMenu && passo && (
+                  <div className="-mt-1.5 flex justify-start">
+                    <div className="w-[85%] overflow-hidden rounded-b-lg bg-white shadow-sm dark:bg-[#202c33]">
+                      {passo.tipo === 'botoes' ? (
+                        passo.opcoes.map((o) => (
+                          <button
+                            key={o.id}
+                            onClick={() => onEscolher(o)}
+                            className="block w-full border-t border-slate-200/70 px-4 py-2 text-center text-[13px] font-medium text-[#0b7a5a] transition-colors hover:bg-[#25d366]/10 dark:border-white/10 dark:text-[#7ee2b8] dark:hover:bg-white/5"
+                          >
+                            {o.rotulo}
+                          </button>
+                        ))
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => setAbertaEm(listaAberta ? null : (passo.id ?? null))}
+                            className="flex w-full items-center justify-center gap-2 border-t border-slate-200/70 px-4 py-2 text-[13px] font-medium text-[#0b7a5a] transition-colors hover:bg-[#25d366]/10 dark:border-white/10 dark:text-[#7ee2b8] dark:hover:bg-white/5"
+                          >
+                            <List className="h-4 w-4" /> {passo.titulo ?? 'Ver opções'}
+                          </button>
+                          {listaAberta && (
+                            <ul className="max-h-56 overflow-y-auto border-t border-slate-200/70 dark:border-white/10">
+                              {passo.opcoes.map((o) => (
+                                <li
+                                  key={o.id}
+                                  className="border-b border-slate-100 last:border-0 dark:border-white/5"
                                 >
-                                  <p className="text-[13px] text-slate-800 dark:text-slate-100">{o.rotulo}</p>
-                                  {o.descricao && (
-                                    <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
-                                      {o.descricao}
-                                    </p>
-                                  )}
-                                </button>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </>
-                    )}
+                                  <button
+                                    onClick={() => onEscolher(o)}
+                                    className="w-full px-3 py-2 text-left transition-colors hover:bg-slate-50 dark:hover:bg-white/5"
+                                  >
+                                    <p className="text-[13px] text-slate-800 dark:text-slate-100">{o.rotulo}</p>
+                                    {o.descricao && (
+                                      <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                                        {o.descricao}
+                                      </p>
+                                    )}
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </>
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
-
-              <div ref={fimRef} />
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Barra de digitar — inerte de propósito: quem responde aqui são os botões */}
-          <div className="flex items-center gap-2 bg-[#f0f0f0] px-2.5 py-2 dark:bg-[#1f2c34]">
-            <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full bg-white px-3 py-1.5 dark:bg-[#2a3942]">
-              <Smile className="h-4 w-4 shrink-0 text-slate-400" />
-              <span className="min-w-0 flex-1 truncate text-[13px] text-slate-400">Mensagem</span>
-              <Paperclip className="h-4 w-4 shrink-0 text-slate-400" />
-              <Camera className="h-4 w-4 shrink-0 text-slate-400" />
-            </div>
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#25d366]">
-              <Mic className="h-4 w-4 text-white" />
-            </span>
-          </div>
+          {/* Barra de digitar: viva só quando o passo pede texto (cadastro de quem não está no
+              pool). Nos passos de menu ela fica inerte, porque ali o bot só aceita opção. */}
+          <BarraDigitar
+            key={passo?.id ?? 'sem-passo'}
+            ativa={digitavel}
+            placeholder={passo?.placeholder ?? 'Mensagem'}
+            onEnviar={onEnviarTexto}
+          />
 
           {/* Home indicator */}
           <div className="flex justify-center bg-[#f0f0f0] pb-1.5 dark:bg-[#1f2c34]">
@@ -176,6 +194,60 @@ export function ChatSimulador({ clinica, telefone, bolhas, passo, onEscolher, on
           limite do WhatsApp · {passo.limite}
         </p>
       )}
+    </div>
+  )
+}
+
+function BarraDigitar({
+  ativa,
+  placeholder,
+  onEnviar,
+}: {
+  ativa: boolean
+  placeholder: string
+  onEnviar: (texto: string) => void
+}) {
+  const [texto, setTexto] = useState('')
+  const podeEnviar = ativa && texto.trim().length > 0
+
+  const enviar = () => {
+    if (!podeEnviar) return
+    onEnviar(texto.trim())
+    setTexto('')
+  }
+
+  return (
+    <div className="flex items-center gap-2 bg-[#f0f0f0] px-2.5 py-2 dark:bg-[#1f2c34]">
+      <div
+        className={`flex min-w-0 flex-1 items-center gap-2 rounded-full bg-white px-3 py-1.5 dark:bg-[#2a3942] ${
+          ativa ? 'ring-1 ring-[#25d366]/60' : ''
+        }`}
+      >
+        <Smile className="h-4 w-4 shrink-0 text-slate-400" />
+        <input
+          value={texto}
+          onChange={(e) => setTexto(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') enviar()
+          }}
+          disabled={!ativa}
+          placeholder={placeholder}
+          aria-label="Mensagem"
+          className="min-w-0 flex-1 bg-transparent text-[13px] text-slate-800 outline-none placeholder:text-slate-400 disabled:cursor-not-allowed dark:text-slate-100"
+        />
+        <Paperclip className="h-4 w-4 shrink-0 text-slate-400" />
+        <Camera className="h-4 w-4 shrink-0 text-slate-400" />
+      </div>
+      <button
+        onClick={enviar}
+        disabled={!podeEnviar}
+        aria-label={podeEnviar ? 'Enviar mensagem' : 'Gravar áudio'}
+        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#25d366] transition-opacity ${
+          ativa ? '' : 'cursor-default'
+        } ${ativa && !podeEnviar ? 'opacity-60' : ''}`}
+      >
+        {podeEnviar ? <Send className="h-4 w-4 text-white" /> : <Mic className="h-4 w-4 text-white" />}
+      </button>
     </div>
   )
 }

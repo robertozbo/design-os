@@ -41,11 +41,6 @@ export function FilaDoBot({ preAgendamentos, leads, onConfirmar, onRecusar, onCa
               <li key={p.id} className="bg-white px-4 py-3 dark:bg-slate-900">
                 <div className="flex flex-wrap items-start gap-x-2 gap-y-1">
                   <span className="text-sm font-medium text-slate-800 dark:text-slate-100">{p.paciente}</span>
-                  {p.novoPaciente && (
-                    <span className="rounded-md bg-rose-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-rose-600 dark:bg-rose-950/40 dark:text-rose-300">
-                      Novo
-                    </span>
-                  )}
                   <span
                     className={`rounded-md px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide ring-1 ${CORES_STATUS[p.status]}`}
                   >
@@ -122,7 +117,7 @@ export function FilaDoBot({ preAgendamentos, leads, onConfirmar, onRecusar, onCa
           <UserPlus className="h-4 w-4 text-slate-400" />
           <h2 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Leads</h2>
           <Contador n={leads.length} />
-          <span className="ml-auto text-[11px] text-slate-400">telefone fora do pool</span>
+          <span className="ml-auto text-[11px] text-slate-400">não agendaram — o bot parou aqui</span>
         </header>
 
         {leads.length === 0 ? (

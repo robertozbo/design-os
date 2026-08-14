@@ -23,6 +23,7 @@ interface Props {
   /** Passo corrente do simulador. */
   passo?: Passo
   onEscolherOpcao: (opcao: OpcaoPasso) => void
+  onEnviarTexto: (texto: string) => void
   onReiniciarSimulacao: () => void
   onSalvarConfig: (config: ConfigBot) => void
   onAlternarServicoExposto: (servicoId: string) => void
@@ -55,6 +56,7 @@ export function AgendamentoWhatsappView({
   bolhas,
   passo,
   onEscolherOpcao,
+  onEnviarTexto,
   onReiniciarSimulacao,
   onSalvarConfig,
   onAlternarServicoExposto,
@@ -94,6 +96,7 @@ export function AgendamentoWhatsappView({
           bolhas={bolhas}
           passo={passo}
           onEscolher={onEscolherOpcao}
+          onEnviarTexto={onEnviarTexto}
           onReiniciar={onReiniciarSimulacao}
         />
 

@@ -1,5 +1,6 @@
 export type StatusCanal = 'conectado' | 'mock' | 'desconectado'
-export type TipoPasso = 'botoes' | 'lista' | 'final'
+/** `entrada` = o paciente digita (nome, nascimento); os demais são menu fechado. */
+export type TipoPasso = 'botoes' | 'lista' | 'entrada' | 'final'
 export type StatusPreAgendamento = 'pendente' | 'confirmado' | 'recusado'
 export type SeveridadeRegra = 'urgencia' | 'clinico' | 'administrativo'
 
@@ -24,6 +25,10 @@ export interface Passo {
   opcoes: OpcaoPasso[]
   /** Restrição do WhatsApp exibida no rodapé (ex.: "3 botões", "até 10 linhas"). */
   limite?: string
+  /** Só em `entrada`: texto do campo de digitar enquanto vazio. */
+  placeholder?: string
+  /** Só em `entrada`: para onde vai depois que o paciente envia o texto. */
+  proximo?: string
 }
 
 export interface ServicoExposto {
@@ -43,6 +48,34 @@ export interface ProfissionalBot {
   especialidade: string
   /** Ids dos serviços que este profissional atende. */
   servicos: string[]
+}
+
+/** Um bloco já tomado na agenda de um médico. */
+export interface BlocoOcupado {
+  medicoId: string
+  inicio: string
+  fim: string
+}
+
+/**
+ * A agenda real do dia. É daqui que saem os horários oferecidos — o bot não tem lista própria.
+ * Espelha a section Agenda: mesmos `medicoId`, mesmos blocos.
+ */
+export interface AgendaDoDia {
+  /** ISO (`2026-07-21`). */
+  data: string
+  /** Rótulo pt-BR usado no chat (`ter, 21 jul`). */
+  rotuloData: string
+  horaInicio: string
+  horaFim: string
+  ocupados: BlocoOcupado[]
+}
+
+/** Um vão livre calculado: horário + de quem é. */
+export interface HorarioLivre {
+  hora: string
+  medicoId: string
+  medicoNome: string
 }
 
 export interface ConfigBot {
@@ -74,11 +107,13 @@ export interface PreAgendamento {
   /** Tempo relativo desde que o bot criou (ex.: "há 12 min"). */
   criadoEm: string
   status: StatusPreAgendamento
-  /** Telefone não estava no pool — cadastro nasceu na conversa. */
-  novoPaciente: boolean
 }
 
-/** Telefone não reconhecido: o bot coleta o básico e para. */
+/**
+ * Telefone não reconhecido. Aqui o bot **para**: coleta nome e nascimento e encerra, sem oferecer
+ * horário. Quem não está no pool não sai da conversa com consulta marcada — a Agenda não aceita
+ * nome livre, e sem cadastro não há convênio para calcular o valor.
+ */
 export interface Lead {
   id: string
   nome: string
@@ -113,6 +148,7 @@ export interface AgendamentoWhatsappData {
   config: ConfigBot
   servicos: ServicoExposto[]
   profissionais: ProfissionalBot[]
+  agendaDoDia: AgendaDoDia
   /** Máquina de estados do chat. `passoInicial` aponta a entrada. */
   passoInicial: string
   passos: Passo[]
@@ -128,6 +164,8 @@ export interface AgendamentoWhatsappProps {
   data: AgendamentoWhatsappData
   /** Avança o simulador para o passo escolhido. */
   onEscolherOpcao?: (passoId: string, opcaoId: string) => void
+  /** O paciente digitou e enviou texto livre num passo `entrada`. */
+  onEnviarTexto?: (passoId: string, texto: string) => void
   /** Volta o simulador ao passo inicial. */
   onReiniciarSimulacao?: () => void
   /** Salva o bloco de configuração (mock). */

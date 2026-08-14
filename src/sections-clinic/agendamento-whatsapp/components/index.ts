@@ -6,6 +6,7 @@ export {
   bolhasIniciais,
   fragmentosNegrito,
   horaDaBolha,
+  horariosLivres,
   moeda,
   passoPorId,
   resumoServico,
