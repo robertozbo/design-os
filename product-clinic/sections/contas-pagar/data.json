@@ -18,20 +18,36 @@
       "valor": 230
     },
     {
-      "nome": "Retorno",
-      "valor": 180
+      "nome": "Consulta · Clínica Geral",
+      "valor": 200
     },
     {
-      "nome": "Avaliação inicial",
-      "valor": 400
+      "nome": "Retorno",
+      "valor": 180
     },
     {
       "nome": "Teleconsulta",
       "valor": 220
     },
     {
+      "nome": "Avaliação inicial",
+      "valor": 400
+    },
+    {
+      "nome": "Sessão de psicoterapia",
+      "valor": 200
+    },
+    {
+      "nome": "Bioimpedância",
+      "valor": 120
+    },
+    {
       "nome": "Procedimento ambulatorial",
       "valor": 150
+    },
+    {
+      "nome": "Pacote mensal (4 sessões)",
+      "valor": 720
     }
   ],
   "categoriasPagar": [
@@ -81,7 +97,7 @@
       "contraparte": "Maria Silva Andrade",
       "categoria": null,
       "vencimento": "2026-07-08",
-      "valor": 250,
+      "valor": 180.0,
       "metodo": "Pix",
       "status": "pago",
       "pagoEm": "2026-07-08",
@@ -94,7 +110,7 @@
       "contraparte": "João Batista",
       "categoria": null,
       "vencimento": "2026-07-22",
-      "valor": 180,
+      "valor": 122.4,
       "metodo": "Boleto",
       "status": "aberto",
       "pagoEm": null,
@@ -120,7 +136,7 @@
       "contraparte": "Solange Amaral",
       "categoria": null,
       "vencimento": "2026-07-12",
-      "valor": 250,
+      "valor": 175.0,
       "metodo": "Pix",
       "status": "vencido",
       "pagoEm": null,
@@ -133,7 +149,7 @@
       "contraparte": "Débora Alves",
       "categoria": null,
       "vencimento": "2026-07-28",
-      "valor": 220,
+      "valor": 149.6,
       "metodo": "Convênio",
       "status": "aberto",
       "pagoEm": null,
