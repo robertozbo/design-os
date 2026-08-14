@@ -75,6 +75,23 @@ const GRUPOS: Grupo[] = [
       'perfil',
     ],
   },
+  // Coluna própria, e não um card dentro de Operacional: o WhatsApp é o único
+  // canal em que a clínica fala com quem AINDA NÃO é paciente. `mensagens` é
+  // conversa com quem já tem vínculo (e por isso vive sob a exigência de dois
+  // canais isolados do LGPD); aqui é aquisição, e o que sai da tela é fila de
+  // pré-agendamento e lead para alguém validar. Misturar os dois faria a
+  // Recepção procurar lead dentro da caixa de mensagens clínicas.
+  //
+  // Nasce com uma section porque é a única que existe hoje. O nome é
+  // "Automação" e não "WhatsApp" de propósito — o que agrupa aqui é
+  // "a clínica atende sem humano no meio", e é onde entram lembrete automático,
+  // confirmação de consulta e a camada de IA que a spec já descreve como V2.
+  {
+    label: 'Automação',
+    emoji: '🤖',
+    hint: 'Canais que atendem sem humano no meio',
+    sectionIds: ['agendamento-whatsapp'],
+  },
 ]
 
 export function ClinicSectionsPage() {
@@ -128,7 +145,11 @@ export function ClinicSectionsPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 items-start">
+          {/* 6 colunas no xl, não 5: o board é uma leitura de UMA olhada — a
+              coluna que quebra para a segunda linha deixa de ser lida como par
+              das outras e vira "o resto". Ao somar Automação, o `xl:grid-cols-5`
+              empurrava justamente a coluna nova para baixo. */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 items-start">
             {GRUPOS.map((g) => {
               const ids = g.sectionIds.filter((id) => allIdsSet.has(id))
               if (ids.length === 0) return null
