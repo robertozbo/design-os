@@ -5,6 +5,7 @@ export { FilaDoBot } from './FilaDoBot'
 export {
   bolhasIniciais,
   fragmentosNegrito,
+  horaDaBolha,
   moeda,
   passoPorId,
   resumoServico,

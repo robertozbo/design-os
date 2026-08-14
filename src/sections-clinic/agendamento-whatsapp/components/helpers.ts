@@ -5,6 +5,19 @@ export interface Bolha {
   id: string
   autor: 'bot' | 'paciente'
   texto: string
+  /** `HH:MM` exibido no rodapé da bolha. */
+  hora: string
+}
+
+/**
+ * Relógio do simulador. Começa em 09:41 e anda 1 minuto a cada duas bolhas — determinístico de
+ * propósito: se viesse de `new Date()`, cada screenshot sairia com um horário diferente.
+ */
+export function horaDaBolha(indice: number): string {
+  const minutos = 9 * 60 + 41 + Math.floor(indice / 2)
+  const hh = String(Math.floor(minutos / 60) % 24).padStart(2, '0')
+  const mm = String(minutos % 60).padStart(2, '0')
+  return `${hh}:${mm}`
 }
 
 export function passoPorId(passos: Passo[], id: string): Passo | undefined {
@@ -15,7 +28,12 @@ export function passoPorId(passos: Passo[], id: string): Passo | undefined {
 export function bolhasIniciais(passos: Passo[], passoInicial: string): Bolha[] {
   const passo = passoPorId(passos, passoInicial)
   if (!passo) return []
-  return passo.bot.map((texto, i) => ({ id: `${passo.id}-b${i}`, autor: 'bot' as const, texto }))
+  return passo.bot.map((texto, i) => ({
+    id: `${passo.id}-b${i}`,
+    autor: 'bot' as const,
+    texto,
+    hora: horaDaBolha(i),
+  }))
 }
 
 /**

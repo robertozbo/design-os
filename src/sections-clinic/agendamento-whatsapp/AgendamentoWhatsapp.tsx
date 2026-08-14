@@ -12,6 +12,7 @@ import {
   AgendamentoWhatsappView,
   type Bolha,
   bolhasIniciais,
+  horaDaBolha,
   passoPorId,
   resumoServico,
 } from './components'
@@ -66,11 +67,14 @@ export default function AgendamentoWhatsappPreview() {
     const destino = passoPorId(base.passos, opcao.proximo)
     if (!destino) return
 
-    setBolhas((prev) => [
-      ...prev,
-      { id: `p-${++bolhaSeq}`, autor: 'paciente', texto: opcao.rotulo },
-      ...destino.bot.map((texto) => ({ id: `b-${++bolhaSeq}`, autor: 'bot' as const, texto })),
-    ])
+    setBolhas((prev) => {
+      const novas: Bolha[] = [
+        { id: `p-${++bolhaSeq}`, autor: 'paciente', texto: opcao.rotulo, hora: '' },
+        ...destino.bot.map((texto) => ({ id: `b-${++bolhaSeq}`, autor: 'bot' as const, texto, hora: '' })),
+      ]
+      // A hora sai da posição na conversa, não do relógio — screenshot precisa ser reprodutível.
+      return [...prev, ...novas].map((b, i) => ({ ...b, hora: horaDaBolha(i) }))
+    })
     setPassoId(destino.id)
   }
 
