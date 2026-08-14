@@ -16,7 +16,7 @@ O painel de administração do workspace da clínica para o **Admin/Gestor**. Co
 ### Ligar/desligar integrações
 - Cada integração é um card com toggle; alternar dispara toast
 - Escriba IA mostra modelo + versão do transcritor/SOAP
-- WhatsApp aparece como **V2** (desabilitado)
+- WhatsApp fica **ligado** e leva à section `agendamento-whatsapp`; a **IA no atendimento** é a linha V2 (desabilitada)
 
 ### Gerir consentimentos (LGPD)
 - Lista de templates de consentimento (gravação de consulta, compartilhamento de prontuário entre médicos, uso de IA) com status ativo, versão e data
@@ -32,7 +32,7 @@ O painel de administração do workspace da clínica para o **Admin/Gestor**. Co
 - **Header**: "Configurações da clínica" + nome da clínica
 - **Dados da clínica**: logo placeholder + inputs (nome, CNPJ, endereço, telefone) + "Salvar"
 - **Plano & limites**: card com plano, uso de profissionais (barra X/max), "Gerenciar plano"
-- **Integrações**: grid de cards, cada um com ícone, nome, descrição, toggle (Memed, Escriba IA c/ modelo+versão, PIX, WhatsApp V2 desabilitado)
+- **Integrações**: grid de cards, cada um com ícone, nome, descrição, toggle (Memed, Escriba IA c/ modelo+versão, PIX, WhatsApp c/ atalho pro bot; IA no WhatsApp V2 desabilitada)
 - **Consentimentos (LGPD)**: lista com status (ativo), versão, data, "Ver termo"
 - **Audit log**: linhas com avatar + autor + papel + ação + alvo + tempo relativo, "Ver tudo"
 

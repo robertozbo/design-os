@@ -10,7 +10,7 @@
 > **Relação com Nymos Clínico:** o produto `clinico` (1 médico + secretária) continua como vertical própria. `clinica` **reusa** as sections clínicas (Consulta, Prontuário, Exames, Prescrição) e adiciona a camada multi-profissional (equipe, salas, prontuário compartilhado, gestão).
 > **Base já existente no backend:** `workspaces` (workspaceType `clinic`, `maxProfessionals`), `workspace_invites`, `professional_patients` + `professional_patient_scopes`. **Maior gap a construir:** compartilhamento de paciente/prontuário no nível do workspace (hoje é isolado por profissional).
 
-## V1 — 26 sections
+## V1 — 27 sections
 
 ### 1. Shell `[V1]`
 Três shells por persona, identidade Nymos (teal, DM Sans):
@@ -85,6 +85,15 @@ liberou, para o médico distinguir "não compartilhado" de "sem dado". Nested em
 para paciente vinculado. É o elo entre o app e a clínica: sem ele o app vira diário pessoal.
 `id: acompanhamento`.
 
+### 20. Agendamento por WhatsApp `[V1]`
+O canal de auto-agendamento no WhatsApp, visto pela **Recepção/Admin**: simulador do chat numa moldura
+de celular, configuração do bot (saudação, serviços expostos, antecedência, janela) e a **fila** de
+pré-agendamentos e leads que ele gerou. O bot é **determinístico** — botões e listas, sem texto gerado.
+A ordem é **serviço → profissional → data → hora**, porque é o serviço que traz `duracaoMin` e o preço;
+"Primeiro horário disponível" é sempre a primeira opção de profissional. Tudo nasce **pendente** e sem
+cobrança: quem confirma é a recepção. WhatsApp é canal **admin** — o bot não responde nada clínico e
+não escreve especialidade nem motivo. A camada de IA é V2 e aparece desligada. `id: agendamento-whatsapp`.
+
 ## V2
 
 - Faturamento de convênio (TUSS, SADT, glosa, recurso)
@@ -92,7 +101,8 @@ para paciente vinculado. É o elo entre o app e a clínica: sem ele o app vira d
 - Multi-unidade (rede de clínicas / filiais sob a mesma conta)
 - Enfermagem/técnico como papel com acesso clínico parcial (triagem, sinais vitais)
 - Triagem de mensagens por IA (classificar urgência, sugerir resposta)
-- WhatsApp Business (template Meta + opt-in)
+- IA no atendimento do WhatsApp (entender a 1ª mensagem, responder FAQ, rascunhar resposta) — o fluxo
+  determinístico da V1 continua sendo o fallback quando ela não tem certeza
 - DICOM viewer embutido (Cornerstone.js)
 - Compartilhamento entre verticais Nymos (Nutri/Personal/Psicólogo) com consentimento
 

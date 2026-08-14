@@ -1,7 +1,8 @@
 // Captura screenshots das sections do clinic via CDP direto (Playwright MCP indisponível).
 import { writeFileSync, mkdirSync } from 'node:fs'
 
-const BASE = 'http://localhost:3000'
+// O vite pula pra 3001/3002 quando a 3000 está ocupada (outra sessão) — daí o override por env.
+const BASE = process.env.DESIGN_OS_BASE ?? 'http://localhost:3000'
 const OUT = 'product-clinic/sections'
 const WIDTH = 1440
 const DSF = 1
@@ -17,7 +18,7 @@ const TARGETS = process.argv[2]
   : JSON.parse(readFileSync(join(AQUI, 'targets.json'), 'utf8'))
 const TEMA = process.argv[3] ?? 'light' // 'light' | 'dark'
 
-const targets = await (await fetch('http://127.0.0.1:9222/json')).json()
+const targets = await (await fetch(`http://127.0.0.1:${process.env.CDP_PORT ?? 9222}/json`)).json()
 const page = targets.find((t) => t.type === 'page')
 const ws = new WebSocket(page.webSocketDebuggerUrl)
 await new Promise((r) => (ws.onopen = r))

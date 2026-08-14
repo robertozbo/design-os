@@ -18,6 +18,7 @@ import {
   DoorOpen,
   FlaskConical,
   Home,
+  MessageCircle,
   MessageSquare,
   Pill,
   Settings as SettingsIcon,
@@ -91,6 +92,7 @@ export const NAV_ADMIN: NavGroup[] = [
     label: 'Operacional',
     items: [
       { label: 'Agenda', href: s('agenda'), icon: Calendar },
+      { label: 'WhatsApp', href: s('agendamento-whatsapp'), icon: MessageCircle },
       { label: 'Configurações', href: s('configuracoes-clinica'), icon: SettingsIcon },
     ],
   },
@@ -104,6 +106,7 @@ export const NAV_RECEPCAO: NavGroup[] = [
       { label: 'Agenda', href: s('agenda'), icon: Calendar },
       { label: 'Pacientes', href: s('pacientes'), icon: Users },
       { label: 'Mensagens', href: s('mensagens'), icon: MessageSquare },
+      { label: 'WhatsApp', href: s('agendamento-whatsapp'), icon: MessageCircle },
       { label: 'Cobrança', href: s('cobranca'), icon: CreditCard },
       { label: 'Configurações', href: s('configuracoes-recepcao'), icon: SettingsIcon },
     ],
@@ -161,6 +164,9 @@ export const PERSONA_DA_SECTION: Record<string, Persona> = {
   // Recepção — balcão
   agenda: 'recepcao',
   mensagens: 'recepcao',
+  // O Admin configura o bot, mas quem vive na fila é a recepção — fica com a persona menos
+  // privilegiada, como Agenda.
+  'agendamento-whatsapp': 'recepcao',
   cobranca: 'recepcao',
   'configuracoes-recepcao': 'recepcao',
 }
