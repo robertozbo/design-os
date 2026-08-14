@@ -13,10 +13,23 @@ export const ORDEM = [
   'inicio', 'inicio-gestao', 'equipe', 'salas', 'agenda', 'pacientes', 'consulta',
   'prontuario', 'acompanhamento', 'atendimentos', 'exames', 'prescricao',
   'encaminhamento', 'mensagens', 'cobranca', 'faturamento', 'contas-receber',
-  'contas-pagar', 'servicos', 'categorias-financeiras', 'fornecedores',
+  'contas-pagar', 'fluxo-caixa', 'servicos', 'categorias-financeiras', 'fornecedores',
   'relatorios', 'configuracoes-clinica', 'configuracoes-medico',
-  'configuracoes-recepcao', 'perfil',
+  'configuracoes-recepcao', 'perfil', 'agendamento-whatsapp',
 ]
+
+// `ORDEM` é escrita à mão, e sem esta trava uma section nova simplesmente não entra no pacote — sem
+// erro, sem aviso, com o script imprimindo "sections: 26" como se estivesse tudo certo. Foi assim
+// que `agendamento-whatsapp` e `fluxo-caixa` ficaram de fora do primeiro build.
+const NO_DISCO = readdirSync(PROD).filter((d) => !d.startsWith('_') && existsSync(`${PROD}/${d}/spec.md`))
+const ausentes = NO_DISCO.filter((d) => !ORDEM.includes(d))
+const fantasmas = ORDEM.filter((d) => !NO_DISCO.includes(d))
+if (ausentes.length || fantasmas.length) {
+  console.error('ORDEM está fora de sincronia com o disco.')
+  if (ausentes.length) console.error('  section com spec mas fora de ORDEM:', ausentes.join(', '))
+  if (fantasmas.length) console.error('  em ORDEM mas sem spec no disco:', fantasmas.join(', '))
+  process.exit(1)
+}
 
 /** Reescreve os imports de types para caminhos relativos ao pacote exportado. */
 function reescrever(code, section) {
