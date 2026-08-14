@@ -106,13 +106,16 @@ export function GraficoFluxo({ dias, hoje }: Props) {
         >
           <defs>
             {/* Hachura marca o previsto sem depender de cor — vale para daltônico e impressão. */}
-            <pattern id="fc-in" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-              <rect width="6" height="6" className="fill-teal-600/15" />
-              <line x1="0" y1="0" x2="0" y2="6" strokeWidth="3" className="stroke-teal-600/80" />
+            {/* Tile de 4px com traço de 1.5px: numa barra de 12px cabem ~3 listras. Com o tile de
+                6px anterior cabia UMA, e a barra baixa — que é a maioria — virava um borrão
+                indistinguível de barra realizada. */}
+            <pattern id="fc-in" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+              <rect width="4" height="4" className="fill-teal-600/10" />
+              <line x1="0" y1="0" x2="0" y2="4" strokeWidth="1.5" className="stroke-teal-600/85" />
             </pattern>
-            <pattern id="fc-out" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-              <rect width="6" height="6" className="fill-rose-600/15 dark:fill-rose-500/15" />
-              <line x1="0" y1="0" x2="0" y2="6" strokeWidth="3" className="stroke-rose-600/80 dark:stroke-rose-500/80" />
+            <pattern id="fc-out" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+              <rect width="4" height="4" className="fill-rose-600/10 dark:fill-rose-500/10" />
+              <line x1="0" y1="0" x2="0" y2="4" strokeWidth="1.5" className="stroke-rose-600/85 dark:stroke-rose-500/85" />
             </pattern>
           </defs>
 
@@ -162,7 +165,8 @@ export function GraficoFluxo({ dias, hoje }: Props) {
                     height={hIn}
                     rx="3"
                     fill={prev ? 'url(#fc-in)' : undefined}
-                    className={prev ? undefined : 'fill-teal-600'}
+                    strokeWidth={prev ? 1.25 : 0}
+                    className={prev ? 'stroke-teal-600' : 'fill-teal-600'}
                   />
                 )}
                 {d.saidas > 0 && (
@@ -173,7 +177,8 @@ export function GraficoFluxo({ dias, hoje }: Props) {
                     height={hOut}
                     rx="3"
                     fill={prev ? 'url(#fc-out)' : undefined}
-                    className={prev ? undefined : 'fill-rose-600 dark:fill-rose-500'}
+                    strokeWidth={prev ? 1.25 : 0}
+                    className={prev ? 'stroke-rose-600 dark:stroke-rose-500' : 'fill-rose-600 dark:fill-rose-500'}
                   />
                 )}
               </g>
@@ -315,8 +320,28 @@ export function GraficoFluxo({ dias, hoje }: Props) {
           Saldo acumulado
         </Chave>
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-sm border border-slate-400 bg-[repeating-linear-gradient(45deg,currentColor_0_2px,transparent_2px_4px)] text-slate-400" />
-          Previsto (hachurado)
+          {/* A amostra é desenhada com a MESMA hachura e o MESMO contorno das barras. Antes era um
+              quadrado de 10px com gradiente CSS: renderizava, mas naquele tamanho virava borrão e
+              não dizia nada sobre o que estava no gráfico. */}
+          <svg width="14" height="14" aria-hidden className="shrink-0">
+            <defs>
+              <pattern id="fc-leg" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                <rect width="4" height="4" className="fill-slate-500/10" />
+                <line x1="0" y1="0" x2="0" y2="4" strokeWidth="1.5" className="stroke-slate-500/85" />
+              </pattern>
+            </defs>
+            <rect
+              x="0.75"
+              y="1.75"
+              width="12.5"
+              height="10.5"
+              rx="3"
+              fill="url(#fc-leg)"
+              strokeWidth="1.25"
+              className="stroke-slate-500"
+            />
+          </svg>
+          Previsto (contorno + hachura)
         </span>
       </div>
     </div>
