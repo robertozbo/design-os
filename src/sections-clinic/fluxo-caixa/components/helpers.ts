@@ -129,9 +129,10 @@ export function montarAlerta(dias: DiaFluxo[]): AlertaCaixa | null {
 
 /**
  * Paleta do gráfico. Rodada em `scripts/validate_palette.js` nos dois modos — os seis checks passam.
- * `slate` reprovou no piso de croma (lia como cinza), por isso o saldo é indigo e não cinza.
+ * `slate` reprovou no piso de croma (lia como cinza). O saldo usa o **accent** do produto
+ * (`violet`), não uma cor inventada — indigo estava fora do token set da clínica.
  */
 export const CORES = {
-  claro: { entrada: '#0d9488', saida: '#e11d48', saldo: '#4f46e5' },
-  escuro: { entrada: '#0d9488', saida: '#f43f5e', saldo: '#6366f1' },
+  claro: { entrada: '#0d9488', saida: '#e11d48', saldo: '#7c3aed' },
+  escuro: { entrada: '#0d9488', saida: '#f43f5e', saldo: '#7c3aed' },
 } as const

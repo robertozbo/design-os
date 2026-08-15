@@ -223,14 +223,14 @@ export function GraficoFluxo({ dias, hoje }: Props) {
               </text>
             </g>
           ))}
-          <path d={linhaSaldo} fill="none" strokeWidth="2" strokeLinejoin="round" className="stroke-indigo-600 dark:stroke-indigo-500" />
+          <path d={linhaSaldo} fill="none" strokeWidth="2" strokeLinejoin="round" className="stroke-violet-600 dark:stroke-violet-500" />
           {dias.map((d, i) => (
             <circle
               key={d.data}
               cx={x(i)}
               cy={eSaldo.y(d.saldoAcumulado)}
               r={ativo === i ? 4 : 2.5}
-              className="fill-indigo-600 stroke-white dark:fill-indigo-500 dark:stroke-slate-900"
+              className="fill-violet-600 stroke-white dark:fill-violet-500 dark:stroke-slate-900"
               strokeWidth="1.5"
             />
           ))}
@@ -311,7 +311,7 @@ export function GraficoFluxo({ dias, hoje }: Props) {
             <Linha
               rotulo="Saldo"
               valor={moedaComSinal(dia.saldoAcumulado)}
-              cor={dia.saldoAcumulado < 0 ? 'text-rose-700 dark:text-rose-400' : 'text-indigo-700 dark:text-indigo-400'}
+              cor={dia.saldoAcumulado < 0 ? 'text-rose-700 dark:text-rose-400' : 'text-violet-700 dark:text-violet-400'}
             />
           </dl>
         </div>
@@ -321,7 +321,7 @@ export function GraficoFluxo({ dias, hoje }: Props) {
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-slate-500 dark:text-slate-400">
         <Chave classe="bg-teal-600">Entradas</Chave>
         <Chave classe="bg-rose-600 dark:bg-rose-500">Saídas</Chave>
-        <Chave classe="bg-indigo-600 dark:bg-indigo-500" linha>
+        <Chave classe="bg-violet-600 dark:bg-violet-500" linha>
           Saldo acumulado
         </Chave>
         <span className="inline-flex items-center gap-1.5">
