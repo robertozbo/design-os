@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Layers, ArrowLeft, Smartphone, HardHat, Radio } from 'lucide-react'
+import { Layers, ArrowLeft, Smartphone, HardHat, Radio, Palette } from 'lucide-react'
 import { PhaseNav } from './PhaseNav'
 import { ThemeToggle } from './ThemeToggle'
 import { Button } from '@/components/ui/button'
@@ -56,6 +56,13 @@ export function AppLayout({
               )}
               <div className="ml-auto flex items-center gap-2">
                 <Link
+                  to="/brand"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  <Palette className="w-3.5 h-3.5" strokeWidth={1.7} />
+                  Marca
+                </Link>
+                <Link
                   to="/mobile"
                   className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
                 >
@@ -108,6 +115,13 @@ export function AppLayout({
             <div className="flex items-center justify-between gap-4">
               {/* Module links on left */}
               <div className="shrink-0 flex items-center gap-2">
+                <Link
+                  to="/brand"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  <Palette className="w-3.5 h-3.5" strokeWidth={1.7} />
+                  Marca
+                </Link>
                 <Link
                   to="/mobile"
                   className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"

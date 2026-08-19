@@ -7,6 +7,7 @@ import { SectionPage } from '@/components/SectionPage'
 import { ScreenDesignPage, ScreenDesignFullscreen } from '@/components/ScreenDesignPage'
 import { ShellDesignPage, ShellDesignFullscreen } from '@/components/ShellDesignPage'
 import { ExportPage } from '@/components/ExportPage'
+import { BrandPage } from '@/components/BrandPage'
 import { MobileSectionsPage, MobileSectionPage } from '@/components/MobilePage'
 import { PsicologoSectionsPage, PsicologoSectionPage } from '@/components/PsicologoPage'
 import { PersonalSectionsPage, PersonalSectionPage } from '@/components/PersonalPage'
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
   {
     path: '/design',
     element: <DesignPage />,
+  },
+  {
+    path: '/brand',
+    element: <BrandPage />,
   },
   {
     path: '/sections',
