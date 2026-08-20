@@ -17,13 +17,12 @@ interface Ponto {
 }
 
 /**
- * Acumulado da comissão dia a dia. Glosa fica de fora: ela nunca vira dinheiro, e uma curva que
- * sobe com valor glosado promete um repasse que não existe.
+ * Acumulado da comissão dia a dia — conta o atendimento feito, pago ou não. É a leitura de
+ * produção; o que já virou dinheiro está no card de próximo repasse.
  */
 function serie(extrato: LinhaExtrato[]): Ponto[] {
   const porDia = new Map<string, { label: string; total: number }>()
   for (const l of extrato) {
-    if (l.status === 'glosado') continue
     const atual = porDia.get(l.data) ?? { label: l.dataLabel, total: 0 }
     atual.total += l.valorRepasse
     porDia.set(l.data, atual)

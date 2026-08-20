@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Clock, Hourglass } from 'lucide-react'
+import { Clock } from 'lucide-react'
 import type {
   FiltroExtrato,
   LinhaExtrato,
 } from '@/../product-clinic/sections/meus-recebimentos/types'
-import { STATUS_META, brl, corFonte } from './helpers'
+import { STATUS_META, brl } from './helpers'
 
 interface Props {
   extrato: LinhaExtrato[]
@@ -15,8 +15,7 @@ interface Props {
 const FILTROS: { valor: FiltroExtrato; label: string }[] = [
   { valor: 'todos', label: 'Todos' },
   { valor: 'liberado', label: 'Liberado' },
-  { valor: 'aguardando', label: 'Aguardando' },
-  { valor: 'glosado', label: 'Glosado' },
+  { valor: 'aguardando', label: 'Em aberto' },
 ]
 
 /** Uma competência tem dezenas de atendimentos; a página inteira não pode virar tabela. */
@@ -58,11 +57,11 @@ export function ExtratoTabela({ extrato, filtro, onFiltro }: Props) {
       </div>
 
       {/* Cabeçalho só no desktop — no mobile cada linha vira bloco */}
-      <div className="hidden border-b border-slate-100 px-4 py-2 text-[10px] uppercase tracking-wide text-slate-400 dark:border-slate-800 lg:grid lg:grid-cols-[64px_1fr_150px_120px_88px_92px_104px] lg:gap-3">
+      <div className="hidden border-b border-slate-100 px-4 py-2 text-[10px] uppercase tracking-wide text-slate-400 dark:border-slate-800 lg:grid lg:grid-cols-[64px_1fr_160px_150px_96px_100px_104px] lg:gap-3">
         <span>Data</span>
         <span>Paciente</span>
         <span>Atendimento</span>
-        <span>Fonte</span>
+        <span>Pagamento</span>
         <span className="text-right">Valor</span>
         <span className="text-right">Sua parte</span>
         <span className="text-right">Situação</span>
@@ -94,7 +93,7 @@ function Linha({ linha: l }: { linha: LinhaExtrato }) {
   const meta = STATUS_META[l.status]
 
   return (
-    <li className="grid grid-cols-[1fr_auto] gap-2 px-4 py-2.5 text-xs transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/40 lg:grid-cols-[64px_1fr_150px_120px_88px_92px_104px] lg:items-center lg:gap-3">
+    <li className="grid grid-cols-[1fr_auto] gap-2 px-4 py-2.5 text-xs transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/40 lg:grid-cols-[64px_1fr_160px_150px_96px_100px_104px] lg:items-center lg:gap-3">
       <span className="order-1 text-[11px] tabular-nums text-slate-400 lg:order-none">
         {l.dataLabel}
       </span>
@@ -107,12 +106,14 @@ function Linha({ linha: l }: { linha: LinhaExtrato }) {
         {l.servico}
       </span>
 
-      <span className="order-5 lg:order-none">
-        <span
-          className={`inline-block rounded-full px-1.5 py-0.5 text-[10px] font-medium ${corFonte(l.fonte)}`}
-        >
-          {l.fonte}
-        </span>
+      <span className="order-5 col-span-2 truncate text-[11px] text-slate-400 lg:order-none lg:col-span-1">
+        {l.formaPagamento ? (
+          `${l.formaPagamento} · ${l.pagoEm}`
+        ) : (
+          <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400">
+            <Clock className="h-2.5 w-2.5" /> paciente não pagou
+          </span>
+        )}
       </span>
 
       <span className="order-6 tabular-nums text-slate-500 dark:text-slate-400 lg:order-none lg:text-right">
@@ -124,28 +125,10 @@ function Linha({ linha: l }: { linha: LinhaExtrato }) {
         <span className="ml-1 text-[10px] font-normal text-slate-400">{l.repassePct}%</span>
       </span>
 
-      <span className="order-2 flex flex-col items-end gap-0.5 lg:order-none">
+      <span className="order-2 flex justify-end lg:order-none">
         <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${meta.chip}`}>
           {meta.label}
         </span>
-        {l.status === 'aguardando' && (
-          <span className="inline-flex items-center gap-1 text-[10px] text-slate-400">
-            {l.origemEspera === 'convenio' ? (
-              <>
-                <Hourglass className="h-2.5 w-2.5" /> convênio · {l.previsaoLabel}
-              </>
-            ) : (
-              <>
-                <Clock className="h-2.5 w-2.5" /> paciente em aberto
-              </>
-            )}
-          </span>
-        )}
-        {l.status === 'glosado' && l.motivoGlosa && (
-          <span className="max-w-48 text-right text-[10px] leading-tight text-rose-500 dark:text-rose-400">
-            {l.motivoGlosa}
-          </span>
-        )}
       </span>
     </li>
   )

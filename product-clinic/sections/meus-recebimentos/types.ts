@@ -2,13 +2,12 @@ export type CorAtuacao = 'teal' | 'rose' | 'violet' | 'slate' | 'sky' | 'amber'
 
 /**
  * O que o profissional já pode contar como dinheiro e o que ainda não.
- * - `liberado`: a clínica recebeu; entra no próximo repasse
- * - `aguardando`: a clínica ainda não recebeu (convênio em análise ou paciente em aberto)
- * - `glosado`: o convênio negou; **não vira comissão**
+ * - `liberado`: o paciente pagou; entra no próximo repasse
+ * - `aguardando`: atendimento feito, pagamento em aberto; entra quando a clínica receber
+ *
+ * V1 é só particular. Convênio (e a glosa que vem junto) fica para depois.
  */
-export type StatusLinha = 'liberado' | 'aguardando' | 'glosado'
-
-export type OrigemEspera = 'convenio' | 'paciente'
+export type StatusLinha = 'liberado' | 'aguardando'
 
 export type FiltroExtrato = 'todos' | StatusLinha
 
@@ -28,7 +27,7 @@ export interface Contrato {
   regra: string
   /** Dia do mês em que a clínica paga o repasse. */
   diaPagamento: number
-  prazoConvenio: string
+  prazoPagamento: string
 }
 
 export interface LinhaExtrato {
@@ -37,16 +36,14 @@ export interface LinhaExtrato {
   dataLabel: string
   pacienteNome: string
   pacienteIniciais: string
+  /** Tipo de atendimento — é ele que define o % do contrato. */
   servico: string
-  /** 'Particular' ou o nome do convênio. */
-  fonte: string
   valorBruto: number
   repassePct: number
   valorRepasse: number
   status: StatusLinha
-  origemEspera: OrigemEspera | null
-  previsaoLabel: string | null
-  motivoGlosa: string | null
+  formaPagamento: string | null
+  pagoEm: string | null
 }
 
 export interface Deducao {
@@ -56,13 +53,13 @@ export interface Deducao {
   valor: number
 }
 
-export interface PorFonte {
+export interface PorServico {
   nome: string
+  repassePct: number
   atendimentos: number
   valorRepasse: number
   liberado: number
   aguardando: number
-  glosado: number
   pct: number
 }
 
@@ -78,7 +75,6 @@ export interface ResumoCompetencia {
   comissao: number
   liberado: number
   aguardando: number
-  glosado: number
   deducoesTotal: number
   /** `liberado − deduções` — é o que cai na conta na data prevista. */
   liquidoPrevisto: number
@@ -102,7 +98,7 @@ export interface MeusRecebimentosData {
   profissional: ProfissionalRef
   contrato: Contrato
   resumo: ResumoCompetencia
-  porFonte: PorFonte[]
+  porServico: PorServico[]
   deducoes: Deducao[]
   extrato: LinhaExtrato[]
   historico: RepassePago[]

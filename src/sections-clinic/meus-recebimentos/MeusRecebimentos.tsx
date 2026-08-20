@@ -35,7 +35,7 @@ export default function MeusRecebimentosPreview() {
         profissional={base.profissional}
         contrato={base.contrato}
         resumo={base.resumo}
-        porFonte={base.porFonte}
+        porServico={base.porServico}
         deducoes={base.deducoes}
         extrato={base.extrato}
         historico={base.historico}

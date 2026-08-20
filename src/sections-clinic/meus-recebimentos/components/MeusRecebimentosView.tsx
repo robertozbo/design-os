@@ -1,25 +1,25 @@
-import { AlertTriangle, Download, Info, Minus, Wallet } from 'lucide-react'
+import { Download, Info, Minus, Wallet } from 'lucide-react'
 import type {
   Contrato,
   Deducao,
   FiltroExtrato,
   LinhaExtrato,
   ProfissionalRef,
-  PorFonte,
+  PorServico,
   RepassePago,
   ResumoCompetencia,
 } from '@/../product-clinic/sections/meus-recebimentos/types'
 import { AcumuladoChart } from './AcumuladoChart'
 import { ExtratoTabela } from './ExtratoTabela'
 import { HistoricoRepasses } from './HistoricoRepasses'
-import { STATUS_META, barraFonte, brl, brlCurto } from './helpers'
+import { STATUS_META, barraServico, brl, brlCurto } from './helpers'
 
 interface Props {
   clinica: string
   profissional: ProfissionalRef
   contrato: Contrato
   resumo: ResumoCompetencia
-  porFonte: PorFonte[]
+  porServico: PorServico[]
   deducoes: Deducao[]
   extrato: LinhaExtrato[]
   historico: RepassePago[]
@@ -34,7 +34,7 @@ export function MeusRecebimentosView({
   profissional,
   contrato,
   resumo,
-  porFonte,
+  porServico,
   deducoes,
   extrato,
   historico,
@@ -43,11 +43,10 @@ export function MeusRecebimentosView({
   onExportar,
   onAbrirRecibo,
 }: Props) {
-  const totalComissao = resumo.comissao + resumo.glosado || 1
+  const totalComissao = resumo.comissao || 1
   const pctLiberado = (resumo.liberado / totalComissao) * 100
   const pctAguardando = (resumo.aguardando / totalComissao) * 100
-  const pctGlosado = (resumo.glosado / totalComissao) * 100
-  const maiorFonte = Math.max(...porFonte.map((f) => f.valorRepasse), 1)
+  const maiorServico = Math.max(...porServico.map((s) => s.valorRepasse), 1)
   // Acumulado do que a clínica JÁ pagou. O que ainda não caiu está no card de próximo repasse —
   // somar os dois num número só faria "recebido" incluir dinheiro que ainda não existe.
   const recebidoNoAno = historico.reduce((s, r) => s + r.liquido, 0)
@@ -101,17 +100,8 @@ export function MeusRecebimentosView({
             {brl(resumo.aguardando)}
           </div>
           <p className="mt-2 text-[11px] leading-snug text-slate-600 dark:text-slate-300">
-            {contrato.prazoConvenio}
+            {contrato.prazoPagamento}
           </p>
-          {resumo.glosado > 0 && (
-            <div className="mt-3 flex items-start gap-1.5 border-t border-amber-200/70 pt-2.5 text-[11px] text-rose-600 dark:border-amber-900/60 dark:text-rose-300">
-              <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0" />
-              <span>
-                <span className="font-medium tabular-nums">{brl(resumo.glosado)}</span> glosados pelo
-                convênio — não entram na comissão.
-              </span>
-            </div>
-          )}
         </div>
       </div>
 
@@ -129,52 +119,51 @@ export function MeusRecebimentosView({
           <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-50">
             Como está sua comissão do mês
           </h2>
-          <span className="text-[11px] text-slate-400">
-            base {brl(resumo.comissao + resumo.glosado)}
-          </span>
+          <span className="text-[11px] text-slate-400">base {brl(resumo.comissao)}</span>
         </div>
         <div className="mt-3 flex h-2.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
           <div className={STATUS_META.liberado.barra} style={{ width: `${pctLiberado}%` }} />
           <div className={STATUS_META.aguardando.barra} style={{ width: `${pctAguardando}%` }} />
-          <div className={STATUS_META.glosado.barra} style={{ width: `${pctGlosado}%` }} />
         </div>
         <div className="mt-2.5 flex flex-wrap gap-x-5 gap-y-1.5 text-[11px]">
           <Legenda cor={STATUS_META.liberado.barra} label="Liberado" valor={resumo.liberado} />
-          <Legenda cor={STATUS_META.aguardando.barra} label="Aguardando" valor={resumo.aguardando} />
-          <Legenda cor={STATUS_META.glosado.barra} label="Glosado" valor={resumo.glosado} />
+          <Legenda cor={STATUS_META.aguardando.barra} label="Em aberto" valor={resumo.aguardando} />
         </div>
       </div>
 
       {/* Acumulado dia a dia + projeção do fechamento */}
       <AcumuladoChart extrato={extrato} resumo={resumo} />
 
-      {/* Por fonte + deduções */}
+      {/* Por tipo de atendimento + deduções */}
       <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
         <div className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
           <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-50">
             De onde vem sua comissão
           </h2>
           <ul className="mt-3 space-y-3">
-            {porFonte.map((f) => (
-              <li key={f.nome}>
+            {porServico.map((s) => (
+              <li key={s.nome}>
                 <div className="flex items-baseline justify-between gap-2 text-xs">
-                  <span className="font-medium text-slate-700 dark:text-slate-200">{f.nome}</span>
+                  <span className="font-medium text-slate-700 dark:text-slate-200">
+                    {s.nome}
+                    <span className="ml-1.5 font-normal text-slate-400">{s.repassePct}%</span>
+                  </span>
                   <span className="tabular-nums text-slate-500 dark:text-slate-400">
-                    {brl(f.valorRepasse)}
+                    {brl(s.valorRepasse)}
                     <span className="ml-1.5 text-slate-400">
-                      {f.pct}% · {f.atendimentos} atend.
+                      {s.pct}% · {s.atendimentos} atend.
                     </span>
                   </span>
                 </div>
                 <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                   <div
-                    className={`h-full ${barraFonte(f.nome)}`}
-                    style={{ width: `${(f.valorRepasse / maiorFonte) * 100}%` }}
+                    className={`h-full ${barraServico(s.nome)}`}
+                    style={{ width: `${(s.valorRepasse / maiorServico) * 100}%` }}
                   />
                 </div>
-                {f.aguardando > 0 && (
+                {s.aguardando > 0 && (
                   <div className="mt-1 text-[10px] text-amber-600 dark:text-amber-400">
-                    {brl(f.aguardando)} ainda aguardando pagamento
+                    {brl(s.aguardando)} ainda em aberto com o paciente
                   </div>
                 )}
               </li>
