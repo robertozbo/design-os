@@ -42,7 +42,14 @@ const GRUPOS: Grupo[] = [
     label: 'Clínico',
     emoji: '📋',
     hint: 'Prontuário compartilhado · exames · receita',
-    sectionIds: ['prontuario', 'acompanhamento', 'exames', 'prescricao', 'encaminhamento'],
+    sectionIds: [
+      'prontuario',
+      'acompanhamento',
+      'exames',
+      'prescricao',
+      'relatorios-medicos',
+      'encaminhamento',
+    ],
   },
   {
     label: 'Gestão',
@@ -53,9 +60,10 @@ const GRUPOS: Grupo[] = [
   {
     label: 'Financeiro',
     emoji: '💰',
-    hint: 'Serviços · contas · fornecedores',
+    hint: 'Serviços · convênios · contas · fornecedores',
     sectionIds: [
       'servicos',
+      'convenios',
       'fornecedores',
       'contas-receber',
       'contas-pagar',

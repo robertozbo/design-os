@@ -16,6 +16,7 @@ import {
   ClipboardList,
   CreditCard,
   DoorOpen,
+  FileText,
   FlaskConical,
   Home,
   LineChart,
@@ -23,6 +24,7 @@ import {
   MessageSquare,
   Pill,
   Settings as SettingsIcon,
+  ShieldCheck,
   Stethoscope,
   Tag,
   Tags,
@@ -51,6 +53,7 @@ export const NAV_MEDICO: NavGroup[] = [
       { label: 'Atendimentos', href: s('atendimentos'), icon: ClipboardList },
       { label: 'Exames', href: s('exames'), icon: FlaskConical },
       { label: 'Prescrições', href: s('prescricao'), icon: Pill },
+      { label: 'Relatórios', href: s('relatorios-medicos'), icon: FileText },
     ],
   },
   {
@@ -86,6 +89,7 @@ export const NAV_ADMIN: NavGroup[] = [
     label: 'Cadastros',
     items: [
       { label: 'Serviços', href: s('servicos'), icon: Tag },
+      { label: 'Convênios', href: s('convenios'), icon: ShieldCheck },
       { label: 'Fornecedores', href: s('fornecedores'), icon: Truck },
       { label: 'Tipos de conta', href: s('categorias-financeiras'), icon: Tags },
     ],
@@ -107,6 +111,9 @@ export const NAV_RECEPCAO: NavGroup[] = [
     items: [
       { label: 'Agenda', href: s('agenda'), icon: Calendar },
       { label: 'Pacientes', href: s('pacientes'), icon: Users },
+      // A recepção cria convênio digitando na ficha do paciente. Quem erra a grafia
+      // é ela, no balcão — então é ela que precisa do lugar de corrigir.
+      { label: 'Convênios', href: s('convenios'), icon: ShieldCheck },
       { label: 'Mensagens', href: s('mensagens'), icon: MessageSquare },
       { label: 'WhatsApp', href: s('agendamento-whatsapp'), icon: MessageCircle },
       { label: 'Cobrança', href: s('cobranca'), icon: CreditCard },
@@ -145,6 +152,9 @@ export const PERSONA_DA_SECTION: Record<string, Persona> = {
   exames: 'medico',
   prescricao: 'medico',
   encaminhamento: 'medico',
+  // Documento clínico que o médico assina (atestado, laudo, relatório). Não confundir com
+  // `relatorios`, que é o painel gerencial do admin — o nome colide, a persona não.
+  'relatorios-medicos': 'medico',
   perfil: 'medico',
   'configuracoes-medico': 'medico',
   // Pacientes tem duas telas: `PacientesLista` (médico — condições crônicas, equipe de cuidado) e
@@ -161,6 +171,10 @@ export const PERSONA_DA_SECTION: Record<string, Persona> = {
   'contas-pagar': 'admin',
   'fluxo-caixa': 'admin',
   servicos: 'admin',
+  // Aparece nos dois navs (Cadastros do admin e Principal da recepção) e a tela é a
+  // mesma — não há campo escondido por papel. Fica com `admin` porque o preview que
+  // faz sentido é o dos Cadastros, ao lado de Serviços e Tipos de conta.
+  convenios: 'admin',
   fornecedores: 'admin',
   'categorias-financeiras': 'admin',
   'configuracoes-clinica': 'admin',
