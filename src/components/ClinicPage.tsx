@@ -76,6 +76,7 @@ const GRUPOS: Grupo[] = [
     hint: 'Mensagens · cobrança · config',
     sectionIds: [
       'mensagens',
+      'meus-recebimentos',
       'cobranca',
       'configuracoes-medico',
       'configuracoes-clinica',

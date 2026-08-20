@@ -30,6 +30,7 @@ import {
   Tags,
   Truck,
   Users,
+  Wallet,
 } from 'lucide-react'
 import type { NavGroup } from './components'
 
@@ -60,6 +61,7 @@ export const NAV_MEDICO: NavGroup[] = [
     label: 'Operacional',
     items: [
       { label: 'Mensagens', href: s('mensagens'), icon: MessageSquare },
+      { label: 'Meus recebimentos', href: s('meus-recebimentos'), icon: Wallet },
       { label: 'Configurações', href: s('configuracoes-medico'), icon: SettingsIcon },
     ],
   },
@@ -155,6 +157,9 @@ export const PERSONA_DA_SECTION: Record<string, Persona> = {
   // Documento clínico que o médico assina (atestado, laudo, relatório). Não confundir com
   // `relatorios`, que é o painel gerencial do admin — o nome colide, a persona não.
   'relatorios-medicos': 'medico',
+  // A comissão do próprio profissional. É financeiro, mas não é o financeiro da clínica: mostra só
+  // o que ELE tem a receber, e por isso vive na persona médico, não na admin.
+  'meus-recebimentos': 'medico',
   perfil: 'medico',
   'configuracoes-medico': 'medico',
   // Pacientes tem duas telas: `PacientesLista` (médico — condições crônicas, equipe de cuidado) e
