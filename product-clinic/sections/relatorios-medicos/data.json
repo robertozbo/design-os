@@ -1,0 +1,360 @@
+{
+  "_meta": {
+    "models": {
+      "modeloRelatorio": "Texto-base de cada tipo de documento, com placeholders {{chave}}.",
+      "pacienteSelector": "Paciente do médico logado + as consultas dele (fonte da data da consulta).",
+      "relatorio": "Documento já gerado: rascunho, emitido ou enviado por e-mail."
+    },
+    "relationships": [
+      "Relatorio nasce de um ModeloRelatorio + um Paciente + uma Consulta",
+      "Relatorio enviado guarda o e-mail de destino e a data do envio",
+      "Consulta pertence ao paciente e ao médico logado"
+    ]
+  },
+  "clinica": {
+    "nome": "Clínica Nymos · Vila Mariana",
+    "cnpj": "12.345.678/0001-90",
+    "endereco": "Rua Domingos de Morais, 1820 · Vila Mariana · São Paulo/SP",
+    "telefone": "(11) 3555-2020",
+    "email": "contato@clinicanymos.com.br"
+  },
+  "medicoLogado": {
+    "id": "med-helena",
+    "nome": "Dra. Helena Prado",
+    "iniciais": "HP",
+    "crm": "CRM 456789-SP",
+    "rqe": "RQE 21430",
+    "especialidade": "Endocrinologia",
+    "cor": "teal"
+  },
+  "modelos": [
+    {
+      "tipo": "relatorio-medico",
+      "titulo": "Relatório médico",
+      "descricao": "Relato circunstanciado do quadro clínico — para convênio, perícia ou outro profissional.",
+      "campo": null,
+      "exigeCid": false,
+      "corpo": [
+        "Atesto, para os devidos fins, que o(a) paciente {{paciente}}, {{idade}} anos, inscrito(a) no CPF {{cpf}}, encontra-se sob meus cuidados médicos, tendo comparecido a consulta em {{dataConsulta}}.",
+        "Motivo da avaliação: {{motivo}}.",
+        "Avaliação clínica: {{avaliacao}}",
+        "Hipótese diagnóstica codificada conforme CID-10: {{cid}}.",
+        "Conduta e plano terapêutico: {{conduta}}",
+        "Coloco-me à disposição para os esclarecimentos que se fizerem necessários."
+      ]
+    },
+    {
+      "tipo": "atestado",
+      "titulo": "Atestado médico",
+      "descricao": "Afastamento de atividades por um número de dias a partir da consulta.",
+      "campo": "dias",
+      "exigeCid": false,
+      "corpo": [
+        "Atesto, para os devidos fins, que o(a) paciente {{paciente}}, inscrito(a) no CPF {{cpf}}, esteve sob meus cuidados profissionais nesta data e necessita de afastamento de suas atividades por {{diasExtenso}}, a contar de {{dataConsulta}}.",
+        "Motivo: {{motivo}}.",
+        "CID-10: {{cid}} — informado mediante autorização expressa do(a) paciente.",
+        "O(a) paciente está apto(a) a retornar às suas atividades em {{dataRetorno}}, salvo nova avaliação."
+      ]
+    },
+    {
+      "tipo": "laudo",
+      "titulo": "Laudo médico",
+      "descricao": "Conclusão técnica sobre exames e achados da avaliação.",
+      "campo": null,
+      "exigeCid": false,
+      "corpo": [
+        "Paciente: {{paciente}}, {{idade}} anos, CPF {{cpf}}. Data da avaliação: {{dataConsulta}}.",
+        "Indicação clínica: {{motivo}}.",
+        "Achados e interpretação: {{avaliacao}}",
+        "Conclusão diagnóstica (CID-10 {{cid}}): quadro compatível com os achados descritos acima, em acompanhamento ambulatorial nesta clínica.",
+        "Recomendações: {{conduta}}"
+      ]
+    },
+    {
+      "tipo": "declaracao",
+      "titulo": "Declaração de comparecimento",
+      "descricao": "Comprova a presença do paciente na consulta, com horário de entrada e saída.",
+      "campo": "horario",
+      "exigeCid": false,
+      "corpo": [
+        "Declaro, para os devidos fins, que o(a) Sr(a). {{paciente}}, inscrito(a) no CPF {{cpf}}, compareceu a esta unidade em {{dataConsulta}}, permanecendo em atendimento no período das {{horaInicio}} às {{horaFim}}.",
+        "A presente declaração não substitui atestado médico e não contém informação sobre diagnóstico, em respeito ao sigilo profissional e à LGPD."
+      ]
+    },
+    {
+      "tipo": "evolucao",
+      "titulo": "Relatório de evolução",
+      "descricao": "Resumo do acompanhamento longitudinal — para convênio ou continuidade do cuidado.",
+      "campo": "periodo",
+      "exigeCid": false,
+      "corpo": [
+        "Relatório de evolução clínica do(a) paciente {{paciente}}, {{idade}} anos, CPF {{cpf}}, em acompanhamento em {{especialidade}} no período de {{periodo}}.",
+        "Última avaliação em {{dataConsulta}}, motivada por: {{motivo}}.",
+        "Evolução observada: {{avaliacao}}",
+        "Diagnóstico em acompanhamento (CID-10): {{cid}}.",
+        "Plano de seguimento: {{conduta}}",
+        "O quadro segue em acompanhamento regular nesta clínica."
+      ]
+    }
+  ],
+  "pacientes": [
+    {
+      "id": "pct-001",
+      "nome": "Maria Silva Andrade",
+      "iniciais": "MA",
+      "idade": 45,
+      "cpf": "123.456.789-00",
+      "email": "maria.andrade@email.com",
+      "convenio": "Particular",
+      "consultas": [
+        {
+          "id": "cst-001",
+          "data": "2026-08-18",
+          "dataLabel": "18 de agosto de 2026",
+          "horaInicio": "09:00",
+          "horaFim": "09:40",
+          "motivo": "Reavaliação de diabetes mellitus tipo 2 descompensada",
+          "especialidade": "Endocrinologia",
+          "cid": "E11.9",
+          "avaliacao": "HbA1c de 8,4% (anterior 9,1%), glicemia de jejum 156 mg/dL, IMC 31,2. Refere melhora da adesão à dieta e caminhadas três vezes por semana. Sem sinais de neuropatia periférica ao exame.",
+          "conduta": "Ajuste de metformina para 1.000 mg 2x/dia, associação de dapagliflozina 10 mg/dia, orientação nutricional e retorno em 90 dias com novo perfil glicêmico."
+        },
+        {
+          "id": "cst-002",
+          "data": "2026-05-12",
+          "dataLabel": "12 de maio de 2026",
+          "horaInicio": "14:30",
+          "horaFim": "15:10",
+          "motivo": "Consulta de rotina — controle glicêmico",
+          "especialidade": "Endocrinologia",
+          "cid": "E11.9",
+          "avaliacao": "HbA1c de 9,1%, glicemia de jejum 178 mg/dL. Adesão irregular à medicação nos últimos dois meses.",
+          "conduta": "Reforço de adesão, manutenção de metformina 850 mg 2x/dia e encaminhamento à nutrição."
+        }
+      ]
+    },
+    {
+      "id": "pct-002",
+      "nome": "Beatriz Camargo",
+      "iniciais": "BC",
+      "idade": 39,
+      "cpf": "987.654.321-00",
+      "email": "beatriz.camargo@email.com",
+      "convenio": "Unimed",
+      "consultas": [
+        {
+          "id": "cst-003",
+          "data": "2026-08-14",
+          "dataLabel": "14 de agosto de 2026",
+          "horaInicio": "11:00",
+          "horaFim": "11:35",
+          "motivo": "Investigação de resistência à insulina",
+          "especialidade": "Endocrinologia",
+          "cid": "E88.8",
+          "avaliacao": "Glicemia de jejum 118 mg/dL, HbA1c 6,1%, HOMA-IR 4,2, IMC 31,0. Acantose nigricans em região cervical posterior. Pressão arterial 132x86 mmHg.",
+          "conduta": "Introdução de metformina 500 mg à noite, plano alimentar com restrição de ultraprocessados, atividade física 150 min/semana e reavaliação laboratorial em 12 semanas."
+        }
+      ]
+    },
+    {
+      "id": "pct-003",
+      "nome": "Larissa Fontes",
+      "iniciais": "LF",
+      "idade": 33,
+      "cpf": "456.789.123-00",
+      "email": "larissa.fontes@email.com",
+      "convenio": "Bradesco Saúde",
+      "consultas": [
+        {
+          "id": "cst-004",
+          "data": "2026-08-19",
+          "dataLabel": "19 de agosto de 2026",
+          "horaInicio": "16:00",
+          "horaFim": "16:45",
+          "motivo": "Síndrome dos ovários policísticos com componente metabólico",
+          "especialidade": "Endocrinologia",
+          "cid": "E28.2",
+          "avaliacao": "Ciclos irregulares há oito meses, testosterona total no limite superior da normalidade, ultrassonografia com ovários de aspecto policístico. HOMA-IR 3,6.",
+          "conduta": "Metformina 500 mg 2x/dia, orientação de perda ponderal de 5% a 7% e seguimento conjunto com a Ginecologia em 60 dias."
+        },
+        {
+          "id": "cst-005",
+          "data": "2026-06-03",
+          "dataLabel": "3 de junho de 2026",
+          "horaInicio": "10:15",
+          "horaFim": "10:50",
+          "motivo": "Primeira avaliação endocrinológica",
+          "especialidade": "Endocrinologia",
+          "cid": null,
+          "avaliacao": "Queixa de ciclos irregulares e ganho de peso de 6 kg em um ano. Exame físico sem alterações relevantes além do IMC de 28,4.",
+          "conduta": "Solicitados perfil hormonal completo, glicemia, insulina e ultrassonografia pélvica."
+        }
+      ]
+    },
+    {
+      "id": "pct-004",
+      "nome": "Roberto Nunes Teixeira",
+      "iniciais": "RT",
+      "idade": 58,
+      "cpf": "321.654.987-00",
+      "email": "roberto.teixeira@email.com",
+      "convenio": "SulAmérica",
+      "consultas": [
+        {
+          "id": "cst-006",
+          "data": "2026-08-17",
+          "dataLabel": "17 de agosto de 2026",
+          "horaInicio": "08:20",
+          "horaFim": "08:55",
+          "motivo": "Hipotireoidismo em ajuste de dose",
+          "especialidade": "Endocrinologia",
+          "cid": "E03.9",
+          "avaliacao": "TSH 6,8 mUI/L com T4 livre no limite inferior. Refere fadiga vespertina e ganho de 3 kg desde a última consulta.",
+          "conduta": "Levotiroxina ajustada para 88 mcg/dia em jejum, reavaliação de TSH em 8 semanas."
+        }
+      ]
+    },
+    {
+      "id": "pct-005",
+      "nome": "Ana Clara Ribeiro",
+      "iniciais": "AR",
+      "idade": 27,
+      "cpf": "159.753.486-00",
+      "email": "anaclara.ribeiro@email.com",
+      "convenio": "Particular",
+      "consultas": [
+        {
+          "id": "cst-007",
+          "data": "2026-08-20",
+          "dataLabel": "20 de agosto de 2026",
+          "horaInicio": "13:00",
+          "horaFim": "13:30",
+          "motivo": "Crise de enxaqueca com náusea persistente",
+          "especialidade": "Endocrinologia",
+          "cid": "G43.9",
+          "avaliacao": "Cefaleia pulsátil há 48 horas, fotofobia e dois episódios de vômito. Sem sinais de alarme neurológico ao exame.",
+          "conduta": "Analgesia, hidratação, repouso em ambiente escuro e retorno se não houver melhora em 72 horas."
+        }
+      ]
+    }
+  ],
+  "relatorios": [
+    {
+      "id": "rel-001",
+      "numero": "REL-2026-0148",
+      "tipo": "relatorio-medico",
+      "titulo": "Relatório médico",
+      "paciente": {
+        "id": "pct-001",
+        "nome": "Maria Silva Andrade",
+        "iniciais": "MA",
+        "idade": 45,
+        "cpf": "123.456.789-00",
+        "email": "maria.andrade@email.com",
+        "convenio": "Particular"
+      },
+      "consultaData": "2026-08-18",
+      "consultaDataLabel": "18 de agosto de 2026",
+      "motivo": "Reavaliação de diabetes mellitus tipo 2 descompensada",
+      "cid": "E11.9",
+      "corpo": [
+        "Atesto, para os devidos fins, que a paciente Maria Silva Andrade, 45 anos, inscrita no CPF 123.456.789-00, encontra-se sob meus cuidados médicos, tendo comparecido a consulta em 18 de agosto de 2026.",
+        "Motivo da avaliação: reavaliação de diabetes mellitus tipo 2 descompensada.",
+        "Avaliação clínica: HbA1c de 8,4% (anterior 9,1%), glicemia de jejum 156 mg/dL, IMC 31,2. Refere melhora da adesão à dieta e caminhadas três vezes por semana.",
+        "Hipótese diagnóstica codificada conforme CID-10: E11.9.",
+        "Conduta e plano terapêutico: ajuste de metformina para 1.000 mg 2x/dia, associação de dapagliflozina 10 mg/dia e retorno em 90 dias.",
+        "Coloco-me à disposição para os esclarecimentos que se fizerem necessários."
+      ],
+      "status": "enviado",
+      "emitidoEm": "18 ago 2026",
+      "enviadoPara": "maria.andrade@email.com",
+      "enviadoEm": "18 ago 2026, 10:12"
+    },
+    {
+      "id": "rel-002",
+      "numero": "REL-2026-0147",
+      "tipo": "atestado",
+      "titulo": "Atestado médico",
+      "paciente": {
+        "id": "pct-005",
+        "nome": "Ana Clara Ribeiro",
+        "iniciais": "AR",
+        "idade": 27,
+        "cpf": "159.753.486-00",
+        "email": "anaclara.ribeiro@email.com",
+        "convenio": "Particular"
+      },
+      "consultaData": "2026-08-20",
+      "consultaDataLabel": "20 de agosto de 2026",
+      "motivo": "Crise de enxaqueca com náusea persistente",
+      "cid": "G43.9",
+      "corpo": [
+        "Atesto, para os devidos fins, que a paciente Ana Clara Ribeiro, inscrita no CPF 159.753.486-00, esteve sob meus cuidados profissionais nesta data e necessita de afastamento de suas atividades por 02 (dois) dias, a contar de 20 de agosto de 2026.",
+        "Motivo: crise de enxaqueca com náusea persistente.",
+        "CID-10: G43.9 — informado mediante autorização expressa da paciente.",
+        "A paciente está apta a retornar às suas atividades em 22 de agosto de 2026, salvo nova avaliação."
+      ],
+      "status": "emitido",
+      "emitidoEm": "20 ago 2026",
+      "enviadoPara": null,
+      "enviadoEm": null
+    },
+    {
+      "id": "rel-003",
+      "numero": "REL-2026-0145",
+      "tipo": "declaracao",
+      "titulo": "Declaração de comparecimento",
+      "paciente": {
+        "id": "pct-004",
+        "nome": "Roberto Nunes Teixeira",
+        "iniciais": "RT",
+        "idade": 58,
+        "cpf": "321.654.987-00",
+        "email": "roberto.teixeira@email.com",
+        "convenio": "SulAmérica"
+      },
+      "consultaData": "2026-08-17",
+      "consultaDataLabel": "17 de agosto de 2026",
+      "motivo": "Hipotireoidismo em ajuste de dose",
+      "cid": null,
+      "corpo": [
+        "Declaro, para os devidos fins, que o Sr. Roberto Nunes Teixeira, inscrito no CPF 321.654.987-00, compareceu a esta unidade em 17 de agosto de 2026, permanecendo em atendimento no período das 08:20 às 08:55.",
+        "A presente declaração não substitui atestado médico e não contém informação sobre diagnóstico, em respeito ao sigilo profissional e à LGPD."
+      ],
+      "status": "enviado",
+      "emitidoEm": "17 ago 2026",
+      "enviadoPara": "roberto.teixeira@email.com",
+      "enviadoEm": "17 ago 2026, 09:04"
+    },
+    {
+      "id": "rel-004",
+      "numero": "REL-2026-0143",
+      "tipo": "evolucao",
+      "titulo": "Relatório de evolução",
+      "paciente": {
+        "id": "pct-003",
+        "nome": "Larissa Fontes",
+        "iniciais": "LF",
+        "idade": 33,
+        "cpf": "456.789.123-00",
+        "email": "larissa.fontes@email.com",
+        "convenio": "Bradesco Saúde"
+      },
+      "consultaData": "2026-08-19",
+      "consultaDataLabel": "19 de agosto de 2026",
+      "motivo": "Síndrome dos ovários policísticos com componente metabólico",
+      "cid": "E28.2",
+      "corpo": [
+        "Relatório de evolução clínica da paciente Larissa Fontes, 33 anos, CPF 456.789.123-00, em acompanhamento em Endocrinologia no período de 3 de junho de 2026 a 19 de agosto de 2026.",
+        "Última avaliação em 19 de agosto de 2026, motivada por: síndrome dos ovários policísticos com componente metabólico.",
+        "Evolução observada: ciclos irregulares há oito meses, testosterona no limite superior da normalidade e HOMA-IR 3,6, com redução de 2 kg desde a primeira avaliação.",
+        "Diagnóstico em acompanhamento (CID-10): E28.2.",
+        "Plano de seguimento: metformina 500 mg 2x/dia, perda ponderal de 5% a 7% e seguimento conjunto com a Ginecologia em 60 dias."
+      ],
+      "status": "rascunho",
+      "emitidoEm": "19 ago 2026",
+      "enviadoPara": null,
+      "enviadoEm": null
+    }
+  ]
+}
