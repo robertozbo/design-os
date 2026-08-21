@@ -12,8 +12,9 @@ const OUT = 'product-plan-clinic'
 export const ORDEM = [
   'inicio', 'inicio-gestao', 'equipe', 'salas', 'agenda', 'pacientes', 'consulta',
   'prontuario', 'acompanhamento', 'atendimentos', 'exames', 'prescricao',
-  'encaminhamento', 'mensagens', 'cobranca', 'faturamento', 'contas-receber',
-  'contas-pagar', 'fluxo-caixa', 'servicos', 'categorias-financeiras', 'fornecedores',
+  'encaminhamento', 'relatorios-medicos', 'mensagens', 'cobranca', 'faturamento',
+  'contas-receber', 'contas-pagar', 'fluxo-caixa', 'meus-recebimentos',
+  'servicos', 'convenios', 'categorias-financeiras', 'fornecedores',
   'relatorios', 'configuracoes-clinica', 'configuracoes-medico',
   'configuracoes-recepcao', 'perfil', 'agendamento-whatsapp',
 ]
