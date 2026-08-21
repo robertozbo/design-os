@@ -1,0 +1,525 @@
+{
+  "_meta": {
+    "models": {
+      "baseAtendimento": "O que toda tela de atendimento tem: paciente, profissional, sessão, contexto e alertas.",
+      "atendimentoFisio": "Miolo da sessão de fisioterapia: EVA, condutas, ADM, testes, evolução.",
+      "atendimentoNutri": "Miolo da consulta de nutrição: antropometria, metas, recordatório, plano alimentar.",
+      "atendimentoPsi": "Miolo da sessão de psicologia: escalas, risco, registro SOAP, técnicas, tarefa."
+    },
+    "relationships": [
+      "Todo atendimento pertence a um paciente do pool da clínica e a um profissional",
+      "Sessão numerada dentro de um pacote (sessaoNumero/sessoesPacote) quando o tratamento tem pacote",
+      "Ao finalizar, o atendimento vira evolução assinada no Prontuário compartilhado"
+    ]
+  },
+  "clinica": "Clínica Nymos · Vila Mariana",
+  "fisioterapia": {
+    "id": "atd-fisio-01",
+    "dataLabel": "21 de agosto de 2026",
+    "horaInicio": "09:00",
+    "duracaoPrevistaMin": 50,
+    "motivo": "Lombalgia mecânica com irradiação para membro inferior direito",
+    "sessaoNumero": 7,
+    "sessoesPacote": 10,
+    "paciente": {
+      "id": "pct-004",
+      "nome": "Roberto Nunes Teixeira",
+      "iniciais": "RT",
+      "idade": 58,
+      "convenio": "SulAmérica",
+      "observacaoCritica": "Hipertenso em uso de losartana — evitar decúbito ventral prolongado"
+    },
+    "profissional": {
+      "nome": "Dr. Igor Beltrão",
+      "iniciais": "IB",
+      "conselho": "CREFITO-3 98765-F",
+      "profissao": "fisioterapia",
+      "atuacao": "Fisioterapia ortopédica",
+      "cor": "sky"
+    },
+    "evaChegada": 5,
+    "evaSaida": null,
+    "historicoEva": [
+      {
+        "sessao": 1,
+        "eva": 8
+      },
+      {
+        "sessao": 2,
+        "eva": 8
+      },
+      {
+        "sessao": 3,
+        "eva": 7
+      },
+      {
+        "sessao": 4,
+        "eva": 6
+      },
+      {
+        "sessao": 5,
+        "eva": 6
+      },
+      {
+        "sessao": 6,
+        "eva": 5
+      }
+    ],
+    "condutas": [
+      {
+        "id": "cd-1",
+        "nome": "TENS lombar",
+        "grupo": "eletroterapia",
+        "aplicada": true,
+        "detalhe": "20 min · 80 Hz"
+      },
+      {
+        "id": "cd-2",
+        "nome": "Ultrassom",
+        "grupo": "eletroterapia",
+        "aplicada": false,
+        "detalhe": null
+      },
+      {
+        "id": "cd-3",
+        "nome": "Mobilização articular L4-L5",
+        "grupo": "terapia-manual",
+        "aplicada": true,
+        "detalhe": "grau III · 3 séries"
+      },
+      {
+        "id": "cd-4",
+        "nome": "Liberação miofascial paravertebral",
+        "grupo": "terapia-manual",
+        "aplicada": true,
+        "detalhe": "8 min"
+      },
+      {
+        "id": "cd-5",
+        "nome": "Estabilização segmentar",
+        "grupo": "cinesioterapia",
+        "aplicada": true,
+        "detalhe": "3x10 · prancha 20s"
+      },
+      {
+        "id": "cd-6",
+        "nome": "Alongamento de isquiotibiais",
+        "grupo": "cinesioterapia",
+        "aplicada": true,
+        "detalhe": "3x30s bilateral"
+      },
+      {
+        "id": "cd-7",
+        "nome": "Fortalecimento de glúteo médio",
+        "grupo": "cinesioterapia",
+        "aplicada": false,
+        "detalhe": null
+      },
+      {
+        "id": "cd-8",
+        "nome": "Crioterapia local",
+        "grupo": "crioterapia",
+        "aplicada": false,
+        "detalhe": null
+      }
+    ],
+    "adm": [
+      {
+        "id": "adm-1",
+        "articulacao": "Coluna lombar",
+        "movimento": "Flexão",
+        "direito": 52,
+        "esquerdo": 52,
+        "referencia": 60
+      },
+      {
+        "id": "adm-2",
+        "articulacao": "Coluna lombar",
+        "movimento": "Extensão",
+        "direito": 18,
+        "esquerdo": 18,
+        "referencia": 25
+      },
+      {
+        "id": "adm-3",
+        "articulacao": "Quadril",
+        "movimento": "Flexão",
+        "direito": 105,
+        "esquerdo": 118,
+        "referencia": 120
+      },
+      {
+        "id": "adm-4",
+        "articulacao": "Quadril",
+        "movimento": "Rotação interna",
+        "direito": 28,
+        "esquerdo": 36,
+        "referencia": 40
+      }
+    ],
+    "testesFuncionais": [
+      {
+        "id": "tf-1",
+        "nome": "Lasègue (elevação da perna estendida)",
+        "resultado": "Positivo a 60° à direita — melhora de 15° desde a avaliação"
+      },
+      {
+        "id": "tf-2",
+        "nome": "Teste de Schober",
+        "resultado": "4,2 cm (inicial 3,1 cm)"
+      },
+      {
+        "id": "tf-3",
+        "nome": "Ponte isométrica",
+        "resultado": "38 s (inicial 12 s)"
+      }
+    ],
+    "evolucaoTexto": "Paciente refere melhora progressiva da dor lombar, com irradiação hoje limitada à face posterior da coxa (antes atingia panturrilha). Tolerou toda a série de estabilização sem exacerbação. Mantém rigidez matinal de ~20 min.",
+    "planoProxima": "Progredir carga da estabilização segmentar, introduzir fortalecimento de glúteo médio e reavaliar Lasègue. Reavaliação formal na sessão 10.",
+    "contexto": [
+      {
+        "id": "ctx-1",
+        "titulo": "Sessão 6",
+        "quando": "18 ago",
+        "resumo": "EVA 5 na chegada, 3 na saída. TENS + estabilização. Lasègue positivo a 55°."
+      },
+      {
+        "id": "ctx-2",
+        "titulo": "Sessão 5",
+        "quando": "14 ago",
+        "resumo": "EVA 6. Queixa de piora após dirigir 2h. Ênfase em terapia manual."
+      },
+      {
+        "id": "ctx-3",
+        "titulo": "Avaliação inicial",
+        "quando": "31 jul",
+        "resumo": "EVA 8, Schober 3,1 cm, Lasègue positivo a 45° à direita. RM com protrusão L4-L5."
+      }
+    ],
+    "alertas": [
+      {
+        "id": "al-1",
+        "texto": "Reavaliação cinético-funcional vence na sessão 10 (COFFITO)",
+        "tom": "atencao"
+      },
+      {
+        "id": "al-2",
+        "texto": "Encaminhado pela Dra. Helena Prado (Endocrinologia) em 29 jul",
+        "tom": "info"
+      }
+    ]
+  },
+  "nutricao": {
+    "id": "atd-nutri-01",
+    "dataLabel": "21 de agosto de 2026",
+    "horaInicio": "10:30",
+    "duracaoPrevistaMin": 45,
+    "motivo": "Retorno — controle de peso e resistência à insulina",
+    "sessaoNumero": 4,
+    "sessoesPacote": null,
+    "paciente": {
+      "id": "pct-002",
+      "nome": "Beatriz Camargo",
+      "iniciais": "BC",
+      "idade": 39,
+      "convenio": "Unimed",
+      "observacaoCritica": "Intolerância à lactose · em uso de metformina 500 mg à noite"
+    },
+    "profissional": {
+      "nome": "Dra. Vera Nakamura",
+      "iniciais": "VN",
+      "conselho": "CRN-3 21456",
+      "profissao": "nutricao",
+      "atuacao": "Nutrição clínica",
+      "cor": "emerald"
+    },
+    "antropometria": {
+      "peso": 82.4,
+      "altura": 1.63,
+      "imc": 31.0,
+      "cintura": 94,
+      "quadril": 108,
+      "gorduraPct": 38.2,
+      "massaMagraKg": 50.9
+    },
+    "antropometriaAnterior": {
+      "peso": 84.1,
+      "altura": 1.63,
+      "imc": 31.7,
+      "cintura": 97,
+      "quadril": 109,
+      "gorduraPct": 39.4,
+      "massaMagraKg": 50.9
+    },
+    "historicoPeso": [
+      {
+        "label": "abr",
+        "peso": 87.2
+      },
+      {
+        "label": "mai",
+        "peso": 86.0
+      },
+      {
+        "label": "jun",
+        "peso": 85.1
+      },
+      {
+        "label": "jul",
+        "peso": 84.1
+      },
+      {
+        "label": "ago",
+        "peso": 82.4
+      }
+    ],
+    "metas": {
+      "kcal": 1650,
+      "proteinaG": 110,
+      "carboidratoG": 165,
+      "gorduraG": 55
+    },
+    "recordatorio": [
+      {
+        "id": "rc-1",
+        "refeicao": "Café da manhã",
+        "descricao": "Café com leite sem lactose, 2 fatias de pão integral com queijo branco"
+      },
+      {
+        "id": "rc-2",
+        "refeicao": "Lanche da manhã",
+        "descricao": "Costuma pular — relata falta de tempo no trabalho"
+      },
+      {
+        "id": "rc-3",
+        "refeicao": "Almoço",
+        "descricao": "Arroz, feijão, frango grelhado, salada de folhas. Repete o arroz 2x/semana"
+      },
+      {
+        "id": "rc-4",
+        "refeicao": "Lanche da tarde",
+        "descricao": "Biscoito recheado (3 a 4 unidades) + café"
+      },
+      {
+        "id": "rc-5",
+        "refeicao": "Jantar",
+        "descricao": "Sopa ou o que sobrou do almoço, em porção menor"
+      }
+    ],
+    "plano": [
+      {
+        "id": "pl-1",
+        "nome": "Café da manhã",
+        "horario": "07:00",
+        "itens": [
+          "2 ovos mexidos",
+          "1 fatia de pão integral",
+          "Café sem açúcar",
+          "1 fruta"
+        ]
+      },
+      {
+        "id": "pl-2",
+        "nome": "Lanche da manhã",
+        "horario": "10:00",
+        "itens": [
+          "Iogurte sem lactose 170 g",
+          "1 col. sopa de aveia"
+        ]
+      },
+      {
+        "id": "pl-3",
+        "nome": "Almoço",
+        "horario": "12:30",
+        "itens": [
+          "4 col. sopa de arroz integral",
+          "1 concha de feijão",
+          "120 g de proteína magra",
+          "Salada à vontade com 1 fio de azeite"
+        ]
+      },
+      {
+        "id": "pl-4",
+        "nome": "Lanche da tarde",
+        "horario": "16:00",
+        "itens": [
+          "1 fruta + 10 castanhas",
+          "Chá ou café sem açúcar"
+        ]
+      },
+      {
+        "id": "pl-5",
+        "nome": "Jantar",
+        "horario": "19:30",
+        "itens": [
+          "Omelete ou peixe 120 g",
+          "Legumes refogados",
+          "1/2 xíc. de arroz integral"
+        ]
+      }
+    ],
+    "orientacoes": [
+      "Não pular o lanche da manhã — é o gatilho do beliscar da tarde",
+      "Trocar o biscoito recheado por fruta + castanhas por 4 semanas",
+      "2 litros de água por dia, com garrafa de 500 ml na mesa de trabalho",
+      "Caminhada de 30 min após o jantar, 5x/semana"
+    ],
+    "evolucaoTexto": "Perda de 1,7 kg desde o último retorno, com redução de 3 cm de cintura e queda de 1,2 p.p. de gordura mantendo massa magra — o padrão que se quer. Adesão boa no almoço, falha no lanche da tarde.",
+    "contexto": [
+      {
+        "id": "ctx-1",
+        "titulo": "Retorno 3",
+        "quando": "17 jul",
+        "resumo": "84,1 kg · cintura 97 cm. Plano de 1.700 kcal. Queixa de fome à tarde."
+      },
+      {
+        "id": "ctx-2",
+        "titulo": "Retorno 2",
+        "quando": "12 jun",
+        "resumo": "85,1 kg. Introduzida proteína no café da manhã."
+      },
+      {
+        "id": "ctx-3",
+        "titulo": "Primeira consulta",
+        "quando": "08 mai",
+        "resumo": "87,2 kg · IMC 32,8 · HOMA-IR 4,2. Encaminhada pela Endocrinologia."
+      }
+    ],
+    "alertas": [
+      {
+        "id": "al-1",
+        "texto": "Intolerância à lactose — plano sem derivados convencionais",
+        "tom": "atencao"
+      },
+      {
+        "id": "al-2",
+        "texto": "Acompanhamento conjunto com Endocrinologia (Dra. Helena Prado)",
+        "tom": "info"
+      }
+    ]
+  },
+  "psicologia": {
+    "id": "atd-psi-01",
+    "dataLabel": "21 de agosto de 2026",
+    "horaInicio": "14:00",
+    "duracaoPrevistaMin": 50,
+    "motivo": "Transtorno de ansiedade generalizada — psicoterapia semanal",
+    "sessaoNumero": 12,
+    "sessoesPacote": null,
+    "paciente": {
+      "id": "pct-003",
+      "nome": "Larissa Fontes",
+      "iniciais": "LF",
+      "idade": 33,
+      "convenio": "Bradesco Saúde",
+      "observacaoCritica": "Sem ideação suicida ativa desde a sessão 4 · em uso de sertralina 50 mg"
+    },
+    "profissional": {
+      "nome": "Dra. Camila Duarte",
+      "iniciais": "CD",
+      "conselho": "CRP 06/154321",
+      "profissao": "psicologia",
+      "atuacao": "Psicologia clínica · TCC",
+      "cor": "violet"
+    },
+    "abordagem": "Terapia cognitivo-comportamental",
+    "escalas": [
+      {
+        "sigla": "GAD-7",
+        "nome": "Ansiedade generalizada",
+        "valor": 11,
+        "maximo": 21,
+        "faixa": "Moderada",
+        "tendencia": "melhora"
+      },
+      {
+        "sigla": "PHQ-9",
+        "nome": "Sintomas depressivos",
+        "valor": 7,
+        "maximo": 27,
+        "faixa": "Leve",
+        "tendencia": "estavel"
+      }
+    ],
+    "risco": 0,
+    "focoSessao": "Reestruturação cognitiva das crenças sobre desempenho no trabalho",
+    "registro": {
+      "subjetivo": "Relata semana com dois episódios de ansiedade antecipatória antes de reuniões, ambos manejados com respiração diafragmática. Sono melhorou: 6h30 em média, contra 5h no mês passado.",
+      "objetivo": "Postura mais relaxada que nas sessões iniciais, contato visual mantido. Trouxe o registro de pensamentos preenchido em 5 dos 7 dias.",
+      "avaliacao": "Boa resposta à reestruturação cognitiva. Crença central de incompetência segue ativa, mas com menor intensidade emocional (de 90% para 60% de credibilidade).",
+      "plano": "Manter registro de pensamentos, iniciar experimento comportamental de exposição a apresentação em reunião pequena."
+    },
+    "notaPrivada": "Evitar tocar na relação com o pai antes de consolidar o manejo de ansiedade — ela deu sinais de esquiva nas sessões 8 e 9.",
+    "tarefaCasa": "Registro de pensamentos nos dias de reunião + apresentar um ponto de pauta na reunião de quinta.",
+    "tecnicas": [
+      {
+        "id": "tc-1",
+        "nome": "Reestruturação cognitiva",
+        "categoria": "Cognitiva",
+        "aplicada": true
+      },
+      {
+        "id": "tc-2",
+        "nome": "Registro de pensamentos disfuncionais",
+        "categoria": "Cognitiva",
+        "aplicada": true
+      },
+      {
+        "id": "tc-3",
+        "nome": "Respiração diafragmática",
+        "categoria": "Manejo de ansiedade",
+        "aplicada": true
+      },
+      {
+        "id": "tc-4",
+        "nome": "Exposição gradual",
+        "categoria": "Comportamental",
+        "aplicada": false
+      },
+      {
+        "id": "tc-5",
+        "nome": "Ativação comportamental",
+        "categoria": "Comportamental",
+        "aplicada": false
+      },
+      {
+        "id": "tc-6",
+        "nome": "Mindfulness",
+        "categoria": "Terceira onda",
+        "aplicada": false
+      }
+    ],
+    "contexto": [
+      {
+        "id": "ctx-1",
+        "titulo": "Sessão 11",
+        "quando": "14 ago",
+        "resumo": "GAD-7 13. Trabalhada identificação de distorções. Tarefa cumprida parcialmente."
+      },
+      {
+        "id": "ctx-2",
+        "titulo": "Sessão 10",
+        "quando": "07 ago",
+        "resumo": "Relato de crise após feedback no trabalho. Treino de respiração."
+      },
+      {
+        "id": "ctx-3",
+        "titulo": "Plano terapêutico",
+        "quando": "revisado em 24 jul",
+        "resumo": "Objetivo: reduzir GAD-7 abaixo de 10 e retomar atividade física em 12 semanas."
+      }
+    ],
+    "alertas": [
+      {
+        "id": "al-1",
+        "texto": "Sigilo profissional: notas privadas não vão para o prontuário compartilhado",
+        "tom": "info"
+      },
+      {
+        "id": "al-2",
+        "texto": "Reavaliação do plano terapêutico prevista para a sessão 16",
+        "tom": "atencao"
+      }
+    ]
+  }
+}
