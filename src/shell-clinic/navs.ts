@@ -157,6 +157,9 @@ export const PERSONA_DA_SECTION: Record<string, Persona> = {
   // Documento clínico que o médico assina (atestado, laudo, relatório). Não confundir com
   // `relatorios`, que é o painel gerencial do admin — o nome colide, a persona não.
   'relatorios-medicos': 'medico',
+  // As telas de atendimento das outras profissões (fisio, nutri, psi). Mesma persona
+  // "profissional" do médico — o RBAC aqui é por vínculo com o paciente, não por conselho.
+  atendimento: 'medico',
   // A comissão do próprio profissional. É financeiro, mas não é o financeiro da clínica: mostra só
   // o que ELE tem a receber, e por isso vive na persona médico, não na admin.
   'meus-recebimentos': 'medico',
@@ -202,4 +205,9 @@ export const PERSONA_DO_DESIGN: Record<string, Persona> = {
 }
 
 /** Sections clínicas nested dentro de Pacientes — o nav destaca "Pacientes". */
-export const NESTED_UNDER_PACIENTES = new Set(['consulta', 'prontuario', 'acompanhamento'])
+export const NESTED_UNDER_PACIENTES = new Set([
+  'consulta',
+  'atendimento',
+  'prontuario',
+  'acompanhamento',
+])

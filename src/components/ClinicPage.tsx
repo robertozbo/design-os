@@ -36,7 +36,7 @@ const GRUPOS: Grupo[] = [
     label: 'Atendimento',
     emoji: '🩺',
     hint: 'Dia a dia do médico',
-    sectionIds: ['inicio', 'agenda', 'pacientes', 'consulta', 'atendimentos'],
+    sectionIds: ['inicio', 'agenda', 'pacientes', 'consulta', 'atendimento', 'atendimentos'],
   },
   {
     label: 'Clínico',

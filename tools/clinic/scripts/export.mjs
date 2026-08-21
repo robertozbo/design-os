@@ -11,7 +11,7 @@ const OUT = 'product-plan-clinic'
 // Ordem dos milestones = ordem do roadmap, não alfabética.
 export const ORDEM = [
   'inicio', 'inicio-gestao', 'equipe', 'salas', 'agenda', 'pacientes', 'consulta',
-  'prontuario', 'acompanhamento', 'atendimentos', 'exames', 'prescricao',
+  'prontuario', 'acompanhamento', 'atendimento', 'atendimentos', 'exames', 'prescricao',
   'encaminhamento', 'relatorios-medicos', 'mensagens', 'cobranca', 'faturamento',
   'contas-receber', 'contas-pagar', 'fluxo-caixa', 'meus-recebimentos',
   'servicos', 'convenios', 'categorias-financeiras', 'fornecedores',
