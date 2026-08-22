@@ -29,15 +29,64 @@ interface Grupo {
   emoji: string
   hint: string
   sectionIds: string[]
+  /** Coluna de telas (uma por profissão), e não de sections. Ver `ATENDIMENTO`. */
+  screens?: ScreenCard[]
+}
+
+interface ScreenCard {
+  sectionId: string
+  /** `componentName` do screen design; ausente = a única tela da section. */
+  design?: string
+  label: string
+  hint: string
+}
+
+// A coluna de atendimento é a única que lista TELAS e não sections, porque a unidade de
+// trabalho aqui é "a tela daquela profissão": o conselho muda o que se registra (SOAP e
+// medida no médico, EVA e goniometria no fisio, antropometria no nutri, escala e risco no
+// psi), então cada profissão tem a sua. Agrupá-las como um card só de `atendimento`
+// esconderia justamente a decisão — três telas atrás de um link chamado "Atendimento".
+const ATENDIMENTO: Grupo = {
+  label: 'Atendimento',
+  emoji: '🩺',
+  hint: 'Uma tela por profissão',
+  sectionIds: [],
+  screens: [
+    {
+      sectionId: 'consulta',
+      design: 'Consulta',
+      label: 'Médico',
+      hint: 'Escriba IA · SOAP · assinatura',
+    },
+    {
+      sectionId: 'atendimento',
+      design: 'AtendimentoFisioterapia',
+      label: 'Fisioterapia',
+      hint: 'EVA · condutas · goniometria',
+    },
+    {
+      sectionId: 'atendimento',
+      design: 'AtendimentoNutricao',
+      label: 'Nutrição',
+      hint: 'Antropometria · metas · plano alimentar',
+    },
+    {
+      sectionId: 'atendimento',
+      design: 'AtendimentoPsicologia',
+      label: 'Psicologia',
+      hint: 'Escalas · risco · nota privada',
+    },
+  ],
 }
 
 const GRUPOS: Grupo[] = [
   {
-    label: 'Atendimento',
-    emoji: '🩺',
-    hint: 'Dia a dia do médico',
-    sectionIds: ['inicio', 'agenda', 'pacientes', 'consulta', 'atendimento', 'atendimentos'],
+    label: 'Dia a dia',
+    emoji: '📅',
+    hint: 'Agenda e pacientes do médico',
+    sectionIds: ['inicio', 'agenda', 'pacientes', 'atendimentos'],
   },
+  ATENDIMENTO,
   {
     label: 'Clínico',
     emoji: '📋',
@@ -107,7 +156,9 @@ export function ClinicSectionsPage() {
   const navigate = useNavigate()
   const allIds = getAllClinicSectionIds()
   const allIdsSet = new Set(allIds)
-  const idsAgrupados = new Set(GRUPOS.flatMap((g) => g.sectionIds))
+  const idsAgrupados = new Set(
+    GRUPOS.flatMap((g) => [...g.sectionIds, ...(g.screens ?? []).map((s) => s.sectionId)])
+  )
   const semGrupo = allIds.filter((id) => !idsAgrupados.has(id))
 
   return (
@@ -154,14 +205,15 @@ export function ClinicSectionsPage() {
             </p>
           </div>
         ) : (
-          // 6 colunas no xl, não 5: o board é uma leitura de UMA olhada — a coluna que quebra para
-          // a segunda linha deixa de ser lida como par das outras e vira "o resto". Ao somar
-          // Automação, o `xl:grid-cols-5` empurrava justamente a coluna nova para baixo.
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 items-start">
+          // Uma coluna por grupo no xl, sem quebra de linha: o board é uma leitura de UMA olhada —
+          // a coluna que cai para a segunda linha deixa de ser lida como par das outras e vira
+          // "o resto". Ao somar uma coluna, suba o `xl:grid-cols-*` junto.
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-2 items-start">
             {GRUPOS.map((g) => {
               const ids = g.sectionIds.filter((id) => allIdsSet.has(id))
-              if (ids.length === 0) return null
-              return <Coluna key={g.label} grupo={g} sectionIds={ids} />
+              const screens = (g.screens ?? []).filter((s) => allIdsSet.has(s.sectionId))
+              if (ids.length === 0 && screens.length === 0) return null
+              return <Coluna key={g.label} grupo={g} sectionIds={ids} screens={screens} />
             })}
             {semGrupo.length > 0 && (
               <Coluna
@@ -176,17 +228,42 @@ export function ClinicSectionsPage() {
   )
 }
 
-function Coluna({ grupo, sectionIds }: { grupo: Grupo; sectionIds: string[] }) {
+function Coluna({
+  grupo,
+  sectionIds,
+  screens = [],
+}: {
+  grupo: Grupo
+  sectionIds: string[]
+  screens?: ScreenCard[]
+}) {
   return (
     <section className="min-w-0">
       <div className="mb-2.5 px-2 flex items-center gap-2">
         <span className="text-base">{grupo.emoji}</span>
         <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-50">{grupo.label}</h2>
         <span className="text-slate-400 dark:text-slate-500 text-xs font-mono tabular-nums">
-          {sectionIds.length}
+          {sectionIds.length + screens.length}
         </span>
       </div>
       <div className="rounded-2xl bg-slate-100 dark:bg-slate-900/40 p-2 space-y-2 min-h-32">
+        {screens.map((s) => (
+          <Link
+            key={`${s.sectionId}:${s.design ?? ''}`}
+            to={`/clinic/sections/${s.sectionId}${s.design ? `?design=${s.design}` : ''}`}
+            className="block rounded-xl border border-slate-200 dark:border-slate-800 p-3 hover:border-teal-500 dark:hover:border-teal-500 hover:shadow-sm transition-all bg-white dark:bg-slate-900"
+          >
+            <div className="text-slate-900 dark:text-slate-50 font-semibold text-[13px] leading-tight">
+              {s.label}
+            </div>
+            <div className="text-slate-500 dark:text-slate-400 text-[11px] mt-1 line-clamp-2 leading-snug">
+              {s.hint}
+            </div>
+            <div className="mt-2 text-[10px] text-slate-400 dark:text-slate-500 font-mono tabular-nums">
+              {s.sectionId}
+            </div>
+          </Link>
+        ))}
         {sectionIds.map((id) => {
           const data = loadClinicSectionData(id)
           const title = data.specParsed?.title.replace(/ Specification$/, '') ?? id
