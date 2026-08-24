@@ -44,8 +44,8 @@ interface ScreenCard {
 // A coluna de atendimento é a única que lista TELAS e não sections, porque a unidade de
 // trabalho aqui é "a tela daquela profissão": o conselho muda o que se registra (SOAP e
 // medida no médico, EVA e goniometria no fisio, antropometria no nutri, escala e risco no
-// psi), então cada profissão tem a sua. Agrupá-las como um card só de `atendimento`
-// esconderia justamente a decisão — três telas atrás de um link chamado "Atendimento".
+// psi, alvo contado na fono), então cada profissão tem a sua. Agrupá-las como um card só de
+// `atendimento` esconderia justamente a decisão — telas atrás de um link chamado "Atendimento".
 const ATENDIMENTO: Grupo = {
   label: 'Atendimento',
   emoji: '🩺',
@@ -75,6 +75,12 @@ const ATENDIMENTO: Grupo = {
       design: 'AtendimentoPsicologia',
       label: 'Psicologia',
       hint: 'Escalas · risco · nota privada',
+    },
+    {
+      sectionId: 'atendimento',
+      design: 'AtendimentoFonoaudiologia',
+      label: 'Fonoaudiologia',
+      hint: 'Alvos contados · precisão · inteligibilidade',
     },
   ],
 }

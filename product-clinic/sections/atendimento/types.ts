@@ -1,6 +1,6 @@
-export type Profissao = 'fisioterapia' | 'nutricao' | 'psicologia'
+export type Profissao = 'fisioterapia' | 'nutricao' | 'psicologia' | 'fonoaudiologia'
 
-export type CorProfissao = 'sky' | 'emerald' | 'violet'
+export type CorProfissao = 'sky' | 'emerald' | 'violet' | 'orange'
 
 export type TomAlerta = 'info' | 'atencao' | 'risco'
 
@@ -161,9 +161,59 @@ export interface AtendimentoPsi extends BaseAtendimento {
   tecnicas: TecnicaPsi[]
 }
 
+/* ---------- Fonoaudiologia ---------- */
+
+export type AreaFono = 'fala' | 'linguagem' | 'motricidade' | 'voz'
+
+/** Quanto apoio o paciente precisou para acertar — muda o que o número significa. */
+export type ApoioAlvo = 'independente' | 'pista' | 'modelo'
+
+/**
+ * O alvo terapêutico da fono é contado, não descrito: tantas tentativas, tantos acertos.
+ * A precisão da sessão é o que decide se o alvo avança ou repete — por isso `criterio` e
+ * `historico` moram junto do contador.
+ */
+export interface AlvoFono {
+  id: string
+  alvo: string
+  area: AreaFono
+  tentativas: number
+  acertos: number
+  apoio: ApoioAlvo
+  /** % de acerto que o alvo precisa sustentar para avançar. */
+  criterio: number
+  /** Precisão das sessões anteriores neste alvo, da mais antiga para a mais recente. */
+  historico: number[]
+}
+
+export interface ExercicioFono {
+  id: string
+  nome: string
+  categoria: string
+  aplicado: boolean
+}
+
+export interface AtendimentoFono extends BaseAtendimento {
+  areaFoco: string
+  /**
+   * Inteligibilidade de fala em contexto, de 1 (só a família entende) a 4 (todos entendem).
+   * É escala de função, não de sintoma: aqui **subir é melhorar**, ao contrário da EVA.
+   */
+  inteligibilidade: 1 | 2 | 3 | 4
+  inteligibilidadeAnterior: 1 | 2 | 3 | 4
+  alvos: AlvoFono[]
+  exercicios: ExercicioFono[]
+  historicoPrecisao: { sessao: number; precisao: number }[]
+  /** O que o cuidador leva para treinar em casa — na fono infantil é metade do tratamento. */
+  orientacaoCuidador: string
+  evolucaoTexto: string
+  planoProxima: string
+}
+
 export interface AtendimentoData {
   clinica: string
   fisioterapia: AtendimentoFisio
   nutricao: AtendimentoNutri
   psicologia: AtendimentoPsi
+  fonoaudiologia: AtendimentoFono
 }

@@ -35,6 +35,13 @@ export const COR_PROFISSAO: Record<CorProfissao, CorMeta> = {
     borda: 'border-violet-200 dark:border-violet-900/60',
     fundo: 'bg-violet-50/60 dark:bg-violet-950/25',
   },
+  orange: {
+    chip: 'bg-orange-50 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300',
+    barra: 'bg-orange-500',
+    texto: 'text-orange-600 dark:text-orange-400',
+    borda: 'border-orange-200 dark:border-orange-900/60',
+    fundo: 'bg-orange-50/60 dark:bg-orange-950/25',
+  },
 }
 
 export const TOM_ALERTA: Record<TomAlerta, string> = {
@@ -60,6 +67,23 @@ export function corEva(valor: number): string {
 export function textoEva(valor: number): string {
   if (valor <= 3) return 'text-emerald-600 dark:text-emerald-400'
   if (valor <= 6) return 'text-amber-600 dark:text-amber-400'
+  return 'text-rose-600 dark:text-rose-400'
+}
+
+/**
+ * Precisão de alvo da fono: escala de DESEMPENHO, não de sintoma — aqui o verde fica em
+ * cima. O corte não é fixo, é o critério do próprio alvo: 70% pode ser alta num alvo de
+ * narrativa e insuficiente num de fonema.
+ */
+export function corPrecisao(pct: number, criterio: number): string {
+  if (pct >= criterio) return 'bg-emerald-500'
+  if (pct >= criterio * 0.7) return 'bg-amber-400'
+  return 'bg-rose-500'
+}
+
+export function textoPrecisao(pct: number, criterio: number): string {
+  if (pct >= criterio) return 'text-emerald-600 dark:text-emerald-400'
+  if (pct >= criterio * 0.7) return 'text-amber-600 dark:text-amber-400'
   return 'text-rose-600 dark:text-rose-400'
 }
 

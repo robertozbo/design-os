@@ -521,5 +521,224 @@
         "tom": "atencao"
       }
     ]
+  },
+  "fonoaudiologia": {
+    "id": "atd-fono-01",
+    "dataLabel": "21 de agosto de 2026",
+    "horaInicio": "15:30",
+    "duracaoPrevistaMin": 40,
+    "motivo": "Transtorno fonológico com atraso de linguagem — terapia semanal",
+    "sessaoNumero": 9,
+    "sessoesPacote": 20,
+    "paciente": {
+      "id": "pct-011",
+      "nome": "Théo Barreto",
+      "iniciais": "TB",
+      "idade": 6,
+      "convenio": "SulAmérica",
+      "observacaoCritica": "Otite de repetição até os 4 anos · audiometria de maio normal · usa óculos"
+    },
+    "profissional": {
+      "nome": "Dra. Marina Rocha",
+      "iniciais": "MR",
+      "conselho": "CRFa 2-19874",
+      "profissao": "fonoaudiologia",
+      "atuacao": "Fonoaudiologia clínica · linguagem infantil",
+      "cor": "orange"
+    },
+    "areaFoco": "Produção do /r/ vibrante e redução do processo de simplificação de encontro consonantal",
+    "inteligibilidade": 3,
+    "inteligibilidadeAnterior": 2,
+    "alvos": [
+      {
+        "id": "alv-1",
+        "alvo": "/r/ vibrante em posição medial",
+        "area": "fala",
+        "tentativas": 20,
+        "acertos": 17,
+        "apoio": "independente",
+        "criterio": 80,
+        "historico": [
+          55,
+          68,
+          82,
+          84
+        ]
+      },
+      {
+        "id": "alv-2",
+        "alvo": "/r/ vibrante em posição inicial",
+        "area": "fala",
+        "tentativas": 16,
+        "acertos": 9,
+        "apoio": "pista",
+        "criterio": 80,
+        "historico": [
+          30,
+          40,
+          50
+        ]
+      },
+      {
+        "id": "alv-3",
+        "alvo": "Encontro consonantal /bl/ e /fl/",
+        "area": "fala",
+        "tentativas": 18,
+        "acertos": 11,
+        "apoio": "modelo",
+        "criterio": 80,
+        "historico": [
+          35,
+          45,
+          55
+        ]
+      },
+      {
+        "id": "alv-4",
+        "alvo": "Narrativa com 4 elementos (quem, onde, o quê, fim)",
+        "area": "linguagem",
+        "tentativas": 6,
+        "acertos": 4,
+        "apoio": "pista",
+        "criterio": 70,
+        "historico": [
+          33,
+          50,
+          50
+        ]
+      },
+      {
+        "id": "alv-5",
+        "alvo": "Vedamento labial em repouso",
+        "area": "motricidade",
+        "tentativas": 10,
+        "acertos": 8,
+        "apoio": "independente",
+        "criterio": 80,
+        "historico": [
+          50,
+          60,
+          70
+        ]
+      }
+    ],
+    "exercicios": [
+      {
+        "id": "ex-1",
+        "nome": "Consciência fonológica — rima",
+        "categoria": "Consciência fonológica",
+        "aplicado": true
+      },
+      {
+        "id": "ex-2",
+        "nome": "Segmentação silábica",
+        "categoria": "Consciência fonológica",
+        "aplicado": true
+      },
+      {
+        "id": "ex-3",
+        "nome": "Pares mínimos",
+        "categoria": "Fonoarticulatório",
+        "aplicado": true
+      },
+      {
+        "id": "ex-4",
+        "nome": "Imitação com pista visual do ponto articulatório",
+        "categoria": "Fonoarticulatório",
+        "aplicado": true
+      },
+      {
+        "id": "ex-5",
+        "nome": "Vibração de língua com apoio de sopro",
+        "categoria": "Motricidade orofacial",
+        "aplicado": true
+      },
+      {
+        "id": "ex-6",
+        "nome": "Mobilidade de língua — dissociação",
+        "categoria": "Motricidade orofacial",
+        "aplicado": false
+      },
+      {
+        "id": "ex-7",
+        "nome": "Reconto de história com apoio de figuras",
+        "categoria": "Linguagem",
+        "aplicado": true
+      },
+      {
+        "id": "ex-8",
+        "nome": "Nomeação por campo semântico",
+        "categoria": "Linguagem",
+        "aplicado": false
+      }
+    ],
+    "historicoPrecisao": [
+      {
+        "sessao": 4,
+        "precisao": 38
+      },
+      {
+        "sessao": 5,
+        "precisao": 45
+      },
+      {
+        "sessao": 6,
+        "precisao": 52
+      },
+      {
+        "sessao": 7,
+        "precisao": 58
+      },
+      {
+        "sessao": 8,
+        "precisao": 64
+      }
+    ],
+    "orientacaoCuidador": "Treinar as 10 palavras do caderno com /r/ medial duas vezes ao dia, em fala espontânea e não em repetição. Não corrigir a fala do Théo na frente de outras crianças — anotar a palavra e trazer na próxima.",
+    "evolucaoTexto": "Nona sessão. /r/ medial estabilizou em 85% sem pista, terceiro registro seguido acima do critério — alvo pronto para generalização em frase. Posição inicial ainda depende de pista visual do ponto articulatório. Narrativa ganhou o elemento de fecho, que faltava desde a avaliação. Mãe relata que a professora entendeu o recado da escola sem intermediação pela primeira vez.",
+    "planoProxima": "Levar /r/ medial para frase e fala espontânea, manter treino de posição inicial com pista desvanecida, iniciar /fl/ em pares mínimos com /f/.",
+    "contexto": [
+      {
+        "id": "ctx-1",
+        "titulo": "Sessão 8",
+        "quando": "14 ago",
+        "resumo": "Precisão geral 64%. /r/ medial 80% com pista. Encontro consonantal ainda com apagamento da líquida."
+      },
+      {
+        "id": "ctx-2",
+        "titulo": "Sessão 7",
+        "quando": "7 ago",
+        "resumo": "Precisão geral 58%. Introduzida vibração de língua com sopro; boa resposta."
+      },
+      {
+        "id": "ctx-3",
+        "titulo": "Sessão 6",
+        "quando": "31 jul",
+        "resumo": "Precisão geral 52%. Narrativa sem elemento de fecho em 4 de 6 tentativas."
+      },
+      {
+        "id": "ctx-4",
+        "titulo": "Reavaliação",
+        "quando": "10 jul",
+        "resumo": "Inteligibilidade subiu de nível 1 para 2. Audiometria repetida: limiares normais bilateralmente."
+      }
+    ],
+    "alertas": [
+      {
+        "id": "alt-1",
+        "texto": "Sessão 9 de 20 — reavaliação formal prevista para a sessão 10",
+        "tom": "info"
+      },
+      {
+        "id": "alt-2",
+        "texto": "Faltou às sessões 3 e 5; treino em casa é o que sustentou o ganho",
+        "tom": "atencao"
+      },
+      {
+        "id": "alt-3",
+        "texto": "Histórico de otite de repetição — repetir audiometria se a evolução estacionar",
+        "tom": "atencao"
+      }
+    ]
   }
 }

@@ -1,7 +1,7 @@
 # Atendimento por Profissional Specification
 
 ## Overview
-A **tela de atendimento de cada profissão** da clínica — fisioterapia, nutrição e psicologia. É a contraparte de `consulta`, que é a tela do médico (escriba IA + SOAP): a clínica é multiprofissional, e cada conselho registra coisas diferentes. Fisioterapeuta registra EVA, condutas e goniometria; nutricionista registra antropometria, metas e plano alimentar; psicólogo registra escalas, risco, técnicas e uma **nota privada que não vai para o prontuário compartilhado**. O que **não** muda é o esqueleto: mesmo cabeçalho de paciente, mesmo cronômetro, mesma coluna de contexto e as mesmas duas ações que encerram. Três telas diferentes que continuam sendo o mesmo produto.
+A **tela de atendimento de cada profissão** da clínica — fisioterapia, nutrição, psicologia e fonoaudiologia. É a contraparte de `consulta`, que é a tela do médico (escriba IA + SOAP): a clínica é multiprofissional, e cada conselho registra coisas diferentes. Fisioterapeuta registra EVA, condutas e goniometria; nutricionista registra antropometria, metas e plano alimentar; psicólogo registra escalas, risco, técnicas e uma **nota privada que não vai para o prontuário compartilhado**; fonoaudiólogo **conta** — tentativa a tentativa, alvo a alvo — porque na fono a evolução é uma porcentagem, não um parágrafo. O que **não** muda é o esqueleto: mesmo cabeçalho de paciente, mesmo cronômetro, mesma coluna de contexto e as mesmas duas ações que encerram. Quatro telas diferentes que continuam sendo o mesmo produto.
 
 ## User Flows
 
@@ -38,6 +38,15 @@ A **tela de atendimento de cada profissão** da clínica — fisioterapia, nutri
 - **Nota privada** em bloco visualmente separado — impressões do profissional, fora do prontuário compartilhado e fora do que o paciente recebe
 - Lateral: **escalas** (GAD-7, PHQ-9) com valor, faixa, barra e direção
 
+### Sessão de fonoaudiologia
+- **Foco da sessão** e **inteligibilidade de fala** em 4 níveis (só a família → todos entendem), com o delta desde a última avaliação
+- **Treino por alvo**: cada alvo tem contador de **acerto/erro batido durante a sessão**, precisão recalculada na hora, barra no tom do critério daquele alvo e o **nível de apoio** (independente · com pista · com modelo)
+- Alvo que sustenta o critério em três sessões seguidas ganha o chip **"pronto para avançar"** — uma sessão boa não é generalização
+- **Exercícios aplicados** em chips por categoria (consciência fonológica, fonoarticulatório, motricidade orofacial, linguagem)
+- **Orientação ao cuidador** (vai para o app do responsável) + **evolução** e **plano da próxima**
+- Lateral: barras da **precisão por sessão** e quantos alvos estão prontos para avançar
+- Finalizar sem nenhuma tentativa registrada avisa que a evolução fica sem número
+
 ## UI Requirements
 
 ### Esqueleto (`AtendimentoShell`)
@@ -47,17 +56,19 @@ A **tela de atendimento de cada profissão** da clínica — fisioterapia, nutri
 - Miolo é uma pilha de `Bloco` (título + acessório à direita); textos usam `Campo`
 
 ### Tom por profissão
-- Fisioterapia `sky` · Nutrição `emerald` · Psicologia `violet` — avatar, chips e destaques da tela seguem o tom, para o profissional reconhecer a tela dele antes de ler o título
+- Fisioterapia `sky` · Nutrição `emerald` · Psicologia `violet` · Fonoaudiologia `orange` — avatar, chips e destaques da tela seguem o tom, para o profissional reconhecer a tela dele antes de ler o título
 
 ### Estados & regras
 - EVA e escalas: verde embaixo, âmbar no meio, rose em cima — **nunca** o contrário
+- Inteligibilidade e precisão de alvo **invertem**: são escala de função e de desempenho, não de sintoma — verde em cima. E o corte da precisão é o critério do próprio alvo, não um número fixo (70% pode ser alta numa meta de narrativa e insuficiente numa de fonema)
 - Peso digitado recalcula o IMC na hora (dois números que se contradizem na mesma tela é pior que nenhum)
 - Delta de massa magra inverte o sinal de "bom": perder peso derrubando massa magra é alerta, não vitória
 - Risco > 0 na psicologia bloqueia a assinatura
 - Fisioterapia sem EVA de saída avisa ao finalizar
+- Fonoaudiologia sem nenhuma tentativa contada avisa ao finalizar
 
 ## Design Notes
 - Nymos (teal nas ações, DM Sans), light/dark, props-based, sem fetch interno
-- Um `data.json` com os três atendimentos; os três screen designs compartilham shell, contexto e helpers
+- Um `data.json` com os quatro atendimentos; os quatro screen designs compartilham shell, contexto e helpers
 - A tela do médico continua sendo `consulta` (escriba IA + SOAP) — esta section é o que faltava para as **outras** profissões
 - Referências das verticais: `product-fisio/sections/evolucao`, `product-psicologo/sections/sessao`
