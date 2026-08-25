@@ -160,6 +160,9 @@ export const PERSONA_DA_SECTION: Record<string, Persona> = {
   // As telas de atendimento das outras profissões (fisio, nutri, psi). Mesma persona
   // "profissional" do médico — o RBAC aqui é por vínculo com o paciente, não por conselho.
   atendimento: 'medico',
+  // Antropometria e composição corporal. Mesma persona pelo mesmo motivo do `atendimento`: quem
+  // abre é nutricionista ou educador físico, e o que autoriza é o vínculo com o paciente.
+  'avaliacao-fisica': 'medico',
   // A comissão do próprio profissional. É financeiro, mas não é o financeiro da clínica: mostra só
   // o que ELE tem a receber, e por isso vive na persona médico, não na admin.
   'meus-recebimentos': 'medico',
@@ -208,6 +211,7 @@ export const PERSONA_DO_DESIGN: Record<string, Persona> = {
 export const NESTED_UNDER_PACIENTES = new Set([
   'consulta',
   'atendimento',
+  'avaliacao-fisica',
   'prontuario',
   'acompanhamento',
 ])

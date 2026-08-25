@@ -100,6 +100,7 @@ const GRUPOS: Grupo[] = [
     sectionIds: [
       'prontuario',
       'acompanhamento',
+      'avaliacao-fisica',
       'exames',
       'prescricao',
       'relatorios-medicos',

@@ -1,0 +1,372 @@
+{
+  "clinica": "Clínica Vida Integrada",
+  "avaliadorLogado": {
+    "id": "prof-cref-1",
+    "nome": "Rafael Nunes",
+    "iniciais": "RN",
+    "registro": "CREF 012345-G/SP",
+    "conselho": "CREF",
+    "atuacao": "Educação física · treinamento resistido"
+  },
+  "pacientes": [
+    {
+      "paciente": {
+        "id": "pac-1",
+        "nome": "Ana Beatriz Marques",
+        "iniciais": "AB",
+        "idade": 34,
+        "sexo": "F",
+        "convenio": "SulAmérica",
+        "observacaoCritica": "Hipotireoidismo em ajuste de levotiroxina — peso oscila com o TSH, não leia a curva sem o exame.",
+        "objetivo": "emagrecimento",
+        "nivelAtividade": "moderado",
+        "metaGorduraPct": 24
+      },
+      "avaliacoes": [
+        {
+          "id": "av-1-1",
+          "pacienteId": "pac-1",
+          "data": "2026-02-03",
+          "dataLabel": "03 fev 2026",
+          "avaliador": {
+            "id": "prof-cref-1",
+            "nome": "Rafael Nunes",
+            "iniciais": "RN",
+            "registro": "CREF 012345-G/SP",
+            "conselho": "CREF",
+            "atuacao": "Educação física · treinamento resistido"
+          },
+          "protocolo": "petroski",
+          "status": "concluida",
+          "usarBioimpedancia": false,
+          "parecer": "Avaliação inicial. Sedentária há 3 anos, retomando atividade. Prioridade é preservar massa magra durante o déficit — força 2×/semana a partir desta semana. Reavaliar em 90 dias.",
+          "medidas": {
+            "pesoKg": 72.0,
+            "alturaCm": 168,
+            "dobras": {
+              "peitoral": 14,
+              "axilarMedia": 16,
+              "triceps": 24,
+              "biceps": 11,
+              "subescapular": 20,
+              "abdominal": 28,
+              "suprailiaca": 22,
+              "coxa": 32,
+              "panturrilha": 20
+            },
+            "circunferencias": {
+              "pescoco": 33.5,
+              "torax": 93,
+              "cintura": 82,
+              "abdomen": 87,
+              "quadril": 100,
+              "bracoRelaxado": 29,
+              "bracoContraido": 31,
+              "antebraco": 25,
+              "coxa": 58,
+              "panturrilha": 36
+            },
+            "bioimpedancia": null
+          }
+        },
+        {
+          "id": "av-1-2",
+          "pacienteId": "pac-1",
+          "data": "2026-05-12",
+          "dataLabel": "12 mai 2026",
+          "avaliador": {
+            "id": "prof-cref-1",
+            "nome": "Rafael Nunes",
+            "iniciais": "RN",
+            "registro": "CREF 012345-G/SP",
+            "conselho": "CREF",
+            "atuacao": "Educação física · treinamento resistido"
+          },
+          "protocolo": "petroski",
+          "status": "concluida",
+          "usarBioimpedancia": false,
+          "parecer": "Perdeu 1,5 kg em 98 dias com massa magra estável — é o ritmo certo. Cintura caiu 3 cm, mais do que o peso justificaria: redistribuição, não só perda. Mantém o protocolo de força.",
+          "medidas": {
+            "pesoKg": 70.5,
+            "alturaCm": 168,
+            "dobras": {
+              "peitoral": 13,
+              "axilarMedia": 15,
+              "triceps": 22,
+              "biceps": 10,
+              "subescapular": 18,
+              "abdominal": 25,
+              "suprailiaca": 20,
+              "coxa": 29,
+              "panturrilha": 18
+            },
+            "circunferencias": {
+              "pescoco": 33,
+              "torax": 91,
+              "cintura": 79,
+              "abdomen": 84,
+              "quadril": 98,
+              "bracoRelaxado": 28.5,
+              "bracoContraido": 30.5,
+              "antebraco": 24.5,
+              "coxa": 57,
+              "panturrilha": 35.5
+            },
+            "bioimpedancia": null
+          }
+        },
+        {
+          "id": "av-1-3",
+          "pacienteId": "pac-1",
+          "data": "2026-08-21",
+          "dataLabel": "21 ago 2026",
+          "avaliador": {
+            "id": "prof-crn-1",
+            "nome": "Marina Alves",
+            "iniciais": "MA",
+            "registro": "CRN-3 45678",
+            "conselho": "CRN",
+            "atuacao": "Nutrição clínica · composição corporal"
+          },
+          "protocolo": "petroski",
+          "status": "concluida",
+          "usarBioimpedancia": false,
+          "parecer": "% de gordura entrou na faixa adequada para a idade e o peso-alvo está a menos de 1 kg. A partir daqui o objetivo muda de déficit para manutenção com ganho de massa magra — recalculei o plano sobre o GET novo. Bioimpedância anexada para conferência; mantive o cálculo pelas dobras porque a série inteira é por dobras.",
+          "medidas": {
+            "pesoKg": 68.4,
+            "alturaCm": 168,
+            "dobras": {
+              "peitoral": 11,
+              "axilarMedia": 13,
+              "triceps": 19,
+              "biceps": 9,
+              "subescapular": 16,
+              "abdominal": 21,
+              "suprailiaca": 17,
+              "coxa": 25,
+              "panturrilha": 16
+            },
+            "circunferencias": {
+              "pescoco": 32,
+              "torax": 89,
+              "cintura": 76,
+              "abdomen": 80,
+              "quadril": 97,
+              "bracoRelaxado": 28,
+              "bracoContraido": 30,
+              "antebraco": 24,
+              "coxa": 55,
+              "panturrilha": 35
+            },
+            "bioimpedancia": {
+              "gorduraPct": 26.4,
+              "massaMagraKg": 50.3,
+              "massaMuscularKg": 47.8,
+              "aguaCorporalPct": 52.1,
+              "gorduraVisceralNivel": 6,
+              "massaOsseaKg": 2.5,
+              "tmbKcal": 1385,
+              "idadeMetabolica": 31
+            }
+          }
+        }
+      ]
+    },
+    {
+      "paciente": {
+        "id": "pac-2",
+        "nome": "Diego Ramalho",
+        "iniciais": "DR",
+        "idade": 41,
+        "sexo": "M",
+        "convenio": "Particular",
+        "observacaoCritica": null,
+        "objetivo": "recomposicao",
+        "nivelAtividade": "intenso",
+        "metaGorduraPct": 14
+      },
+      "avaliacoes": [
+        {
+          "id": "av-2-1",
+          "pacienteId": "pac-2",
+          "data": "2026-03-14",
+          "dataLabel": "14 mar 2026",
+          "avaliador": {
+            "id": "prof-cref-1",
+            "nome": "Rafael Nunes",
+            "iniciais": "RN",
+            "registro": "CREF 012345-G/SP",
+            "conselho": "CREF",
+            "atuacao": "Educação física · treinamento resistido"
+          },
+          "protocolo": "jackson_pollock_7",
+          "status": "concluida",
+          "usarBioimpedancia": false,
+          "parecer": "Base para o ciclo de recomposição. Treino 5×/semana, GET calculado sobre a massa magra medida. Reavaliação a cada 8 semanas — em recomposição o peso quase não se move e só a composição mostra se está funcionando.",
+          "medidas": {
+            "pesoKg": 88.5,
+            "alturaCm": 178,
+            "dobras": {
+              "peitoral": 14,
+              "axilarMedia": 16,
+              "triceps": 14,
+              "biceps": 7,
+              "subescapular": 21,
+              "abdominal": 30,
+              "suprailiaca": 23,
+              "coxa": 17,
+              "panturrilha": 13
+            },
+            "circunferencias": {
+              "pescoco": 40,
+              "torax": 106,
+              "cintura": 92,
+              "abdomen": 95,
+              "quadril": 103,
+              "bracoRelaxado": 34,
+              "bracoContraido": 36.5,
+              "antebraco": 28.5,
+              "coxa": 59,
+              "panturrilha": 38
+            },
+            "bioimpedancia": null
+          }
+        },
+        {
+          "id": "av-2-2",
+          "pacienteId": "pac-2",
+          "data": "2026-05-09",
+          "dataLabel": "09 mai 2026",
+          "avaliador": {
+            "id": "prof-crn-1",
+            "nome": "Marina Alves",
+            "iniciais": "MA",
+            "registro": "CRN-3 45678",
+            "conselho": "CRN",
+            "atuacao": "Nutrição clínica · composição corporal"
+          },
+          "protocolo": "jackson_pollock_3",
+          "status": "concluida",
+          "usarBioimpedancia": false,
+          "parecer": "Consulta de nutrição: medi as três dobras do Pollock-3 e as circunferências. A série do Rafael é por 7 dobras — comparar %G entre os dois protocolos exige cautela, por isso registrei também a Σ e a cintura, que não dependem de equação.",
+          "medidas": {
+            "pesoKg": 87.6,
+            "alturaCm": 178,
+            "dobras": {
+              "peitoral": 13,
+              "abdominal": 27,
+              "coxa": 16,
+              "triceps": 13,
+              "suprailiaca": 21
+            },
+            "circunferencias": {
+              "pescoco": 39.5,
+              "torax": 105,
+              "cintura": 89,
+              "abdomen": 92,
+              "quadril": 102,
+              "bracoRelaxado": 34.5,
+              "bracoContraido": 37,
+              "antebraco": 28.5,
+              "coxa": 59.5,
+              "panturrilha": 38.5
+            },
+            "bioimpedancia": null
+          }
+        },
+        {
+          "id": "av-2-3",
+          "pacienteId": "pac-2",
+          "data": "2026-07-04",
+          "dataLabel": "04 jul 2026",
+          "avaliador": {
+            "id": "prof-cref-1",
+            "nome": "Rafael Nunes",
+            "iniciais": "RN",
+            "registro": "CREF 012345-G/SP",
+            "conselho": "CREF",
+            "atuacao": "Educação física · treinamento resistido"
+          },
+          "protocolo": "jackson_pollock_7",
+          "status": "concluida",
+          "usarBioimpedancia": false,
+          "parecer": "Peso praticamente parado e massa magra subindo — é exatamente o que se espera numa recomposição. Se olhasse só a balança, teria concluído que 8 semanas de treino não deram em nada.",
+          "medidas": {
+            "pesoKg": 86.8,
+            "alturaCm": 178,
+            "dobras": {
+              "peitoral": 12,
+              "axilarMedia": 14,
+              "triceps": 12,
+              "biceps": 6,
+              "subescapular": 19,
+              "abdominal": 26,
+              "suprailiaca": 20,
+              "coxa": 15,
+              "panturrilha": 11
+            },
+            "circunferencias": {
+              "pescoco": 39.5,
+              "torax": 105,
+              "cintura": 87,
+              "abdomen": 90,
+              "quadril": 101,
+              "bracoRelaxado": 34.5,
+              "bracoContraido": 37.5,
+              "antebraco": 29,
+              "coxa": 60,
+              "panturrilha": 38.5
+            },
+            "bioimpedancia": null
+          }
+        },
+        {
+          "id": "av-2-4",
+          "pacienteId": "pac-2",
+          "data": "2026-08-20",
+          "dataLabel": "20 ago 2026",
+          "avaliador": {
+            "id": "prof-cref-1",
+            "nome": "Rafael Nunes",
+            "iniciais": "RN",
+            "registro": "CREF 012345-G/SP",
+            "conselho": "CREF",
+            "atuacao": "Educação física · treinamento resistido"
+          },
+          "protocolo": "jackson_pollock_7",
+          "status": "rascunho",
+          "usarBioimpedancia": false,
+          "parecer": "",
+          "medidas": {
+            "pesoKg": 86.0,
+            "alturaCm": 178,
+            "dobras": {
+              "peitoral": 11,
+              "axilarMedia": 13,
+              "triceps": 11,
+              "biceps": 5,
+              "subescapular": 17,
+              "abdominal": 23,
+              "suprailiaca": 18,
+              "coxa": 12,
+              "panturrilha": 10
+            },
+            "circunferencias": {
+              "pescoco": 39,
+              "torax": 104,
+              "cintura": 86,
+              "abdomen": 88,
+              "quadril": 100,
+              "bracoRelaxado": 35,
+              "bracoContraido": 38,
+              "antebraco": 29,
+              "coxa": 60,
+              "panturrilha": 39
+            },
+            "bioimpedancia": null
+          }
+        }
+      ]
+    }
+  ]
+}
