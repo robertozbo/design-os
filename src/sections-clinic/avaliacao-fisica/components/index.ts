@@ -1,24 +1,45 @@
 export { NovaAvaliacaoForm } from './NovaAvaliacaoForm'
+export { FuncionalForm } from './FuncionalForm'
 export { ResultadoPanel } from './ResultadoPanel'
+export { ResultadoFuncionalPanel } from './ResultadoFuncionalPanel'
 export { AvaliacoesListaView } from './AvaliacoesListaView'
 export { ComparativoView } from './ComparativoView'
-export { ClassBadge, CollapsibleBlock, NumberInput, Segmented, SubTitulo } from './FormPrimitives'
+export {
+  ClassBadge,
+  CollapsibleBlock,
+  NumberInput,
+  PhotoSlot,
+  ScorePicker,
+  Segmented,
+  Select,
+  SubTitulo,
+  TextArea,
+  ValorDoCadastro,
+} from './FormPrimitives'
 export { Toasts, useToasts } from './toasts'
 export {
   CIRCUNFERENCIAS,
+  CONDICAO_VAZIA,
   DOBRAS_ORDEM,
   DOBRA_LABEL,
   FATOR_ATIVIDADE,
+  FMS_TESTES,
+  FUNCIONAL_VAZIO,
+  LIBERACAO_LABEL,
+  LIBERACAO_TOM,
   LIMITES,
   NIVEL_ATIVIDADE_LABEL,
   PROTOCOLOS,
   PROTOCOLO_POR_ID,
+  RM_LABEL,
   calcular,
+  calcular1RMBrzycki,
   calcularCMB,
   calcularGET,
   calcularIMC,
   calcularRCQ,
   classificarCMB,
+  classificarFMS,
   classificarGordura,
   classificarIMC,
   classificarRCQ,
@@ -26,17 +47,31 @@ export {
   composicao4,
   densidadeEGordura,
   dobrasDoProtocolo,
+  fmsComDor,
+  fmsTotal,
   gorduraAlvo,
   metasDiarias,
   pesoAlvo,
+  resumirFuncional,
   siri,
   somaDobras,
   tmbKatchMcArdle,
+  vo2Cooper,
+  vo2De,
 } from './formulas'
-export type { Classificacao, MetasDiarias, ProtocoloMeta, Resultado, Tom } from './formulas'
+export type {
+  Classificacao,
+  MetasDiarias,
+  ProtocoloMeta,
+  Resultado,
+  ResumoFuncional,
+  Tom,
+} from './formulas'
 export {
   CONSELHO_LABEL,
   COR_CONSELHO,
+  NIVEIS_ATIVIDADE,
+  OBJETIVOS,
   OBJETIVO_LABEL,
   STATUS_LABEL,
   TOM_BADGE,

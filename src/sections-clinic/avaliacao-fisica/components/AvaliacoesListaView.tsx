@@ -293,6 +293,14 @@ function CardPaciente({
                     <span className="min-w-0 flex-1 truncate text-[11px] text-slate-400">
                       {a.protocolo ? PROTOCOLO_POR_ID[a.protocolo].label : 'sem protocolo'}
                     </span>
+                    {a.funcional && (
+                      <span
+                        title="Inclui avaliação funcional"
+                        className="shrink-0 rounded bg-slate-100 px-1 py-0.5 font-mono text-[9px] uppercase tracking-wider text-slate-500 dark:bg-slate-800 dark:text-slate-400"
+                      >
+                        funcional
+                      </span>
+                    )}
                     <span className="shrink-0 font-mono text-[11px] tabular-nums text-slate-600 dark:text-slate-300">
                       {numero(a.medidas.pesoKg)} kg
                     </span>

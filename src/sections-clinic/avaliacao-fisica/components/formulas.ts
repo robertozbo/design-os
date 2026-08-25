@@ -12,11 +12,19 @@
  * medida que o gerou é a mesma armadilha do peso que muda sem o IMC acompanhar.
  */
 import type {
+  Cardio,
   CircunferenciaId,
+  CondicaoFisica,
   DobraId,
+  FMS,
+  FMSTesteId,
+  Funcional,
+  LiberacaoMedica,
   Medidas,
   NivelAtividade,
+  OneRM,
   ProtocoloId,
+  RMTeste,
   Sexo,
 } from '@/../product-clinic/sections/avaliacao-fisica/types'
 
@@ -613,6 +621,147 @@ export function metasDiarias(
 export function pesoAlvo(massaMagraKg: number | null, metaGorduraPct: number | null): number | null {
   if (!massaMagraKg || metaGorduraPct == null || metaGorduraPct >= 100) return null
   return massaMagraKg / (1 - metaGorduraPct / 100)
+}
+
+/* ═══════════════ Funcional ═══════════════ */
+
+/**
+ * 1RM estimado por Brzycki: peso × 36 / (37 − reps).
+ *
+ * A equação é a mesma do spec da vertical Personal. Vale para teste submáximo: acima de ~10
+ * repetições ela superestima, e é por isso que a tela mostra as repetições ao lado do resultado
+ * em vez de só o 1RM — o número sozinho esconde de que teste ele veio.
+ */
+export function calcular1RMBrzycki(
+  pesoKg: number | null,
+  reps: number | null,
+): number | null {
+  if (!pesoKg || !reps || reps < 1 || reps > 36) return null
+  return (pesoKg * 36) / (37 - reps)
+}
+
+export const FMS_TESTES: { id: FMSTesteId; label: string }[] = [
+  { id: 'agachamentoProfundo', label: 'Agachamento profundo' },
+  { id: 'passagemBarreira', label: 'Passagem sobre barreira' },
+  { id: 'avancoLinha', label: 'Avanço em linha' },
+  { id: 'mobilidadeOmbro', label: 'Mobilidade de ombro' },
+  { id: 'elevacaoPernaEstendida', label: 'Elevação da perna estendida' },
+  { id: 'estabilidadeTroncoFlexao', label: 'Estabilidade de tronco (flexão)' },
+  { id: 'estabilidadeRotatoria', label: 'Estabilidade rotatória' },
+]
+
+export function fmsTotal(fms: FMS | null): number | null {
+  if (!fms) return null
+  return FMS_TESTES.reduce((soma, t) => soma + (fms[t.id] ?? 0), 0)
+}
+
+/**
+ * FMS: o único corte validado é **14**. Abaixo dele, risco aumentado de lesão (Kiesel et al.).
+ *
+ * E há uma regra que o total esconde: **zero em qualquer sub-teste significa DOR**, não
+ * desempenho ruim — o protocolo manda encaminhar antes de prescrever, mesmo com o total alto.
+ * Por isso a dor é verificada separado da soma.
+ */
+export function classificarFMS(fms: FMS | null): Classificacao | null {
+  const total = fmsTotal(fms)
+  if (total == null || !fms) return null
+  const comDor = FMS_TESTES.some((t) => fms[t.id] === 0)
+  if (comDor) return { label: 'Dor em um teste — encaminhar', tom: 'rose' }
+  if (total <= 14) return { label: 'Risco aumentado (≤ 14)', tom: 'amber' }
+  return { label: 'Acima do corte', tom: 'emerald' }
+}
+
+/** Sub-testes pontuados com 0, isto é, com dor relatada durante a execução. */
+export function fmsComDor(fms: FMS | null): FMSTesteId[] {
+  if (!fms) return []
+  return FMS_TESTES.filter((t) => fms[t.id] === 0).map((t) => t.id)
+}
+
+/** Cooper (1968): VO₂máx = (distância_m − 504,9) / 44,73. Só o Cooper tem forma fechada. */
+export function vo2Cooper(distanciaM: number | null): number | null {
+  if (!distanciaM) return null
+  return (distanciaM - 504.9) / 44.73
+}
+
+export function vo2De(cardio: Cardio | null): number | null {
+  if (!cardio) return null
+  if (cardio.protocolo === 'cooper') return vo2Cooper(cardio.metricaPrincipal)
+  // Åstrand sai de nomograma (carga × FC × idade), não de equação fechada — vem digitado.
+  return cardio.vo2Informado
+}
+
+export interface ResumoFuncional {
+  rm: { id: keyof OneRM; label: string; estimado: number | null; teste: RMTeste | null }[]
+  totalRM: number | null
+  /** Soma dos três 1RM dividida pelo peso corporal. */
+  forcaRelativa: number | null
+  fmsTotal: number | null
+  fmsClasse: Classificacao | null
+  fmsComDor: FMSTesteId[]
+  vo2: number | null
+}
+
+export const RM_LABEL: Record<keyof OneRM, string> = {
+  supino: 'Supino',
+  agachamento: 'Agachamento',
+  levantamentoTerra: 'Levantamento terra',
+}
+
+export function resumirFuncional(
+  funcional: Funcional | null,
+  pesoKg: number | null,
+): ResumoFuncional {
+  const rm = (Object.keys(RM_LABEL) as (keyof OneRM)[]).map((id) => {
+    const teste = funcional?.rm[id] ?? null
+    return {
+      id,
+      label: RM_LABEL[id],
+      estimado: calcular1RMBrzycki(teste?.pesoTesteKg ?? null, teste?.repsTeste ?? null),
+      teste,
+    }
+  })
+  const estimados = rm.map((x) => x.estimado).filter((v): v is number => v != null)
+  const totalRM = estimados.length > 0 ? estimados.reduce((a, b) => a + b, 0) : null
+
+  return {
+    rm,
+    totalRM,
+    forcaRelativa: totalRM != null && pesoKg ? totalRM / pesoKg : null,
+    fmsTotal: fmsTotal(funcional?.fms ?? null),
+    fmsClasse: classificarFMS(funcional?.fms ?? null),
+    fmsComDor: fmsComDor(funcional?.fms ?? null),
+    vo2: vo2De(funcional?.cardio ?? null),
+  }
+}
+
+export const FUNCIONAL_VAZIO: Funcional = {
+  rm: { supino: null, agachamento: null, levantamentoTerra: null },
+  fms: null,
+  flexibilidade: null,
+  cardio: null,
+  resistenciaLocal: null,
+}
+
+export const CONDICAO_VAZIA: CondicaoFisica = {
+  lesoesAtuais: '',
+  cirurgiasPrevias: '',
+  restricoes: '',
+  liberacaoMedica: 'nao-informado',
+  liberacaoNota: '',
+}
+
+export const LIBERACAO_LABEL: Record<LiberacaoMedica, string> = {
+  'nao-informado': 'Não informado',
+  liberado: 'Liberado',
+  'com-restricoes': 'Com restrições',
+  contraindicado: 'Contraindicado',
+}
+
+export const LIBERACAO_TOM: Record<LiberacaoMedica, Tom> = {
+  'nao-informado': 'slate',
+  liberado: 'emerald',
+  'com-restricoes': 'amber',
+  contraindicado: 'rose',
 }
 
 /* ═══════════════ Resultado consolidado ═══════════════ */

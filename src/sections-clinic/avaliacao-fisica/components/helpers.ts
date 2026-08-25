@@ -1,5 +1,6 @@
 import type {
   Conselho,
+  NivelAtividade,
   ObjetivoId,
   StatusAvaliacao,
 } from '@/../product-clinic/sections/avaliacao-fisica/types'
@@ -56,6 +57,22 @@ export const OBJETIVO_LABEL: Record<ObjetivoId, string> = {
   performance: 'Performance',
   saude: 'Saúde e manutenção',
 }
+
+export const OBJETIVOS: ObjetivoId[] = [
+  'emagrecimento',
+  'hipertrofia',
+  'recomposicao',
+  'performance',
+  'saude',
+]
+
+export const NIVEIS_ATIVIDADE: NivelAtividade[] = [
+  'sedentario',
+  'leve',
+  'moderado',
+  'intenso',
+  'atleta',
+]
 
 export const STATUS_LABEL: Record<StatusAvaliacao, { label: string; classe: string }> = {
   rascunho: {

@@ -5,7 +5,14 @@ import type {
   DobraId,
   PacienteAvaliacao,
 } from '@/../product-clinic/sections/avaliacao-fisica/types'
-import { DOBRAS_ORDEM, DOBRA_LABEL, PROTOCOLO_POR_ID, calcular, type Resultado } from './formulas'
+import {
+  DOBRAS_ORDEM,
+  DOBRA_LABEL,
+  PROTOCOLO_POR_ID,
+  calcular,
+  resumirFuncional,
+  type Resultado,
+} from './formulas'
 import { ClassBadge } from './FormPrimitives'
 import { CONSELHO_LABEL, escala, numero } from './helpers'
 
@@ -59,6 +66,8 @@ export function ComparativoView({
 
   const rA = resultadoDe(atual, paciente)
   const rR = resultadoDe(referencia, paciente)
+  const fA = resumirFuncional(atual.funcional, atual.medidas.pesoKg)
+  const fR = resumirFuncional(referencia.funcional, referencia.medidas.pesoKg)
 
   const dobrasComDado = DOBRAS_ORDEM.filter(
     (d) => atual.medidas.dobras[d] != null || referencia.medidas.dobras[d] != null,
@@ -82,6 +91,37 @@ export function ComparativoView({
     l('Σ dobras', 'mm', 0, true, rA.somaDobras, rR.somaDobras),
     ...dobrasComDado.map((d: DobraId) =>
       l(DOBRA_LABEL[d], 'mm', 0, true, atual.medidas.dobras[d] ?? null, referencia.medidas.dobras[d] ?? null, true),
+    ),
+    // Funcional: aqui a direção desejável inverte quase toda — subir é melhorar.
+    ...fA.rm.map((x, i) =>
+      l(`1RM ${x.label}`, 'kg', 0, false, x.estimado, fR.rm[i]?.estimado ?? null),
+    ),
+    l('Força relativa', '× peso', 2, false, fA.forcaRelativa, fR.forcaRelativa),
+    l('FMS', '/21', 0, false, fA.fmsTotal, fR.fmsTotal),
+    l('VO₂máx', 'mL/kg/min', 1, false, fA.vo2, fR.vo2),
+    l(
+      'Flexões',
+      'reps',
+      0,
+      false,
+      atual.funcional?.resistenciaLocal?.flexoesMax ?? null,
+      referencia.funcional?.resistenciaLocal?.flexoesMax ?? null,
+    ),
+    l(
+      'Prancha',
+      's',
+      0,
+      false,
+      atual.funcional?.resistenciaLocal?.pranchaSegundos ?? null,
+      referencia.funcional?.resistenciaLocal?.pranchaSegundos ?? null,
+    ),
+    l(
+      'Senta-e-alcança',
+      'cm',
+      1,
+      false,
+      atual.funcional?.flexibilidade?.sentaEAlcancaCm ?? null,
+      referencia.funcional?.flexibilidade?.sentaEAlcancaCm ?? null,
     ),
   ].filter((x) => x.atual != null || x.referencia != null)
 
@@ -114,6 +154,13 @@ export function ComparativoView({
       casas: 1,
       menorEhMelhor: true,
       valores: serie.map((a) => a.medidas.circunferencias.cintura ?? null),
+    },
+    {
+      titulo: 'Força relativa',
+      unidade: '× peso',
+      casas: 2,
+      menorEhMelhor: false,
+      valores: serie.map((a) => resumirFuncional(a.funcional, a.medidas.pesoKg).forcaRelativa),
     },
   ]
 

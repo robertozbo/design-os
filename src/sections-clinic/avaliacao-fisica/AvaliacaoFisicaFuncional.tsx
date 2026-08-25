@@ -8,92 +8,96 @@ import type {
   PacienteAvaliacao,
   ProtocoloId,
 } from '@/../product-clinic/sections/avaliacao-fisica/types'
-import { CONDICAO_VAZIA, NovaAvaliacaoForm, Toasts, useToasts } from './components'
+import { NovaAvaliacaoForm, Toasts, useToasts } from './components'
 
 const d = data as unknown as AvaliacaoFisicaData
 
 /**
- * A tela de medir. Avaliação nova da Ana pelo educador físico da clínica, com a última avaliação
- * (feita pela nutricionista) do lado direito como referência — é o ponto do produto: o corpo é um
- * só, a série é uma só, e quem mede hoje vê o que o colega mediu em agosto.
+ * A metade funcional do mesmo formulário, aberta na aba de desempenho.
+ *
+ * O caso é o Diego, que tem dor documentada no ombro direito acima de 120° — e é isso que o
+ * zero na mobilidade de ombro do FMS significa. A tela existe para não deixar esse zero
+ * desaparecer dentro do total: 15/21 parece um resultado bom até alguém reparar que um dos
+ * sete testes doeu.
  */
-export default function AvaliacaoFisicaNovaPreview() {
-  const base = d.pacientes[0]
+export default function AvaliacaoFisicaFuncionalPreview() {
+  const base = d.pacientes[1]
   const anterior = [...base.avaliacoes].sort((a, b) => b.data.localeCompare(a.data))[0]
 
-  // Objetivo, nível de atividade e meta mudam o GET e o peso-alvo — por isso são editáveis
-  // durante a avaliação, e por isso o paciente é estado e não constante.
   const [paciente, setPaciente] = useState<PacienteAvaliacao>(base.paciente)
-  const [aba, setAba] = useState<AbaFormulario>('antropometria')
+  const [aba, setAba] = useState<AbaFormulario>('funcional')
 
   const [avaliacao, setAvaliacao] = useState<Avaliacao>({
-    id: 'av-nova',
+    id: 'av-nova-func',
     pacienteId: base.paciente.id,
     data: '2026-11-18',
     dataLabel: '18 nov 2026',
     avaliador: d.avaliadorLogado,
-    protocolo: 'petroski',
+    protocolo: 'jackson_pollock_7',
     status: 'rascunho',
     usarBioimpedancia: false,
     visivelAoPaciente: true,
     parecer: '',
     condicao: {
-      ...CONDICAO_VAZIA,
-      lesoesAtuais: 'Dor lombar baixa ocasional ao fim do dia, sem irradiação.',
-      liberacaoMedica: 'liberado',
+      lesoesAtuais: 'Ombro direito com dor em elevação acima de 120°.',
+      cirurgiasPrevias: 'Reconstrução de LCA em 2019 (joelho esquerdo).',
+      restricoes: 'Sem desenvolvimento militar; agachamento liberado até profundidade completa.',
+      liberacaoMedica: 'com-restricoes',
       liberacaoNota:
-        'Dra. Helena Prado (CRM 456789-SP) — liberada para atividade progressiva, 03 fev 2026.',
+        'Dr. Bruno Sales (CRM 123456-SP) — liberado com restrição de amplitude no ombro direito, 10 mar 2026.',
     },
     fotos: { frontal: true, lateral: true, posterior: false },
     funcional: {
       rm: {
-        supino: { pesoTesteKg: 35, repsTeste: 8 },
-        agachamento: { pesoTesteKg: 55, repsTeste: 8 },
-        levantamentoTerra: { pesoTesteKg: 65, repsTeste: 6 },
+        supino: { pesoTesteKg: 112, repsTeste: 5 },
+        agachamento: { pesoTesteKg: 160, repsTeste: 5 },
+        levantamentoTerra: { pesoTesteKg: 190, repsTeste: 4 },
       },
       fms: {
-        agachamentoProfundo: 2,
+        agachamentoProfundo: 3,
         passagemBarreira: 2,
         avancoLinha: 2,
-        mobilidadeOmbro: 2,
+        // Zero é dor, não desempenho ruim — bate com a queixa registrada na condição física.
+        mobilidadeOmbro: 0,
         elevacaoPernaEstendida: 2,
-        estabilidadeTroncoFlexao: 2,
+        estabilidadeTroncoFlexao: 3,
         estabilidadeRotatoria: 2,
       },
-      flexibilidade: { sentaEAlcancaCm: 30, mobilidadeOmbroCm: 4, schoberCm: 6.5 },
+      flexibilidade: { sentaEAlcancaCm: 24, mobilidadeOmbroCm: 13, schoberCm: 6.5 },
       cardio: {
         protocolo: 'cooper',
-        metricaPrincipal: 2050,
+        metricaPrincipal: 2680,
         vo2Informado: null,
-        fcMedia: 160,
-        fcRecuperacao: 31,
+        fcMedia: 163,
+        fcRecuperacao: 41,
       },
-      resistenciaLocal: { flexoesMax: 18, abdominais1min: 34, pranchaSegundos: 78 },
+      resistenciaLocal: { flexoesMax: 40, abdominais1min: 52, pranchaSegundos: 128 },
     },
     medidas: {
-      pesoKg: 67.9,
-      alturaCm: 168,
+      pesoKg: 85.4,
+      alturaCm: 178,
       dobras: {
-        peitoral: 11,
+        peitoral: 10,
         axilarMedia: 12,
-        triceps: 18,
-        subescapular: 15,
-        abdominal: 20,
-        suprailiaca: 16,
-        coxa: 24,
-        panturrilha: 15,
+        triceps: 10,
+        biceps: 5,
+        subescapular: 16,
+        abdominal: 21,
+        suprailiaca: 17,
+        coxa: 11,
+        panturrilha: 9,
       },
       circunferencias: {
-        pescoco: 32,
-        torax: 88,
-        cintura: 75,
-        abdomen: 79,
-        quadril: 96,
-        bracoRelaxado: 28,
-        bracoContraido: 30.5,
-        antebraco: 24,
-        coxa: 55,
-        panturrilha: 35,
+        pescoco: 39,
+        torax: 104,
+        cintura: 85,
+        abdomen: 87,
+        quadril: 100,
+        bracoRelaxado: 35.5,
+        bracoContraido: 38.5,
+        antebraco: 29,
+        coxa: 60.5,
+        panturrilha: 39,
       },
       bioimpedancia: null,
     },

@@ -12,6 +12,7 @@
 {"section":"atendimento","design":"AtendimentoPsicologia","file":"atendimento-psicologia"},
 {"section":"avaliacao-fisica","design":"AvaliacaoFisicaLista","file":"avaliacao-fisica-lista"},
 {"section":"avaliacao-fisica","design":"AvaliacaoFisicaNova","file":"avaliacao-fisica-nova"},
+{"section":"avaliacao-fisica","design":"AvaliacaoFisicaFuncional","file":"avaliacao-fisica-funcional"},
 {"section":"avaliacao-fisica","design":"AvaliacaoFisicaComparativo","file":"avaliacao-fisica-comparativo"},
 {"section":"exames","design":"ExamesLista","file":"exames-lista"},
 {"section":"exames","design":"ExameDetalhe","file":"exame-detalhe"},

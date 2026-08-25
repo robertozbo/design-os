@@ -80,6 +80,91 @@ export interface Bioimpedancia {
   idadeMetabolica: number | null
 }
 
+/* ---------- Condição física ---------- */
+
+export type LiberacaoMedica =
+  | 'nao-informado'
+  | 'liberado'
+  | 'com-restricoes'
+  | 'contraindicado'
+
+/**
+ * O que o avaliador precisa saber antes de prescrever. Numa clínica isso deixa de ser
+ * autorrelato: a liberação vem de um médico da mesma equipe, e o campo aponta para ele.
+ */
+export interface CondicaoFisica {
+  lesoesAtuais: string
+  cirurgiasPrevias: string
+  restricoes: string
+  liberacaoMedica: LiberacaoMedica
+  /** Quem liberou, com que restrição e quando. */
+  liberacaoNota: string
+}
+
+export interface Fotos {
+  frontal: boolean
+  lateral: boolean
+  posterior: boolean
+}
+
+/* ---------- Funcional ---------- */
+
+/** Teste submáximo → 1RM estimado. */
+export interface RMTeste {
+  pesoTesteKg: number | null
+  repsTeste: number | null
+}
+
+export interface OneRM {
+  supino: RMTeste | null
+  agachamento: RMTeste | null
+  levantamentoTerra: RMTeste | null
+}
+
+export type FMSTesteId =
+  | 'agachamentoProfundo'
+  | 'passagemBarreira'
+  | 'avancoLinha'
+  | 'mobilidadeOmbro'
+  | 'elevacaoPernaEstendida'
+  | 'estabilidadeTroncoFlexao'
+  | 'estabilidadeRotatoria'
+
+/** Score 0–3 por sub-teste; o total (0–21) é derivado, nunca guardado. */
+export type FMS = Record<FMSTesteId, number>
+
+export interface Flexibilidade {
+  sentaEAlcancaCm: number | null
+  mobilidadeOmbroCm: number | null
+  schoberCm: number | null
+}
+
+export type CardioProtocolo = 'cooper' | 'astrand'
+
+export interface Cardio {
+  protocolo: CardioProtocolo
+  /** Cooper: metros em 12 min · Åstrand: degraus/min. */
+  metricaPrincipal: number | null
+  /** Só o Åstrand precisa digitar — no Cooper o VO₂ sai da distância. */
+  vo2Informado: number | null
+  fcMedia: number | null
+  fcRecuperacao: number | null
+}
+
+export interface ResistenciaLocal {
+  flexoesMax: number | null
+  abdominais1min: number | null
+  pranchaSegundos: number | null
+}
+
+export interface Funcional {
+  rm: OneRM
+  fms: FMS | null
+  flexibilidade: Flexibilidade | null
+  cardio: Cardio | null
+  resistenciaLocal: ResistenciaLocal | null
+}
+
 /* ---------- Avaliação ---------- */
 
 export interface AvaliadorRef {
@@ -109,6 +194,9 @@ export interface PacienteAvaliacao {
 
 export type StatusAvaliacao = 'rascunho' | 'concluida'
 
+/** As duas metades do formulário. Só a antropometria é comum aos dois conselhos. */
+export type AbaFormulario = 'antropometria' | 'funcional'
+
 export interface Avaliacao {
   id: string
   pacienteId: string
@@ -118,10 +206,17 @@ export interface Avaliacao {
   protocolo: ProtocoloId | null
   status: StatusAvaliacao
   medidas: Medidas
+  condicao: CondicaoFisica
+  fotos: Fotos
+  /** `null` quando a avaliação foi só antropométrica — o caso da nutrição. */
+  funcional: Funcional | null
   /** Leitura do avaliador. Vira a evolução no prontuário quando concluída. */
   parecer: string
   /** Marcado quando o %G exibido veio da balança, e não das dobras. */
   usarBioimpedancia: boolean
+  /** Se o paciente vê esta avaliação no app. O pool da clínica já é compartilhado
+   *  entre os profissionais; o que precisa de decisão é o que sai para fora dela. */
+  visivelAoPaciente: boolean
 }
 
 /* ---------- Dados da section ---------- */
@@ -146,10 +241,21 @@ export interface NovaAvaliacaoFormProps {
   avaliacao: Avaliacao
   /** Avaliação anterior do mesmo paciente, para o delta ao vivo. `null` na primeira. */
   anterior: Avaliacao | null
+  aba: AbaFormulario
+  onAba: (aba: AbaFormulario) => void
+  onData: (data: string) => void
   onMedidas: (medidas: Medidas) => void
   onProtocolo: (protocolo: ProtocoloId) => void
   onUsarBioimpedancia: (usar: boolean) => void
+  onCondicao: (condicao: CondicaoFisica) => void
+  onFotos: (fotos: Fotos) => void
+  onFuncional: (funcional: Funcional | null) => void
   onParecer: (texto: string) => void
+  onVisivelAoPaciente: (visivel: boolean) => void
+  /** Objetivo e nível de atividade alimentam o GET — mudam o cálculo, então mudam aqui. */
+  onObjetivo: (objetivo: ObjetivoId) => void
+  onNivelAtividade: (nivel: NivelAtividade) => void
+  onMetaGordura: (pct: number | null) => void
   onSalvarRascunho: () => void
   onConcluir: () => void
   onCancelar: () => void

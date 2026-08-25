@@ -41,7 +41,7 @@
           "usarBioimpedancia": false,
           "parecer": "Avaliação inicial. Sedentária há 3 anos, retomando atividade. Prioridade é preservar massa magra durante o déficit — força 2×/semana a partir desta semana. Reavaliar em 90 dias.",
           "medidas": {
-            "pesoKg": 72.0,
+            "pesoKg": 72,
             "alturaCm": 168,
             "dobras": {
               "peitoral": 14,
@@ -67,6 +67,52 @@
               "panturrilha": 36
             },
             "bioimpedancia": null
+          },
+          "condicao": {
+            "lesoesAtuais": "Dor lombar baixa ocasional ao fim do dia, sem irradiação.",
+            "cirurgiasPrevias": "",
+            "restricoes": "Evitar flexão de tronco com carga até a reavaliação.",
+            "liberacaoMedica": "liberado",
+            "liberacaoNota": "Dra. Helena Prado (CRM 456789-SP) — liberada para atividade progressiva, 03 fev 2026."
+          },
+          "fotos": {
+            "frontal": true,
+            "lateral": true,
+            "posterior": false
+          },
+          "visivelAoPaciente": true,
+          "funcional": {
+            "rm": {
+              "supino": null,
+              "agachamento": null,
+              "levantamentoTerra": null
+            },
+            "fms": {
+              "agachamentoProfundo": 1,
+              "passagemBarreira": 2,
+              "avancoLinha": 1,
+              "mobilidadeOmbro": 2,
+              "elevacaoPernaEstendida": 2,
+              "estabilidadeTroncoFlexao": 1,
+              "estabilidadeRotatoria": 1
+            },
+            "flexibilidade": {
+              "sentaEAlcancaCm": 24,
+              "mobilidadeOmbroCm": 8,
+              "schoberCm": 5.5
+            },
+            "cardio": {
+              "protocolo": "cooper",
+              "metricaPrincipal": 1680,
+              "vo2Informado": null,
+              "fcMedia": 158,
+              "fcRecuperacao": 22
+            },
+            "resistenciaLocal": {
+              "flexoesMax": 8,
+              "abdominais1min": 22,
+              "pranchaSegundos": 35
+            }
           }
         },
         {
@@ -113,6 +159,61 @@
               "panturrilha": 35.5
             },
             "bioimpedancia": null
+          },
+          "condicao": {
+            "lesoesAtuais": "Dor lombar baixa ocasional ao fim do dia, sem irradiação.",
+            "cirurgiasPrevias": "",
+            "restricoes": "",
+            "liberacaoMedica": "liberado",
+            "liberacaoNota": "Dra. Helena Prado (CRM 456789-SP) — liberada para atividade progressiva, 03 fev 2026."
+          },
+          "fotos": {
+            "frontal": true,
+            "lateral": true,
+            "posterior": true
+          },
+          "visivelAoPaciente": true,
+          "funcional": {
+            "rm": {
+              "supino": {
+                "pesoTesteKg": 30,
+                "repsTeste": 8
+              },
+              "agachamento": {
+                "pesoTesteKg": 45,
+                "repsTeste": 8
+              },
+              "levantamentoTerra": {
+                "pesoTesteKg": 55,
+                "repsTeste": 6
+              }
+            },
+            "fms": {
+              "agachamentoProfundo": 2,
+              "passagemBarreira": 2,
+              "avancoLinha": 2,
+              "mobilidadeOmbro": 2,
+              "elevacaoPernaEstendida": 2,
+              "estabilidadeTroncoFlexao": 2,
+              "estabilidadeRotatoria": 1
+            },
+            "flexibilidade": {
+              "sentaEAlcancaCm": 28,
+              "mobilidadeOmbroCm": 5,
+              "schoberCm": 6
+            },
+            "cardio": {
+              "protocolo": "cooper",
+              "metricaPrincipal": 1920,
+              "vo2Informado": null,
+              "fcMedia": 162,
+              "fcRecuperacao": 28
+            },
+            "resistenciaLocal": {
+              "flexoesMax": 14,
+              "abdominais1min": 30,
+              "pranchaSegundos": 62
+            }
           }
         },
         {
@@ -168,7 +269,21 @@
               "tmbKcal": 1385,
               "idadeMetabolica": 31
             }
-          }
+          },
+          "condicao": {
+            "lesoesAtuais": "Dor lombar baixa ocasional ao fim do dia, sem irradiação.",
+            "cirurgiasPrevias": "",
+            "restricoes": "",
+            "liberacaoMedica": "liberado",
+            "liberacaoNota": "Dra. Helena Prado (CRM 456789-SP) — liberada para atividade progressiva, 03 fev 2026."
+          },
+          "fotos": {
+            "frontal": true,
+            "lateral": true,
+            "posterior": true
+          },
+          "visivelAoPaciente": true,
+          "funcional": null
         }
       ]
     },
@@ -230,6 +345,61 @@
               "panturrilha": 38
             },
             "bioimpedancia": null
+          },
+          "condicao": {
+            "lesoesAtuais": "Ombro direito com dor em elevação acima de 120°.",
+            "cirurgiasPrevias": "Reconstrução de LCA em 2019 (joelho esquerdo).",
+            "restricoes": "Sem desenvolvimento militar; agachamento até a paralela.",
+            "liberacaoMedica": "com-restricoes",
+            "liberacaoNota": "Dr. Bruno Sales (CRM 123456-SP) — liberado com restrição de amplitude no ombro direito, 10 mar 2026."
+          },
+          "fotos": {
+            "frontal": true,
+            "lateral": true,
+            "posterior": true
+          },
+          "visivelAoPaciente": true,
+          "funcional": {
+            "rm": {
+              "supino": {
+                "pesoTesteKg": 100,
+                "repsTeste": 5
+              },
+              "agachamento": {
+                "pesoTesteKg": 140,
+                "repsTeste": 5
+              },
+              "levantamentoTerra": {
+                "pesoTesteKg": 170,
+                "repsTeste": 4
+              }
+            },
+            "fms": {
+              "agachamentoProfundo": 2,
+              "passagemBarreira": 2,
+              "avancoLinha": 2,
+              "mobilidadeOmbro": 0,
+              "elevacaoPernaEstendida": 2,
+              "estabilidadeTroncoFlexao": 3,
+              "estabilidadeRotatoria": 2
+            },
+            "flexibilidade": {
+              "sentaEAlcancaCm": 18,
+              "mobilidadeOmbroCm": 22,
+              "schoberCm": 6
+            },
+            "cardio": {
+              "protocolo": "cooper",
+              "metricaPrincipal": 2450,
+              "vo2Informado": null,
+              "fcMedia": 168,
+              "fcRecuperacao": 32
+            },
+            "resistenciaLocal": {
+              "flexoesMax": 32,
+              "abdominais1min": 45,
+              "pranchaSegundos": 95
+            }
           }
         },
         {
@@ -272,7 +442,21 @@
               "panturrilha": 38.5
             },
             "bioimpedancia": null
-          }
+          },
+          "condicao": {
+            "lesoesAtuais": "Ombro direito com dor em elevação acima de 120°.",
+            "cirurgiasPrevias": "Reconstrução de LCA em 2019 (joelho esquerdo).",
+            "restricoes": "Sem desenvolvimento militar; agachamento até a paralela.",
+            "liberacaoMedica": "com-restricoes",
+            "liberacaoNota": "Dr. Bruno Sales (CRM 123456-SP) — liberado com restrição de amplitude no ombro direito, 10 mar 2026."
+          },
+          "fotos": {
+            "frontal": false,
+            "lateral": false,
+            "posterior": false
+          },
+          "visivelAoPaciente": true,
+          "funcional": null
         },
         {
           "id": "av-2-3",
@@ -318,6 +502,61 @@
               "panturrilha": 38.5
             },
             "bioimpedancia": null
+          },
+          "condicao": {
+            "lesoesAtuais": "Ombro direito com dor em elevação acima de 120°.",
+            "cirurgiasPrevias": "Reconstrução de LCA em 2019 (joelho esquerdo).",
+            "restricoes": "Sem desenvolvimento militar; agachamento até a paralela.",
+            "liberacaoMedica": "com-restricoes",
+            "liberacaoNota": "Dr. Bruno Sales (CRM 123456-SP) — liberado com restrição de amplitude no ombro direito, 10 mar 2026."
+          },
+          "fotos": {
+            "frontal": true,
+            "lateral": true,
+            "posterior": true
+          },
+          "visivelAoPaciente": true,
+          "funcional": {
+            "rm": {
+              "supino": {
+                "pesoTesteKg": 105,
+                "repsTeste": 5
+              },
+              "agachamento": {
+                "pesoTesteKg": 150,
+                "repsTeste": 5
+              },
+              "levantamentoTerra": {
+                "pesoTesteKg": 180,
+                "repsTeste": 4
+              }
+            },
+            "fms": {
+              "agachamentoProfundo": 2,
+              "passagemBarreira": 2,
+              "avancoLinha": 2,
+              "mobilidadeOmbro": 1,
+              "elevacaoPernaEstendida": 2,
+              "estabilidadeTroncoFlexao": 3,
+              "estabilidadeRotatoria": 2
+            },
+            "flexibilidade": {
+              "sentaEAlcancaCm": 21,
+              "mobilidadeOmbroCm": 17,
+              "schoberCm": 6.5
+            },
+            "cardio": {
+              "protocolo": "cooper",
+              "metricaPrincipal": 2560,
+              "vo2Informado": null,
+              "fcMedia": 165,
+              "fcRecuperacao": 36
+            },
+            "resistenciaLocal": {
+              "flexoesMax": 36,
+              "abdominais1min": 48,
+              "pranchaSegundos": 110
+            }
           }
         },
         {
@@ -338,7 +577,7 @@
           "usarBioimpedancia": false,
           "parecer": "",
           "medidas": {
-            "pesoKg": 86.0,
+            "pesoKg": 86,
             "alturaCm": 178,
             "dobras": {
               "peitoral": 11,
@@ -364,6 +603,61 @@
               "panturrilha": 39
             },
             "bioimpedancia": null
+          },
+          "condicao": {
+            "lesoesAtuais": "Ombro direito com dor em elevação acima de 120°.",
+            "cirurgiasPrevias": "Reconstrução de LCA em 2019 (joelho esquerdo).",
+            "restricoes": "Agachamento liberado até profundidade completa desde jul/26.",
+            "liberacaoMedica": "com-restricoes",
+            "liberacaoNota": "Dr. Bruno Sales (CRM 123456-SP) — liberado com restrição de amplitude no ombro direito, 10 mar 2026."
+          },
+          "fotos": {
+            "frontal": true,
+            "lateral": false,
+            "posterior": false
+          },
+          "visivelAoPaciente": false,
+          "funcional": {
+            "rm": {
+              "supino": {
+                "pesoTesteKg": 110,
+                "repsTeste": 5
+              },
+              "agachamento": {
+                "pesoTesteKg": 155,
+                "repsTeste": 5
+              },
+              "levantamentoTerra": {
+                "pesoTesteKg": 185,
+                "repsTeste": 4
+              }
+            },
+            "fms": {
+              "agachamentoProfundo": 3,
+              "passagemBarreira": 2,
+              "avancoLinha": 2,
+              "mobilidadeOmbro": 2,
+              "elevacaoPernaEstendida": 2,
+              "estabilidadeTroncoFlexao": 3,
+              "estabilidadeRotatoria": 2
+            },
+            "flexibilidade": {
+              "sentaEAlcancaCm": 23,
+              "mobilidadeOmbroCm": 14,
+              "schoberCm": 6.5
+            },
+            "cardio": {
+              "protocolo": "cooper",
+              "metricaPrincipal": 2620,
+              "vo2Informado": null,
+              "fcMedia": 164,
+              "fcRecuperacao": 39
+            },
+            "resistenciaLocal": {
+              "flexoesMax": 38,
+              "abdominais1min": 50,
+              "pranchaSegundos": 120
+            }
           }
         }
       ]

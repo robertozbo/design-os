@@ -220,6 +220,167 @@ export function ClassBadge({
   )
 }
 
+export function TextArea({
+  label,
+  hint,
+  valor,
+  onChange,
+  linhas = 2,
+  placeholder,
+}: {
+  label: string
+  hint?: string
+  valor: string
+  onChange: (v: string) => void
+  linhas?: number
+  placeholder?: string
+}) {
+  return (
+    <label className="block">
+      <span className="flex items-baseline gap-2">
+        <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+          {label}
+        </span>
+        {hint && <span className="text-[10px] text-slate-400">{hint}</span>}
+      </span>
+      <textarea
+        value={valor}
+        onChange={(e) => onChange(e.target.value)}
+        rows={linhas}
+        placeholder={placeholder}
+        className="mt-1 w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-xs leading-relaxed text-slate-700 outline-none transition-colors placeholder:text-slate-400 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:placeholder:text-slate-600"
+      />
+    </label>
+  )
+}
+
+export function Select<T extends string>({
+  label,
+  value,
+  options,
+  onChange,
+  hint,
+}: {
+  label: string
+  value: T
+  options: { id: T; label: string }[]
+  onChange: (id: T) => void
+  hint?: string
+}) {
+  return (
+    <label className="block">
+      <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+        {label}
+      </span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value as T)}
+        className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 outline-none transition-colors focus:border-teal-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+      >
+        {options.map((o) => (
+          <option key={o.id} value={o.id}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+      {hint && (
+        <p className="mt-0.5 font-mono text-[9px] uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          {hint}
+        </p>
+      )}
+    </label>
+  )
+}
+
+/** Campo que veio do cadastro do paciente e não se edita aqui — só se confere. */
+export function ValorDoCadastro({ label, valor }: { label: string; valor: string }) {
+  return (
+    <div>
+      <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+        {label}
+      </span>
+      <div className="mt-1 flex items-center justify-between gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-800/40">
+        <span
+          title={valor}
+          className="min-w-0 truncate font-mono text-sm tabular-nums text-slate-600 dark:text-slate-300"
+        >
+          {valor}
+        </span>
+        <span className="shrink-0 rounded bg-white px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-slate-400 dark:bg-slate-900">
+          cadastro
+        </span>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Slot de foto do acompanhamento. No protótipo é um marcador — o que a tela precisa provar é que
+ * as três vistas existem e são pareáveis com as da avaliação anterior, não o upload em si.
+ */
+export function PhotoSlot({
+  label,
+  preenchida,
+  onToggle,
+}: {
+  label: string
+  preenchida: boolean
+  onToggle: () => void
+}) {
+  return (
+    <div className="space-y-1.5">
+      <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+        {label}
+      </p>
+      <button
+        type="button"
+        onClick={onToggle}
+        className={`flex aspect-[3/4] w-full items-center justify-center rounded-xl border-2 border-dashed text-[11px] transition-colors ${
+          preenchida
+            ? 'border-teal-300 bg-gradient-to-b from-teal-50 to-slate-100 text-teal-700 dark:border-teal-700 dark:from-teal-950/40 dark:to-slate-900 dark:text-teal-300'
+            : 'border-slate-200 bg-slate-50 text-slate-400 hover:text-teal-600 dark:border-slate-700 dark:bg-slate-900/40 dark:hover:text-teal-400'
+        }`}
+      >
+        {preenchida ? 'Foto anexada · remover' : '+ Anexar'}
+      </button>
+    </div>
+  )
+}
+
+/** Seletor 0–3 do FMS. Zero não é "ruim": é dor durante o teste. */
+export function ScorePicker({
+  value,
+  onChange,
+}: {
+  value: number
+  onChange: (v: number) => void
+}) {
+  return (
+    <div className="inline-flex overflow-hidden rounded-md ring-1 ring-inset ring-slate-200 dark:ring-slate-700">
+      {[0, 1, 2, 3].map((s) => {
+        const ativo = value === s
+        return (
+          <button
+            key={s}
+            type="button"
+            onClick={() => onChange(s)}
+            title={s === 0 ? 'Dor durante o teste' : undefined}
+            className={`h-7 w-7 font-mono text-[12px] font-semibold tabular-nums transition-colors ${
+              ativo
+                ? s === 0
+                  ? 'bg-rose-500 text-white'
+                  : 'bg-teal-500 text-white'
+                : 'bg-white text-slate-500 hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700'
+            }`}
+          >
+            {s}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
 export function SubTitulo({ children }: { children: ReactNode }) {
   return (
     <p className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">

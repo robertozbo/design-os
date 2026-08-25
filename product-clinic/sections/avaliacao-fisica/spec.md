@@ -11,13 +11,23 @@ Não confundir com `acompanhamento`, que é o que o **paciente** compartilha pel
 
 ### Medir (nutricionista ou educador físico, mesma tela)
 - Abre a avaliação a partir da ficha do paciente → cabeçalho com paciente, conselho de quem avalia e objetivo combinado
-- Quatro blocos colapsáveis: **Básico** (peso, estatura, IMC) · **Dobras cutâneas** · **Circunferências** · **Bioimpedância** · **Parecer**
+- **Duas abas**: **Antropometria** (comum aos dois conselhos) e **Funcional** (de quem prescreve treino). Cada aba tem um ponto que acende quando há dado
+- Antropometria: **Identificação** · **Básico** (peso, estatura, IMC) · **Dobras cutâneas** · **Circunferências** · **Bioimpedância** · **Condição física** · **Fotos** · **Parecer**
+- Em Identificação ficam os campos que mudam o cálculo antes de qualquer medida: data, **objetivo**, **nível de atividade** (multiplica a TMB no GET) e **meta de % de gordura** (alimenta o peso-alvo). Idade e sexo vêm do cadastro e não se editam aqui — a tag "cadastro" diz de onde vieram
 - O bloco que já abre depende do conselho: **CREF** abre em Dobras (adipômetro), **CRN** abre em Circunferências (fita e balança). Os dois blocos existem para os dois — o que muda é o que está na frente
 - Escolhe o **protocolo**; a tela mostra a equação, a referência e a população em que foi validada
 - **Nenhuma dobra some** ao trocar de protocolo: as exigidas ganham anel teal e um ponto, as demais recuam para 40% de opacidade e voltam no hover. Continuam editáveis — a medida vale mesmo fora do cálculo
 - O painel à direita **recalcula a cada tecla**: IMC, Σ das dobras, densidade, % de gordura, massa gorda e magra, RCQ, RCE, CMB, fracionamento em 4 compartimentos, TMB, GET e as metas diárias
+- **Condição física** registra lesões, cirurgias, restrições e a liberação médica — que numa clínica vem do médico da própria equipe, com CRM e data. `Contraindicado` avisa em rose: a avaliação pode ser registrada, o que não pode é virar prescrição
+- **Fotos** frontal/lateral/posterior, pareáveis com as da avaliação anterior
 - "Salvar rascunho" a qualquer momento · "Concluir avaliação" fecha e gera a evolução no Prontuário
 - Cada bloco pode ser pulado: a avaliação que só mediu peso e cintura continua valendo
+
+### Medir desempenho (aba Funcional, só quem prescreve treino)
+- **Força · 1RM estimado** por Brzycki (`peso × 36 / (37 − reps)`) em supino, agachamento e levantamento terra. O teste que gerou o número aparece ao lado dele
+- **FMS** — 7 sub-testes de 0 a 3. **Zero é dor, não desempenho ruim**: o botão fica em rose e o painel manda encaminhar antes de prescrever, mesmo com o total alto
+- **Flexibilidade** (senta-e-alcança, mobilidade de ombro, Schober) · **Cardiorrespiratório** (Cooper ou Åstrand) · **Resistência local** (flexões, abdominais, prancha)
+- O painel da direita mostra 1RM total, **força relativa** (soma dos 1RM ÷ peso corporal), total do FMS com o corte 14 e VO₂máx
 
 ### Ler o histórico do paciente (histórico da clínica)
 - Lista **por paciente**, com KPIs da clínica no topo (avaliações, pacientes avaliados, % com dobras, rascunhos pendentes)
@@ -51,6 +61,13 @@ Não confundir com `acompanhamento`, que é o que o **paciente** compartilha pel
 | Yuhasz | tríceps, subescapular, supra-ilíaca, abdominal, coxa, panturrilha | idem | não |
 | Slaughter-Lohman | tríceps, panturrilha | idem | não (8–18 anos) |
 
+### Funcional
+- **1RM (Brzycki)** — `peso × 36 / (37 − reps)`, teste submáximo. Acima de ~10 repetições superestima, por isso o teste é exibido junto do resultado
+- **Força relativa** = soma dos três 1RM ÷ peso corporal. É ela que muda a conduta: 100 kg de supino significa uma coisa num paciente de 60 kg e outra num de 100
+- **FMS** — total 0–21, corte validado em **14** (Kiesel et al.). E a regra que o total esconde: **0 em qualquer sub-teste é dor**, e manda encaminhar mesmo com total alto
+- **VO₂máx** — Cooper (1968) tem forma fechada, `(distância_m − 504,9) / 44,73`, e é calculado. Åstrand sai de nomograma e é digitado; a tela troca o campo entre calculado e editável conforme o protocolo
+- Sem classificação de VO₂ por idade/sexo: a tabela não existe no motor do backend e não vale inventar uma
+
 ### Estados & regras
 - **Nenhum resultado é armazenado.** Tudo é derivado das medidas a cada tecla — número derivado guardado ao lado da medida que o gerou é a mesma armadilha do peso que muda sem o IMC acompanhar
 - **A Σ soma só as dobras exigidas pelo protocolo, e é `null` se faltar uma.** Uma soma que ignora o sítio que faltou não é soma parcial: é um número menor apresentado como se fosse o certo
@@ -81,5 +98,5 @@ Não confundir com `acompanhamento`, que é o que o **paciente** compartilha pel
 - Nymos (teal nas ações, DM Sans), light/dark, props-based, sem fetch interno
 - Gráficos em **SVG inline** e barras CSS — sem biblioteca
 - O motor de cálculo vive em `components/formulas.ts` e é **cópia verbatim** de `backend/src/lib/body-composition/protocols.ts` + `norms.ts`. Não redesenhe equação aqui: o número que sai desta tela vai para o prontuário, e precisa ser o mesmo que a clínica já calcula
-- Três screen designs sobre um `data.json` só: `AvaliacaoFisicaLista` (histórico), `AvaliacaoFisicaNova` (formulário) e `AvaliacaoFisicaComparativo` (evolução)
+- Quatro screen designs sobre um `data.json` só: `AvaliacaoFisicaLista` (histórico), `AvaliacaoFisicaNova` (formulário, aba antropometria), `AvaliacaoFisicaFuncional` (o mesmo formulário na aba de desempenho) e `AvaliacaoFisicaComparativo` (evolução)
 - Referências: `product-personal/sections/avaliacoes` (formulário original) e a tela de atendimento de nutrição em `product-clinic/sections/atendimento`, que registra o peso do dia mas não faz avaliação — as duas se completam, não se repetem
