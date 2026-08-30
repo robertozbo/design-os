@@ -31,6 +31,7 @@ export function TreinamentosView({
   const [tab, setTab] = useState<Tab>('cursos')
   const [cursoAbertoId, setCursoAbertoId] = useState<string | null>(null)
   const [turmaAbertaId, setTurmaAbertaId] = useState<string | null>(null)
+  const [turmaExpandidaId, setTurmaExpandidaId] = useState<string | null>(null)
   const [drawerTreinamento, setDrawerTreinamento] = useState(false)
   const [novaTurmaDe, setNovaTurmaDe] = useState<string | null | false>(false)
 
@@ -231,36 +232,96 @@ export function TreinamentosView({
                 {turmasFiltradas.map((turma) => {
                   const curso = treinamentos.find((t) => t.id === turma.treinamentoId)
                   const emp = empregadores.find((e) => e.id === turma.empregadorId)
+                  const expandida = turmaExpandidaId === turma.id
                   return (
-                    <button
-                      key={turma.id}
-                      onClick={() => {
-                        setTurmaAbertaId(turma.id)
-                        onSelectTurma?.(turma.id)
-                      }}
-                      className="flex w-full flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/50"
-                    >
-                      <div className="min-w-0 flex-1">
-                        <p className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">
-                          {curso && (
-                            <span className="rounded bg-teal-50 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-teal-700 dark:bg-teal-950 dark:text-teal-300">
-                              {curso.norma}
-                            </span>
+                    <div key={turma.id}>
+                      <button
+                        onClick={() => setTurmaExpandidaId(expandida ? null : turma.id)}
+                        className="flex w-full flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                      >
+                        <svg
+                          className={`h-4 w-4 shrink-0 text-slate-400 transition-transform ${expandida ? 'rotate-90' : ''}`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                        <div className="min-w-0 flex-1">
+                          <p className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">
+                            {curso && (
+                              <span className="rounded bg-teal-50 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-teal-700 dark:bg-teal-950 dark:text-teal-300">
+                                {curso.norma}
+                              </span>
+                            )}
+                            <span className="truncate">{curso?.nome ?? turma.treinamentoId}</span>
+                          </p>
+                          <p className="truncate text-xs text-slate-500 dark:text-slate-400">
+                            {emp?.razaoSocial} · {TIPO_TURMA_LABEL[turma.tipo]}
+                          </p>
+                        </div>
+                        <span className="text-xs text-slate-500 tabular-nums dark:text-slate-400">{formatPeriodo(turma)}</span>
+                        <span className="text-xs text-slate-500 tabular-nums dark:text-slate-400">
+                          {turma.alunos.length} aluno{turma.alunos.length === 1 ? '' : 's'}
+                        </span>
+                        <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_TURMA_CLASSES[turma.status]}`}>
+                          {STATUS_TURMA_LABEL[turma.status]}
+                        </span>
+                      </button>
+
+                      {expandida && (
+                        <div className="border-t border-slate-100 bg-slate-50/60 px-4 py-3 pl-12 dark:border-slate-800 dark:bg-slate-800/30">
+                          {turma.alunos.length === 0 ? (
+                            <p className="py-2 text-sm text-slate-500 dark:text-slate-400">Nenhum aluno nesta turma ainda.</p>
+                          ) : (
+                            <ul className="grid gap-x-8 gap-y-1.5 sm:grid-cols-2 xl:grid-cols-3">
+                              {turma.alunos.map((a) => {
+                                const trab = trabalhadores.find((t) => t.id === a.trabalhadorId)
+                                return (
+                                  <li key={a.trabalhadorId} className="flex items-center gap-2 text-sm">
+                                    <span
+                                      className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                                        a.certificadoEmitido
+                                          ? 'bg-emerald-500'
+                                          : a.aprovado
+                                            ? 'bg-teal-500'
+                                            : a.presente === false
+                                              ? 'bg-rose-400'
+                                              : 'bg-slate-300 dark:bg-slate-600'
+                                      }`}
+                                    />
+                                    <span className="min-w-0 truncate text-slate-700 dark:text-slate-200">
+                                      {trab?.nome ?? a.trabalhadorId}
+                                    </span>
+                                    <span className="shrink-0 font-mono text-xs text-slate-400 dark:text-slate-500">
+                                      {trab?.matricula}
+                                    </span>
+                                    {a.certificadoEmitido && (
+                                      <span className="shrink-0 rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                                        Certificado
+                                      </span>
+                                    )}
+                                  </li>
+                                )
+                              })}
+                            </ul>
                           )}
-                          <span className="truncate">{curso?.nome ?? turma.treinamentoId}</span>
-                        </p>
-                        <p className="truncate text-xs text-slate-500 dark:text-slate-400">
-                          {emp?.razaoSocial} · {TIPO_TURMA_LABEL[turma.tipo]}
-                        </p>
-                      </div>
-                      <span className="text-xs text-slate-500 tabular-nums dark:text-slate-400">{formatPeriodo(turma)}</span>
-                      <span className="text-xs text-slate-500 tabular-nums dark:text-slate-400">
-                        {turma.alunos.length} aluno{turma.alunos.length === 1 ? '' : 's'}
-                      </span>
-                      <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_TURMA_CLASSES[turma.status]}`}>
-                        {STATUS_TURMA_LABEL[turma.status]}
-                      </span>
-                    </button>
+                          <button
+                            onClick={() => {
+                              setTurmaAbertaId(turma.id)
+                              onSelectTurma?.(turma.id)
+                            }}
+                            className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300"
+                          >
+                            Abrir turma — presença, aprovação e certificados
+                            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   )
                 })}
               </div>
