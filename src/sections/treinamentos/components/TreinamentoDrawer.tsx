@@ -112,13 +112,13 @@ export function TreinamentoDrawer({ onClose, onSave }: TreinamentoDrawerProps) {
                 <div key={i} className="flex items-center gap-2">
                   <span className="w-5 shrink-0 text-right font-mono text-xs text-slate-400 tabular-nums">{i + 1}.</span>
                   <input
-                    className={inputCls}
+                    className={`${inputCls} min-w-0 flex-1`}
                     value={d.titulo}
                     onChange={(e) => updateDisciplina(i, { titulo: e.target.value })}
                     placeholder="Título da disciplina"
                   />
                   <input
-                    className={`${inputCls} w-20 shrink-0 text-right tabular-nums`}
+                    className="w-20 shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-right text-sm text-slate-900 tabular-nums placeholder:text-slate-400 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500"
                     type="number"
                     min={0}
                     step={0.5}
