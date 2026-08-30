@@ -21,6 +21,7 @@ export function TreinamentosView({
   empregadores,
   trabalhadores,
   onCreateTreinamento,
+  onUpdateTreinamento,
   onCreateTurma,
   onTogglePresenca,
   onToggleAprovacao,
@@ -35,6 +36,7 @@ export function TreinamentosView({
   const [turmaAbertaId, setTurmaAbertaId] = useState<string | null>(null)
   const [turmaExpandidaId, setTurmaExpandidaId] = useState<string | null>(null)
   const [drawerTreinamento, setDrawerTreinamento] = useState(false)
+  const [cursoEditando, setCursoEditando] = useState<Treinamento | null>(null)
   const [novaTurmaDe, setNovaTurmaDe] = useState<string | null | false>(false)
 
   const [filtroEmpregador, setFiltroEmpregador] = useState('')
@@ -91,6 +93,7 @@ export function TreinamentosView({
           turmasDoCurso={turmas.filter((t) => t.treinamentoId === cursoAberto.id)}
           empregadores={empregadores}
           onBack={() => setCursoAbertoId(null)}
+          onEditar={() => setCursoEditando(cursoAberto)}
           onNovaTurma={() => setNovaTurmaDe(cursoAberto.id)}
           onOpenTurma={(id) => {
             setTurmaAbertaId(id)
@@ -334,8 +337,18 @@ export function TreinamentosView({
         </>
       )}
 
-      {drawerTreinamento && (
-        <TreinamentoDrawer onClose={() => setDrawerTreinamento(false)} onSave={onCreateTreinamento} />
+      {(drawerTreinamento || cursoEditando) && (
+        <TreinamentoDrawer
+          inicial={cursoEditando ?? undefined}
+          onClose={() => {
+            setDrawerTreinamento(false)
+            setCursoEditando(null)
+          }}
+          onSave={(input) => {
+            if (cursoEditando) onUpdateTreinamento?.(cursoEditando.id, input)
+            else onCreateTreinamento?.(input)
+          }}
+        />
       )}
       {novaTurmaDe !== false && (
         <NovaTurmaFlow
@@ -360,6 +373,7 @@ function CursoDetail({
   turmasDoCurso,
   empregadores,
   onBack,
+  onEditar,
   onNovaTurma,
   onOpenTurma,
 }: {
@@ -367,6 +381,7 @@ function CursoDetail({
   turmasDoCurso: TreinamentosProps['turmas']
   empregadores: TreinamentosProps['empregadores']
   onBack: () => void
+  onEditar: () => void
   onNovaTurma: () => void
   onOpenTurma: (id: string) => void
 }) {
@@ -406,12 +421,27 @@ function CursoDetail({
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-300">{curso.descricao}</p>
           )}
         </div>
-        <button
-          onClick={onNovaTurma}
-          className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-700"
-        >
-          Nova turma
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onEditar}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.9 4.5a2.1 2.1 0 013 3L8.5 18.9 4 20l1.1-4.5L16.9 4.5z"
+              />
+            </svg>
+            Editar
+          </button>
+          <button
+            onClick={onNovaTurma}
+            className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-700"
+          >
+            Nova turma
+          </button>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">

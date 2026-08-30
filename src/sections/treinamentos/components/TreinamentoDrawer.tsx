@@ -5,18 +5,24 @@ import { MODALIDADE_LABEL, formatHoras, somaDisciplinas } from './helpers'
 const NORMAS = ['NR-1', 'NR-5', 'NR-6', 'NR-10', 'NR-11', 'NR-12', 'NR-17', 'NR-18', 'NR-20', 'NR-33', 'NR-35']
 
 interface TreinamentoDrawerProps {
+  /** Quando presente, o drawer abre em modo edição pré-preenchido */
+  inicial?: Treinamento
   onClose: () => void
   onSave?: (treinamento: Omit<Treinamento, 'id'>) => void
 }
 
-export function TreinamentoDrawer({ onClose, onSave }: TreinamentoDrawerProps) {
-  const [nome, setNome] = useState('')
-  const [norma, setNorma] = useState('NR-35')
-  const [modalidade, setModalidade] = useState<Modalidade>('presencial')
-  const [cargaHoraria, setCargaHoraria] = useState('')
-  const [validade, setValidade] = useState('')
-  const [descricao, setDescricao] = useState('')
-  const [disciplinas, setDisciplinas] = useState<Disciplina[]>([{ titulo: '', horas: 0 }])
+export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawerProps) {
+  const editando = !!inicial
+  const [nome, setNome] = useState(inicial?.nome ?? '')
+  const [norma, setNorma] = useState(inicial?.norma ?? 'NR-35')
+  const [modalidade, setModalidade] = useState<Modalidade>(inicial?.modalidade ?? 'presencial')
+  const [cargaHoraria, setCargaHoraria] = useState(inicial ? String(inicial.cargaHorariaHoras) : '')
+  const [validade, setValidade] = useState(inicial?.validadeMeses != null ? String(inicial.validadeMeses) : '')
+  const [descricao, setDescricao] = useState(inicial?.descricao ?? '')
+  const [ativo, setAtivo] = useState(inicial?.ativo ?? true)
+  const [disciplinas, setDisciplinas] = useState<Disciplina[]>(
+    inicial?.conteudoProgramatico.length ? inicial.conteudoProgramatico : [{ titulo: '', horas: 0 }],
+  )
 
   const carga = Number(cargaHoraria) || 0
   const soma = somaDisciplinas(disciplinas)
@@ -36,8 +42,12 @@ export function TreinamentoDrawer({ onClose, onSave }: TreinamentoDrawerProps) {
       <aside className="relative flex h-full w-full max-w-[540px] flex-col bg-white shadow-2xl dark:bg-slate-900 max-sm:max-w-full">
         <header className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Novo treinamento</h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Curso do catálogo oferecido aos empregadores</p>
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+              {editando ? 'Editar treinamento' : 'Novo treinamento'}
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              {editando ? inicial?.nome : 'Curso do catálogo oferecido aos empregadores'}
+            </p>
           </div>
           <button
             onClick={onClose}
@@ -156,32 +166,47 @@ export function TreinamentoDrawer({ onClose, onSave }: TreinamentoDrawerProps) {
           </div>
         </div>
 
-        <footer className="flex items-center justify-end gap-3 border-t border-slate-200 px-6 py-4 dark:border-slate-800">
-          <button
-            onClick={onClose}
-            className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-          >
-            Cancelar
-          </button>
-          <button
-            disabled={!valido}
-            onClick={() => {
-              onSave?.({
-                nome: nome.trim(),
-                norma,
-                modalidade,
-                cargaHorariaHoras: carga,
-                validadeMeses: validade ? Number(validade) : null,
-                descricao: descricao.trim(),
-                conteudoProgramatico: disciplinas.filter((d) => d.titulo.trim()),
-                ativo: true,
-              })
-              onClose()
-            }}
-            className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            Salvar treinamento
-          </button>
+        <footer className="flex items-center justify-between gap-3 border-t border-slate-200 px-6 py-4 dark:border-slate-800">
+          {editando ? (
+            <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+              <input
+                type="checkbox"
+                checked={ativo}
+                onChange={(e) => setAtivo(e.target.checked)}
+                className="h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500 dark:border-slate-600 dark:bg-slate-800"
+              />
+              Curso ativo no catálogo
+            </label>
+          ) : (
+            <span />
+          )}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onClose}
+              className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+            >
+              Cancelar
+            </button>
+            <button
+              disabled={!valido}
+              onClick={() => {
+                onSave?.({
+                  nome: nome.trim(),
+                  norma,
+                  modalidade,
+                  cargaHorariaHoras: carga,
+                  validadeMeses: validade ? Number(validade) : null,
+                  descricao: descricao.trim(),
+                  conteudoProgramatico: disciplinas.filter((d) => d.titulo.trim()),
+                  ativo,
+                })
+                onClose()
+              }}
+              className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {editando ? 'Salvar alterações' : 'Salvar treinamento'}
+            </button>
+          </div>
         </footer>
       </aside>
     </div>

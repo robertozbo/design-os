@@ -33,6 +33,9 @@ export default function TreinamentosPreview() {
       onCreateTreinamento={(input) =>
         setTreinamentos((prev) => [...prev, { ...input, id: `trein-${prev.length + 1}` }])
       }
+      onUpdateTreinamento={(id, patch) =>
+        setTreinamentos((prev) => prev.map((t) => (t.id === id ? { ...t, ...patch } : t)))
+      }
       onCreateTurma={(input) =>
         setTurmas((prev) => [
           {
