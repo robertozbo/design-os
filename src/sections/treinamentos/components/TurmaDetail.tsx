@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { CertificadoModal } from './CertificadoModal'
+import { AgendaGoogleModal, EnviarCertificadosModal } from './EnvioModals'
 import type {
   Empregador,
   Trabalhador,
@@ -24,6 +25,8 @@ interface TurmaDetailProps {
   onTogglePresenca?: (turmaId: string, trabalhadorId: string, presente: boolean) => void
   onToggleAprovacao?: (turmaId: string, trabalhadorId: string, aprovado: boolean) => void
   onEmitirCertificados?: (turmaId: string) => void
+  onEnviarCertificados?: (turmaId: string, trabalhadorIds: string[]) => void
+  onCriarEventoAgenda?: (turmaId: string) => void
 }
 
 export function TurmaDetail({
@@ -35,9 +38,13 @@ export function TurmaDetail({
   onTogglePresenca,
   onToggleAprovacao,
   onEmitirCertificados,
+  onEnviarCertificados,
+  onCriarEventoAgenda,
 }: TurmaDetailProps) {
   const [confirmando, setConfirmando] = useState(false)
   const [certificadoDe, setCertificadoDe] = useState<string | null>(null)
+  const [enviandoEmail, setEnviandoEmail] = useState(false)
+  const [agendaAberta, setAgendaAberta] = useState(false)
 
   const aprovados = turma.alunos.filter((a) => a.aprovado).length
   const emitidos = turma.alunos.filter((a) => a.certificadoEmitido)
@@ -101,23 +108,56 @@ export function TurmaDetail({
             {TIPO_TURMA_LABEL[turma.tipo]} · {formatPeriodo(turma)}
           </p>
         </div>
-        {turma.status === 'certificados_emitidos' && emitidos.length > 0 ? (
-          <button
-            onClick={() => setCertificadoDe(emitidos[0].trabalhadorId)}
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700"
-          >
-            Ver certificados ({emitidos.length})
-          </button>
-        ) : (
-          <button
-            disabled={!podeEmitir}
-            onClick={() => setConfirmando(true)}
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-40"
-            title={!podeEmitir ? 'Disponível quando a turma estiver concluída e houver alunos aprovados' : undefined}
-          >
-            Emitir certificados
-          </button>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          {(turma.status === 'agendada' || turma.status === 'em_andamento') &&
+            (turma.agendaGoogleSincronizada ? (
+              <span className="inline-flex items-center gap-1.5 rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm font-medium text-teal-700 dark:border-teal-900 dark:bg-teal-950 dark:text-teal-300">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Agenda sincronizada
+              </span>
+            ) : (
+              <button
+                onClick={() => setAgendaAberta(true)}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <rect x="3" y="5" width="18" height="16" rx="2" />
+                  <path strokeLinecap="round" d="M3 10h18M8 3v4M16 3v4" />
+                </svg>
+                Google Agenda
+              </button>
+            ))}
+          {turma.status === 'certificados_emitidos' && emitidos.length > 0 ? (
+            <>
+              <button
+                onClick={() => setEnviandoEmail(true)}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.9 5.3a2 2 0 002.2 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Enviar por e-mail
+              </button>
+              <button
+                onClick={() => setCertificadoDe(emitidos[0].trabalhadorId)}
+                className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700"
+              >
+                Ver certificados ({emitidos.length})
+              </button>
+            </>
+          ) : (
+            <button
+              disabled={!podeEmitir}
+              onClick={() => setConfirmando(true)}
+              className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-40"
+              title={!podeEmitir ? 'Disponível quando a turma estiver concluída e houver alunos aprovados' : undefined}
+            >
+              Emitir certificados
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -175,15 +215,27 @@ export function TurmaDetail({
                     </td>
                     <td className="px-4 py-3 text-right">
                       {a.certificadoEmitido ? (
-                        <button
-                          onClick={() => setCertificadoDe(a.trabalhadorId)}
-                          className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:hover:bg-emerald-900"
-                        >
-                          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                          Ver certificado
-                        </button>
+                        <span className="inline-flex items-center gap-1.5">
+                          {a.certificadoEnviado && (
+                            <span
+                              className="text-teal-600 dark:text-teal-400"
+                              title="Certificado enviado por e-mail"
+                            >
+                              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.9 5.3a2 2 0 002.2 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              </svg>
+                            </span>
+                          )}
+                          <button
+                            onClick={() => setCertificadoDe(a.trabalhadorId)}
+                            className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:hover:bg-emerald-900"
+                          >
+                            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Ver certificado
+                          </button>
+                        </span>
                       ) : (
                         <span className="text-xs text-slate-400 dark:text-slate-500">—</span>
                       )}
@@ -242,6 +294,26 @@ export function TurmaDetail({
           </div>
         )}
       </div>
+
+      {enviandoEmail && (
+        <EnviarCertificadosModal
+          turma={turma}
+          treinamento={treinamento}
+          trabalhadores={trabalhadores}
+          onClose={() => setEnviandoEmail(false)}
+          onEnviar={onEnviarCertificados}
+        />
+      )}
+
+      {agendaAberta && (
+        <AgendaGoogleModal
+          turma={turma}
+          treinamento={treinamento}
+          trabalhadores={trabalhadores}
+          onClose={() => setAgendaAberta(false)}
+          onCriar={onCriarEventoAgenda}
+        />
+      )}
 
       {certificadoDe && treinamento && (
         <CertificadoModal

@@ -25,6 +25,8 @@ export function TreinamentosView({
   onTogglePresenca,
   onToggleAprovacao,
   onEmitirCertificados,
+  onEnviarCertificados,
+  onCriarEventoAgenda,
   onSelectTreinamento,
   onSelectTurma,
 }: TreinamentosProps) {
@@ -74,6 +76,8 @@ export function TreinamentosView({
           onTogglePresenca={onTogglePresenca}
           onToggleAprovacao={onToggleAprovacao}
           onEmitirCertificados={onEmitirCertificados}
+          onEnviarCertificados={onEnviarCertificados}
+          onCriarEventoAgenda={onCriarEventoAgenda}
         />
       </div>
     )

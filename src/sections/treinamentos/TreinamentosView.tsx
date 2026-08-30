@@ -45,11 +45,13 @@ export default function TreinamentosPreview() {
             instrutor: input.instrutor,
             local: input.local,
             status: 'agendada',
+            agendaGoogleSincronizada: false,
             alunos: input.trabalhadorIds.map((trabalhadorId) => ({
               trabalhadorId,
               presente: null,
               aprovado: null,
               certificadoEmitido: false,
+              certificadoEnviado: false,
             })),
           },
           ...prev,
@@ -68,6 +70,25 @@ export default function TreinamentosPreview() {
                 }
               : t,
           ),
+        )
+      }
+      onEnviarCertificados={(turmaId, trabalhadorIds) =>
+        setTurmas((prev) =>
+          prev.map((t) =>
+            t.id === turmaId
+              ? {
+                  ...t,
+                  alunos: t.alunos.map((a) =>
+                    trabalhadorIds.includes(a.trabalhadorId) ? { ...a, certificadoEnviado: true } : a,
+                  ),
+                }
+              : t,
+          ),
+        )
+      }
+      onCriarEventoAgenda={(turmaId) =>
+        setTurmas((prev) =>
+          prev.map((t) => (t.id === turmaId ? { ...t, agendaGoogleSincronizada: true } : t)),
         )
       }
       onSelectTreinamento={(id) => console.log('Abrir curso', id)}
