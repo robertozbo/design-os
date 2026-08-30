@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CertificadoModal } from './CertificadoModal'
 import type {
   Empregador,
   Trabalhador,
@@ -36,8 +37,10 @@ export function TurmaDetail({
   onEmitirCertificados,
 }: TurmaDetailProps) {
   const [confirmando, setConfirmando] = useState(false)
+  const [certificadoDe, setCertificadoDe] = useState<string | null>(null)
 
   const aprovados = turma.alunos.filter((a) => a.aprovado).length
+  const emitidos = turma.alunos.filter((a) => a.certificadoEmitido)
   const podeEmitir = turma.status === 'concluida' && aprovados > 0
   const nomeDe = (id: string) => trabalhadores.find((t) => t.id === id)
 
@@ -98,20 +101,23 @@ export function TurmaDetail({
             {TIPO_TURMA_LABEL[turma.tipo]} · {formatPeriodo(turma)}
           </p>
         </div>
-        <button
-          disabled={!podeEmitir}
-          onClick={() => setConfirmando(true)}
-          className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-40"
-          title={
-            turma.status === 'certificados_emitidos'
-              ? 'Certificados já emitidos'
-              : !podeEmitir
-                ? 'Disponível quando a turma estiver concluída e houver alunos aprovados'
-                : undefined
-          }
-        >
-          {turma.status === 'certificados_emitidos' ? 'Certificados emitidos ✓' : 'Emitir certificados'}
-        </button>
+        {turma.status === 'certificados_emitidos' && emitidos.length > 0 ? (
+          <button
+            onClick={() => setCertificadoDe(emitidos[0].trabalhadorId)}
+            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700"
+          >
+            Ver certificados ({emitidos.length})
+          </button>
+        ) : (
+          <button
+            disabled={!podeEmitir}
+            onClick={() => setConfirmando(true)}
+            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-40"
+            title={!podeEmitir ? 'Disponível quando a turma estiver concluída e houver alunos aprovados' : undefined}
+          >
+            Emitir certificados
+          </button>
+        )}
       </div>
 
       <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -169,12 +175,15 @@ export function TurmaDetail({
                     </td>
                     <td className="px-4 py-3 text-right">
                       {a.certificadoEmitido ? (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                        <button
+                          onClick={() => setCertificadoDe(a.trabalhadorId)}
+                          className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:hover:bg-emerald-900"
+                        >
                           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
-                          Emitido
-                        </span>
+                          Ver certificado
+                        </button>
                       ) : (
                         <span className="text-xs text-slate-400 dark:text-slate-500">—</span>
                       )}
@@ -194,9 +203,12 @@ export function TurmaDetail({
                 <div className="flex items-center justify-between">
                   <p className="font-medium text-slate-900 dark:text-slate-100">{t?.nome ?? a.trabalhadorId}</p>
                   {a.certificadoEmitido && (
-                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-                      Certificado ✓
-                    </span>
+                    <button
+                      onClick={() => setCertificadoDe(a.trabalhadorId)}
+                      className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"
+                    >
+                      Ver certificado
+                    </button>
                   )}
                 </div>
                 <p className="font-mono text-xs text-slate-400">{t?.matricula} · {t?.setor}</p>
@@ -230,6 +242,17 @@ export function TurmaDetail({
           </div>
         )}
       </div>
+
+      {certificadoDe && treinamento && (
+        <CertificadoModal
+          turma={turma}
+          treinamento={treinamento}
+          empregador={empregador}
+          trabalhadores={trabalhadores}
+          alunoInicialId={certificadoDe}
+          onClose={() => setCertificadoDe(null)}
+        />
+      )}
 
       {confirmando && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
