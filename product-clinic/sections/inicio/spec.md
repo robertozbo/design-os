@@ -30,7 +30,10 @@ O **dashboard de trabalho do médico** — a página dele, de onde opera o dia i
 - **Encaminhamentos recebidos** (coluna lateral): cards com médico de origem (avatar+especialidade), paciente, motivo, contexto e ações Aceitar / Abrir
 
 ### Estados & regras
-- Status da consulta: `confirmado`, `aguardando`, `em-atendimento`, `realizado`, `faltou`, `cancelado` — cada um com cor própria
+- Status da consulta: vocabulário único de `_shared/status` (`pendente`, `confirmado`, `chegou`,
+  `em-atendimento`, `realizado`, `faltou`, `cancelado`), com o mapa de cores único de
+  `src/sections-clinic/_shared/status-meta.ts`. `chegou` é o antigo `aguardando`: significa
+  **paciente na clínica**, registrado pela recepção — não "aguardando confirmação".
 - `realizado`/`cancelado`/`faltou` aparecem esmaecidos (dia já passou por eles)
 - Modalidade `tele` mostra ícone de vídeo; `presencial` mostra a sala
 - Alerta com count 0 fica neutro (sem badge)

@@ -39,7 +39,12 @@
       "id": "c1",
       "hora": "08:00",
       "duracaoMin": 30,
-      "paciente": { "nome": "Marcos Vinícius Lima", "iniciais": "ML", "idade": 58, "convenio": "Bradesco Saúde" },
+      "paciente": {
+        "nome": "Marcos Vinícius Lima",
+        "iniciais": "ML",
+        "idade": 58,
+        "convenio": "Bradesco Saúde"
+      },
       "motivo": "Retorno · ajuste de insulina",
       "modalidade": "presencial",
       "sala": "Consultório 2",
@@ -49,7 +54,12 @@
       "id": "c2",
       "hora": "08:40",
       "duracaoMin": 20,
-      "paciente": { "nome": "Sônia Ribeiro", "iniciais": "SR", "idade": 64, "convenio": "Particular" },
+      "paciente": {
+        "nome": "Sônia Ribeiro",
+        "iniciais": "SR",
+        "idade": 64,
+        "convenio": "Particular"
+      },
       "motivo": "Resultado TSH",
       "modalidade": "tele",
       "sala": null,
@@ -59,7 +69,12 @@
       "id": "c3",
       "hora": "09:20",
       "duracaoMin": 40,
-      "paciente": { "nome": "André Nogueira", "iniciais": "AN", "idade": 45, "convenio": "SulAmérica" },
+      "paciente": {
+        "nome": "André Nogueira",
+        "iniciais": "AN",
+        "idade": 45,
+        "convenio": "SulAmérica"
+      },
       "motivo": "Tireoidite · primeira consulta",
       "modalidade": "presencial",
       "sala": "Consultório 2",
@@ -69,18 +84,28 @@
       "id": "c4",
       "hora": "11:00",
       "duracaoMin": 30,
-      "paciente": { "nome": "Beatriz Camargo", "iniciais": "BC", "idade": 39, "convenio": "Amil" },
+      "paciente": {
+        "nome": "Beatriz Camargo",
+        "iniciais": "BC",
+        "idade": 39,
+        "convenio": "Amil"
+      },
       "motivo": "Encaminhada · resistência à insulina",
       "modalidade": "presencial",
       "sala": "Consultório 2",
-      "status": "confirmado",
+      "status": "chegou",
       "viaEncaminhamento": true
     },
     {
       "id": "c5",
       "hora": "11:40",
       "duracaoMin": 20,
-      "paciente": { "nome": "Roberto Tavares", "iniciais": "RT", "idade": 71, "convenio": "Bradesco Saúde" },
+      "paciente": {
+        "nome": "Roberto Tavares",
+        "iniciais": "RT",
+        "idade": 71,
+        "convenio": "Bradesco Saúde"
+      },
       "motivo": "Renovação de receita contínua",
       "modalidade": "tele",
       "sala": null,
@@ -90,26 +115,51 @@
       "id": "c6",
       "hora": "14:00",
       "duracaoMin": 30,
-      "paciente": { "nome": "Larissa Fontes", "iniciais": "LF", "idade": 33, "convenio": "Particular" },
+      "paciente": {
+        "nome": "Larissa Fontes",
+        "iniciais": "LF",
+        "idade": 33,
+        "convenio": "Particular"
+      },
       "motivo": "Retorno · SOP",
       "modalidade": "presencial",
       "sala": "Consultório 4",
-      "status": "aguardando"
+      "status": "confirmado"
     }
   ],
   "encaminhamentos": [
     {
       "id": "e1",
-      "de": { "nome": "Dr. Paulo Sette", "iniciais": "PS", "especialidade": "Clínica Geral", "cor": "sky" },
-      "paciente": { "nome": "Beatriz Camargo", "iniciais": "BC", "idade": 39, "convenio": "Amil" },
+      "de": {
+        "nome": "Dr. Paulo Sette",
+        "iniciais": "PS",
+        "especialidade": "Clínica Geral",
+        "cor": "sky"
+      },
+      "paciente": {
+        "nome": "Beatriz Camargo",
+        "iniciais": "BC",
+        "idade": 39,
+        "convenio": "Amil"
+      },
       "motivo": "Resistência à insulina",
       "contexto": "Glicemia de jejum 118, HbA1c 6.1%, IMC 31. Solicito avaliação endócrina e conduta.",
       "recebidoEm": "há 2h"
     },
     {
       "id": "e2",
-      "de": { "nome": "Dra. Marina Alves", "iniciais": "MA", "especialidade": "Ginecologia", "cor": "rose" },
-      "paciente": { "nome": "Larissa Fontes", "iniciais": "LF", "idade": 33, "convenio": "Particular" },
+      "de": {
+        "nome": "Dra. Marina Alves",
+        "iniciais": "MA",
+        "especialidade": "Ginecologia",
+        "cor": "rose"
+      },
+      "paciente": {
+        "nome": "Larissa Fontes",
+        "iniciais": "LF",
+        "idade": 33,
+        "convenio": "Particular"
+      },
       "motivo": "Suspeita de SOP com componente metabólico",
       "contexto": "Ciclos irregulares, acantose nigricans, testosterona no limite superior. Avaliar resistência insulínica.",
       "recebidoEm": "ontem"

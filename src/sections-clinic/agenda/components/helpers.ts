@@ -3,7 +3,6 @@ import type {
   CorEspecialidade,
   Modalidade,
   Recorrencia,
-  StatusConsulta,
 } from '@/../product-clinic/sections/agenda/types'
 
 export const AVATAR_COR: Record<CorEspecialidade, string> = {
@@ -34,41 +33,7 @@ export const BADGE_COR: Record<CorEspecialidade, string> = {
   amber: 'bg-amber-100 text-amber-800 dark:bg-amber-950/50 dark:text-amber-300',
 }
 
-export const STATUS_META: Record<
-  StatusConsulta,
-  { label: string; dot: string; badge: string; esmaecido: boolean }
-> = {
-  pendente: {
-    label: 'Pendente',
-    dot: 'bg-amber-400',
-    badge: 'bg-amber-100 text-amber-800 dark:bg-amber-950/50 dark:text-amber-300',
-    esmaecido: false,
-  },
-  confirmado: {
-    label: 'Confirmado',
-    dot: 'bg-emerald-500',
-    badge: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300',
-    esmaecido: false,
-  },
-  realizado: {
-    label: 'Realizado',
-    dot: 'bg-slate-400',
-    badge: 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
-    esmaecido: false,
-  },
-  cancelado: {
-    label: 'Cancelado',
-    dot: 'bg-red-400',
-    badge: 'bg-red-100 text-red-700 dark:bg-red-950/50 dark:text-red-300',
-    esmaecido: true,
-  },
-  faltou: {
-    label: 'Faltou',
-    dot: 'bg-red-500',
-    badge: 'bg-red-100 text-red-700 dark:bg-red-950/50 dark:text-red-300',
-    esmaecido: true,
-  },
-}
+export { STATUS_META, type StatusMeta } from '@/sections-clinic/_shared/status-meta'
 
 /** "HH:MM" -> minutos desde 00:00. */
 export function minutos(hhmm: string): number {

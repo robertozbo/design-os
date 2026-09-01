@@ -1,12 +1,14 @@
+import type { StatusConsulta } from '../_shared/status'
+
 export type CorEspecialidade = 'teal' | 'rose' | 'violet' | 'slate' | 'sky' | 'amber'
 export type Modalidade = 'presencial' | 'tele'
-export type StatusConsulta =
-  | 'confirmado'
-  | 'aguardando'
-  | 'em-atendimento'
-  | 'realizado'
-  | 'faltou'
-  | 'cancelado'
+
+/**
+ * Status do agendamento — definido em `_shared/status`, nunca aqui. O antigo
+ * `aguardando` local virou `chegou` no enum canônico.
+ */
+export type { StatusConsulta }
+export { ORDEM_STATUS, TRANSICOES, PAR_BACKEND, podeTransicionar } from '../_shared/status'
 
 export interface PacienteMini {
   nome: string

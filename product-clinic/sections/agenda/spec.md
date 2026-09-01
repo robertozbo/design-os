@@ -10,7 +10,7 @@ Agenda **multi-profissional** da clínica — o calendário compartilhado onde r
 ### Ver o dia
 - Recepção/médico abre Agenda → **visão diária** com uma coluna por médico (default) ou por sala (toggle)
 - Navega entre dias (‹ ›, "Hoje"); o grid mostra horários (07h–19h) e blocos de consulta coloridos por **especialidade**
-- Cada bloco: horário, paciente, especialidade, modalidade (presencial/tele) e **status** (pendente, confirmado, realizado, cancelado, faltou)
+- Cada bloco: horário, paciente, especialidade, modalidade (presencial/tele) e **status** (pendente, confirmado, chegou, em-atendimento, realizado, cancelado, faltou)
 - Legenda de status + especialidades no topo
 
 ### Alternar médico ↔ sala
@@ -125,6 +125,16 @@ operadora e não o paciente — no V1 convênio é só tracking textual.
 - **Drawer** de detalhe à direita
 
 ### Estados & regras
+- O vocabulário de status é **único** e mora em `_shared/status.ts` — a Agenda e o Início
+  reexportam de lá, e as cores saem do mapa único em `src/sections-clinic/_shared/status-meta.ts`.
+  Não redeclare o enum nesta section.
+- **As ações do drawer são derivadas de `TRANSICOES`**, não uma grade fixa de quatro botões.
+  Estado terminal (realizado, cancelado) não mostra ação nenhuma — mostra a frase que explica
+  por quê. Remarcar cria agendamento novo.
+- **`chegou` bloqueia `faltou`.** Registrada a chegada, a falta some das ações e o drawer diz o
+  motivo. É a invariante da issue #808 (`no_show` recusado quando existe `checked_in_at`) visível
+  na tela, em vez de erro de backend que só aparece depois do clique.
+- `faltou → chegou` é permitido: a recepção marca falta e o paciente aparece atrasado.
 - Cancelado/faltou: visual esmaecido + badge
 - Conflito (mesmo médico ou sala sobrepostos): destaque de alerta
 - Vazio: coluna sem consultas mostra o grid limpo

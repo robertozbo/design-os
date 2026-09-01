@@ -160,7 +160,7 @@ function AlertaCard({ alerta, onClick }: { alerta: AlertaResumo; onClick: () => 
 function ConsultaItem({ consulta, onIniciar }: { consulta: ConsultaDia; onIniciar: () => void }) {
   const meta = STATUS_META[consulta.status]
   const emAtendimento = consulta.status === 'em-atendimento'
-  const iniciavel = consulta.status === 'confirmado' || consulta.status === 'aguardando' || emAtendimento
+  const iniciavel = consulta.status === 'confirmado' || consulta.status === 'chegou' || emAtendimento
 
   return (
     <li

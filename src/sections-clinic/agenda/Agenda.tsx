@@ -242,14 +242,16 @@ export default function AgendaPreview() {
   const setStatus = (id: string, status: StatusConsulta) => {
     setAgendamentos((prev) => prev.map((a) => (a.id === id ? { ...a, status } : a)))
     setSelecionado((s) => (s && s.id === id ? { ...s, status } : s))
-    const label = {
+    const label: Record<StatusConsulta, string> = {
       pendente: 'marcada como pendente',
       confirmado: 'confirmada',
+      chegou: 'com chegada registrada',
+      'em-atendimento': 'iniciada',
       realizado: 'marcada como realizada',
       cancelado: 'cancelada',
       faltou: 'marcada como falta',
-    }[status]
-    pushToast(`Consulta ${label}`)
+    }
+    pushToast(`Consulta ${label[status]}`)
     if (status === 'cancelado') setSelecionado(null)
   }
 

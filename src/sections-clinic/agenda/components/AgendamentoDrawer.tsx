@@ -3,11 +3,14 @@ import {
   Check,
   Clock,
   DoorOpen,
+  LogIn,
   MapPin,
   Pencil,
+  Play,
   RefreshCw,
   Stethoscope,
   User,
+  UserX,
   Video,
   X,
 } from 'lucide-react'
@@ -18,12 +21,47 @@ import type {
   SalaAgenda,
   StatusConsulta,
 } from '@/../product-clinic/sections/agenda/types'
+import { TRANSICOES } from '@/../product-clinic/sections/_shared/status'
 import { AVATAR_COR, BADGE_COR, STATUS_META, dataCurta } from './helpers'
 
 const MODELO_LABEL: Record<ModeloCobranca, string> = {
   sessao: 'Por sessão',
   mensal: 'Mensal',
   pacote: 'Pacote total',
+}
+
+const NEUTRO =
+  'border border-slate-200 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800'
+
+/**
+ * Rótulo e aparência de cada destino possível. Quais aparecem é decisão de
+ * `TRANSICOES`, não deste objeto — antes os quatro botões eram renderizados
+ * incondicionalmente e dava para marcar "Faltou" numa consulta já realizada.
+ */
+const ACAO: Record<StatusConsulta, { label: string; cls: string; icone: React.ReactNode }> = {
+  pendente: { label: 'Reabrir', cls: NEUTRO, icone: <RefreshCw className="h-3.5 w-3.5" /> },
+  confirmado: {
+    label: 'Confirmar',
+    cls: 'bg-emerald-600 text-white hover:bg-emerald-700',
+    icone: <Check className="h-3.5 w-3.5" />,
+  },
+  chegou: {
+    label: 'Chegou',
+    cls: 'bg-sky-600 text-white hover:bg-sky-700',
+    icone: <LogIn className="h-3.5 w-3.5" />,
+  },
+  'em-atendimento': {
+    label: 'Iniciar',
+    cls: NEUTRO,
+    icone: <Play className="h-3.5 w-3.5" />,
+  },
+  realizado: { label: 'Realizado', cls: NEUTRO, icone: null },
+  faltou: { label: 'Faltou', cls: NEUTRO, icone: <UserX className="h-3.5 w-3.5" /> },
+  cancelado: {
+    label: 'Cancelar',
+    cls: 'text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/30',
+    icone: null,
+  },
 }
 
 const brl = (n: number) =>
@@ -53,6 +91,7 @@ export function AgendamentoDrawer({
   const medico = medicos.find((m) => m.id === a.medicoId)
   const sala = salas.find((s) => s.id === a.salaId)
   const st = STATUS_META[a.status]
+  const acoes = TRANSICOES[a.status]
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
@@ -100,7 +139,7 @@ export function AgendamentoDrawer({
 
           {/* Status */}
           <div className="flex items-center gap-2">
-            <span className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium ${st.badge}`}>
+            <span className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium ${st.chip}`}>
               <span className={`h-1.5 w-1.5 rounded-full ${st.dot}`} />
               {st.label}
             </span>
@@ -172,34 +211,30 @@ export function AgendamentoDrawer({
           )}
         </div>
 
-        {/* Ações de status */}
+        {/* Ações de status — derivadas de TRANSICOES, não fixas */}
         <div className="border-t border-slate-200 px-5 py-4 dark:border-slate-800">
-          <div className="grid grid-cols-2 gap-2">
-            <AcaoBtn
-              onClick={() => onStatus(a.id, 'confirmado')}
-              cls="bg-emerald-600 text-white hover:bg-emerald-700"
-            >
-              <Check className="h-3.5 w-3.5" /> Confirmar
-            </AcaoBtn>
-            <AcaoBtn
-              onClick={() => onStatus(a.id, 'realizado')}
-              cls="border border-slate-200 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
-            >
-              Realizado
-            </AcaoBtn>
-            <AcaoBtn
-              onClick={() => onStatus(a.id, 'faltou')}
-              cls="border border-slate-200 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
-            >
-              Faltou
-            </AcaoBtn>
-            <AcaoBtn
-              onClick={() => onStatus(a.id, 'cancelado')}
-              cls="text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/30"
-            >
-              Cancelar
-            </AcaoBtn>
-          </div>
+          {acoes.length > 0 ? (
+            <div className="grid grid-cols-2 gap-2">
+              {acoes.map((destino) => {
+                const acao = ACAO[destino]
+                return (
+                  <AcaoBtn key={destino} onClick={() => onStatus(a.id, destino)} cls={acao.cls}>
+                    {acao.icone}
+                    {acao.label}
+                  </AcaoBtn>
+                )
+              })}
+            </div>
+          ) : (
+            <p className="text-center text-xs text-slate-400 dark:text-slate-500">
+              {st.label} é estado final — remarcar cria um agendamento novo.
+            </p>
+          )}
+          {a.status === 'chegou' && (
+            <p className="mt-2.5 text-center text-[11px] text-slate-400 dark:text-slate-500">
+              Chegada registrada: não é mais possível marcar falta.
+            </p>
+          )}
         </div>
       </div>
     </div>

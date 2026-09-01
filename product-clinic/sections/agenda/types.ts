@@ -1,11 +1,12 @@
+import type { StatusConsulta } from '../_shared/status'
+
 export type CorEspecialidade = 'teal' | 'rose' | 'violet' | 'slate' | 'sky' | 'amber'
 export type Modalidade = 'presencial' | 'tele'
-export type StatusConsulta =
-  | 'pendente'
-  | 'confirmado'
-  | 'realizado'
-  | 'cancelado'
-  | 'faltou'
+
+/** Status do agendamento — definido em `_shared/status`, nunca aqui. */
+export type { StatusConsulta }
+export { ORDEM_STATUS, TRANSICOES, PAR_BACKEND, podeTransicionar } from '../_shared/status'
+
 export type VisaoAgenda = 'medicos' | 'salas'
 
 export interface MedicoAgenda {

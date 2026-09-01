@@ -5,6 +5,7 @@ import type {
   AgendaDia,
   VisaoAgenda,
 } from '@/../product-clinic/sections/agenda/types'
+import { ORDEM_STATUS } from '@/../product-clinic/sections/_shared/status'
 import { AVATAR_COR, BLOCO_COR, STATUS_META, dataExtenso, minutos } from './helpers'
 
 const HORA_PX = 56 // altura de 1 hora no grid
@@ -103,10 +104,10 @@ export function AgendaView({ agenda, visao, onVisao, onDia, onHoje, onNovo, onAb
 
       {/* Legenda */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-slate-200 bg-slate-50 px-6 py-2 text-[11px] text-slate-500 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-400">
-        {Object.entries(STATUS_META).map(([k, m]) => (
+        {ORDEM_STATUS.map((k) => (
           <span key={k} className="inline-flex items-center gap-1.5">
-            <span className={`h-2 w-2 rounded-full ${m.dot}`} />
-            {m.label}
+            <span className={`h-2 w-2 rounded-full ${STATUS_META[k].dot}`} />
+            {STATUS_META[k].label}
           </span>
         ))}
         <span className="ml-auto inline-flex items-center gap-1.5">
