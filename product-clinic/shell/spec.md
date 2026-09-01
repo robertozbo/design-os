@@ -36,8 +36,8 @@ Gestão do negócio. **Nunca** vê conteúdo clínico de paciente.
 > precificado aparece no wizard de agendamento), não o cadastro.
 
 ### Recepção (web — side-nav reduzida)
-Operacional puro. Abre direto em Agenda. Sem acesso clínico.
-- Agenda (multi-médico), Pacientes (só admin), Mensagens (canal admin), Cobrança, Configurações
+Operacional puro. **Abre em Chegada** — a tela do balcão, onde ela passa o dia. Sem acesso clínico.
+- Chegada (quem já está aqui), Agenda (multi-médico), Pacientes (só admin), Mensagens (canal admin), Cobrança, Configurações
 
 ### Paciente (mobile — bottom-nav)
 - Início, Agenda, Medicação, Mensagens, Perfil

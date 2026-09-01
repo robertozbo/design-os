@@ -20,6 +20,7 @@ import {
   FlaskConical,
   Home,
   LineChart,
+  LogIn,
   MessageCircle,
   MessageSquare,
   Pill,
@@ -111,6 +112,10 @@ export const NAV_RECEPCAO: NavGroup[] = [
   {
     label: 'Principal',
     items: [
+      // Primeiro item de propósito: é a tela onde a recepção passa o dia. A Agenda
+      // é grade de coordenação — 07h–19h × N profissionais, sem busca e sem linha
+      // do agora —, e receber gente na porta é outro trabalho.
+      { label: 'Chegada', href: s('chegada'), icon: LogIn },
       { label: 'Agenda', href: s('agenda'), icon: Calendar },
       { label: 'Pacientes', href: s('pacientes'), icon: Users },
       // A recepção cria convênio digitando na ficha do paciente. Quem erra a grafia
@@ -190,6 +195,7 @@ export const PERSONA_DA_SECTION: Record<string, Persona> = {
   'categorias-financeiras': 'admin',
   'configuracoes-clinica': 'admin',
   // Recepção — balcão
+  chegada: 'recepcao',
   agenda: 'recepcao',
   mensagens: 'recepcao',
   // O Admin configura o bot, mas quem vive na fila é a recepção — fica com a persona menos
