@@ -78,7 +78,7 @@ export function ScreenDesignPage() {
             Back
           </Button>
           <div className="h-4 w-px bg-stone-200 dark:bg-stone-700" />
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex flex-1 items-center gap-2 min-w-0">
             <Layout className="w-4 h-4 text-stone-400 shrink-0" strokeWidth={1.5} />
             {section && (
               <span className="text-sm text-stone-500 dark:text-stone-400 truncate">
@@ -92,7 +92,7 @@ export function ScreenDesignPage() {
           </div>
 
           {/* Width indicator and device presets */}
-          <div className="ml-auto flex items-center gap-4">
+          <div className="ml-auto flex shrink-0 items-center gap-4">
             {/* Device size presets */}
             <div className="flex items-center gap-1 border-r border-stone-200 dark:border-stone-700 pr-4">
               <button
