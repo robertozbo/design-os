@@ -8,6 +8,10 @@ export interface NavigationItem {
   icon?: LucideIcon
   isActive?: boolean
   badge?: number
+  /** One-line explanation shown under the label when the sidebar is expanded */
+  description?: string
+  /** Sub-group label; consecutive items with the same group share one heading */
+  group?: string
 }
 
 export interface AppShellUser {

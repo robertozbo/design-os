@@ -61,14 +61,20 @@ export function MainNav({
 
       <div className="flex-1 overflow-y-auto py-3">
         <ul className="space-y-0.5 px-2">
-          {navigationItems.map((item) => (
-            <NavItemRow
-              key={item.href}
-              item={item}
-              isCollapsed={isCollapsed}
-              onNavigate={onNavigate}
-            />
-          ))}
+          {navigationItems.map((item, index) => {
+            const previousGroup = index > 0 ? navigationItems[index - 1].group : undefined
+            const startsGroup = !!item.group && item.group !== previousGroup
+            return (
+              <NavItemRow
+                key={item.href}
+                item={item}
+                isCollapsed={isCollapsed}
+                onNavigate={onNavigate}
+                groupHeading={startsGroup ? item.group : undefined}
+                firstGroup={startsGroup && index === 0}
+              />
+            )
+          })}
         </ul>
 
         {secondaryItems.length > 0 && (
@@ -125,10 +131,15 @@ function NavItemRow({
   item,
   isCollapsed,
   onNavigate,
+  groupHeading,
+  firstGroup,
 }: {
   item: NavigationItem
   isCollapsed: boolean
   onNavigate?: (href: string) => void
+  /** Rendered above this item when it opens a new sub-group */
+  groupHeading?: string
+  firstGroup?: boolean
 }) {
   const Icon = item.icon
   const hasBadge = item.badge != null && item.badge > 0
@@ -142,15 +153,28 @@ function NavItemRow({
         <NavItemDot />
       </span>
     )
+  const hasDescription = !!item.description && !isCollapsed
   return (
     <li>
+      {groupHeading && (
+        <div
+          className={`${firstGroup ? '' : 'mt-4'} ${
+            isCollapsed
+              ? 'mx-2 mb-1.5 border-t border-slate-200 dark:border-slate-800'
+              : 'px-2.5 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500'
+          }`}
+        >
+          {!isCollapsed && groupHeading}
+        </div>
+      )}
       <button
         onClick={() => onNavigate?.(item.href)}
         title={isCollapsed ? item.label : undefined}
         className={`
-          group relative flex items-center gap-3 w-full
-          px-2.5 py-2 rounded-md text-sm
+          group relative flex gap-3 w-full
+          px-2.5 rounded-md text-sm
           transition-colors
+          ${hasDescription ? 'items-start py-1.5' : 'items-center py-2'}
           ${isCollapsed ? 'md:justify-center' : ''}
           ${
             item.isActive
@@ -159,10 +183,21 @@ function NavItemRow({
           }
         `}
       >
-        {renderIcon(item.isActive ? 'text-teal-600 dark:text-teal-400' : '')}
+        {renderIcon(`${item.isActive ? 'text-teal-600 dark:text-teal-400' : ''} ${hasDescription ? 'mt-px' : ''}`)}
         {!isCollapsed && (
           <>
-            <span className="flex-1 text-left truncate">{item.label}</span>
+            <span className="flex-1 min-w-0 text-left">
+              <span className="block truncate">{item.label}</span>
+              {hasDescription && (
+                <span
+                  className={`block text-[11px] leading-snug line-clamp-2 ${
+                    item.isActive ? 'text-teal-600/80 dark:text-teal-300/70' : 'text-slate-400 dark:text-slate-500'
+                  }`}
+                >
+                  {item.description}
+                </span>
+              )}
+            </span>
             {hasBadge && (
               <span className="shrink-0 min-w-[20px] h-5 px-1.5 flex items-center justify-center text-[11px] font-medium rounded-full bg-violet-500 text-white">
                 {item.badge}

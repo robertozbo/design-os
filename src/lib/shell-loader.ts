@@ -2,7 +2,7 @@
  * Shell loading and parsing utilities
  */
 
-import type { ShellSpec, ShellInfo } from '@/types/product'
+import type { ShellSpec, ShellInfo, ShellNavGroup } from '@/types/product'
 import type { ComponentType, ReactNode } from 'react'
 
 // Load shell spec markdown file at build time
@@ -51,13 +51,27 @@ export function parseShellSpec(md: string): ShellSpec | null {
     // Extract navigation items
     const navSection = md.match(/## Navigation Structure\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
     const navigationItems: string[] = []
+    const navigationGroups: ShellNavGroup[] = []
 
     if (navSection?.[1]) {
       const lines = navSection[1].split('\n')
+      let current: ShellNavGroup | null = null
       for (const line of lines) {
         const trimmed = line.trim()
+        const heading = trimmed.match(/^(#{3,4})\s+(.+)$/)
+        if (heading) {
+          current = { title: heading[2].trim(), level: heading[1].length as 3 | 4, items: [] }
+          navigationGroups.push(current)
+          continue
+        }
         if (trimmed.startsWith('- ')) {
-          navigationItems.push(trimmed.slice(2).trim())
+          const item = trimmed.slice(2).trim()
+          navigationItems.push(item)
+          if (!current) {
+            current = { title: '', level: 3, items: [] }
+            navigationGroups.push(current)
+          }
+          current.items.push(item)
         }
       }
     }
@@ -75,6 +89,7 @@ export function parseShellSpec(md: string): ShellSpec | null {
       raw: md,
       overview,
       navigationItems,
+      navigationGroups,
       layoutPattern,
     }
   } catch {

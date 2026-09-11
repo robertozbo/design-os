@@ -74,10 +74,20 @@ export interface DesignSystem {
 // Application Shell
 // =============================================================================
 
+export interface ShellNavGroup {
+  /** Heading text, e.g. "SST · NR-1" (###) or "Treinamentos" (####) */
+  title: string
+  /** 3 = context group (###), 4 = sub-group label inside it (####) */
+  level: 3 | 4
+  items: string[]
+}
+
 export interface ShellSpec {
   raw: string
   overview: string
   navigationItems: string[]
+  /** Same items, grouped by the ###/#### headings under Navigation Structure (in order) */
+  navigationGroups: ShellNavGroup[]
   layoutPattern: string
 }
 

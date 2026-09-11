@@ -251,7 +251,6 @@ export function ScreenDesignFullscreen() {
         const ShellWrapper = ({ children }: { children?: React.ReactNode }) => {
           // Try to get navigation items from shell spec
           const shellInfo = loadShellInfo()
-          const specNavItems = shellInfo?.spec?.navigationItems || []
           const productData = loadProductData()
           const roadmapSections = productData.roadmap?.sections ?? []
 
@@ -275,70 +274,104 @@ export function ScreenDesignFullscreen() {
             return byTitle?.id ?? null
           }
 
-          // Build navigation items wired to actual section prototypes
+          // Build navigation items wired to actual section prototypes.
+          // Line format (spec.md, under "## Navigation Structure"):
+          //   - **Label** → `section-id/ScreenName` · one-line description
+          // Target and description are optional: without a target the label is
+          // matched against the roadmap; without " · " there is no description.
           type Item = {
             label: string
             href: string
             isActive: boolean
             sectionId: string | null
             screenName: string | null
+            description?: string
+            topGroup: string | null
+            subGroup: string | null
           }
-          const items: Item[] = specNavItems.length > 0
-            ? specNavItems.map((item, index) => {
-                const labelMatch = item.match(/\*\*([^*]+)\*\*/)
-                const label = labelMatch
-                  ? labelMatch[1]
-                  : item.split('→')[0]?.trim() || `Item ${index + 1}`
-                const targetId = findSectionIdForLabel(label)
-                const designs = targetId ? getSectionScreenDesigns(targetId) : []
-                const screenName = designs[0]?.name ?? null
-                const href = targetId && screenName
-                  ? `/sections/${targetId}/screen-designs/${screenName}`
-                  : `#${slugify(label)}`
-                return {
-                  label,
-                  href,
-                  isActive: targetId === sectionId,
-                  sectionId: targetId,
-                  screenName,
-                }
+          const groups = shellInfo?.spec?.navigationGroups ?? []
+          const parseNavLine = (raw: string, index: number) => {
+            const labelMatch = raw.match(/\*\*([^*]+)\*\*/)
+            const label = labelMatch ? labelMatch[1] : raw.split('→')[0]?.trim() || `Item ${index + 1}`
+            const targetMatch = raw.match(/`([a-z0-9-]+)(?:\/([A-Za-z0-9_-]+))?`/)
+            const descMatch = raw.match(/ · (.+)$/)
+            return {
+              label,
+              targetSection: targetMatch?.[1] ?? null,
+              targetScreen: targetMatch?.[2] ?? null,
+              description: descMatch?.[1]?.trim() || undefined,
+            }
+          }
+
+          const items: Item[] = []
+          let topGroup: string | null = null
+          let subGroup: string | null = null
+          groups.forEach((group) => {
+            if (group.level === 3) {
+              topGroup = group.title || null
+              subGroup = null
+            } else {
+              subGroup = group.title
+            }
+            group.items.forEach((raw, index) => {
+              const { label, targetSection, targetScreen, description } = parseNavLine(raw, index)
+              const targetId = targetSection ?? findSectionIdForLabel(label)
+              const designs = targetId ? getSectionScreenDesigns(targetId) : []
+              const screenName =
+                (targetScreen && designs.find((d) => d.name === targetScreen)?.name) ?? designs[0]?.name ?? null
+              const href = targetId && screenName
+                ? `/sections/${targetId}/screen-designs/${screenName}`
+                : `#${slugify(label)}`
+              items.push({
+                label,
+                href,
+                isActive: targetId === sectionId && (!targetScreen || screenName === screenDesignName),
+                sectionId: targetId,
+                screenName,
+                description,
+                topGroup,
+                subGroup,
               })
-            : []
+            })
+          })
 
-          // Split items: admin/* go to a separate secondary group so the
-          // sidebar visually distinguishes "interno · Admin" from the
-          // patient/professional navigation.
-          const isAdminItem = (it: Item) =>
-            (it.sectionId?.startsWith('admin-') ?? false) ||
-            it.href.includes('/admin-')
+          // "Seções principais" + "Itens secundários" are the default (patient)
+          // sidebar. Every other ### group is a context of its own — Admin, SST —
+          // shown alone when the current section belongs to it, so the operator's
+          // flow isn't polluted with patient nav.
+          const isDefaultGroup = (title: string | null) =>
+            !title || /^(seções principais|itens secundários)/i.test(title)
+          const isAdminGroup = (title: string | null) => /^admin/i.test(title ?? '')
 
-          // When viewing an admin section, swap to an admin-only sidebar
-          // so the operator's flow isn't polluted with patient nav.
-          const isAdminContext = sectionId?.startsWith('admin-') ?? false
+          const currentTop = items.find((it) => it.sectionId === sectionId)?.topGroup ?? null
+          const isContextual = !isDefaultGroup(currentTop)
+          const contextName = isContextual
+            ? (currentTop ?? '').replace(/\(.*$/, '').split('·')[0].trim()
+            : null
+          const stripContext = (label: string) =>
+            contextName ? label.replace(new RegExp(`^${contextName}\\s+|\\s+${contextName}$`), '') : label
 
-          const navigationItems = isAdminContext
-            ? items
-                .filter(isAdminItem)
-                .map(({ label, href, isActive }) => ({
-                  label: label.replace(/^Admin\s+/, ''),
-                  href,
-                  isActive,
-                }))
-            : items
-                .filter((it) => !isAdminItem(it))
-                .map(({ label, href, isActive }) => ({ label, href, isActive }))
+          const toNavItem = ({ label, href, isActive, description, subGroup }: Item) => ({
+            label: isContextual ? stripContext(label) : label,
+            href,
+            isActive,
+            description,
+            group: subGroup ?? undefined,
+          })
 
-          const secondaryItems = isAdminContext
+          const navigationItems = isContextual
+            ? items.filter((it) => it.topGroup === currentTop).map(toNavItem)
+            : items.filter((it) => isDefaultGroup(it.topGroup)).map(toNavItem)
+
+          // Patient context keeps the Admin group as a secondary block at the bottom.
+          const secondaryItems = isContextual
             ? []
             : items
-                .filter(isAdminItem)
-                .map(({ label, href, isActive }) => ({
-                  // Strip "Admin " prefix so the sidebar shows just the area
-                  // (e.g. "Custos IA" instead of "Admin Custos IA"); the group
-                  // label below already establishes context.
-                  label: label.replace(/^Admin\s+/, ''),
-                  href,
-                  isActive,
+                .filter((it) => isAdminGroup(it.topGroup))
+                .map((it) => ({
+                  ...toNavItem(it),
+                  label: it.label.replace(/^Admin\s+/, ''),
+                  group: undefined,
                 }))
 
           const defaultUser = {
@@ -363,7 +396,7 @@ export function ScreenDesignFullscreen() {
           // Pass props dynamically - the shell component decides what it needs
           return (
             <ShellComponent
-              productName={isAdminContext ? 'Nymos · Admin' : 'Nymos'}
+              productName={contextName ? `Nymos · ${contextName}` : 'Nymos'}
               navigationItems={navigationItems}
               secondaryItems={secondaryItems}
               secondaryLabel={secondaryItems.length > 0 ? 'Admin · Nymos' : undefined}
@@ -382,7 +415,7 @@ export function ScreenDesignFullscreen() {
         return { default: ({ children }: { children?: React.ReactNode }) => <>{children}</> }
       }
     })
-  }, [sectionId]) // Depends on sectionId to check section-specific shell config
+  }, [sectionId, screenDesignName]) // Active item depends on both section and screen
 
   // Sync theme with parent window
   useEffect(() => {

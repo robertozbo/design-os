@@ -17,13 +17,14 @@ import { TurmaDetail } from './TurmaDetail'
 import { EventoDrawer } from './EventoDrawer'
 import { EventoDetail } from './EventoDetail'
 
-type Tab = 'cursos' | 'turmas' | 'eventos'
+export type VisaoTreinamentos = 'cursos' | 'turmas' | 'eventos'
 
-const VIEWS: { id: Tab; label: string; descricao: string }[] = [
-  { id: 'cursos', label: 'Cursos', descricao: 'Catálogo de treinamentos oferecidos' },
-  { id: 'turmas', label: 'Turmas', descricao: 'Execuções com alunos, presença e certificados' },
-  { id: 'eventos', label: 'Eventos', descricao: 'Ocasiões na empresa que agrupam turmas' },
-]
+/** Cada visão é um item independente na sidebar; o rótulo e a explicação abrem a página. */
+const VIEWS: Record<VisaoTreinamentos, { label: string; descricao: string }> = {
+  cursos: { label: 'Cursos', descricao: 'Catálogo de treinamentos oferecidos — norma, carga horária e conteúdo programático.' },
+  turmas: { label: 'Turmas', descricao: 'Execuções de um curso numa empresa — alunos, presença, aprovação e certificados.' },
+  eventos: { label: 'Eventos', descricao: 'Ocasiões na empresa (SIPAT, integração, campanha) que agrupam as turmas.' },
+}
 
 const STATUS_EVENTO_ORDEM: Record<Evento['status'], number> = { em_andamento: 0, agendado: 1, concluido: 2 }
 
@@ -48,9 +49,9 @@ export function TreinamentosView({
   onSelectTreinamento,
   onSelectTurma,
   onSelectEvento,
-}: TreinamentosProps) {
-  const [tab, setTab] = useState<Tab>('cursos')
-  const [menuAberto, setMenuAberto] = useState(false)
+  visao = 'cursos',
+}: TreinamentosProps & { visao?: VisaoTreinamentos }) {
+  const tab = visao
   const [cursoAbertoId, setCursoAbertoId] = useState<string | null>(null)
   const [eventoAbertoId, setEventoAbertoId] = useState<string | null>(null)
   const [turmaAbertaId, setTurmaAbertaId] = useState<string | null>(null)
@@ -100,7 +101,7 @@ export function TreinamentosView({
     onSelectTurma?.(id)
   }
 
-  const primaria: Record<Tab, { rotulo: string; acao: () => void }> = {
+  const primaria: Record<VisaoTreinamentos, { rotulo: string; acao: () => void }> = {
     cursos: { rotulo: 'Novo treinamento', acao: () => setDrawerTreinamento(true) },
     turmas: { rotulo: 'Nova turma', acao: () => setNovaTurmaDe({}) },
     eventos: { rotulo: 'Novo evento', acao: () => setDrawerEvento(true) },
@@ -128,8 +129,7 @@ export function TreinamentosView({
     )
   }
 
-  const contagem: Record<Tab, number> = { cursos: treinamentos.length, turmas: turmas.length, eventos: eventos.length }
-  const viewAtual = VIEWS.find((v) => v.id === tab) ?? VIEWS[0]
+  const viewAtual = VIEWS[tab]
 
   return (
     <div className="w-full px-4 py-6 sm:px-6 lg:px-8">
@@ -158,66 +158,9 @@ export function TreinamentosView({
         <>
           <header className="mb-6 flex flex-wrap items-start justify-between gap-4">
             <div>
-              <div className="relative inline-block">
-                <button
-                  onClick={() => setMenuAberto((v) => !v)}
-                  aria-haspopup="menu"
-                  aria-expanded={menuAberto}
-                  className="-ml-2 inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold uppercase tracking-wide text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-                >
-                  Treinamentos
-                  <svg
-                    className={`h-3.5 w-3.5 transition-transform ${menuAberto ? 'rotate-180' : ''}`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
-                  </svg>
-                </button>
-                {menuAberto && (
-                  <>
-                    <div className="fixed inset-0 z-30" onClick={() => setMenuAberto(false)} />
-                    <div
-                      role="menu"
-                      className="absolute left-0 top-full z-40 mt-1 w-80 max-w-[calc(100vw-2rem)] rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg dark:border-slate-700 dark:bg-slate-900"
-                    >
-                      {VIEWS.map((v) => {
-                        const ativo = tab === v.id
-                        return (
-                          <button
-                            key={v.id}
-                            role="menuitem"
-                            onClick={() => {
-                              setTab(v.id)
-                              setMenuAberto(false)
-                            }}
-                            className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left ${
-                              ativo ? 'bg-teal-50 dark:bg-teal-950/50' : 'hover:bg-slate-50 dark:hover:bg-slate-800'
-                            }`}
-                          >
-                            <div className="min-w-0 flex-1">
-                              <p
-                                className={`text-sm font-medium ${
-                                  ativo ? 'text-teal-700 dark:text-teal-300' : 'text-slate-900 dark:text-slate-100'
-                                }`}
-                              >
-                                {v.label}
-                              </p>
-                              <p className="text-xs text-slate-500 dark:text-slate-400">{v.descricao}</p>
-                            </div>
-                            <span className="shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-xs tabular-nums text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-                              {contagem[v.id]}
-                            </span>
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </>
-                )}
-              </div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Treinamentos</p>
               <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">{viewAtual.label}</h1>
+              <p className="mt-1 max-w-xl text-sm text-slate-600 dark:text-slate-300">{viewAtual.descricao}</p>
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                 <span className="tabular-nums">{treinamentos.length}</span> cursos ·{' '}
                 <span className="tabular-nums">{turmasAtivas}</span> turmas ativas ·{' '}
@@ -511,10 +454,7 @@ export function TreinamentosView({
         <EventoDrawer
           empregadores={empregadores}
           onClose={() => setDrawerEvento(false)}
-          onSave={(input) => {
-            onCreateEvento?.(input)
-            setTab('eventos')
-          }}
+          onSave={(input) => onCreateEvento?.(input)}
         />
       )}
       {novaTurmaDe !== null && (
@@ -526,15 +466,7 @@ export function TreinamentosView({
           treinamentoInicialId={novaTurmaDe.treinamentoId}
           eventoInicialId={novaTurmaDe.eventoId}
           onClose={() => setNovaTurmaDe(null)}
-          onCreate={(input) => {
-            onCreateTurma?.(input)
-            setCursoAbertoId(null)
-            // Turma criada de dentro de um evento volta para o evento; avulsa vai para a lista de turmas
-            if (!input.eventoId) {
-              setEventoAbertoId(null)
-              setTab('turmas')
-            }
-          }}
+          onCreate={(input) => onCreateTurma?.(input)}
         />
       )}
     </div>
