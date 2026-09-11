@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react'
-import type { TreinamentosProps, Treinamento } from '@/../product/sections/treinamentos/types'
+import type { Evento, TreinamentosProps, Treinamento } from '@/../product/sections/treinamentos/types'
 import {
   MODALIDADE_LABEL,
+  STATUS_EVENTO_CLASSES,
+  STATUS_EVENTO_LABEL,
   STATUS_TURMA_CLASSES,
   STATUS_TURMA_LABEL,
   TIPO_TURMA_LABEL,
@@ -12,16 +14,31 @@ import {
 import { TreinamentoDrawer } from './TreinamentoDrawer'
 import { NovaTurmaFlow } from './NovaTurmaFlow'
 import { TurmaDetail } from './TurmaDetail'
+import { EventoDrawer } from './EventoDrawer'
+import { EventoDetail } from './EventoDetail'
 
-type Tab = 'cursos' | 'turmas'
+type Tab = 'cursos' | 'turmas' | 'eventos'
+
+const VIEWS: { id: Tab; label: string; descricao: string }[] = [
+  { id: 'cursos', label: 'Cursos', descricao: 'Catálogo de treinamentos oferecidos' },
+  { id: 'turmas', label: 'Turmas', descricao: 'Execuções com alunos, presença e certificados' },
+  { id: 'eventos', label: 'Eventos', descricao: 'Ocasiões na empresa que agrupam turmas' },
+]
+
+const STATUS_EVENTO_ORDEM: Record<Evento['status'], number> = { em_andamento: 0, agendado: 1, concluido: 2 }
+
+/** Abertura do fluxo de nova turma: null = fechado; objeto = aberto com pré-seleções */
+type NovaTurmaAbertura = { treinamentoId?: string; eventoId?: string } | null
 
 export function TreinamentosView({
   treinamentos,
   turmas,
+  eventos,
   empregadores,
   trabalhadores,
   onCreateTreinamento,
   onUpdateTreinamento,
+  onCreateEvento,
   onCreateTurma,
   onTogglePresenca,
   onToggleAprovacao,
@@ -30,14 +47,18 @@ export function TreinamentosView({
   onCriarEventoAgenda,
   onSelectTreinamento,
   onSelectTurma,
+  onSelectEvento,
 }: TreinamentosProps) {
   const [tab, setTab] = useState<Tab>('cursos')
+  const [menuAberto, setMenuAberto] = useState(false)
   const [cursoAbertoId, setCursoAbertoId] = useState<string | null>(null)
+  const [eventoAbertoId, setEventoAbertoId] = useState<string | null>(null)
   const [turmaAbertaId, setTurmaAbertaId] = useState<string | null>(null)
   const [turmaExpandidaId, setTurmaExpandidaId] = useState<string | null>(null)
   const [drawerTreinamento, setDrawerTreinamento] = useState(false)
+  const [drawerEvento, setDrawerEvento] = useState(false)
   const [cursoEditando, setCursoEditando] = useState<Treinamento | null>(null)
-  const [novaTurmaDe, setNovaTurmaDe] = useState<string | null | false>(false)
+  const [novaTurmaDe, setNovaTurmaDe] = useState<NovaTurmaAbertura>(null)
 
   const [filtroEmpregador, setFiltroEmpregador] = useState('')
   const [filtroCurso, setFiltroCurso] = useState('')
@@ -60,8 +81,30 @@ export function TreinamentosView({
     [turmas, filtroEmpregador, filtroCurso, filtroStatus],
   )
 
+  const eventosOrdenados = useMemo(
+    () =>
+      [...eventos].sort(
+        (a, b) =>
+          STATUS_EVENTO_ORDEM[a.status] - STATUS_EVENTO_ORDEM[b.status] || a.dataInicio.localeCompare(b.dataInicio),
+      ),
+    [eventos],
+  )
+  const eventosAbertos = eventos.filter((e) => e.status !== 'concluido').length
+
   const cursoAberto = treinamentos.find((t) => t.id === cursoAbertoId)
+  const eventoAberto = eventos.find((e) => e.id === eventoAbertoId)
   const turmaAberta = turmas.find((t) => t.id === turmaAbertaId)
+
+  const abrirTurma = (id: string) => {
+    setTurmaAbertaId(id)
+    onSelectTurma?.(id)
+  }
+
+  const primaria: Record<Tab, { rotulo: string; acao: () => void }> = {
+    cursos: { rotulo: 'Novo treinamento', acao: () => setDrawerTreinamento(true) },
+    turmas: { rotulo: 'Nova turma', acao: () => setNovaTurmaDe({}) },
+    eventos: { rotulo: 'Novo evento', acao: () => setDrawerEvento(true) },
+  }
 
   const selectCls =
     'rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-teal-500 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200'
@@ -85,6 +128,9 @@ export function TreinamentosView({
     )
   }
 
+  const contagem: Record<Tab, number> = { cursos: treinamentos.length, turmas: turmas.length, eventos: eventos.length }
+  const viewAtual = VIEWS.find((v) => v.id === tab) ?? VIEWS[0]
+
   return (
     <div className="w-full px-4 py-6 sm:px-6 lg:px-8">
       {cursoAberto ? (
@@ -94,59 +140,169 @@ export function TreinamentosView({
           empregadores={empregadores}
           onBack={() => setCursoAbertoId(null)}
           onEditar={() => setCursoEditando(cursoAberto)}
-          onNovaTurma={() => setNovaTurmaDe(cursoAberto.id)}
-          onOpenTurma={(id) => {
-            setTurmaAbertaId(id)
-            onSelectTurma?.(id)
-          }}
+          onNovaTurma={() => setNovaTurmaDe({ treinamentoId: cursoAberto.id })}
+          onOpenTurma={abrirTurma}
+        />
+      ) : eventoAberto ? (
+        <EventoDetail
+          evento={eventoAberto}
+          empregador={empregadores.find((e) => e.id === eventoAberto.empregadorId)}
+          turmasDoEvento={turmas.filter((t) => t.eventoId === eventoAberto.id)}
+          treinamentos={treinamentos}
+          trabalhadores={trabalhadores}
+          onBack={() => setEventoAbertoId(null)}
+          onNovaTurma={() => setNovaTurmaDe({ eventoId: eventoAberto.id })}
+          onOpenTurma={abrirTurma}
         />
       ) : (
         <>
           <header className="mb-6 flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">Treinamentos</h1>
+              <div className="relative inline-block">
+                <button
+                  onClick={() => setMenuAberto((v) => !v)}
+                  aria-haspopup="menu"
+                  aria-expanded={menuAberto}
+                  className="-ml-2 inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold uppercase tracking-wide text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+                >
+                  Treinamentos
+                  <svg
+                    className={`h-3.5 w-3.5 transition-transform ${menuAberto ? 'rotate-180' : ''}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
+                {menuAberto && (
+                  <>
+                    <div className="fixed inset-0 z-30" onClick={() => setMenuAberto(false)} />
+                    <div
+                      role="menu"
+                      className="absolute left-0 top-full z-40 mt-1 w-80 max-w-[calc(100vw-2rem)] rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg dark:border-slate-700 dark:bg-slate-900"
+                    >
+                      {VIEWS.map((v) => {
+                        const ativo = tab === v.id
+                        return (
+                          <button
+                            key={v.id}
+                            role="menuitem"
+                            onClick={() => {
+                              setTab(v.id)
+                              setMenuAberto(false)
+                            }}
+                            className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left ${
+                              ativo ? 'bg-teal-50 dark:bg-teal-950/50' : 'hover:bg-slate-50 dark:hover:bg-slate-800'
+                            }`}
+                          >
+                            <div className="min-w-0 flex-1">
+                              <p
+                                className={`text-sm font-medium ${
+                                  ativo ? 'text-teal-700 dark:text-teal-300' : 'text-slate-900 dark:text-slate-100'
+                                }`}
+                              >
+                                {v.label}
+                              </p>
+                              <p className="text-xs text-slate-500 dark:text-slate-400">{v.descricao}</p>
+                            </div>
+                            <span className="shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-xs tabular-nums text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                              {contagem[v.id]}
+                            </span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </>
+                )}
+              </div>
+              <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">{viewAtual.label}</h1>
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                 <span className="tabular-nums">{treinamentos.length}</span> cursos ·{' '}
                 <span className="tabular-nums">{turmasAtivas}</span> turmas ativas ·{' '}
+                <span className="tabular-nums">{eventosAbertos}</span> eventos abertos ·{' '}
                 <span className="tabular-nums">{certificadosEmitidos}</span> certificados emitidos
               </p>
             </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setDrawerTreinamento(true)}
-                className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
-              >
-                Novo treinamento
-              </button>
-              <button
-                onClick={() => setNovaTurmaDe(null)}
-                className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-700"
-              >
-                Nova turma
-              </button>
-            </div>
+            <button
+              onClick={primaria[tab].acao}
+              className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-700"
+            >
+              {primaria[tab].rotulo}
+            </button>
           </header>
 
-          <div className="mb-6 flex gap-1 border-b border-slate-200 dark:border-slate-800">
-            {(['cursos', 'turmas'] as Tab[]).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={`-mb-px border-b-2 px-4 py-2.5 text-sm font-medium transition-colors ${
-                  tab === t
-                    ? 'border-teal-600 text-teal-700 dark:border-teal-400 dark:text-teal-300'
-                    : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
-                }`}
-              >
-                {t === 'cursos' ? 'Cursos' : 'Turmas'}{' '}
-                <span className="ml-1 rounded-full bg-slate-100 px-1.5 py-0.5 text-xs tabular-nums text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-                  {t === 'cursos' ? treinamentos.length : turmas.length}
-                </span>
-              </button>
-            ))}
-          </div>
-
-          {tab === 'cursos' ? (
+          {tab === 'eventos' ? (
+            eventos.length === 0 ? (
+              <EmptyState
+                titulo="Nenhum evento criado"
+                texto="Crie a ocasião na empresa — SIPAT, integração, campanha — e monte as turmas dentro dela."
+                cta="Novo evento"
+                onCta={() => setDrawerEvento(true)}
+              />
+            ) : (
+              <div className="grid gap-3 sm:grid-cols-2">
+                {eventosOrdenados.map((ev) => {
+                  const emp = empregadores.find((e) => e.id === ev.empregadorId)
+                  const turmasDoEvento = turmas.filter((t) => t.eventoId === ev.id)
+                  const inscritos = new Set(turmasDoEvento.flatMap((t) => t.alunos.map((a) => a.trabalhadorId))).size
+                  const normas = [
+                    ...new Set(
+                      turmasDoEvento
+                        .map((t) => treinamentos.find((c) => c.id === t.treinamentoId)?.norma)
+                        .filter((n): n is string => !!n),
+                    ),
+                  ]
+                  return (
+                    <button
+                      key={ev.id}
+                      onClick={() => {
+                        setEventoAbertoId(ev.id)
+                        onSelectEvento?.(ev.id)
+                      }}
+                      className="group rounded-xl border border-slate-200 bg-white p-4 text-left transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
+                    >
+                      <div className="mb-2 flex items-center justify-between gap-2">
+                        <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_EVENTO_CLASSES[ev.status]}`}>
+                          {STATUS_EVENTO_LABEL[ev.status]}
+                        </span>
+                        <span className="text-xs text-slate-500 tabular-nums dark:text-slate-400">{formatPeriodo(ev)}</span>
+                      </div>
+                      <h3 className="font-semibold text-slate-900 group-hover:text-teal-700 dark:text-slate-100 dark:group-hover:text-teal-300">
+                        {ev.nome}
+                      </h3>
+                      <p className="mt-0.5 truncate text-sm text-slate-500 dark:text-slate-400">
+                        {emp?.razaoSocial ?? ev.empregadorId}
+                        {ev.local && <span> · {ev.local}</span>}
+                      </p>
+                      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-500 dark:text-slate-400">
+                        <span className="tabular-nums">
+                          {turmasDoEvento.length} turma{turmasDoEvento.length === 1 ? '' : 's'}
+                        </span>
+                        <span className="tabular-nums">{inscritos} inscritos</span>
+                        {normas.length > 0 && (
+                          <span className="flex flex-wrap gap-1">
+                            {normas.map((n) => (
+                              <span
+                                key={n}
+                                className="rounded bg-teal-50 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-teal-700 dark:bg-teal-950 dark:text-teal-300"
+                              >
+                                {n}
+                              </span>
+                            ))}
+                          </span>
+                        )}
+                        {turmasDoEvento.length === 0 && (
+                          <span className="font-medium text-amber-600 dark:text-amber-400">Sem turmas ainda</span>
+                        )}
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            )
+          ) : tab === 'cursos' ? (
             treinamentos.length === 0 ? (
               <EmptyState
                 titulo="Nenhum curso no catálogo"
@@ -205,7 +361,7 @@ export function TreinamentosView({
               titulo="Nenhuma turma criada"
               texto="Monte a primeira turma escolhendo um curso e a empresa cliente."
               cta="Nova turma"
-              onCta={() => setNovaTurmaDe(null)}
+              onCta={() => setNovaTurmaDe({})}
             />
           ) : (
             <>
@@ -239,6 +395,7 @@ export function TreinamentosView({
                 {turmasFiltradas.map((turma) => {
                   const curso = treinamentos.find((t) => t.id === turma.treinamentoId)
                   const emp = empregadores.find((e) => e.id === turma.empregadorId)
+                  const evento = turma.eventoId ? eventos.find((e) => e.id === turma.eventoId) : undefined
                   const expandida = turmaExpandidaId === turma.id
                   return (
                     <div key={turma.id}>
@@ -266,6 +423,9 @@ export function TreinamentosView({
                           </p>
                           <p className="truncate text-xs text-slate-500 dark:text-slate-400">
                             {emp?.razaoSocial} · {TIPO_TURMA_LABEL[turma.tipo]}
+                            {evento && (
+                              <span className="text-teal-600 dark:text-teal-400"> · {evento.nome}</span>
+                            )}
                           </p>
                         </div>
                         <span className="text-xs text-slate-500 tabular-nums dark:text-slate-400">{formatPeriodo(turma)}</span>
@@ -315,10 +475,7 @@ export function TreinamentosView({
                             </ul>
                           )}
                           <button
-                            onClick={() => {
-                              setTurmaAbertaId(turma.id)
-                              onSelectTurma?.(turma.id)
-                            }}
+                            onClick={() => abrirTurma(turma.id)}
                             className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300"
                           >
                             Abrir turma — presença, aprovação e certificados
@@ -350,17 +507,33 @@ export function TreinamentosView({
           }}
         />
       )}
-      {novaTurmaDe !== false && (
+      {drawerEvento && (
+        <EventoDrawer
+          empregadores={empregadores}
+          onClose={() => setDrawerEvento(false)}
+          onSave={(input) => {
+            onCreateEvento?.(input)
+            setTab('eventos')
+          }}
+        />
+      )}
+      {novaTurmaDe !== null && (
         <NovaTurmaFlow
           treinamentos={treinamentos}
+          eventos={eventos}
           empregadores={empregadores}
           trabalhadores={trabalhadores}
-          treinamentoInicialId={novaTurmaDe}
-          onClose={() => setNovaTurmaDe(false)}
+          treinamentoInicialId={novaTurmaDe.treinamentoId}
+          eventoInicialId={novaTurmaDe.eventoId}
+          onClose={() => setNovaTurmaDe(null)}
           onCreate={(input) => {
             onCreateTurma?.(input)
             setCursoAbertoId(null)
-            setTab('turmas')
+            // Turma criada de dentro de um evento volta para o evento; avulsa vai para a lista de turmas
+            if (!input.eventoId) {
+              setEventoAbertoId(null)
+              setTab('turmas')
+            }
           }}
         />
       )}

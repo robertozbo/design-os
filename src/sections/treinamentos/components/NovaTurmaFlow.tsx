@@ -1,44 +1,67 @@
 import { useMemo, useState } from 'react'
 import type {
   Empregador,
+  Evento,
   NovaTurmaInput,
   TipoTurma,
   Trabalhador,
   Treinamento,
 } from '@/../product/sections/treinamentos/types'
-import { TIPO_TURMA_LABEL, formatHoras } from './helpers'
+import { TIPO_TURMA_LABEL, formatHoras, formatPeriodo } from './helpers'
 
 interface NovaTurmaFlowProps {
   treinamentos: Treinamento[]
+  eventos: Evento[]
   empregadores: Empregador[]
   trabalhadores: Trabalhador[]
   /** Pré-seleção quando o fluxo abre a partir do detalhe de um curso */
   treinamentoInicialId?: string | null
+  /** Pré-seleção quando o fluxo abre a partir do detalhe de um evento — trava empresa e herda período/local */
+  eventoInicialId?: string | null
   onClose: () => void
   onCreate?: (input: NovaTurmaInput) => void
 }
 
 export function NovaTurmaFlow({
   treinamentos,
+  eventos,
   empregadores,
   trabalhadores,
   treinamentoInicialId,
+  eventoInicialId,
   onClose,
   onCreate,
 }: NovaTurmaFlowProps) {
+  const eventoInicial = eventos.find((e) => e.id === eventoInicialId)
   const [etapa, setEtapa] = useState<1 | 2>(1)
   const [treinamentoId, setTreinamentoId] = useState(treinamentoInicialId ?? '')
+  const [eventoId, setEventoId] = useState(eventoInicial?.id ?? '')
   const [tipo, setTipo] = useState<TipoTurma>('formacao_inicial')
-  const [dataInicio, setDataInicio] = useState('')
-  const [dataFim, setDataFim] = useState('')
+  const [dataInicio, setDataInicio] = useState(eventoInicial?.dataInicio ?? '')
+  const [dataFim, setDataFim] = useState(eventoInicial?.dataFim ?? '')
   const [instrutor, setInstrutor] = useState('')
-  const [local, setLocal] = useState('')
-  const [empregadorId, setEmpregadorId] = useState('')
+  const [local, setLocal] = useState(eventoInicial?.local ?? '')
+  const [empregadorId, setEmpregadorId] = useState(eventoInicial?.empregadorId ?? '')
   const [busca, setBusca] = useState('')
   const [selecionados, setSelecionados] = useState<Set<string>>(new Set())
 
   const treinamento = treinamentos.find((t) => t.id === treinamentoId)
   const empregador = empregadores.find((e) => e.id === empregadorId)
+  const evento = eventos.find((e) => e.id === eventoId)
+  const eventosAbertos = eventos.filter((e) => e.status !== 'concluido')
+  const travadoPeloEvento = !!eventoInicial
+
+  /** Escolher um evento herda empresa, período e local; limpar volta ao formulário livre */
+  const escolherEvento = (id: string) => {
+    setEventoId(id)
+    const ev = eventos.find((e) => e.id === id)
+    if (!ev) return
+    setEmpregadorId(ev.empregadorId)
+    setDataInicio(ev.dataInicio)
+    setDataFim(ev.dataFim)
+    setLocal(ev.local)
+    setSelecionados(new Set())
+  }
 
   const candidatos = useMemo(
     () => trabalhadores.filter((t) => t.empregadorId === empregadorId),
@@ -140,6 +163,35 @@ export function NovaTurmaFlow({
             </div>
 
             <div>
+              <label className={labelCls}>Evento</label>
+              {travadoPeloEvento && evento ? (
+                <div className="flex items-center justify-between rounded-lg border border-teal-200 bg-teal-50/60 px-3 py-2 text-sm dark:border-teal-900 dark:bg-teal-950/40">
+                  <div className="min-w-0">
+                    <p className="truncate font-medium text-teal-900 dark:text-teal-100">{evento.nome}</p>
+                    <p className="text-xs text-teal-700 tabular-nums dark:text-teal-300">{formatPeriodo(evento)} · {evento.local}</p>
+                  </div>
+                  <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[11px] font-medium text-teal-700 dark:bg-slate-900 dark:text-teal-300">
+                    dentro do evento
+                  </span>
+                </div>
+              ) : (
+                <>
+                  <select className={inputCls} value={eventoId} onChange={(e) => escolherEvento(e.target.value)}>
+                    <option value="">Turma avulsa — sem evento</option>
+                    {eventosAbertos.map((e) => (
+                      <option key={e.id} value={e.id}>
+                        {e.nome} · {empregadores.find((emp) => emp.id === e.empregadorId)?.razaoSocial} · {formatPeriodo(e)}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
+                    Opcional. Ao escolher um evento a turma herda empresa, período e local.
+                  </p>
+                </>
+              )}
+            </div>
+
+            <div>
               <label className={labelCls}>Tipo</label>
               <div className="flex flex-wrap gap-2">
                 {(Object.keys(TIPO_TURMA_LABEL) as TipoTurma[]).map((t) => (
@@ -183,8 +235,9 @@ export function NovaTurmaFlow({
             <div>
               <label className={labelCls}>Empregador</label>
               <select
-                className={inputCls}
+                className={`${inputCls} disabled:cursor-not-allowed disabled:opacity-60`}
                 value={empregadorId}
+                disabled={!!evento}
                 onChange={(e) => {
                   setEmpregadorId(e.target.value)
                   setSelecionados(new Set())
@@ -198,7 +251,9 @@ export function NovaTurmaFlow({
                 ))}
               </select>
               <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
-                Na próxima etapa a lista de funcionários dessa empresa será carregada para você marcar a turma.
+                {evento
+                  ? 'Empresa herdada do evento — as turmas de um evento são sempre da mesma empresa.'
+                  : 'Na próxima etapa a lista de funcionários dessa empresa será carregada para você marcar a turma.'}
               </p>
             </div>
           </div>
@@ -297,6 +352,7 @@ export function NovaTurmaFlow({
                 onCreate?.({
                   treinamentoId,
                   empregadorId,
+                  eventoId: eventoId || null,
                   tipo,
                   dataInicio,
                   dataFim: dataFim || dataInicio,

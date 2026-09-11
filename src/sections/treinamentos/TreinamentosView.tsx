@@ -2,6 +2,7 @@ import { useState } from 'react'
 import data from '@/../product/sections/treinamentos/data.json'
 import type {
   Empregador,
+  Evento,
   Trabalhador,
   Treinamento,
   Turma,
@@ -11,6 +12,7 @@ import { TreinamentosView } from './components/TreinamentosView'
 export default function TreinamentosPreview() {
   const [treinamentos, setTreinamentos] = useState<Treinamento[]>(data.treinamentos as Treinamento[])
   const [turmas, setTurmas] = useState<Turma[]>(data.turmas as Turma[])
+  const [eventos, setEventos] = useState<Evento[]>(data.eventos as Evento[])
 
   const patchAluno = (turmaId: string, trabalhadorId: string, patch: Partial<Turma['alunos'][number]>) =>
     setTurmas((prev) =>
@@ -28,6 +30,7 @@ export default function TreinamentosPreview() {
     <TreinamentosView
       treinamentos={treinamentos}
       turmas={turmas}
+      eventos={eventos}
       empregadores={data.empregadores as Empregador[]}
       trabalhadores={data.trabalhadores as Trabalhador[]}
       onCreateTreinamento={(input) =>
@@ -36,12 +39,16 @@ export default function TreinamentosPreview() {
       onUpdateTreinamento={(id, patch) =>
         setTreinamentos((prev) => prev.map((t) => (t.id === id ? { ...t, ...patch } : t)))
       }
+      onCreateEvento={(input) =>
+        setEventos((prev) => [{ ...input, id: `ev-${prev.length + 1}`, status: 'agendado' }, ...prev])
+      }
       onCreateTurma={(input) =>
         setTurmas((prev) => [
           {
             id: `turma-${prev.length + 1}`,
             treinamentoId: input.treinamentoId,
             empregadorId: input.empregadorId,
+            eventoId: input.eventoId,
             tipo: input.tipo,
             dataInicio: input.dataInicio,
             dataFim: input.dataFim,
@@ -96,6 +103,7 @@ export default function TreinamentosPreview() {
       }
       onSelectTreinamento={(id) => console.log('Abrir curso', id)}
       onSelectTurma={(id) => console.log('Abrir turma', id)}
+      onSelectEvento={(id) => console.log('Abrir evento', id)}
     />
   )
 }
