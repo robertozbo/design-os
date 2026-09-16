@@ -90,7 +90,7 @@ export function NovaTurmaFlow({
     <div className="fixed inset-0 z-50 flex justify-end">
       <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px]" onClick={onClose} />
       <aside className="relative flex h-full w-full max-w-[600px] flex-col bg-white shadow-2xl dark:bg-slate-900 max-sm:max-w-full">
-        <header className="border-b border-slate-200 px-6 py-4 dark:border-slate-800">
+        <header className="shrink-0 border-b border-slate-200 px-6 py-4 dark:border-slate-800">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Nova turma</h2>
             <button
@@ -129,9 +129,9 @@ export function NovaTurmaFlow({
         </header>
 
         {etapa === 1 ? (
-          <div className="flex-1 space-y-5 overflow-y-auto px-6 py-5">
+          <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
             <div>
-              <label className={labelCls}>Treinamento</label>
+              <label className={labelCls}>Curso</label>
               <select className={inputCls} value={treinamentoId} onChange={(e) => setTreinamentoId(e.target.value)}>
                 <option value="">Selecione um curso do catálogo…</option>
                 {treinamentos.filter((t) => t.ativo).map((t) => (
@@ -208,7 +208,7 @@ export function NovaTurmaFlow({
 
           </div>
         ) : (
-          <div className="flex flex-1 flex-col overflow-hidden">
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
             <div className="border-b border-slate-200 px-6 py-3 dark:border-slate-800">
               <p className="mb-2 text-sm text-slate-600 dark:text-slate-300">
                 Funcionários de <span className="font-semibold text-slate-900 dark:text-slate-100">{empregador?.razaoSocial}</span>
@@ -220,7 +220,7 @@ export function NovaTurmaFlow({
                 placeholder="Buscar por nome ou matrícula…"
               />
             </div>
-            <div className="flex-1 overflow-y-auto px-6 py-4">
+            <div className="min-h-0 flex-1 overflow-y-auto px-6 py-4">
               {candidatos.length === 0 ? (
                 <div className="rounded-xl border border-dashed border-slate-300 px-6 py-10 text-center dark:border-slate-700">
                   <p className="text-sm font-medium text-slate-600 dark:text-slate-300">Nenhum trabalhador cadastrado nesta empresa</p>
@@ -276,7 +276,7 @@ export function NovaTurmaFlow({
           </div>
         )}
 
-        <footer className="flex items-center justify-between gap-3 border-t border-slate-200 px-6 py-4 dark:border-slate-800">
+        <footer className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-200 px-6 py-4 dark:border-slate-800">
           {etapa === 2 ? (
             <button
               onClick={() => setEtapa(1)}

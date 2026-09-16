@@ -40,7 +40,7 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
     <div className="fixed inset-0 z-50 flex justify-end">
       <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px]" onClick={onClose} />
       <aside className="relative flex h-full w-full max-w-[980px] flex-col bg-white shadow-2xl dark:bg-slate-900 max-sm:max-w-full">
-        <header className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
+        <header className="flex shrink-0 items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
           <div>
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
               {editando ? 'Editar curso' : 'Novo curso'}
@@ -60,7 +60,7 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
           </button>
         </header>
 
-        <div className="grid flex-1 grid-cols-1 overflow-y-auto lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:overflow-hidden">
+        <div className="grid min-h-0 flex-1 grid-cols-1 overflow-y-auto lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:overflow-hidden">
           <div className="space-y-6 px-6 py-5 lg:overflow-y-auto">
           <div>
             <label className={labelCls}>Nome do curso</label>
@@ -178,7 +178,7 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
           </div>
         </div>
 
-        <footer className="flex items-center justify-between gap-3 border-t border-slate-200 px-6 py-4 dark:border-slate-800">
+        <footer className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-200 px-6 py-4 dark:border-slate-800">
           {editando ? (
             <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
               <input

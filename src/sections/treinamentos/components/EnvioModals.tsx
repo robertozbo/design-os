@@ -44,14 +44,14 @@ export function EnviarCertificadosModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px]" onClick={onClose} />
       <div className="relative flex max-h-full w-full max-w-lg flex-col rounded-2xl bg-white shadow-2xl dark:bg-slate-900">
-        <header className="border-b border-slate-200 px-6 py-4 dark:border-slate-800">
+        <header className="shrink-0 border-b border-slate-200 px-6 py-4 dark:border-slate-800">
           <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Enviar certificados por e-mail</h3>
           <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
             {treinamento?.norma} — {treinamento?.nome} · concluído em {formatData(turma.dataFim)}
           </p>
         </header>
 
-        <div className="flex-1 overflow-y-auto px-6 py-4">
+        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-4">
           <ul className="divide-y divide-slate-100 dark:divide-slate-800">
             {certificados.map((a) => {
               const t = trabDe(a.trabalhadorId)
@@ -87,7 +87,7 @@ export function EnviarCertificadosModal({
           </p>
         </div>
 
-        <footer className="flex items-center justify-end gap-3 border-t border-slate-200 px-6 py-4 dark:border-slate-800">
+        <footer className="flex shrink-0 items-center justify-end gap-3 border-t border-slate-200 px-6 py-4 dark:border-slate-800">
           <button
             onClick={onClose}
             className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
@@ -134,7 +134,7 @@ export function AgendaGoogleModal({ turma, treinamento, trabalhadores, onClose, 
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px]" onClick={onClose} />
       <div className="relative flex max-h-full w-full max-w-lg flex-col rounded-2xl bg-white shadow-2xl dark:bg-slate-900">
-        <header className="flex items-center gap-3 border-b border-slate-200 px-6 py-4 dark:border-slate-800">
+        <header className="flex shrink-0 items-center gap-3 border-b border-slate-200 px-6 py-4 dark:border-slate-800">
           {/* Marca do Google Agenda */}
           <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white dark:border-slate-700">
             <svg viewBox="0 0 24 24" className="h-5 w-5">
@@ -150,7 +150,7 @@ export function AgendaGoogleModal({ turma, treinamento, trabalhadores, onClose, 
           </div>
         </header>
 
-        <div className="flex-1 space-y-4 overflow-y-auto px-6 py-4">
+        <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-6 py-4">
           <div className="rounded-xl border border-slate-200 p-4 dark:border-slate-700">
             <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
               {treinamento?.norma} · {treinamento?.nome}
@@ -203,7 +203,7 @@ export function AgendaGoogleModal({ turma, treinamento, trabalhadores, onClose, 
           </div>
         </div>
 
-        <footer className="flex items-center justify-end gap-3 border-t border-slate-200 px-6 py-4 dark:border-slate-800">
+        <footer className="flex shrink-0 items-center justify-end gap-3 border-t border-slate-200 px-6 py-4 dark:border-slate-800">
           <button
             onClick={onClose}
             className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
