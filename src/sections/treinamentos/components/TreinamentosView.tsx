@@ -139,7 +139,6 @@ export function TreinamentosView({
       empregador={empregadores.find((e) => e.id === turmaAberta.empregadorId)}
       trabalhadores={trabalhadores}
       onBack={() => setTurmaAbertaId(null)}
-      emModal={tab === 'agenda'}
       onTogglePresenca={onTogglePresenca}
       onToggleAprovacao={onToggleAprovacao}
       onEmitirCertificados={onEmitirCertificados}
@@ -148,8 +147,7 @@ export function TreinamentosView({
     />
   ) : null
 
-  // Na Agenda a turma abre sobre o calendário (modal); nas outras telas ela ocupa a página.
-  if (turmaDetail && tab !== 'agenda') {
+  if (turmaDetail) {
     return <div className="w-full px-4 py-6 sm:px-6 lg:px-8">{turmaDetail}</div>
   }
 
@@ -414,18 +412,6 @@ export function TreinamentosView({
             </>
           )}
         </>
-      )}
-
-      {turmaDetail && tab === 'agenda' && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto p-4 sm:p-8">
-          <div
-            className="fixed inset-0 bg-slate-950/50 backdrop-blur-[2px]"
-            onClick={() => setTurmaAbertaId(null)}
-          />
-          <div className="relative z-10 w-full max-w-4xl rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-800 dark:bg-slate-900">
-            {turmaDetail}
-          </div>
-        </div>
       )}
 
       {(drawerTreinamento || cursoEditando) && (
