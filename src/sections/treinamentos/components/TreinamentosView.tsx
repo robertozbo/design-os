@@ -14,13 +14,13 @@ import { NovaTurmaFlow } from './NovaTurmaFlow'
 import { TurmaDetail } from './TurmaDetail'
 import { AgendaCalendario } from './AgendaCalendario'
 
-export type VisaoTreinamentos = 'treinamentos' | 'agenda' | 'turmas'
+export type VisaoTreinamentos = 'cursos' | 'agenda' | 'turmas'
 
 /** Cada visão é um item independente na sidebar; o rótulo e a explicação abrem a página. */
 const VIEWS: Record<VisaoTreinamentos, { label: string; descricao: string }> = {
-  treinamentos: {
-    label: 'Treinamentos',
-    descricao: 'O que a consultoria oferece — norma, carga horária, conteúdo programático e prazo de reciclagem.',
+  cursos: {
+    label: 'Cursos',
+    descricao: 'O catálogo do que a consultoria oferece — norma, carga horária, conteúdo programático e prazo de reciclagem.',
   },
   agenda: {
     label: 'Agenda',
@@ -50,7 +50,7 @@ export function TreinamentosView({
   onCriarEventoAgenda,
   onSelectTreinamento,
   onSelectTurma,
-  visao = 'treinamentos',
+  visao = 'cursos',
 }: TreinamentosProps & { visao?: VisaoTreinamentos }) {
   const tab = visao
   const [cursoAbertoId, setCursoAbertoId] = useState<string | null>(null)
@@ -123,7 +123,7 @@ export function TreinamentosView({
   }
 
   const primaria: Record<VisaoTreinamentos, { rotulo: string; acao: () => void }> = {
-    treinamentos: { rotulo: 'Novo treinamento', acao: () => setDrawerTreinamento(true) },
+    cursos: { rotulo: 'Novo curso', acao: () => setDrawerTreinamento(true) },
     agenda: { rotulo: 'Agendar turma', acao: () => setNovaTurmaDe({}) },
     turmas: { rotulo: 'Nova turma', acao: () => setNovaTurmaDe({}) },
   }
@@ -173,7 +173,7 @@ export function TreinamentosView({
               <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">{viewAtual.label}</h1>
               <p className="mt-1 max-w-xl text-sm text-slate-600 dark:text-slate-300">{viewAtual.descricao}</p>
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                <span className="tabular-nums">{treinamentos.length}</span> treinamentos ·{' '}
+                <span className="tabular-nums">{treinamentos.length}</span> cursos ·{' '}
                 <span className="tabular-nums">{turmasAtivas}</span> turmas ativas ·{' '}
                 <span className="tabular-nums">{certificadosEmitidos}</span> certificados emitidos
               </p>
@@ -196,12 +196,12 @@ export function TreinamentosView({
               onOpenTurma={abrirTurma}
               onNovaTurma={() => setNovaTurmaDe({})}
             />
-          ) : tab === 'treinamentos' ? (
+          ) : tab === 'cursos' ? (
             treinamentos.length === 0 ? (
               <EmptyState
-                titulo="Nenhum treinamento no catálogo"
-                texto="Cadastre o primeiro treinamento oferecido pela sua consultoria — NR-35, NR-33, CIPA, brigada, primeiros socorros."
-                cta="Novo treinamento"
+                titulo="Nenhum curso no catálogo"
+                texto="Cadastre o primeiro curso oferecido pela sua consultoria — NR-35, NR-33, CIPA, brigada, primeiros socorros."
+                cta="Novo curso"
                 onCta={() => setDrawerTreinamento(true)}
               />
             ) : (
@@ -233,7 +233,7 @@ export function TreinamentosView({
                 <div className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900">
                   {treinamentosFiltrados.length === 0 && (
                     <p className="px-6 py-8 text-center text-sm text-slate-500 dark:text-slate-400">
-                      Nenhum treinamento com esses filtros.
+                      Nenhum curso com esses filtros.
                     </p>
                   )}
                   {treinamentosFiltrados.map((curso) => (
@@ -469,7 +469,7 @@ function CursoDetail({
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
-        Treinamentos
+        Cursos
       </button>
 
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
@@ -552,7 +552,7 @@ function CursoDetail({
 
         <section className="rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
           <h2 className="border-b border-slate-100 px-5 py-3.5 text-sm font-semibold text-slate-900 dark:border-slate-800 dark:text-slate-100">
-            Turmas deste treinamento
+            Turmas deste curso
           </h2>
           {turmasDoCurso.length === 0 ? (
             <p className="px-5 py-8 text-center text-sm text-slate-500 dark:text-slate-400">Nenhuma turma ainda.</p>

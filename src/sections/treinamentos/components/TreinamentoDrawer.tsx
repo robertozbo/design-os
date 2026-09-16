@@ -43,7 +43,7 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
         <header className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
           <div>
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-              {editando ? 'Editar treinamento' : 'Novo treinamento'}
+              {editando ? 'Editar curso' : 'Novo curso'}
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               {editando ? inicial?.nome : 'Curso do catálogo oferecido aos empregadores'}
@@ -63,7 +63,7 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
         <div className="grid flex-1 grid-cols-1 overflow-y-auto lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:overflow-hidden">
           <div className="space-y-6 px-6 py-5 lg:overflow-y-auto">
           <div>
-            <label className={labelCls}>Nome do treinamento</label>
+            <label className={labelCls}>Nome do curso</label>
             <input className={inputCls} value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex. Trabalho em Altura" />
           </div>
 
@@ -114,7 +114,7 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Conteúdo programático</h3>
                 <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                  As disciplinas que compõem a carga horária do treinamento.
+                  As disciplinas que compõem a carga horária do curso.
                 </p>
               </div>
               <span
@@ -216,7 +216,7 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
               }}
               className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {editando ? 'Salvar alterações' : 'Salvar treinamento'}
+              {editando ? 'Salvar alterações' : 'Salvar curso'}
             </button>
           </div>
         </footer>
