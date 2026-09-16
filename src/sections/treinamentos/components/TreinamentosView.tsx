@@ -16,14 +16,24 @@ import { NovaTurmaFlow } from './NovaTurmaFlow'
 import { TurmaDetail } from './TurmaDetail'
 import { EventoDrawer } from './EventoDrawer'
 import { EventoDetail } from './EventoDetail'
+import { AgendaCalendario } from './AgendaCalendario'
 
-export type VisaoTreinamentos = 'cursos' | 'turmas' | 'eventos'
+export type VisaoTreinamentos = 'treinamentos' | 'agenda' | 'turmas'
 
 /** Cada visão é um item independente na sidebar; o rótulo e a explicação abrem a página. */
 const VIEWS: Record<VisaoTreinamentos, { label: string; descricao: string }> = {
-  cursos: { label: 'Cursos', descricao: 'Catálogo de treinamentos oferecidos — norma, carga horária e conteúdo programático.' },
-  turmas: { label: 'Turmas', descricao: 'Execuções de um curso numa empresa — alunos, presença, aprovação e certificados.' },
-  eventos: { label: 'Eventos', descricao: 'Ocasiões na empresa (SIPAT, integração, campanha) que agrupam as turmas.' },
+  treinamentos: {
+    label: 'Treinamentos',
+    descricao: 'O que a consultoria oferece — norma, carga horária, conteúdo programático e prazo de reciclagem.',
+  },
+  agenda: {
+    label: 'Agenda',
+    descricao: 'Quando cada treinamento acontece — turmas no calendário e os eventos (SIPAT, integração) que as agrupam.',
+  },
+  turmas: {
+    label: 'Turmas',
+    descricao: 'Execuções de um treinamento numa empresa — alunos, presença, aprovação e certificados.',
+  },
 }
 
 const STATUS_EVENTO_ORDEM: Record<Evento['status'], number> = { em_andamento: 0, agendado: 1, concluido: 2 }
@@ -49,7 +59,7 @@ export function TreinamentosView({
   onSelectTreinamento,
   onSelectTurma,
   onSelectEvento,
-  visao = 'cursos',
+  visao = 'treinamentos',
 }: TreinamentosProps & { visao?: VisaoTreinamentos }) {
   const tab = visao
   const [cursoAbertoId, setCursoAbertoId] = useState<string | null>(null)
@@ -60,6 +70,8 @@ export function TreinamentosView({
   const [drawerEvento, setDrawerEvento] = useState(false)
   const [cursoEditando, setCursoEditando] = useState<Treinamento | null>(null)
   const [novaTurmaDe, setNovaTurmaDe] = useState<NovaTurmaAbertura>(null)
+
+  const [modoAgenda, setModoAgenda] = useState<'calendario' | 'eventos'>('calendario')
 
   const [filtroEmpregador, setFiltroEmpregador] = useState('')
   const [filtroCurso, setFiltroCurso] = useState('')
@@ -102,9 +114,14 @@ export function TreinamentosView({
   }
 
   const primaria: Record<VisaoTreinamentos, { rotulo: string; acao: () => void }> = {
-    cursos: { rotulo: 'Novo treinamento', acao: () => setDrawerTreinamento(true) },
+    treinamentos: { rotulo: 'Novo treinamento', acao: () => setDrawerTreinamento(true) },
+    agenda: { rotulo: 'Agendar turma', acao: () => setNovaTurmaDe({}) },
     turmas: { rotulo: 'Nova turma', acao: () => setNovaTurmaDe({}) },
-    eventos: { rotulo: 'Novo evento', acao: () => setDrawerEvento(true) },
+  }
+
+  const abrirEvento = (id: string) => {
+    setEventoAbertoId(id)
+    onSelectEvento?.(id)
   }
 
   const selectCls =
@@ -162,22 +179,64 @@ export function TreinamentosView({
               <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">{viewAtual.label}</h1>
               <p className="mt-1 max-w-xl text-sm text-slate-600 dark:text-slate-300">{viewAtual.descricao}</p>
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                <span className="tabular-nums">{treinamentos.length}</span> cursos ·{' '}
+                <span className="tabular-nums">{treinamentos.length}</span> treinamentos ·{' '}
                 <span className="tabular-nums">{turmasAtivas}</span> turmas ativas ·{' '}
                 <span className="tabular-nums">{eventosAbertos}</span> eventos abertos ·{' '}
                 <span className="tabular-nums">{certificadosEmitidos}</span> certificados emitidos
               </p>
             </div>
-            <button
-              onClick={primaria[tab].acao}
-              className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-700"
-            >
-              {primaria[tab].rotulo}
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              {tab === 'agenda' && (
+                <button
+                  onClick={() => setDrawerEvento(true)}
+                  className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                >
+                  Novo evento
+                </button>
+              )}
+              <button
+                onClick={primaria[tab].acao}
+                className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-700"
+              >
+                {primaria[tab].rotulo}
+              </button>
+            </div>
           </header>
 
-          {tab === 'eventos' ? (
-            eventos.length === 0 ? (
+          {tab === 'agenda' ? (
+            <>
+              <div className="mb-4 inline-flex rounded-lg border border-slate-200 bg-white p-0.5 dark:border-slate-700 dark:bg-slate-900">
+                {(
+                  [
+                    ['calendario', 'Calendário'],
+                    ['eventos', 'Eventos'],
+                  ] as const
+                ).map(([modo, label]) => (
+                  <button
+                    key={modo}
+                    onClick={() => setModoAgenda(modo)}
+                    className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                      modoAgenda === modo
+                        ? 'bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300'
+                        : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              {modoAgenda === 'calendario' ? (
+                <AgendaCalendario
+                  turmas={turmas}
+                  eventos={eventos}
+                  treinamentos={treinamentos}
+                  empregadores={empregadores}
+                  onOpenTurma={abrirTurma}
+                  onOpenEvento={abrirEvento}
+                  onNovaTurma={() => setNovaTurmaDe({})}
+                />
+              ) : eventos.length === 0 ? (
               <EmptyState
                 titulo="Nenhum evento criado"
                 texto="Crie a ocasião na empresa — SIPAT, integração, campanha — e monte as turmas dentro dela."
@@ -244,12 +303,13 @@ export function TreinamentosView({
                   )
                 })}
               </div>
-            )
-          ) : tab === 'cursos' ? (
+              )}
+            </>
+          ) : tab === 'treinamentos' ? (
             treinamentos.length === 0 ? (
               <EmptyState
-                titulo="Nenhum curso no catálogo"
-                texto="Cadastre o primeiro treinamento oferecido pela sua consultoria."
+                titulo="Nenhum treinamento no catálogo"
+                texto="Cadastre o primeiro treinamento oferecido pela sua consultoria — NR-35, NR-33, CIPA, brigada, primeiros socorros."
                 cta="Novo treinamento"
                 onCta={() => setDrawerTreinamento(true)}
               />
@@ -500,7 +560,7 @@ function CursoDetail({
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
-        Cursos
+        Treinamentos
       </button>
 
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
@@ -583,7 +643,7 @@ function CursoDetail({
 
         <section className="rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
           <h2 className="border-b border-slate-100 px-5 py-3.5 text-sm font-semibold text-slate-900 dark:border-slate-800 dark:text-slate-100">
-            Turmas deste curso
+            Turmas deste treinamento
           </h2>
           {turmasDoCurso.length === 0 ? (
             <p className="px-5 py-8 text-center text-sm text-slate-500 dark:text-slate-400">Nenhuma turma ainda.</p>

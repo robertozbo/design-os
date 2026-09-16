@@ -10,7 +10,7 @@ import type {
 } from '@/../product/sections/treinamentos/types'
 
 /**
- * Estado em memória compartilhado pelas três telas (Cursos, Turmas, Eventos).
+ * Estado em memória compartilhado pelas três telas (Treinamentos, Agenda, Turmas).
  * Cada tela é um item independente na sidebar; o que muda entre elas é só a `visao`.
  */
 export function useTreinamentosPreview(): TreinamentosProps {
