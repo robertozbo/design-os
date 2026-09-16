@@ -2,7 +2,6 @@ import { useState } from 'react'
 import data from '@/../product/sections/treinamentos/data.json'
 import type {
   Empregador,
-  Evento,
   Trabalhador,
   Treinamento,
   TreinamentosProps,
@@ -16,7 +15,6 @@ import type {
 export function useTreinamentosPreview(): TreinamentosProps {
   const [treinamentos, setTreinamentos] = useState<Treinamento[]>(data.treinamentos as Treinamento[])
   const [turmas, setTurmas] = useState<Turma[]>(data.turmas as Turma[])
-  const [eventos, setEventos] = useState<Evento[]>(data.eventos as Evento[])
 
   const patchAluno = (turmaId: string, trabalhadorId: string, patch: Partial<Turma['alunos'][number]>) =>
     setTurmas((prev) =>
@@ -33,22 +31,18 @@ export function useTreinamentosPreview(): TreinamentosProps {
   return {
     treinamentos,
     turmas,
-    eventos,
     empregadores: data.empregadores as Empregador[],
     trabalhadores: data.trabalhadores as Trabalhador[],
     onCreateTreinamento: (input) =>
       setTreinamentos((prev) => [...prev, { ...input, id: `trein-${prev.length + 1}` }]),
     onUpdateTreinamento: (id, patch) =>
       setTreinamentos((prev) => prev.map((t) => (t.id === id ? { ...t, ...patch } : t))),
-    onCreateEvento: (input) =>
-      setEventos((prev) => [{ ...input, id: `ev-${prev.length + 1}`, status: 'agendado' }, ...prev]),
     onCreateTurma: (input) =>
       setTurmas((prev) => [
         {
           id: `turma-${prev.length + 1}`,
           treinamentoId: input.treinamentoId,
           empregadorId: input.empregadorId,
-          eventoId: input.eventoId,
           tipo: input.tipo,
           dataInicio: input.dataInicio,
           dataFim: input.dataFim,
@@ -97,6 +91,5 @@ export function useTreinamentosPreview(): TreinamentosProps {
       setTurmas((prev) => prev.map((t) => (t.id === turmaId ? { ...t, agendaGoogleSincronizada: true } : t))),
     onSelectTreinamento: (id) => console.log('Abrir curso', id),
     onSelectTurma: (id) => console.log('Abrir turma', id),
-    onSelectEvento: (id) => console.log('Abrir evento', id),
   }
 }

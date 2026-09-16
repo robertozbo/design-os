@@ -1,4 +1,4 @@
-import type { Modalidade, StatusEvento, StatusTurma, TipoTurma } from '@/../product/sections/treinamentos/types'
+import type { Modalidade, StatusTurma, TipoTurma } from '@/../product/sections/treinamentos/types'
 
 export const MODALIDADE_LABEL: Record<Modalidade, string> = {
   presencial: 'Presencial',
@@ -28,18 +28,6 @@ export const STATUS_TURMA_CLASSES: Record<StatusTurma, string> = {
     'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
   certificados_emitidos:
     'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300',
-}
-
-export const STATUS_EVENTO_LABEL: Record<StatusEvento, string> = {
-  agendado: 'Agendado',
-  em_andamento: 'Em andamento',
-  concluido: 'Concluído',
-}
-
-export const STATUS_EVENTO_CLASSES: Record<StatusEvento, string> = {
-  agendado: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300',
-  em_andamento: 'bg-teal-100 text-teal-700 dark:bg-teal-950 dark:text-teal-300',
-  concluido: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300',
 }
 
 export function formatHoras(horas: number): string {

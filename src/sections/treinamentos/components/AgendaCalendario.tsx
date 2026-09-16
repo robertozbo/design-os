@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
-import type { Empregador, Evento, Treinamento, Turma } from '@/../product/sections/treinamentos/types'
-import { STATUS_TURMA_CLASSES, STATUS_TURMA_LABEL, formatPeriodo } from './helpers'
+import type { Empregador, Treinamento, Turma } from '@/../product/sections/treinamentos/types'
+import { STATUS_TURMA_CLASSES, STATUS_TURMA_LABEL } from './helpers'
 
 const DIAS_SEMANA = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
 const MESES = [
@@ -30,22 +30,18 @@ function mesInicial(turmas: Turma[]): Date {
 
 export interface AgendaCalendarioProps {
   turmas: Turma[]
-  eventos: Evento[]
   treinamentos: Treinamento[]
   empregadores: Empregador[]
   onOpenTurma: (id: string) => void
-  onOpenEvento: (id: string) => void
   onNovaTurma: () => void
 }
 
-/** Visão calendário da Agenda: turmas por dia, com a faixa do evento que as agrupa. */
+/** Visão calendário da Agenda: as turmas de cada empresa, dia a dia. */
 export function AgendaCalendario({
   turmas,
-  eventos,
   treinamentos,
   empregadores,
   onOpenTurma,
-  onOpenEvento,
   onNovaTurma,
 }: AgendaCalendarioProps) {
   const [mesRef, setMesRef] = useState(() => mesInicial(turmas))
@@ -72,9 +68,6 @@ export function AgendaCalendario({
   const mesPrefixo = `${mesRef.getFullYear()}-${String(mesRef.getMonth() + 1).padStart(2, '0')}`
   const turmasDoMes = turmas.filter(
     (t) => t.dataInicio.slice(0, 7) <= mesPrefixo && mesPrefixo <= t.dataFim.slice(0, 7),
-  )
-  const eventosDoMes = eventos.filter(
-    (e) => e.dataInicio.slice(0, 7) <= mesPrefixo && mesPrefixo <= e.dataFim.slice(0, 7),
   )
   const alunosDoMes = new Set(turmasDoMes.flatMap((t) => t.alunos.map((a) => a.trabalhadorId))).size
 
@@ -109,8 +102,7 @@ export function AgendaCalendario({
         </div>
         <p className="text-xs text-slate-500 dark:text-slate-400">
           <span className="tabular-nums">{turmasDoMes.length}</span> turma{turmasDoMes.length === 1 ? '' : 's'} ·{' '}
-          <span className="tabular-nums">{alunosDoMes}</span> alunos ·{' '}
-          <span className="tabular-nums">{eventosDoMes.length}</span> evento{eventosDoMes.length === 1 ? '' : 's'}
+          <span className="tabular-nums">{alunosDoMes}</span> alunos
         </p>
       </div>
 
@@ -132,7 +124,6 @@ export function AgendaCalendario({
             {semana.map((dia) => {
               const diaIso = iso(dia)
               const doMes = dia.getMonth() === mesRef.getMonth()
-              const eventosDoDia = eventos.filter((e) => cobre(e, diaIso))
               const turmasDoDia = turmas.filter((t) => cobre(t, diaIso))
               return (
                 <div
@@ -156,16 +147,6 @@ export function AgendaCalendario({
                   </div>
 
                   <div className="space-y-1">
-                    {eventosDoDia.map((ev) => (
-                      <button
-                        key={ev.id}
-                        onClick={() => onOpenEvento(ev.id)}
-                        title={`${ev.nome} · ${formatPeriodo(ev)}`}
-                        className="block w-full truncate rounded border-l-2 border-amber-400 bg-amber-50 px-1.5 py-0.5 text-left text-[11px] font-medium text-amber-800 hover:bg-amber-100 dark:bg-amber-950/50 dark:text-amber-300 dark:hover:bg-amber-950"
-                      >
-                        {ev.nome}
-                      </button>
-                    ))}
                     {turmasDoDia.map((t) => {
                       const curso = treinamentos.find((c) => c.id === t.treinamentoId)
                       const emp = empregadores.find((e) => e.id === t.empregadorId)
@@ -190,9 +171,6 @@ export function AgendaCalendario({
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-500 dark:text-slate-400">
-        <span className="inline-flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-sm border-l-2 border-amber-400 bg-amber-100 dark:bg-amber-950" /> Evento
-        </span>
         {Object.entries(STATUS_TURMA_LABEL).map(([k, label]) => (
           <span key={k} className="inline-flex items-center gap-1.5">
             <span className={`h-2.5 w-2.5 rounded-sm ${STATUS_TURMA_CLASSES[k as keyof typeof STATUS_TURMA_LABEL]}`} />
