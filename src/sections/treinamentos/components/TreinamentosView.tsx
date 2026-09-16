@@ -314,7 +314,7 @@ export function TreinamentosView({
                 onCta={() => setDrawerTreinamento(true)}
               />
             ) : (
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900">
                 {treinamentos.map((curso) => (
                   <button
                     key={curso.id}
@@ -322,39 +322,38 @@ export function TreinamentosView({
                       setCursoAbertoId(curso.id)
                       onSelectTreinamento?.(curso.id)
                     }}
-                    className={`group rounded-xl border border-slate-200 bg-white p-4 text-left transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900 ${
+                    className={`group flex w-full flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3 text-left hover:bg-slate-50 dark:hover:bg-slate-800/50 ${
                       !curso.ativo ? 'opacity-55' : ''
                     }`}
                   >
-                    <div className="mb-2 flex items-center justify-between">
-                      <span className="rounded-md bg-teal-50 px-2 py-0.5 font-mono text-xs font-semibold text-teal-700 dark:bg-teal-950 dark:text-teal-300">
-                        {curso.norma}
-                      </span>
-                      {!curso.ativo && (
+                    <span className="w-16 shrink-0 rounded-md bg-teal-50 px-2 py-0.5 text-center font-mono text-xs font-semibold text-teal-700 dark:bg-teal-950 dark:text-teal-300">
+                      {curso.norma}
+                    </span>
+                    <span className="min-w-0 flex-1 truncate font-medium text-slate-900 group-hover:text-teal-700 dark:text-slate-100 dark:group-hover:text-teal-300">
+                      {curso.nome}
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-xs text-slate-500 tabular-nums dark:text-slate-400">
+                      <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <circle cx="12" cy="12" r="9" />
+                        <path strokeLinecap="round" d="M12 7v5l3 2" />
+                      </svg>
+                      {formatHoras(curso.cargaHorariaHoras)}
+                    </span>
+                    <span className="w-24 text-xs text-slate-500 dark:text-slate-400">{MODALIDADE_LABEL[curso.modalidade]}</span>
+                    <span className="w-24 text-xs text-slate-500 tabular-nums dark:text-slate-400">
+                      {curso.conteudoProgramatico.length} disciplina{curso.conteudoProgramatico.length === 1 ? '' : 's'}
+                    </span>
+                    <span className="w-32 shrink-0 text-right">
+                      {!curso.ativo ? (
                         <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400">
                           Inativo
                         </span>
-                      )}
-                    </div>
-                    <h3 className="font-semibold text-slate-900 group-hover:text-teal-700 dark:text-slate-100 dark:group-hover:text-teal-300">
-                      {curso.nome}
-                    </h3>
-                    <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
-                      <span className="inline-flex items-center gap-1 tabular-nums">
-                        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <circle cx="12" cy="12" r="9" />
-                          <path strokeLinecap="round" d="M12 7v5l3 2" />
-                        </svg>
-                        {formatHoras(curso.cargaHorariaHoras)}
-                      </span>
-                      <span>{MODALIDADE_LABEL[curso.modalidade]}</span>
-                      <span className="tabular-nums">{curso.conteudoProgramatico.length} disciplinas</span>
-                      {curso.validadeMeses != null && (
-                        <span className="rounded-full bg-amber-50 px-2 py-0.5 font-medium text-amber-700 tabular-nums dark:bg-amber-950/60 dark:text-amber-300">
+                      ) : curso.validadeMeses != null ? (
+                        <span className="rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700 tabular-nums dark:bg-amber-950/60 dark:text-amber-300">
                           Reciclagem {curso.validadeMeses}m
                         </span>
-                      )}
-                    </div>
+                      ) : null}
+                    </span>
                   </button>
                 ))}
               </div>
