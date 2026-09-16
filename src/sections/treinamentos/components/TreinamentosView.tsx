@@ -94,6 +94,17 @@ export function TreinamentosView({
     [turmas, filtroEmpregador, filtroCurso, filtroStatus],
   )
 
+  /** Catálogo em ordem decrescente de norma (NR-35 → NR-1); sem número vai para o fim. */
+  const treinamentosOrdenados = useMemo(() => {
+    const numeroNorma = (norma: string) => {
+      const n = Number(norma.replace(/\D/g, ''))
+      return Number.isFinite(n) && norma.trim() !== '' ? n : -1
+    }
+    return [...treinamentos].sort(
+      (a, b) => numeroNorma(b.norma) - numeroNorma(a.norma) || a.nome.localeCompare(b.nome),
+    )
+  }, [treinamentos])
+
   const eventosOrdenados = useMemo(
     () =>
       [...eventos].sort(
@@ -315,7 +326,7 @@ export function TreinamentosView({
               />
             ) : (
               <div className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900">
-                {treinamentos.map((curso) => (
+                {treinamentosOrdenados.map((curso) => (
                   <button
                     key={curso.id}
                     onClick={() => {
