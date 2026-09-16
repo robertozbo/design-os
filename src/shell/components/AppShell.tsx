@@ -45,12 +45,12 @@ export function AppShell({
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <div className="flex h-full min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="flex h-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <div className="md:hidden fixed top-0 inset-x-0 z-40 flex items-center justify-between h-14 px-4 border-b border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800">
         <button
           onClick={() => setMobileOpen(true)}
           className="p-2 -ml-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-          aria-label="Open menu"
+          aria-label="Abrir menu"
         >
           <Menu className="w-5 h-5" />
         </button>
