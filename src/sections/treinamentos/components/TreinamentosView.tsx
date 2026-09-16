@@ -73,6 +73,10 @@ export function TreinamentosView({
 
   const [modoAgenda, setModoAgenda] = useState<'calendario' | 'eventos'>('calendario')
 
+  const [filtroNorma, setFiltroNorma] = useState('')
+  const [filtroModalidade, setFiltroModalidade] = useState('')
+  const [filtroAtivo, setFiltroAtivo] = useState('')
+
   const [filtroEmpregador, setFiltroEmpregador] = useState('')
   const [filtroCurso, setFiltroCurso] = useState('')
   const [filtroStatus, setFiltroStatus] = useState('')
@@ -104,6 +108,23 @@ export function TreinamentosView({
       (a, b) => numeroNorma(b.norma) - numeroNorma(a.norma) || a.nome.localeCompare(b.nome),
     )
   }, [treinamentos])
+
+  /** Normas presentes no catálogo, na mesma ordem decrescente da lista. */
+  const normas = useMemo(
+    () => [...new Set(treinamentosOrdenados.map((t) => t.norma))],
+    [treinamentosOrdenados],
+  )
+
+  const treinamentosFiltrados = useMemo(
+    () =>
+      treinamentosOrdenados.filter(
+        (t) =>
+          (!filtroNorma || t.norma === filtroNorma) &&
+          (!filtroModalidade || t.modalidade === filtroModalidade) &&
+          (!filtroAtivo || String(t.ativo) === filtroAtivo),
+      ),
+    [treinamentosOrdenados, filtroNorma, filtroModalidade, filtroAtivo],
+  )
 
   const eventosOrdenados = useMemo(
     () =>
@@ -325,8 +346,38 @@ export function TreinamentosView({
                 onCta={() => setDrawerTreinamento(true)}
               />
             ) : (
-              <div className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900">
-                {treinamentosOrdenados.map((curso) => (
+              <>
+                <div className="mb-4 flex flex-wrap gap-2">
+                  <select className={selectCls} value={filtroNorma} onChange={(e) => setFiltroNorma(e.target.value)}>
+                    <option value="">Todas as normas</option>
+                    {normas.map((n) => (
+                      <option key={n} value={n}>{n}</option>
+                    ))}
+                  </select>
+                  <select
+                    className={selectCls}
+                    value={filtroModalidade}
+                    onChange={(e) => setFiltroModalidade(e.target.value)}
+                  >
+                    <option value="">Todas as modalidades</option>
+                    {Object.entries(MODALIDADE_LABEL).map(([k, v]) => (
+                      <option key={k} value={k}>{v}</option>
+                    ))}
+                  </select>
+                  <select className={selectCls} value={filtroAtivo} onChange={(e) => setFiltroAtivo(e.target.value)}>
+                    <option value="">Ativos e inativos</option>
+                    <option value="true">Só ativos</option>
+                    <option value="false">Só inativos</option>
+                  </select>
+                </div>
+
+                <div className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900">
+                  {treinamentosFiltrados.length === 0 && (
+                    <p className="px-6 py-8 text-center text-sm text-slate-500 dark:text-slate-400">
+                      Nenhum treinamento com esses filtros.
+                    </p>
+                  )}
+                  {treinamentosFiltrados.map((curso) => (
                   <button
                     key={curso.id}
                     onClick={() => {
@@ -365,9 +416,10 @@ export function TreinamentosView({
                         </span>
                       ) : null}
                     </span>
-                  </button>
-                ))}
-              </div>
+                    </button>
+                  ))}
+                </div>
+              </>
             )
           ) : turmas.length === 0 ? (
             <EmptyState
