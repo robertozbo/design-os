@@ -1,5 +1,5 @@
 import { useEffect, useState, type ComponentType, type ReactNode } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { Plus, Search } from 'lucide-react'
 import { MobileFrame } from './MobileFrame'
 import {
@@ -70,6 +70,10 @@ const SUB_PAGE_CONFIG: Record<string, SubPageConfig> = {
   medicacao: {
     title: 'Medicação',
     subtitle: 'Prescrição, doses do dia e adesão',
+  },
+  glp1: {
+    title: 'GLP-1',
+    subtitle: 'Doses, aplicações e evolução de peso',
   },
   exames: {
     title: 'Exames',
@@ -173,7 +177,7 @@ const GRUPOS: Grupo[] = [
     label: 'Início',
     emoji: '🏠',
     hint: 'Dashboard e fluxos diários',
-    sectionIds: ['inicio', 'treinos', 'atividades', 'nutricao', 'minha-saude'],
+    sectionIds: ['inicio', 'treinos', 'atividades', 'nutricao', 'glp1', 'minha-saude'],
   },
   {
     label: 'Métricas',
@@ -297,6 +301,10 @@ function Coluna({ grupo, sectionIds }: { grupo: Grupo; sectionIds: string[] }) {
 
 export function MobileSectionPage() {
   const { sectionId } = useParams<{ sectionId: string }>()
+  // ?design=<ComponentName> escolhe entre os screen designs da section
+  // (sem isso só o primeiro em ordem alfabética é alcançável).
+  const [searchParams] = useSearchParams()
+  const designParam = searchParams.get('design')
   const [Component, setComponent] = useState<ComponentType | null>(null)
   const [loading, setLoading] = useState(true)
   const [overlay, setOverlay] = useState<ReactNode | null>(null)
@@ -314,12 +322,14 @@ export function MobileSectionPage() {
     if (!sectionId) return
     setLoading(true)
     const data = loadMobileSectionData(sectionId)
-    const first = data.screenDesigns[0]
-    if (!first) {
+    const escolhido =
+      (designParam && data.screenDesigns.find((d) => d.componentName === designParam)) ||
+      data.screenDesigns[0]
+    if (!escolhido) {
       setLoading(false)
       return
     }
-    const loader = loadMobileScreenDesignComponent(sectionId, first.componentName)
+    const loader = loadMobileScreenDesignComponent(sectionId, escolhido.componentName)
     if (!loader) {
       setLoading(false)
       return
@@ -328,7 +338,7 @@ export function MobileSectionPage() {
       setComponent(() => mod.default)
       setLoading(false)
     })
-  }, [sectionId])
+  }, [sectionId, designParam])
 
   if (!sectionId) return <div className="p-8">Section não especificada</div>
 
@@ -352,6 +362,7 @@ export function MobileSectionPage() {
     'minha-saude': 'mais',
     treinos: 'inicio',
     medicacao: 'inicio',
+    glp1: 'inicio',
     perfil: 'mais',
     profissionais: 'mais',
     plano: 'mais',

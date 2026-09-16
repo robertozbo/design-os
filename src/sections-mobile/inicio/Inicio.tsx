@@ -39,6 +39,12 @@ export default function InicioPreview() {
             window.location.href = '/mobile/sections/medicacao'
           }}
           onMarcarDose={(id) => console.log('Marcar dose:', id)}
+          onGlp1Click={() => {
+            window.location.href = '/mobile/sections/glp1'
+          }}
+          onNovaDoseGlp1={() => {
+            window.location.href = '/mobile/sections/glp1'
+          }}
         />
       </div>
     </>

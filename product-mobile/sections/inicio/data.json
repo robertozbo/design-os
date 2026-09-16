@@ -332,9 +332,9 @@
     {
       "id": "weight",
       "label": "Peso",
-      "valor": "83",
+      "valor": "87,6",
       "unidade": "kg",
-      "delta": "↓ -0,3 kg",
+      "delta": "↓ -0,4 kg",
       "tendencia": "down",
       "iconeNome": "Scale",
       "iconeCor": "teal-400",
@@ -431,5 +431,20 @@
       "iconeNome": "Dumbbell",
       "rota": "/treinos"
     }
-  ]
+  ],
+
+  "glp1": {
+    "configurado": true,
+    "medicamentoNome": "Mounjaro®",
+    "dose": "5 mg",
+    "proximaDoseLabel": "Hoje, 16/09 · 20:00",
+    "proximaDoseEmDias": 0,
+    "atrasada": false,
+    "pesoAtualKg": 87.6,
+    "perdidoKg": 8.8,
+    "perdidoPct": 9.1,
+    "faltaKg": 9.6,
+    "semanas": 12,
+    "sparkline": [91.2, 90.4, 89.8, 89.1, 88.6, 88.0, 87.6]
+  }
 }

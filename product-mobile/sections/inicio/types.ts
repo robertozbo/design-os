@@ -185,6 +185,29 @@ export interface MedicacaoHojePreview {
   adesaoSemana: number
 }
 
+/**
+ * Preview do módulo GLP-1 — só aparece pra quem usa análogo de GLP-1.
+ * Junta medicação (próxima dose) e evolução de peso num card só.
+ */
+export interface Glp1Preview {
+  /** false = elegível mas ainda não configurou → card-convite. */
+  configurado: boolean
+  medicamentoNome: string
+  dose: string | null
+  /** "Hoje, 16/09 · 20:00" */
+  proximaDoseLabel: string
+  proximaDoseEmDias: number
+  atrasada: boolean
+  pesoAtualKg: number
+  perdidoKg: number
+  perdidoPct: number
+  faltaKg: number
+  /** Semanas de tratamento. */
+  semanas: number
+  /** Últimos pesos (7 pontos) pro sparkline. */
+  sparkline: number[]
+}
+
 export interface InicioData {
   usuario: UsuarioContexto
   novidades: Novidade[]
@@ -196,6 +219,8 @@ export interface InicioData {
   miniStats: MiniStat[]
   semanaAtiva: SemanaAtiva
   quickActions: QuickAction[]
+  /** Aparece SÓ pra quem usa GLP-1 (ou é elegível e ainda não configurou). */
+  glp1: Glp1Preview | null
 }
 
 export interface InicioProps {
@@ -211,5 +236,7 @@ export interface InicioProps {
   onStreakClick?: () => void
   onMedicacaoClick?: () => void
   onMarcarDose?: (doseId: string) => void
+  onGlp1Click?: () => void
+  onNovaDoseGlp1?: () => void
   onRefresh?: () => Promise<void>
 }

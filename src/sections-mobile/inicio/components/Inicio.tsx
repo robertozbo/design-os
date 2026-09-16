@@ -8,6 +8,7 @@ import { AnelCalorias } from './AnelCalorias'
 import { MiniStatStrip } from './MiniStatStrip'
 import { SemanaAtivaCard } from './SemanaAtivaCard'
 import { QuickActions } from './QuickActions'
+import { Glp1Mini } from './Glp1Mini'
 
 export function Inicio({
   data,
@@ -22,6 +23,8 @@ export function Inicio({
   onStreakClick,
   onMedicacaoClick,
   onMarcarDose,
+  onGlp1Click,
+  onNovaDoseGlp1,
 }: InicioProps) {
   const novidadesAtivas = data.novidades.filter((n) => !n.dispensada)
 
@@ -57,6 +60,10 @@ export function Inicio({
       <SemanaAtivaCard data={data.semanaAtiva} onClick={onSemanaClick} />
 
       <QuickActions actions={data.quickActions} onActionClick={onQuickActionClick} />
+
+      {data.glp1 && (
+        <Glp1Mini glp1={data.glp1} onClick={onGlp1Click} onNovaDose={onNovaDoseGlp1} />
+      )}
     </div>
   )
 }
