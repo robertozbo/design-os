@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { Empregador, Treinamento, Turma } from '@/../product/sections/treinamentos/types'
 import { STATUS_TURMA_CLASSES, STATUS_TURMA_LABEL } from './helpers'
+import { DiaModal } from './DiaModal'
 
 const DIAS_SEMANA = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
 const MESES = [
@@ -45,6 +46,7 @@ export function AgendaCalendario({
   onNovaTurma,
 }: AgendaCalendarioProps) {
   const [mesRef, setMesRef] = useState(() => mesInicial(turmas))
+  const [diaAberto, setDiaAberto] = useState<string | null>(null)
   const hoje = iso(new Date())
 
   const semanas = useMemo(() => {
@@ -128,7 +130,17 @@ export function AgendaCalendario({
               return (
                 <div
                   key={diaIso}
-                  className={`min-h-[6.5rem] border-r border-slate-100 p-1.5 last:border-r-0 dark:border-slate-800 ${
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Ver o dia ${dia.getDate()}`}
+                  onClick={() => setDiaAberto(diaIso)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setDiaAberto(diaIso)
+                    }
+                  }}
+                  className={`min-h-[6.5rem] cursor-pointer border-r border-slate-100 p-1.5 last:border-r-0 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-teal-500 dark:border-slate-800 dark:hover:bg-slate-800/40 ${
                     doMes ? '' : 'bg-slate-50/60 dark:bg-slate-950/40'
                   }`}
                 >
@@ -153,7 +165,11 @@ export function AgendaCalendario({
                       return (
                         <button
                           key={t.id}
-                          onClick={() => onOpenTurma(t.id)}
+                          onClick={(e) => {
+                            // O chip vai direto para a turma; a célula é que abre o dia.
+                            e.stopPropagation()
+                            onOpenTurma(t.id)
+                          }}
                           title={`${curso?.norma ?? ''} ${curso?.nome ?? ''} · ${emp?.razaoSocial ?? ''} · ${STATUS_TURMA_LABEL[t.status]}`}
                           className={`block w-full truncate rounded px-1.5 py-0.5 text-left text-[11px] font-medium hover:brightness-95 ${STATUS_TURMA_CLASSES[t.status]}`}
                         >
@@ -184,6 +200,18 @@ export function AgendaCalendario({
           + Agendar turma
         </button>
       </div>
+
+      {diaAberto && (
+        <DiaModal
+          diaIso={diaAberto}
+          turmas={turmas.filter((t) => cobre(t, diaAberto))}
+          treinamentos={treinamentos}
+          empregadores={empregadores}
+          onOpenTurma={onOpenTurma}
+          onNovaTurma={onNovaTurma}
+          onClose={() => setDiaAberto(null)}
+        />
+      )}
     </div>
   )
 }
