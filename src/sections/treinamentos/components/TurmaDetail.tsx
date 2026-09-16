@@ -22,6 +22,8 @@ interface TurmaDetailProps {
   empregador?: Empregador
   trabalhadores: Trabalhador[]
   onBack: () => void
+  /** Quando true o detalhe é renderizado dentro de um modal — o voltar vira "Fechar" */
+  emModal?: boolean
   onTogglePresenca?: (turmaId: string, trabalhadorId: string, presente: boolean) => void
   onToggleAprovacao?: (turmaId: string, trabalhadorId: string, aprovado: boolean) => void
   onEmitirCertificados?: (turmaId: string) => void
@@ -35,6 +37,7 @@ export function TurmaDetail({
   empregador,
   trabalhadores,
   onBack,
+  emModal,
   onTogglePresenca,
   onToggleAprovacao,
   onEmitirCertificados,
@@ -84,9 +87,13 @@ export function TurmaDetail({
         className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
       >
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          {emModal ? (
+            <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
+          ) : (
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          )}
         </svg>
-        Turmas
+        {emModal ? 'Fechar' : 'Turmas'}
       </button>
 
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
