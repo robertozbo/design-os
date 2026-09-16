@@ -445,6 +445,7 @@
     "perdidoPct": 9.1,
     "faltaKg": 9.6,
     "semanas": 12,
+    "dosesAplicadas": 11,
     "sparkline": [91.2, 90.4, 89.8, 89.1, 88.6, 88.0, 87.6]
   }
 }

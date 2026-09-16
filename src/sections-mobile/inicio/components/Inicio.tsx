@@ -24,7 +24,6 @@ export function Inicio({
   onMedicacaoClick,
   onMarcarDose,
   onGlp1Click,
-  onNovaDoseGlp1,
 }: InicioProps) {
   const novidadesAtivas = data.novidades.filter((n) => !n.dispensada)
 
@@ -62,7 +61,7 @@ export function Inicio({
       <QuickActions actions={data.quickActions} onActionClick={onQuickActionClick} />
 
       {data.glp1 && (
-        <Glp1Mini glp1={data.glp1} onClick={onGlp1Click} onNovaDose={onNovaDoseGlp1} />
+        <Glp1Mini glp1={data.glp1} onClick={onGlp1Click} />
       )}
     </div>
   )

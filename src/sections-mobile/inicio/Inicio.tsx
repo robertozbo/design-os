@@ -42,9 +42,6 @@ export default function InicioPreview() {
           onGlp1Click={() => {
             window.location.href = '/mobile/sections/glp1'
           }}
-          onNovaDoseGlp1={() => {
-            window.location.href = '/mobile/sections/glp1'
-          }}
         />
       </div>
     </>

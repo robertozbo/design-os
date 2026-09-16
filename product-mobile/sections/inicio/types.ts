@@ -204,6 +204,8 @@ export interface Glp1Preview {
   faltaKg: number
   /** Semanas de tratamento. */
   semanas: number
+  /** Total de aplicações registradas — 0 muda o CTA pra "Iniciar". */
+  dosesAplicadas: number
   /** Últimos pesos (7 pontos) pro sparkline. */
   sparkline: number[]
 }
@@ -237,6 +239,5 @@ export interface InicioProps {
   onMedicacaoClick?: () => void
   onMarcarDose?: (doseId: string) => void
   onGlp1Click?: () => void
-  onNovaDoseGlp1?: () => void
   onRefresh?: () => Promise<void>
 }

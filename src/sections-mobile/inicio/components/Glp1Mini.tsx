@@ -4,12 +4,11 @@ import type { Glp1Preview } from '@/../product-mobile/sections/inicio/types'
 interface Props {
   glp1: Glp1Preview
   onClick?: () => void
-  onNovaDose?: () => void
 }
 
 const n1 = (v: number) => v.toFixed(1).replace('.', ',')
 
-export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
+export function Glp1Mini({ glp1, onClick }: Props) {
   // Convite: paciente elegível que ainda não configurou o módulo.
   if (!glp1.configurado) {
     return (
@@ -121,17 +120,18 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
               glp1.atrasada ? 'text-rose-200' : hoje ? 'text-teal-200' : 'text-slate-400'
             }`}
           >
-            {glp1.atrasada ? 'Dose atrasada' : glp1.proximaDoseLabel}
+            {glp1.dosesAplicadas === 0
+              ? 'Registre sua primeira aplicação'
+              : glp1.atrasada
+                ? 'Dose atrasada'
+                : glp1.proximaDoseLabel}
           </span>
         </div>
         <button
-          onClick={(e) => {
-            e.stopPropagation()
-            onNovaDose?.()
-          }}
+          onClick={onClick}
           className="shrink-0 rounded-lg bg-teal-500 px-3 py-1.5 text-[12px] font-semibold text-slate-950 active:scale-[0.97] transition-transform"
         >
-          Nova dose
+          {glp1.dosesAplicadas === 0 ? 'Iniciar' : 'Acompanhar'}
         </button>
       </div>
     </div>
