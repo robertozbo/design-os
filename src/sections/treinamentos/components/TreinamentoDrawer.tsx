@@ -39,7 +39,7 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px]" onClick={onClose} />
-      <aside className="relative flex h-full w-full max-w-[540px] flex-col bg-white shadow-2xl dark:bg-slate-900 max-sm:max-w-full">
+      <aside className="relative flex h-full w-full max-w-[980px] flex-col bg-white shadow-2xl dark:bg-slate-900 max-sm:max-w-full">
         <header className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
           <div>
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
@@ -60,7 +60,8 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
           </button>
         </header>
 
-        <div className="flex-1 space-y-6 overflow-y-auto px-6 py-5">
+        <div className="grid flex-1 grid-cols-1 overflow-y-auto lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:overflow-hidden">
+          <div className="space-y-6 px-6 py-5 lg:overflow-y-auto">
           <div>
             <label className={labelCls}>Nome do treinamento</label>
             <input className={inputCls} value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex. Trabalho em Altura" />
@@ -106,18 +107,27 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
             />
           </div>
 
-          <div>
-            <div className="mb-2 flex items-baseline justify-between">
-              <label className={`${labelCls} mb-0`}>Conteúdo programático</label>
+          </div>
+
+          <div className="flex flex-col border-t border-slate-200 bg-slate-50/70 dark:border-slate-800 dark:bg-slate-950/40 lg:overflow-y-auto lg:border-l lg:border-t-0">
+            <div className="sticky top-0 z-10 flex items-baseline justify-between border-b border-slate-200 bg-slate-50/95 px-6 py-4 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
+              <div>
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Conteúdo programático</h3>
+                <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                  As disciplinas que compõem a carga horária do treinamento.
+                </p>
+              </div>
               <span
-                className={`text-xs tabular-nums ${
-                  somaDiverge ? 'font-medium text-amber-600 dark:text-amber-400' : 'text-slate-500 dark:text-slate-400'
+                className={`shrink-0 rounded-full px-2.5 py-1 text-xs tabular-nums ${
+                  somaDiverge
+                    ? 'bg-amber-50 font-medium text-amber-700 dark:bg-amber-950/60 dark:text-amber-300'
+                    : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
                 }`}
               >
                 Soma: {formatHoras(soma)}{carga > 0 ? ` / ${formatHoras(carga)}` : ''}
               </span>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 px-6 py-4">
               {disciplinas.map((d, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <span className="w-5 shrink-0 text-right font-mono text-xs text-slate-400 tabular-nums">{i + 1}.</span>
@@ -149,9 +159,10 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
                 </div>
               ))}
             </div>
+            <div className="px-6 pb-6">
             <button
               onClick={() => setDisciplinas((prev) => [...prev, { titulo: '', horas: 0 }])}
-              className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" d="M12 5v14m-7-7h14" />
@@ -163,6 +174,7 @@ export function TreinamentoDrawer({ inicial, onClose, onSave }: TreinamentoDrawe
                 A soma das disciplinas ({formatHoras(soma)}) difere da carga horária declarada ({formatHoras(carga)}).
               </p>
             )}
+            </div>
           </div>
         </div>
 
