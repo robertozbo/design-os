@@ -21,6 +21,7 @@ import {
   Home,
   LineChart,
   LogIn,
+  Megaphone,
   MessageCircle,
   MessageSquare,
   Pill,
@@ -102,6 +103,10 @@ export const NAV_ADMIN: NavGroup[] = [
     items: [
       { label: 'Agenda', href: s('agenda'), icon: Calendar },
       { label: 'WhatsApp', href: s('agendamento-whatsapp'), icon: MessageCircle },
+      // Add-on pago Marketing. Fica no Operacional do admin porque quem opera o
+      // conteúdo da clínica é a gestão — o profissional entra como autor do post,
+      // e é o conselho dele que define as regras que o validador aplica.
+      { label: 'Publicações', href: s('publicacoes'), icon: Megaphone },
       { label: 'Configurações', href: s('configuracoes-clinica'), icon: SettingsIcon },
     ],
   },
@@ -194,6 +199,7 @@ export const PERSONA_DA_SECTION: Record<string, Persona> = {
   fornecedores: 'admin',
   'categorias-financeiras': 'admin',
   'configuracoes-clinica': 'admin',
+  publicacoes: 'admin',
   // Recepção — balcão
   chegada: 'recepcao',
   agenda: 'recepcao',

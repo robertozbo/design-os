@@ -1,0 +1,403 @@
+{
+  "_meta": {
+    "models": {
+      "conta": "A conta do Instagram de destino (Business/Creator). Traz quantos posts já saíram hoje contra o limite de 50/dia da API e quando o token de longa duração expira.",
+      "quota": "A cota do add-on pago Marketing: quantos posts do mês já foram gerados, quantos o plano inclui e quando renova. Refazer um post gasta cota.",
+      "pauta": "A recorrência semanal: dia, hora e a lista de temas de onde a IA tira o rascunho da semana. Gera sempre em 'revisar', nunca em 'agendado'.",
+      "publicacao": "Um post: tema, formato, legenda, hashtags, os cartões, o autor (com o conselho que define as regras aplicadas), o status no pipeline, os alertas de publicidade e a falha do publish quando houve."
+    },
+    "relationships": [
+      "PublicacoesData tem uma Conta, uma Quota, uma Pauta e muitas Publicacao",
+      "Publicacao.autor.conselho escolhe o conjunto de regras que o validador aplica — CRN cai em CFN 599/2018, CRM em CFM 2.336/2023. O mesmo texto escrito por profissões diferentes não recebe os mesmos alertas",
+      "Publicacao.alertas com severidade 'bloqueio' impedem agendar; 'aviso' não. É a diferença entre vedação expressa do código de ética e boa prática",
+      "Publicacao.slides tem um item para feed e story, e vários para carrossel — a ordem do array é a ordem que o dedo desliza",
+      "Publicacao.falha só existe em status 'falhou'. Codigo 'token_expirado' não tem proximaTentativa: retry não resolve, só reconectar a conta",
+      "Publicacao.permalink só existe depois de publicar — é o único dado que volta do Instagram nesta fatia",
+      "Publicacao.versoes conta as reescritas da IA. Some com a cota: 12 usados no mês não é 12 posts, é 12 gerações"
+    ]
+  },
+  "conta": {
+    "rede": "instagram",
+    "usuario": "@clinicavidaplena",
+    "nome": "Clínica Vida Plena",
+    "conectada": true,
+    "tokenExpiraEm": "2026-09-23T00:00:00-03:00",
+    "publicadosHoje": 3,
+    "limiteDiario": 50
+  },
+  "quota": {
+    "addon": "Marketing",
+    "postsUsados": 12,
+    "postsIncluidos": 30,
+    "renovaEm": "2026-10-01T00:00:00-03:00"
+  },
+  "pauta": {
+    "ativa": true,
+    "diaSemana": 1,
+    "hora": "09:00",
+    "temas": [
+      "Alimentação e sono",
+      "Rotina de exames por faixa de idade",
+      "Hidratação no dia a dia",
+      "Atividade física para quem passa o dia sentado",
+      "Rótulos: como ler sem se perder"
+    ],
+    "proximaGeracao": "2026-09-21T09:00:00-03:00",
+    "autorPadrao": {
+      "nome": "Dra. Helena Prado",
+      "conselho": "CRM",
+      "registro": "CRM 456789-SP"
+    }
+  },
+  "publicacoes": [
+    {
+      "id": "pb-001",
+      "tema": "Nutrição favorece a saúde em todas as idades",
+      "formato": "feed",
+      "status": "revisar",
+      "origem": "voz",
+      "autor": {
+        "nome": "Marina Coelho",
+        "conselho": "CRN",
+        "registro": "CRN-3 12345"
+      },
+      "legenda": "Comer bem não é coisa de fase da vida. Na infância, a alimentação constrói o corpo que vai crescer. Na vida adulta, ela sustenta a energia do dia e protege o coração. Depois dos 60, é o que preserva massa muscular, equilíbrio e autonomia — o que decide se a escada de casa é um caminho ou um obstáculo.\n\nO nutriente muda de papel a cada idade, mas o princípio não muda: comida de verdade, com regularidade, orientada por quem acompanha você.\n\nQuer entender o que o seu momento pede? Agende uma avaliação com a nossa equipe de nutrição.",
+      "hashtags": ["#nutricao", "#saudeemtodasasidades", "#alimentacaosaudavel", "#qualidadedevida", "#clinicavidaplena"],
+      "slides": [
+        {
+          "ordem": 1,
+          "titulo": "Nutrição em todas as idades",
+          "texto": "Na infância constrói. Na vida adulta sustenta. Depois dos 60, preserva."
+        }
+      ],
+      "midia": {
+        "tipo": "template",
+        "template": "Dica clínica",
+        "acento": "teal"
+      },
+      "briefOriginal": "Cria um post pra mim sobre como a nutrição favorece a saúde em todas as idades e uma melhor qualidade de vida. Tom acolhedor, pra publicar semana que vem.",
+      "versoes": 2,
+      "agendadoPara": null,
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-17T08:41:00-03:00",
+      "aprovadoPor": null,
+      "alertas": [],
+      "falha": null
+    },
+    {
+      "id": "pb-002",
+      "tema": "5 sinais de que sua alimentação precisa de ajuste",
+      "formato": "carrossel",
+      "status": "agendado",
+      "origem": "pauta",
+      "autor": {
+        "nome": "Marina Coelho",
+        "conselho": "CRN",
+        "registro": "CRN-3 12345"
+      },
+      "legenda": "Nem sempre o corpo avisa com fome. Às vezes ele avisa com sono depois do almoço, unha quebrando ou pavio curto no fim da tarde. Cinco sinais que valem uma conversa — desliza para o lado.",
+      "hashtags": ["#nutricao", "#sinaisdocorpo", "#reeducacaoalimentar", "#clinicavidaplena"],
+      "slides": [
+        { "ordem": 1, "titulo": "5 sinais", "texto": "Que sua alimentação pede um ajuste" },
+        { "ordem": 2, "titulo": "1. Sono depois do almoço", "texto": "Refeição muito pesada em carboidrato simples cobra a conta em uma hora." },
+        { "ordem": 3, "titulo": "2. Fome 2h depois de comer", "texto": "Faltou proteína e fibra no prato — não faltou quantidade." },
+        { "ordem": 4, "titulo": "3. Unha e cabelo frágeis", "texto": "Pode ser ferro, zinco ou proteína. Exame responde, palpite não." },
+        { "ordem": 5, "titulo": "Conversa, não dieta", "texto": "Agende uma avaliação com a nossa equipe de nutrição." }
+      ],
+      "midia": {
+        "tipo": "template",
+        "template": "Lista numerada",
+        "acento": "emerald"
+      },
+      "briefOriginal": null,
+      "versoes": 1,
+      "agendadoPara": "2026-09-19T11:00:00-03:00",
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-14T09:00:00-03:00",
+      "aprovadoPor": "Roberto Dias",
+      "alertas": [],
+      "falha": null
+    },
+    {
+      "id": "pb-003",
+      "tema": "Resultado da paciente Marina em 3 meses",
+      "formato": "feed",
+      "status": "bloqueado",
+      "origem": "voz",
+      "autor": {
+        "nome": "Marina Coelho",
+        "conselho": "CRN",
+        "registro": "CRN-3 12345"
+      },
+      "legenda": "Olha o antes e depois da nossa paciente! Foram 3 meses de acompanhamento e 12kg eliminados. Resultado garantido para quem segue o protocolo. Agende e tenha o mesmo resultado.",
+      "hashtags": ["#antesedepois", "#emagrecimento", "#resultado"],
+      "slides": [
+        { "ordem": 1, "titulo": "Antes e depois", "texto": "3 meses · -12kg" }
+      ],
+      "midia": {
+        "tipo": "upload",
+        "template": "Foto do paciente",
+        "acento": "rose"
+      },
+      "briefOriginal": "Faz um post com o antes e depois da Marina, ela perdeu 12 quilos em três meses, coloca que o resultado é garantido.",
+      "versoes": 1,
+      "agendadoPara": null,
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-16T17:22:00-03:00",
+      "aprovadoPor": null,
+      "alertas": [
+        {
+          "id": "al-001",
+          "severidade": "bloqueio",
+          "regra": "CFN 599/2018, art. 12",
+          "trecho": "antes e depois",
+          "explicacao": "O Código de Ética do Nutricionista veda a divulgação de imagens de antes e depois. Não há caminho de exceção: a imagem precisa sair do post."
+        },
+        {
+          "id": "al-002",
+          "severidade": "bloqueio",
+          "regra": "CFN 599/2018, art. 12",
+          "trecho": "Resultado garantido para quem segue o protocolo",
+          "explicacao": "Prometer ou garantir resultado é vedado. Reescreva descrevendo o acompanhamento, não o desfecho."
+        },
+        {
+          "id": "al-003",
+          "severidade": "bloqueio",
+          "regra": "LGPD art. 11 · dado de saúde",
+          "trecho": "nossa paciente Marina",
+          "explicacao": "Identificar paciente em rede social expõe dado de saúde. Exige consentimento específico e por escrito, que não está registrado para esta publicação."
+        }
+      ],
+      "falha": null
+    },
+    {
+      "id": "pb-004",
+      "tema": "Semana do coração: o sal que você não vê",
+      "formato": "feed",
+      "status": "publicado",
+      "origem": "manual",
+      "autor": {
+        "nome": "Dra. Helena Prado",
+        "conselho": "CRM",
+        "registro": "CRM 456789-SP"
+      },
+      "legenda": "O saleiro da mesa responde por menos de um quarto do sódio que você come. O resto está no pão, no queijo, no embutido e no molho pronto. Ler rótulo é mais eficiente que tirar o saleiro — e muda a pressão de quem já tem diagnóstico.",
+      "hashtags": ["#semanadocoracao", "#pressaoarterial", "#cardiologia", "#clinicavidaplena"],
+      "slides": [
+        { "ordem": 1, "titulo": "O sal que você não vê", "texto": "77% do sódio vem de alimento industrializado, não do saleiro." }
+      ],
+      "midia": {
+        "tipo": "template",
+        "template": "Estatística",
+        "acento": "sky"
+      },
+      "briefOriginal": null,
+      "versoes": 1,
+      "agendadoPara": "2026-09-15T10:00:00-03:00",
+      "publicadoEm": "2026-09-15T10:02:00-03:00",
+      "permalink": "https://www.instagram.com/p/C8xK2mQp1Ab/",
+      "criadoEm": "2026-09-12T14:30:00-03:00",
+      "aprovadoPor": "Roberto Dias",
+      "alertas": [],
+      "falha": null
+    },
+    {
+      "id": "pb-005",
+      "tema": "Novo protocolo de emagrecimento da clínica",
+      "formato": "feed",
+      "status": "revisar",
+      "origem": "manual",
+      "autor": {
+        "nome": "Dra. Helena Prado",
+        "conselho": "CRM",
+        "registro": "CRM 456789-SP"
+      },
+      "legenda": "Chegou o melhor protocolo de emagrecimento da região, exclusivo da Clínica Vida Plena. Avaliação médica, nutrição e educação física na mesma mesa, com acompanhamento a cada 15 dias.",
+      "hashtags": ["#emagrecimento", "#saude", "#multidisciplinar"],
+      "slides": [
+        { "ordem": 1, "titulo": "Protocolo Vida Plena", "texto": "Médico, nutrição e educação física na mesma mesa." }
+      ],
+      "midia": {
+        "tipo": "template",
+        "template": "Convite",
+        "acento": "violet"
+      },
+      "briefOriginal": null,
+      "versoes": 1,
+      "agendadoPara": null,
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-16T11:05:00-03:00",
+      "aprovadoPor": null,
+      "alertas": [
+        {
+          "id": "al-004",
+          "severidade": "aviso",
+          "regra": "CFM 2.336/2023",
+          "trecho": "o melhor protocolo de emagrecimento da região",
+          "explicacao": "Superlativo e comparação com concorrência caracterizam autopromoção. Não é vedação expressa quando não há promessa de resultado, mas é o trecho que costuma virar representação no conselho."
+        }
+      ],
+      "falha": null
+    },
+    {
+      "id": "pb-006",
+      "tema": "Dia Mundial do Diabetes: agende seu check-up",
+      "formato": "feed",
+      "status": "falhou",
+      "origem": "pauta",
+      "autor": {
+        "nome": "Dra. Helena Prado",
+        "conselho": "CRM",
+        "registro": "CRM 456789-SP"
+      },
+      "legenda": "Metade das pessoas com diabetes tipo 2 não sabe que tem. O exame que descobre custa pouco e leva dez minutos. Novembro é o mês de lembrar — nossa agenda está aberta.",
+      "hashtags": ["#diabetes", "#prevencao", "#checkup"],
+      "slides": [
+        { "ordem": 1, "titulo": "Metade não sabe", "texto": "Diabetes tipo 2 é diagnóstico tardio na maioria dos casos." }
+      ],
+      "midia": {
+        "tipo": "template",
+        "template": "Estatística",
+        "acento": "amber"
+      },
+      "briefOriginal": null,
+      "versoes": 1,
+      "agendadoPara": "2026-09-16T09:00:00-03:00",
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-09T09:00:00-03:00",
+      "aprovadoPor": "Roberto Dias",
+      "alertas": [],
+      "falha": {
+        "codigo": "token_expirado",
+        "mensagem": "A autorização do Instagram expirou. O post não foi publicado e não será tentado de novo até a conta ser reconectada.",
+        "tentativas": 1,
+        "proximaTentativa": null
+      }
+    },
+    {
+      "id": "pb-007",
+      "tema": "Alimentação e sono: o que jantar muda a sua noite",
+      "formato": "carrossel",
+      "status": "gerando",
+      "origem": "voz",
+      "autor": {
+        "nome": "Marina Coelho",
+        "conselho": "CRN",
+        "registro": "CRN-3 12345"
+      },
+      "legenda": "",
+      "hashtags": [],
+      "slides": [],
+      "midia": {
+        "tipo": "template",
+        "template": "Lista numerada",
+        "acento": "teal"
+      },
+      "briefOriginal": "Post em carrossel sobre alimentação e sono, o que a pessoa janta e como isso muda a noite dela.",
+      "versoes": 0,
+      "agendadoPara": null,
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-17T09:12:00-03:00",
+      "aprovadoPor": null,
+      "alertas": [],
+      "falha": null
+    },
+    {
+      "id": "pb-008",
+      "tema": "Rotina de exames por faixa de idade",
+      "formato": "carrossel",
+      "status": "rascunho",
+      "origem": "manual",
+      "autor": {
+        "nome": "Dra. Helena Prado",
+        "conselho": "CRM",
+        "registro": "CRM 456789-SP"
+      },
+      "legenda": "",
+      "hashtags": [],
+      "slides": [],
+      "midia": {
+        "tipo": "template",
+        "template": "Lista numerada",
+        "acento": "sky"
+      },
+      "briefOriginal": null,
+      "versoes": 0,
+      "agendadoPara": null,
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-17T07:55:00-03:00",
+      "aprovadoPor": null,
+      "alertas": [],
+      "falha": null
+    },
+    {
+      "id": "pb-009",
+      "tema": "Bastidor: a equipe de nutrição em reunião de caso",
+      "formato": "story",
+      "status": "publicado",
+      "origem": "manual",
+      "autor": {
+        "nome": "Roberto Dias",
+        "conselho": "CRM",
+        "registro": "—"
+      },
+      "legenda": "Toda quarta a equipe senta para discutir caso. Paciente nenhum aparece aqui: o que sai da sala é decisão, não nome.",
+      "hashtags": [],
+      "slides": [
+        { "ordem": 1, "titulo": "Reunião de caso", "texto": "Quarta, 8h. Sem nome de paciente." }
+      ],
+      "midia": {
+        "tipo": "upload",
+        "template": "Foto da clínica",
+        "acento": "stone"
+      },
+      "briefOriginal": null,
+      "versoes": 1,
+      "agendadoPara": "2026-09-17T08:30:00-03:00",
+      "publicadoEm": "2026-09-17T08:31:00-03:00",
+      "permalink": "https://www.instagram.com/stories/clinicavidaplena/3412998877/",
+      "criadoEm": "2026-09-17T07:10:00-03:00",
+      "aprovadoPor": "Roberto Dias",
+      "alertas": [],
+      "falha": null
+    },
+    {
+      "id": "pb-010",
+      "tema": "Hidratação no fim do inverno",
+      "formato": "feed",
+      "status": "publicando",
+      "origem": "pauta",
+      "autor": {
+        "nome": "Marina Coelho",
+        "conselho": "CRN",
+        "registro": "CRN-3 12345"
+      },
+      "legenda": "Sede diminui no frio, necessidade de água não. Fim de inverno é quando a queixa de intestino preso e dor de cabeça aparece no consultório — e boa parte é hidratação.",
+      "hashtags": ["#hidratacao", "#inverno", "#nutricao"],
+      "slides": [
+        { "ordem": 1, "titulo": "A sede engana no frio", "texto": "Menos sede não é menos necessidade." }
+      ],
+      "midia": {
+        "tipo": "template",
+        "template": "Dica clínica",
+        "acento": "sky"
+      },
+      "briefOriginal": null,
+      "versoes": 1,
+      "agendadoPara": "2026-09-17T12:00:00-03:00",
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-13T09:00:00-03:00",
+      "aprovadoPor": "Roberto Dias",
+      "alertas": [],
+      "falha": null
+    }
+  ]
+}

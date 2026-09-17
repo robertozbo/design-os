@@ -136,6 +136,24 @@ quem assina. Nested em Pacientes. `id: avaliacao-fisica`.
 - DICOM viewer embutido (Cornerstone.js)
 - Compartilhamento entre verticais Nymos (Nutri/Personal/Psicólogo) com consentimento
 
+## Add-on pago — Marketing
+
+### 24. Publicações `[V2]`
+A fila de conteúdo da clínica para o Instagram: o profissional **dita ou escreve uma pauta**, a IA
+devolve legenda, hashtags e os cartões no template da marca, e alguém **revisa antes de agendar** —
+não há caminho de brief a publicado sem pessoa no meio. Único módulo com cota própria
+(`N posts/mês`), porque tem custo variável de IA e de publicação.
+
+O que o separa de um Buffer com IA é a camada de **conselho de classe**: antes e depois, promessa de
+resultado e identificação de paciente são vedados (CFN 599/2018, CFM 2.336/2023, LGPD art. 11), e o
+post que infringe **não chega a poder ser agendado** — a tela cita a norma e o trecho. Quem escolhe o
+conjunto de regras é o conselho do **autor**, não a clínica.
+
+Publica pela Content Publishing API do Instagram (conta Business/Creator, container → publish, 50
+posts/dia por conta, token de ~60 dias com reconexão guiada). Sem vídeo: não existe Reels aqui.
+**O app mobile do profissional — ditar post do celular entre consultas — é ferramenta separada,
+produto próprio, não uma tela do app do paciente.** `id: publicacoes`.
+
 ## V3+ (ou parceria SaMD)
 
 - Análise/laudo IA de imagem médica (exige registro ANVISA SaMD ou parceria aprovada)
