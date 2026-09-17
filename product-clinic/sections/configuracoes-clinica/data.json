@@ -6,14 +6,15 @@
       "integracao": "Integração externa com toggle (Memed, Escriba IA, PIX, WhatsApp).",
       "consentimento": "Template de consentimento LGPD com status, versão e data.",
       "auditEvento": "Linha do audit log: ator, papel, ação, alvo, quando.",
-      "addon": "Um módulo pago por fora do plano base, com cota própria por mês. Hoje só Marketing, que destrava a section Publicações."
+      "addon": "Um módulo vendido à parte (Marketing, Fiscal). Tem preço próprio, cota própria com unidade própria, e status: ativo, disponível para contratar ou suspenso."
     },
     "relationships": [
       "ConfiguracoesClinicaData agrega a administração do workspace (não-clínico, não-financeiro do dia a dia)",
       "plano.profissionais <= plano.maxProfissionais; igualdade => barra em amber (no limite)",
       "integracao.indisponivel => card esmaecido e toggle bloqueado (V2)",
       "Integracao com oauth = true não tem toggle: conectar é consentimento na Meta e desconectar revoga token. O App ID/secret é do app Meta da Nymos, não da clínica — não há credencial para digitar aqui",
-      "PlanoInfo tem muitos AddonContratado; a cota do add-on Marketing é a mesma que a section publicacoes mostra no header"
+      "PlanoInfo tem muitos Addon. Add-on 'ativo' mostra barra de consumo; 'disponivel' mostra preço e o botão de contratar — usados, incluidos, renovaEm e secao são null porque não há ciclo correndo nem tela para abrir",
+      "A cota do add-on Marketing é a mesma que o header da section publicacoes mostra. O número tem uma casa: aqui, junto do preço"
     ]
   },
   "clinica": {
@@ -34,10 +35,25 @@
         "id": "marketing",
         "nome": "Marketing",
         "descricao": "Posts para Instagram com IA, ditado por voz e validação de publicidade",
+        "status": "ativo",
+        "precoMensal": 149.0,
         "usados": 12,
         "incluidos": 30,
+        "unidade": "gerações de IA",
         "renovaEm": "2026-10-01",
         "secao": "publicacoes"
+      },
+      {
+        "id": "fiscal",
+        "nome": "Fiscal",
+        "descricao": "Emissão de NFS-e, retenções e livro de serviços prestados",
+        "status": "disponivel",
+        "precoMensal": 199.0,
+        "usados": null,
+        "incluidos": null,
+        "unidade": "notas emitidas",
+        "renovaEm": null,
+        "secao": null
       }
     ]
   },
@@ -68,16 +84,6 @@
       "descricao": "Lembretes e confirmação de consulta pelo WhatsApp",
       "ativa": false,
       "indisponivel": true
-    },
-    {
-      "id": "instagram",
-      "nome": "Instagram",
-      "descricao": "Publica os posts do módulo Marketing. Conta Business ou Creator — conta pessoal não publica por API.",
-      "ativa": true,
-      "oauth": true,
-      "addon": true,
-      "conta": "@clinicavidaplena",
-      "detalhe": "Autorização válida até 23/09 · 3 de 50 publicações hoje"
     }
   ],
   "consentimentos": [

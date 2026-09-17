@@ -4,7 +4,9 @@
       "conta": "A conta do Instagram de destino (Business/Creator). Traz quantos posts já saíram hoje contra o limite de 50/dia da API e quando o token de longa duração expira.",
       "quota": "A cota do add-on pago Marketing: quantos posts do mês já foram gerados, quantos o plano inclui e quando renova. Refazer um post gasta cota.",
       "pauta": "A recorrência semanal: dia, hora e a lista de temas de onde a IA tira o rascunho da semana. Gera sempre em 'revisar', nunca em 'agendado'.",
-      "publicacao": "Um post: tema, formato, legenda, hashtags, os cartões, o autor (com o conselho que define as regras aplicadas), o status no pipeline, os alertas de publicidade e a falha do publish quando houve."
+      "publicacao": "Um post: tema, formato, legenda, hashtags, os cartões, o autor (com o conselho que define as regras aplicadas), o status no pipeline, os alertas de publicidade e a falha do publish quando houve.",
+      "padroes": "O que a IA assume quando o brief não diz: tom, template, autor padrão, CTA fixo e se o registro profissional vai no rodapé do cartão.",
+      "regras": "Quem pode aprovar e agendar, e se aviso de publicidade exige ciência antes de agendar."
     },
     "relationships": [
       "PublicacoesData tem uma Conta, uma Quota, uma Pauta e muitas Publicacao",
@@ -13,7 +15,8 @@
       "Publicacao.slides tem um item para feed e story, e vários para carrossel — a ordem do array é a ordem que o dedo desliza",
       "Publicacao.falha só existe em status 'falhou'. Codigo 'token_expirado' não tem proximaTentativa: retry não resolve, só reconectar a conta",
       "Publicacao.permalink só existe depois de publicar — é o único dado que volta do Instagram nesta fatia",
-      "Publicacao.versoes conta as reescritas da IA. Some com a cota: 12 usados no mês não é 12 posts, é 12 gerações"
+      "Publicacao.versoes conta as reescritas da IA. Some com a cota: 12 usados no mês não é 12 posts, é 12 gerações",
+      "Padroes.autorPadrao define o conselho aplicado quando o post nasce da pauta semanal — é o que faz a recorrência ser validada pelas regras de alguém, e não por nenhuma"
     ]
   },
   "conta": {
@@ -49,6 +52,21 @@
       "registro": "CRM 456789-SP"
     }
   },
+  "padroes": {
+    "tom": "acolhedor",
+    "template": "Dica clínica",
+    "autorPadrao": {
+      "nome": "Marina Coelho",
+      "conselho": "CRN",
+      "registro": "CRN-3 12345"
+    },
+    "ctaFixo": "Agende sua avaliação pelo link da bio.",
+    "mostrarRegistro": true
+  },
+  "regras": {
+    "quemAprova": "gestor-e-autor",
+    "exigirCienciaDeAviso": false
+  },
   "publicacoes": [
     {
       "id": "pb-001",
@@ -62,7 +80,13 @@
         "registro": "CRN-3 12345"
       },
       "legenda": "Comer bem não é coisa de fase da vida. Na infância, a alimentação constrói o corpo que vai crescer. Na vida adulta, ela sustenta a energia do dia e protege o coração. Depois dos 60, é o que preserva massa muscular, equilíbrio e autonomia — o que decide se a escada de casa é um caminho ou um obstáculo.\n\nO nutriente muda de papel a cada idade, mas o princípio não muda: comida de verdade, com regularidade, orientada por quem acompanha você.\n\nQuer entender o que o seu momento pede? Agende uma avaliação com a nossa equipe de nutrição.",
-      "hashtags": ["#nutricao", "#saudeemtodasasidades", "#alimentacaosaudavel", "#qualidadedevida", "#clinicavidaplena"],
+      "hashtags": [
+        "#nutricao",
+        "#saudeemtodasasidades",
+        "#alimentacaosaudavel",
+        "#qualidadedevida",
+        "#clinicavidaplena"
+      ],
       "slides": [
         {
           "ordem": 1,
@@ -97,13 +121,38 @@
         "registro": "CRN-3 12345"
       },
       "legenda": "Nem sempre o corpo avisa com fome. Às vezes ele avisa com sono depois do almoço, unha quebrando ou pavio curto no fim da tarde. Cinco sinais que valem uma conversa — desliza para o lado.",
-      "hashtags": ["#nutricao", "#sinaisdocorpo", "#reeducacaoalimentar", "#clinicavidaplena"],
+      "hashtags": [
+        "#nutricao",
+        "#sinaisdocorpo",
+        "#reeducacaoalimentar",
+        "#clinicavidaplena"
+      ],
       "slides": [
-        { "ordem": 1, "titulo": "5 sinais", "texto": "Que sua alimentação pede um ajuste" },
-        { "ordem": 2, "titulo": "1. Sono depois do almoço", "texto": "Refeição muito pesada em carboidrato simples cobra a conta em uma hora." },
-        { "ordem": 3, "titulo": "2. Fome 2h depois de comer", "texto": "Faltou proteína e fibra no prato — não faltou quantidade." },
-        { "ordem": 4, "titulo": "3. Unha e cabelo frágeis", "texto": "Pode ser ferro, zinco ou proteína. Exame responde, palpite não." },
-        { "ordem": 5, "titulo": "Conversa, não dieta", "texto": "Agende uma avaliação com a nossa equipe de nutrição." }
+        {
+          "ordem": 1,
+          "titulo": "5 sinais",
+          "texto": "Que sua alimentação pede um ajuste"
+        },
+        {
+          "ordem": 2,
+          "titulo": "1. Sono depois do almoço",
+          "texto": "Refeição muito pesada em carboidrato simples cobra a conta em uma hora."
+        },
+        {
+          "ordem": 3,
+          "titulo": "2. Fome 2h depois de comer",
+          "texto": "Faltou proteína e fibra no prato — não faltou quantidade."
+        },
+        {
+          "ordem": 4,
+          "titulo": "3. Unha e cabelo frágeis",
+          "texto": "Pode ser ferro, zinco ou proteína. Exame responde, palpite não."
+        },
+        {
+          "ordem": 5,
+          "titulo": "Conversa, não dieta",
+          "texto": "Agende uma avaliação com a nossa equipe de nutrição."
+        }
       ],
       "midia": {
         "tipo": "template",
@@ -132,9 +181,17 @@
         "registro": "CRN-3 12345"
       },
       "legenda": "Olha o antes e depois da nossa paciente! Foram 3 meses de acompanhamento e 12kg eliminados. Resultado garantido para quem segue o protocolo. Agende e tenha o mesmo resultado.",
-      "hashtags": ["#antesedepois", "#emagrecimento", "#resultado"],
+      "hashtags": [
+        "#antesedepois",
+        "#emagrecimento",
+        "#resultado"
+      ],
       "slides": [
-        { "ordem": 1, "titulo": "Antes e depois", "texto": "3 meses · -12kg" }
+        {
+          "ordem": 1,
+          "titulo": "Antes e depois",
+          "texto": "3 meses · -12kg"
+        }
       ],
       "midia": {
         "tipo": "upload",
@@ -185,9 +242,18 @@
         "registro": "CRM 456789-SP"
       },
       "legenda": "O saleiro da mesa responde por menos de um quarto do sódio que você come. O resto está no pão, no queijo, no embutido e no molho pronto. Ler rótulo é mais eficiente que tirar o saleiro — e muda a pressão de quem já tem diagnóstico.",
-      "hashtags": ["#semanadocoracao", "#pressaoarterial", "#cardiologia", "#clinicavidaplena"],
+      "hashtags": [
+        "#semanadocoracao",
+        "#pressaoarterial",
+        "#cardiologia",
+        "#clinicavidaplena"
+      ],
       "slides": [
-        { "ordem": 1, "titulo": "O sal que você não vê", "texto": "77% do sódio vem de alimento industrializado, não do saleiro." }
+        {
+          "ordem": 1,
+          "titulo": "O sal que você não vê",
+          "texto": "77% do sódio vem de alimento industrializado, não do saleiro."
+        }
       ],
       "midia": {
         "tipo": "template",
@@ -216,9 +282,17 @@
         "registro": "CRM 456789-SP"
       },
       "legenda": "Chegou o melhor protocolo de emagrecimento da região, exclusivo da Clínica Vida Plena. Avaliação médica, nutrição e educação física na mesma mesa, com acompanhamento a cada 15 dias.",
-      "hashtags": ["#emagrecimento", "#saude", "#multidisciplinar"],
+      "hashtags": [
+        "#emagrecimento",
+        "#saude",
+        "#multidisciplinar"
+      ],
       "slides": [
-        { "ordem": 1, "titulo": "Protocolo Vida Plena", "texto": "Médico, nutrição e educação física na mesma mesa." }
+        {
+          "ordem": 1,
+          "titulo": "Protocolo Vida Plena",
+          "texto": "Médico, nutrição e educação física na mesma mesa."
+        }
       ],
       "midia": {
         "tipo": "template",
@@ -255,9 +329,17 @@
         "registro": "CRM 456789-SP"
       },
       "legenda": "Metade das pessoas com diabetes tipo 2 não sabe que tem. O exame que descobre custa pouco e leva dez minutos. Novembro é o mês de lembrar — nossa agenda está aberta.",
-      "hashtags": ["#diabetes", "#prevencao", "#checkup"],
+      "hashtags": [
+        "#diabetes",
+        "#prevencao",
+        "#checkup"
+      ],
       "slides": [
-        { "ordem": 1, "titulo": "Metade não sabe", "texto": "Diabetes tipo 2 é diagnóstico tardio na maioria dos casos." }
+        {
+          "ordem": 1,
+          "titulo": "Metade não sabe",
+          "texto": "Diabetes tipo 2 é diagnóstico tardio na maioria dos casos."
+        }
       ],
       "midia": {
         "tipo": "template",
@@ -351,7 +433,11 @@
       "legenda": "Toda quarta a equipe senta para discutir caso. Paciente nenhum aparece aqui: o que sai da sala é decisão, não nome.",
       "hashtags": [],
       "slides": [
-        { "ordem": 1, "titulo": "Reunião de caso", "texto": "Quarta, 8h. Sem nome de paciente." }
+        {
+          "ordem": 1,
+          "titulo": "Reunião de caso",
+          "texto": "Quarta, 8h. Sem nome de paciente."
+        }
       ],
       "midia": {
         "tipo": "upload",
@@ -380,9 +466,17 @@
         "registro": "CRN-3 12345"
       },
       "legenda": "Sede diminui no frio, necessidade de água não. Fim de inverno é quando a queixa de intestino preso e dor de cabeça aparece no consultório — e boa parte é hidratação.",
-      "hashtags": ["#hidratacao", "#inverno", "#nutricao"],
+      "hashtags": [
+        "#hidratacao",
+        "#inverno",
+        "#nutricao"
+      ],
       "slides": [
-        { "ordem": 1, "titulo": "A sede engana no frio", "texto": "Menos sede não é menos necessidade." }
+        {
+          "ordem": 1,
+          "titulo": "A sede engana no frio",
+          "texto": "Menos sede não é menos necessidade."
+        }
       ],
       "midia": {
         "tipo": "template",

@@ -141,8 +141,10 @@ quem assina. Nested em Pacientes. `id: avaliacao-fisica`.
 ### 24. Publicações `[V2]`
 A fila de conteúdo da clínica para o Instagram: o profissional **dita ou escreve uma pauta**, a IA
 devolve legenda, hashtags e os cartões no template da marca, e alguém **revisa antes de agendar** —
-não há caminho de brief a publicado sem pessoa no meio. Único módulo com cota própria
-(`N posts/mês`), porque tem custo variável de IA e de publicação.
+não há caminho de brief a publicado sem pessoa no meio. **Vendido à parte**, como o
+módulo Fiscal — contratado em *Plano & limites → Módulos*, com preço e cota própria (`N gerações/mês`),
+porque tem custo variável de IA e de publicação. Autocontido: a conta do Instagram, a pauta e os
+padrões da marca ficam na aba **Configurações** da própria section, não no cadastro da clínica.
 
 O que o separa de um Buffer com IA é a camada de **conselho de classe**: antes e depois, promessa de
 resultado e identificação de paciente são vedados (CFN 599/2018, CFM 2.336/2023, LGPD art. 11), e o

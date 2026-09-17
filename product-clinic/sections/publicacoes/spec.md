@@ -45,18 +45,23 @@ e qual trecho.
 - Vê o estado da **conta conectada** (@, publicados hoje / limite diário, quando o token expira) e
   reconecta quando pedido.
 
-## Onde ficam as configurações
-Divisão por frequência de uso, não por assunto:
+## Duas abas: Fila e Configurações
+O módulo é **vendido à parte** (como o Fiscal), então ele é autocontido: carrega as próprias
+configurações em vez de espalhá-las pelo cadastro da clínica. Clínica que não compra Marketing não
+vê configuração de Instagram em lugar nenhum.
 
-| Onde | O quê |
+| Aba | O quê |
 |---|---|
-| **Configurações da clínica** → Integrações | Conectar/desconectar o Instagram, conta autorizada, validade da autorização. Feito uma vez |
-| **Configurações da clínica** → Plano & limites → Add-ons | A cota do mês do add-on Marketing e a renovação. É preço, não preferência |
-| **Esta section** | Reconectar quando a autorização vence (o aviso nasce aqui), pauta semanal, tom e formato por post |
+| **Fila** | A fila de posts e o preview. A conta só aparece aqui quando há o que fazer: autorização vencendo, em faixa âmbar com **Reconectar**. Alerta, não configuração |
+| **Configurações** | Conta do Instagram (conectar/desconectar, validade, consumo do dia), pauta semanal, padrões da marca (tom, template, fecho fixo, registro no cartão) e aprovação (quem aprova, se aviso exige ciência) |
 
-**Não existe credencial para digitar em lugar nenhum.** O app no Meta é da Nymos, com App Review
-feito uma vez; cada clínica só passa pelo OAuth e escolhe a conta. É o que faz o módulo escalar sem
-suporte manual por clínica.
+**Em Configurações da clínica fica só o que é cobrança:** o módulo aparece em *Plano & limites →
+Módulos* com preço, consumo do ciclo e um link **Configurar** que traz para cá. Preço e cota não
+são preferência, e um número de cobrança em duas telas envelhece em duas velocidades.
+
+**Não existe credencial para digitar em lugar nenhum.** O aplicativo no Meta é da Nymos, com App
+Review feito uma vez; cada clínica só passa pelo OAuth e escolhe a conta. É o que faz o módulo
+escalar sem suporte manual por clínica.
 
 ## Multi-tenant: a Nymos publica pelo mesmo módulo
 A fila é por **workspace**, e a Nymos é um workspace como qualquer outro — o mesmo módulo serve a
@@ -94,8 +99,8 @@ A fila é por **workspace**, e a Nymos é um workspace como qualquer outro — o
 - **Editor de imagem.** Escolhe template e troca a foto de fundo. Não recorta, não desenha.
 - **Reels e qualquer vídeo.** Sem geração de vídeo, o formato não existe na tela — oferecer Reels
   seria prometer um pipeline que não há.
-- **Estado "add-on não contratado".** O gate de entitlement e o upsell são componentes
-  compartilhados do plano — esta tela assume o módulo ativo e cuida só da cota.
+- **Estado "add-on não contratado".** Quem contrata e cancela é *Plano & limites → Módulos*, que
+  serve Marketing, Fiscal e os próximos. Esta tela assume o módulo ativo.
 - **Aprovação em duas etapas** (marketing escreve, profissional assina). A clínica de V1 tem uma
   pessoa fazendo os dois.
 
@@ -116,7 +121,9 @@ A fila é por **workspace**, e a Nymos é um workspace como qualquer outro — o
   alerta mostra o **trecho** que o disparou.
 - Ações do preview: **Refazer** (abre campo de instrução), **Editar texto**, **Agendar**,
   **Publicar agora**, **Excluir**. Desabilitadas com motivo no `title` quando não cabem.
-- Card da pauta semanal: toggle, dia/hora, os temas da lista e a próxima geração.
+- Tab-rail de duas abas (Fila · Configurações) logo abaixo do header.
+- Aba Configurações em grade de quatro blocos: Conta do Instagram, Pauta semanal, Padrões da marca,
+  Aprovação. Padrões salvam em lote (botão habilita só quando há mudança); o resto salva no toque.
 - Estado vazio: fila sem nenhuma publicação → explica o caminho do ditado e oferece os dois botões.
 - Estado de cota esgotada: chip vermelho, Ditar/Novo/Refazer desabilitados com motivo; agendar e
   publicar continuam vivos.

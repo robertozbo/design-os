@@ -1,7 +1,7 @@
 # Configurações da Clínica Specification
 
 ## Overview
-O painel de administração do workspace da clínica para o **Admin/Gestor**. Concentra o que não é clínico nem financeiro do dia a dia: **dados cadastrais** da clínica (razão social, CNPJ, endereço, contato, logo), **plano & limites** (plano atual, quantos profissionais de quantos permitidos, gerenciar plano), **integrações** (Memed, Escriba IA, PIX/pagamentos, WhatsApp), **consentimentos LGPD** (templates ativos com versão/data) e o **audit log** recente (quem acessou/fez o quê, quando). Só Admin acessa. Página única em blocos (sem tab-rail) para leitura contínua. Todos os controles são mock (protótipo) e disparam toast.
+O painel de administração do workspace da clínica para o **Admin/Gestor**. Concentra o que não é clínico nem financeiro do dia a dia: **dados cadastrais** da clínica (razão social, CNPJ, endereço, contato, logo), **plano & limites** (plano atual, quantos profissionais de quantos permitidos, gerenciar plano, e os **módulos vendidos à parte** com preço e consumo), **integrações** (Memed, Escriba IA, PIX/pagamentos, WhatsApp), **consentimentos LGPD** (templates ativos com versão/data) e o **audit log** recente (quem acessou/fez o quê, quando). Só Admin acessa. Página única em blocos (sem tab-rail) para leitura contínua. Todos os controles são mock (protótipo) e disparam toast.
 
 ## User Flows
 
@@ -12,20 +12,19 @@ O painel de administração do workspace da clínica para o **Admin/Gestor**. Co
 ### Conferir plano e limites
 - Vê plano atual + uso de profissionais (X de maxProfessionals) com barra
 - "Gerenciar plano" abre fluxo de billing (mock toast)
-- **Add-ons** em bloco próprio no fim do card: nome, descrição e a **cota do mês** com barra
-  (`12/30`, vermelha quando esgotada) e a data de renovação. Hoje só **Marketing**, que destrava a
-  section `publicacoes`; o nome leva para ela. A cota mora aqui porque é preço, não é preferência —
-  a mesma que o header de Publicações mostra.
+- **Módulos** em bloco próprio no fim do card: preço mensal, consumo do ciclo na unidade do módulo
+  e a ação certa para o status (Configurar quando ativo, Contratar quando disponível).
 
-### Conectar Instagram (add-on Marketing)
-- O card do Instagram **não tem toggle**: tem `@conta`, a validade da autorização, o consumo do dia
-  (`3 de 50`) e um botão **Conectar / Desconectar**. Ligar é consentimento na Meta, desligar revoga
-  token — switch não representa nenhum dos dois.
-- **Não há credencial para a clínica digitar.** O app no Meta é da Nymos, já passado por App Review;
-  o que a clínica faz é autorizar e escolher a conta. Exige conta **Business ou Creator** — conta
-  pessoal não publica por API.
-- Desconectar para de publicar: os posts agendados ficam na fila e o aviso aparece na section
-  Publicações.
+### Contratar e acompanhar módulos
+- *Plano & limites* tem o bloco **Módulos**: os add-ons vendidos à parte, cada um com preço mensal.
+- Módulo **ativo** mostra o consumo do ciclo com a **unidade dele** (`gerações de IA`,
+  `notas emitidas`) e o link **Configurar**, que abre a section do módulo — é lá que ele se
+  configura, inclusive a conta conectada.
+- Módulo **disponível** mostra preço e **Contratar**. Nada de cota: não há ciclo correndo.
+- Hoje: **Marketing** (ativo, R$ 149) e **Fiscal** (disponível, R$ 199). A lista é genérica de
+  propósito — tratar Marketing como exceção obrigaria a reescrever a tela quando o Fiscal entrou.
+- **Configuração de módulo não mora aqui.** Esta tela é cobrança: preço, consumo, contratar. Conta
+  do Instagram, pauta e padrões da marca ficam dentro de Publicações.
 
 ### Ligar/desligar integrações
 - Cada integração é um card com toggle; alternar dispara toast
@@ -46,7 +45,7 @@ O painel de administração do workspace da clínica para o **Admin/Gestor**. Co
 - **Header**: "Configurações da clínica" + nome da clínica
 - **Dados da clínica**: logo placeholder + inputs (nome, CNPJ, endereço, telefone) + "Salvar"
 - **Plano & limites**: card com plano, uso de profissionais (barra X/max), "Gerenciar plano"
-- **Integrações**: grid de cards, cada um com ícone, nome, descrição, toggle (Memed, Escriba IA c/ modelo+versão, PIX, WhatsApp c/ atalho pro bot; IA no WhatsApp V2 desabilitada). **Instagram** é o caso fora do padrão: badge "Add-on", conta + validade + consumo do dia, e botão Conectar/Desconectar no lugar do switch
+- **Integrações**: grid de cards, cada um com ícone, nome, descrição, toggle (Memed, Escriba IA c/ modelo+versão, PIX, WhatsApp c/ atalho pro bot; IA no WhatsApp V2 desabilitada). sem Instagram: integração de módulo vendido à parte mora dentro do módulo
 - **Consentimentos (LGPD)**: lista com status (ativo), versão, data, "Ver termo"
 - **Audit log**: linhas com avatar + autor + papel + ação + alvo + tempo relativo, "Ver tudo"
 

@@ -160,10 +160,48 @@ export interface PautaSemanal {
   autorPadrao: Autor
 }
 
+/**
+ * As duas abas da section.
+ *
+ * Módulo vendido à parte carrega as próprias configurações: a conta do Instagram, a
+ * pauta e os padrões da marca não cabem nas Configurações da clínica, senão a clínica
+ * que não compra o módulo vê configuração de um produto que não tem.
+ */
+export type AbaPublicacoes = 'fila' | 'configuracoes'
+
+/** O que a IA assume quando o brief não diz. Editável na aba Configurações. */
+export interface PadroesMarca {
+  tom: string
+  template: string
+  autorPadrao: Autor
+  /** Fecho fixo colado no fim de toda legenda. Vazio = sem CTA. */
+  ctaFixo: string
+  /**
+   * Registro profissional no rodapé do cartão. Ligado por padrão porque os conselhos
+   * exigem identificação do responsável técnico na peça publicitária.
+   */
+  mostrarRegistro: boolean
+}
+
+export type QuemAprova = 'gestor' | 'gestor-e-autor' | 'qualquer'
+
+export interface RegrasAprovacao {
+  quemAprova: QuemAprova
+  /**
+   * Aviso (não bloqueio) precisa ser reconhecido antes de agendar.
+   *
+   * Desligado, o aviso continua aparecendo e não impede nada — é o default, porque
+   * exigir clique em todo superlativo treina a pessoa a clicar sem ler.
+   */
+  exigirCienciaDeAviso: boolean
+}
+
 export interface PublicacoesData {
   conta: ContaConectada
   quota: QuotaAddon
   pauta: PautaSemanal
+  padroes: PadroesMarca
+  regras: RegrasAprovacao
   publicacoes: Publicacao[]
 }
 
@@ -195,4 +233,10 @@ export interface PublicacoesProps extends PublicacoesData {
   /** Reabre o OAuth do Instagram. Único caminho para token expirado. */
   onReconectarConta?: () => void
   onAlternarPauta?: (ativa: boolean) => void
+  /** Abre o OAuth da Meta. Não há credencial para digitar: o app é da plataforma. */
+  onConectarConta?: () => void
+  /** Revoga o token. Para de publicar — os agendados ficam na fila esperando. */
+  onDesconectarConta?: () => void
+  onSalvarPadroes?: (p: PadroesMarca) => void
+  onSalvarRegras?: (r: RegrasAprovacao) => void
 }

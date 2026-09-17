@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
 import {
-  AlertTriangle,
   CalendarClock,
   CheckCircle2,
   Inbox,
@@ -12,15 +11,18 @@ import {
   Wand2,
 } from 'lucide-react'
 import type {
+  AbaPublicacoes,
   ContaConectada,
   FiltroPublicacao,
+  PadroesMarca,
   PautaSemanal,
   Publicacao,
   QuotaAddon,
+  RegrasAprovacao,
 } from '@/../product-clinic/sections/publicacoes/types'
+import { ConfiguracoesPublicacoes } from './ConfiguracoesPublicacoes'
 import { DetalhePublicacao } from './DetalhePublicacao'
 import {
-  DIA_SEMANA,
   FORMATO_LABEL,
   STATUS_META,
   contarPorFiltro,
@@ -35,17 +37,25 @@ interface Props {
   conta: ContaConectada
   quota: QuotaAddon
   pauta: PautaSemanal
+  padroes: PadroesMarca
+  regras: RegrasAprovacao
   publicacoes: Publicacao[]
+  aba: AbaPublicacoes
   filtro: FiltroPublicacao
   selecionada: Publicacao | null
   /** No mobile o detalhe é drawer: só cobre a tela depois de tocar num item. */
   drawerAberto: boolean
+  onAba: (a: AbaPublicacoes) => void
   onFiltro: (f: FiltroPublicacao) => void
   onSelecionar: (p: Publicacao) => void
   onFecharDrawer: () => void
   onDitar: () => void
   onNovo: () => void
   onAlternarPauta: (ativa: boolean) => void
+  onConectarConta: () => void
+  onDesconectarConta: () => void
+  onSalvarPadroes: (p: PadroesMarca) => void
+  onSalvarRegras: (r: RegrasAprovacao) => void
   onRefazer: (id: string, instrucao: string) => void
   onEditarLegenda: (id: string, legenda: string) => void
   onAbrirAgendar: (p: Publicacao) => void
@@ -67,16 +77,24 @@ export function PublicacoesView({
   conta,
   quota,
   pauta,
+  padroes,
+  regras,
   publicacoes,
+  aba,
   filtro,
   selecionada,
   drawerAberto,
+  onAba,
   onFiltro,
   onSelecionar,
   onFecharDrawer,
   onDitar,
   onNovo,
   onAlternarPauta,
+  onConectarConta,
+  onDesconectarConta,
+  onSalvarPadroes,
+  onSalvarRegras,
   ...acoes
 }: Props) {
   const lista = useMemo(() => filtrar(publicacoes, filtro), [publicacoes, filtro])
@@ -133,44 +151,71 @@ export function PublicacoesView({
         </div>
       </div>
 
-      {/* Conta conectada */}
-      <div
-        className={`mt-5 flex flex-col gap-2 rounded-xl border px-3.5 py-2.5 sm:flex-row sm:items-center sm:justify-between ${
-          tokenVencendo
-            ? 'border-amber-200 bg-amber-50 dark:border-amber-900/60 dark:bg-amber-950/30'
-            : 'border-slate-200 dark:border-slate-800'
-        }`}
-      >
-        <div className="flex min-w-0 items-center gap-2.5">
-          <Instagram className="h-4 w-4 shrink-0 text-slate-400" />
-          <div className="min-w-0">
-            <p className="truncate text-xs font-medium text-slate-700 dark:text-slate-200">
-              {conta.usuario}{' '}
-              <span className="font-normal text-slate-400 dark:text-slate-500">· {conta.nome}</span>
-            </p>
-            <p className="text-[11px] tabular-nums text-slate-400 dark:text-slate-500">
-              {conta.publicadosHoje}/{conta.limiteDiario} publicados hoje · limite da API
-            </p>
-          </div>
-        </div>
-        {tokenVencendo && (
-          <div className="flex shrink-0 items-center gap-2">
-            <p className="text-[11px] text-amber-700 dark:text-amber-300">
-              {diasToken <= 0
-                ? 'Autorização expirada — nada publica até reconectar.'
-                : `A autorização expira em ${diasToken} dia${diasToken === 1 ? '' : 's'}.`}
-            </p>
-            <button
-              onClick={acoes.onReconectarConta}
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-amber-600 px-2.5 py-1.5 text-[11px] font-medium text-white hover:bg-amber-700"
-            >
-              <RotateCcw className="h-3 w-3" /> Reconectar
-            </button>
-          </div>
-        )}
+      {/* Abas — o módulo é vendido à parte, então carrega as próprias configurações */}
+      <div className="mt-5 flex items-center gap-1 border-b border-slate-200 dark:border-slate-800">
+        {(
+          [
+            { id: 'fila' as const, label: 'Fila' },
+            { id: 'configuracoes' as const, label: 'Configurações' },
+          ]
+        ).map((t) => (
+          <button
+            key={t.id}
+            onClick={() => onAba(t.id)}
+            className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium transition-colors ${
+              aba === t.id
+                ? 'border-teal-600 text-teal-700 dark:text-teal-400'
+                : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
       </div>
 
+      {/*
+        Na fila a conta só aparece quando há o que fazer: autorização vencendo para de
+        publicar, e isso é alerta, não configuração. O estado completo da conta mora na
+        aba Configurações.
+      */}
+      {aba === 'fila' && tokenVencendo && (
+        <div className="mt-4 flex flex-col gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3.5 py-2.5 sm:flex-row sm:items-center sm:justify-between dark:border-amber-900/60 dark:bg-amber-950/30">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <Instagram className="h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
+            <p className="min-w-0 text-xs text-amber-800 dark:text-amber-200">
+              <span className="font-medium">{conta.usuario}</span> ·{' '}
+              {diasToken <= 0
+                ? 'autorização expirada — nada publica até reconectar.'
+                : `a autorização expira em ${diasToken} dia${diasToken === 1 ? '' : 's'}.`}
+            </p>
+          </div>
+          <button
+            onClick={acoes.onReconectarConta}
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-amber-600 px-2.5 py-1.5 text-[11px] font-medium text-white hover:bg-amber-700"
+          >
+            <RotateCcw className="h-3 w-3" /> Reconectar
+          </button>
+        </div>
+      )}
+
+      {aba === 'configuracoes' && (
+        <div className="mt-4">
+          <ConfiguracoesPublicacoes
+            conta={conta}
+            pauta={pauta}
+            padroes={padroes}
+            regras={regras}
+            onConectarConta={onConectarConta}
+            onDesconectarConta={onDesconectarConta}
+            onAlternarPauta={onAlternarPauta}
+            onSalvarPadroes={onSalvarPadroes}
+            onSalvarRegras={onSalvarRegras}
+          />
+        </div>
+      )}
+
       {/* Filtros */}
+      {aba === 'fila' && (
       <div className="mt-4 flex flex-wrap items-center gap-1">
         {FILTROS.map((f) => {
           const n = contarPorFiltro(publicacoes, f.id)
@@ -190,7 +235,9 @@ export function PublicacoesView({
           )
         })}
       </div>
+      )}
 
+      {aba === 'fila' && (
       <div className="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-12">
         {/* Fila */}
         <div className="lg:col-span-7">
@@ -282,55 +329,6 @@ export function PublicacoesView({
             </div>
           )}
 
-          {/* Pauta semanal */}
-          <div className="mt-4 rounded-2xl border border-slate-200 p-3.5 dark:border-slate-800">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="flex items-center gap-1.5 text-sm font-medium text-slate-800 dark:text-slate-100">
-                  <Repeat className="h-3.5 w-3.5" /> Pauta semanal
-                </p>
-                <p className="mt-0.5 text-[11px] text-slate-400 dark:text-slate-500">
-                  {pauta.ativa
-                    ? `Toda ${DIA_SEMANA[pauta.diaSemana]} às ${pauta.hora} · próxima em ${quando(pauta.proximaGeracao)}`
-                    : 'Desligada — nenhum rascunho é gerado sozinho'}
-                </p>
-              </div>
-              <button
-                onClick={() => onAlternarPauta(!pauta.ativa)}
-                role="switch"
-                aria-checked={pauta.ativa}
-                aria-label="Pauta semanal"
-                className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${
-                  pauta.ativa ? 'bg-teal-600' : 'bg-slate-200 dark:bg-slate-700'
-                }`}
-              >
-                <span
-                  className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${
-                    pauta.ativa ? 'left-[1.125rem]' : 'left-0.5'
-                  }`}
-                />
-              </button>
-            </div>
-            {pauta.ativa && (
-              <>
-                <div className="mt-2.5 flex flex-wrap gap-1.5">
-                  {pauta.temas.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-500 dark:bg-slate-800 dark:text-slate-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-2.5 flex items-start gap-1.5 text-[11px] leading-relaxed text-slate-400 dark:text-slate-500">
-                  <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0" />
-                  A recorrência gera em <strong className="font-medium">Revisar</strong>, nunca em
-                  Agendado. Automatiza a escrita, não a aprovação.
-                </p>
-              </>
-            )}
-          </div>
         </div>
 
         {/* Detalhe — coluna fixa no desktop, drawer no mobile */}
@@ -360,6 +358,7 @@ export function PublicacoesView({
           </div>
         )}
       </div>
+      )}
     </div>
   )
 }

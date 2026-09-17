@@ -7,7 +7,7 @@ export type AcaoAudit =
   | 'exportou'
   | 'consentimento'
 export type StatusConsentimento = 'ativo' | 'rascunho'
-export type IntegracaoId = 'memed' | 'escriba' | 'pix' | 'whatsapp' | 'instagram'
+export type IntegracaoId = 'memed' | 'escriba' | 'pix' | 'whatsapp'
 
 export interface DadosClinica {
   nome: string
@@ -23,27 +23,47 @@ export interface PlanoInfo {
   profissionais: number
   maxProfissionais: number
   renovaEm: string
-  /** Módulos pagos por fora do plano base. Hoje só Marketing (section `publicacoes`). */
-  addons: AddonContratado[]
+  /**
+   * Módulos vendidos à parte — Marketing, Fiscal e os que vierem.
+   *
+   * Lista, não campos: add-on é família, não caso especial. A primeira versão tratou
+   * Marketing como exceção e teria exigido reescrever esta tela no dia em que o Fiscal
+   * entrou.
+   */
+  addons: Addon[]
 }
 
+export type StatusAddon = 'ativo' | 'disponivel' | 'suspenso'
+
 /**
- * Um add-on cobrado à parte, com cota própria.
+ * Um módulo cobrado por fora do plano base.
  *
- * Cota existe porque o módulo tem custo variável (chamada de IA e publicação), e não
- * porque o plano quer limitar uso — por isso o número vive aqui, junto do plano, e
- * não escondido dentro da tela que o gasta.
+ * A cota existe porque o módulo tem **custo variável** (chamada de IA no Marketing,
+ * emissão no Fiscal), não porque o plano queira limitar uso — por isso o número mora
+ * aqui, ao lado do preço, e não escondido dentro da tela que o gasta.
  */
-export interface AddonContratado {
+export interface Addon {
   id: string
   nome: string
   descricao: string
-  /** Gerações do mês (post novo e refação contam igual). */
-  usados: number
-  incluidos: number
-  renovaEm: string
-  /** A section que o add-on destrava. */
-  secao: string
+  status: StatusAddon
+  /** Em reais por mês. É o que a tela mostra para quem ainda não contratou. */
+  precoMensal: number
+  /**
+   * Consumo do ciclo. `null` nos dois casos em que não existe número para mostrar:
+   * add-on não contratado e add-on sem cota (cobrança por assinatura pura).
+   */
+  usados: number | null
+  incluidos: number | null
+  /**
+   * O que a cota conta, no plural: "gerações de IA", "notas emitidas". Sem isto a
+   * barra vira um número sem unidade, e 12/30 de coisas diferentes parece a mesma coisa.
+   */
+  unidade: string
+  /** `null` quando não contratado — não há ciclo correndo. */
+  renovaEm: string | null
+  /** A section que o add-on destrava. `null` enquanto o módulo não existe no produto. */
+  secao: string | null
 }
 
 export interface Integracao {
@@ -56,20 +76,8 @@ export interface Integracao {
   /** Só para Escriba IA: modelo + versão do transcritor/SOAP. */
   modelo?: string
   versao?: string
-  /**
-   * Integração que exige OAuth com um provedor externo (Instagram/Facebook).
-   *
-   * O toggle não serve: ligar é um fluxo de consentimento na Meta, e desligar
-   * revoga um token. O card mostra a conta e um botão — nunca um switch.
-   */
-  oauth?: boolean
-  /** A conta autorizada, quando conectada. `@handle`. */
-  conta?: string
-  /** Linha de estado: validade da autorização, limite diário, o que for verdade hoje. */
-  detalhe?: string
-  /** Marca "Add-on" — módulo pago por fora do plano base. */
-  addon?: boolean
 }
+
 
 export interface Consentimento {
   id: string

@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import data from '@/../product-clinic/sections/publicacoes/data.json'
 import type {
+  AbaPublicacoes,
   BriefValues,
   ContaConectada,
+  PadroesMarca,
+  RegrasAprovacao,
   PautaSemanal,
   Publicacao,
   PublicacoesData,
@@ -34,6 +37,9 @@ export default function PublicacoesPreview() {
   const [conta, setConta] = useState<ContaConectada>(base.conta)
   const [quota, setQuota] = useState<QuotaAddon>(base.quota)
   const [pauta, setPauta] = useState<PautaSemanal>(base.pauta)
+  const [padroes, setPadroes] = useState<PadroesMarca>(base.padroes)
+  const [regras, setRegras] = useState<RegrasAprovacao>(base.regras)
+  const [aba, setAba] = useState<AbaPublicacoes>('fila')
   const [filtro, setFiltro] = useState<FiltroPublicacao>('tudo')
   const [selecionadaId, setSelecionadaId] = useState<string | null>(base.publicacoes[0]?.id ?? null)
   const [drawerAberto, setDrawerAberto] = useState(false)
@@ -210,10 +216,14 @@ export default function PublicacoesPreview() {
         conta={conta}
         quota={quota}
         pauta={pauta}
+        padroes={padroes}
+        regras={regras}
         publicacoes={publicacoes}
+        aba={aba}
         filtro={filtro}
         selecionada={selecionada}
         drawerAberto={drawerAberto}
+        onAba={setAba}
         onFiltro={setFiltro}
         onSelecionar={(p) => {
           setSelecionadaId(p.id)
@@ -233,6 +243,19 @@ export default function PublicacoesPreview() {
         onExcluir={excluir}
         onTentarNovamente={tentarNovamente}
         onReconectarConta={reconectar}
+        onConectarConta={reconectar}
+        onDesconectarConta={() => {
+          setConta((c) => ({ ...c, conectada: false }))
+          pushToast('Conta desconectada — os agendados ficam na fila esperando')
+        }}
+        onSalvarPadroes={(p) => {
+          setPadroes(p)
+          pushToast('Padrões da marca salvos')
+        }}
+        onSalvarRegras={(r) => {
+          setRegras(r)
+          pushToast('Regra de aprovação salva')
+        }}
       />
 
       {modal && <BriefModal modo={modal} onGerar={gerar} onFechar={() => setModal(null)} />}

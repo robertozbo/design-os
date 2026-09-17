@@ -1,8 +1,8 @@
 import {
   Building2,
   CreditCard,
+  ArrowRight,
   FileSignature,
-  Instagram,
   Megaphone,
   MessageCircle,
   Save,
@@ -11,6 +11,7 @@ import {
   Stethoscope,
 } from 'lucide-react'
 import type {
+  Addon,
   Consentimento,
   ConfiguracoesClinicaData,
   Integracao,
@@ -23,7 +24,6 @@ const INTEGRACAO_ICON: Record<IntegracaoId, typeof Stethoscope> = {
   escriba: Sparkles,
   pix: CreditCard,
   whatsapp: MessageCircle,
-  instagram: Instagram,
 }
 
 interface Props {
@@ -31,21 +31,115 @@ interface Props {
   onSalvarDados: () => void
   onGerenciarPlano: () => void
   onToggleIntegracao: (i: Integracao) => void
-  /**
-   * Conectar/desconectar uma integração OAuth (Instagram).
-   *
-   * Separada do toggle de propósito: ligar abre o consentimento na Meta e escolhe a
-   * conta; desligar revoga um token e para de publicar. Switch não representa nenhum
-   * dos dois.
-   */
-  onConectarIntegracao: (i: Integracao) => void
-  /** Abre o add-on — a section que ele destrava. */
-  onAbrirAddon: (id: string) => void
+  /** Abre a section que o add-on destrava — é lá que ele se configura. */
+  onAbrirAddon: (secao: string) => void
+  /** Contratar um módulo que ainda não é do plano. */
+  onContratarAddon: (a: Addon) => void
   onVerTermo: (c: Consentimento) => void
   onVerAuditoria: () => void
 }
 
 /** Toggle controlado em Tailwind puro (sem lib externa). */
+/**
+ * Uma linha de módulo vendido à parte.
+ *
+ * Três estados, porque os três acontecem: contratado (consumo + onde configurar),
+ * disponível (preço + contratar) e suspenso (o que quebrou). Renderizar só o primeiro
+ * é o que obriga a reescrever a tela no próximo módulo.
+ */
+function AddonLinha({
+  addon,
+  onAbrir,
+  onContratar,
+}: {
+  addon: Addon
+  onAbrir: (secao: string) => void
+  onContratar: (a: Addon) => void
+}) {
+  const ativo = addon.status === 'ativo'
+  const temCota = addon.usados !== null && addon.incluidos !== null
+  const pct = temCota ? Math.round((addon.usados! / addon.incluidos!) * 100) : 0
+  const esgotado = temCota && addon.usados! >= addon.incluidos!
+
+  return (
+    <>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <Megaphone className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+            <span className="text-sm font-medium text-slate-800 dark:text-slate-200">
+              {addon.nome}
+            </span>
+            {addon.status === 'suspenso' && (
+              <span className="rounded bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-950/40 dark:text-amber-300">
+                Suspenso
+              </span>
+            )}
+          </div>
+          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{addon.descricao}</p>
+        </div>
+        <div className="shrink-0 text-right">
+          <p className="text-xs font-medium tabular-nums text-slate-600 dark:text-slate-300">
+            {reais(addon.precoMensal)}
+            <span className="font-normal text-slate-400">/mês</span>
+          </p>
+          {ativo && addon.secao ? (
+            <button
+              onClick={() => onAbrir(addon.secao!)}
+              className="mt-1 inline-flex items-center gap-1 text-[11px] font-medium text-teal-700 hover:underline dark:text-teal-400"
+            >
+              Configurar <ArrowRight className="h-3 w-3" />
+            </button>
+          ) : (
+            <button
+              onClick={() => onContratar(addon)}
+              className="mt-1 rounded-lg bg-teal-600 px-2.5 py-1 text-[11px] font-medium text-white hover:bg-teal-700"
+            >
+              Contratar
+            </button>
+          )}
+        </div>
+      </div>
+
+      {ativo && temCota && (
+        <div className="mt-2">
+          <div className="mb-1 flex items-center justify-between text-[11px]">
+            <span className="text-slate-500 dark:text-slate-400">{addon.unidade}</span>
+            <span
+              className={`font-medium tabular-nums ${
+                esgotado ? 'text-red-600 dark:text-red-400' : 'text-slate-500 dark:text-slate-400'
+              }`}
+            >
+              {addon.usados} de {addon.incluidos}
+            </span>
+          </div>
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+            <div
+              className={`h-full rounded-full ${esgotado ? 'bg-red-500' : 'bg-teal-500'}`}
+              style={{ width: `${Math.min(pct, 100)}%` }}
+            />
+          </div>
+          {addon.renovaEm && (
+            <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">
+              Renova em {dataCurta(addon.renovaEm)}. As configurações do módulo — conta conectada
+              incluída — ficam dentro dele.
+            </p>
+          )}
+        </div>
+      )}
+    </>
+  )
+}
+
+/** R$ 149 — sem centavos quando é redondo, que é o caso de preço de plano. */
+function reais(v: number): string {
+  return v.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: v % 1 === 0 ? 0 : 2,
+  })
+}
+
 function Switch({
   ativo,
   disabled,
@@ -128,8 +222,8 @@ export function ConfiguracoesClinicaView({
   onSalvarDados,
   onGerenciarPlano,
   onToggleIntegracao,
-  onConectarIntegracao,
   onAbrirAddon,
+  onContratarAddon,
   onVerTermo,
   onVerAuditoria,
 }: Props) {
@@ -223,52 +317,23 @@ export function ConfiguracoesClinicaView({
             )}
           </div>
 
-          {/* Add-ons: cobrados por fora, cada um com cota própria */}
+          {/* Módulos vendidos à parte — preço, consumo do ciclo e onde se configuram */}
           {plano.addons.length > 0 && (
             <div className="mt-4 border-t border-slate-100 pt-3 dark:border-slate-800">
               <p className="text-[11px] font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500">
-                Add-ons
+                Módulos
               </p>
-              {plano.addons.map((a) => {
-                const pct = Math.round((a.usados / a.incluidos) * 100)
-                const esgotado = a.usados >= a.incluidos
-                return (
-                  <div key={a.id} className="mt-2.5">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <button
-                          onClick={() => onAbrirAddon(a.secao)}
-                          className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-800 hover:underline dark:text-slate-200"
-                        >
-                          <Megaphone className="h-3.5 w-3.5" /> {a.nome}
-                        </button>
-                        <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                          {a.descricao}
-                        </p>
-                      </div>
-                      <span
-                        className={`shrink-0 text-xs font-medium tabular-nums ${
-                          esgotado
-                            ? 'text-red-600 dark:text-red-400'
-                            : 'text-slate-500 dark:text-slate-400'
-                        }`}
-                      >
-                        {a.usados}/{a.incluidos}
-                      </span>
-                    </div>
-                    <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
-                      <div
-                        className={`h-full rounded-full ${esgotado ? 'bg-red-500' : 'bg-teal-500'}`}
-                        style={{ width: `${Math.min(pct, 100)}%` }}
-                      />
-                    </div>
-                    <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">
-                      Gerações do mês — post novo e refação contam igual. Renova em{' '}
-                      {dataCurta(a.renovaEm)}.
-                    </p>
-                  </div>
-                )
-              })}
+              <ul className="mt-1 divide-y divide-slate-100 dark:divide-slate-800">
+                {plano.addons.map((a) => (
+                  <li key={a.id} className="py-2.5 last:pb-0">
+                    <AddonLinha
+                      addon={a}
+                      onAbrir={onAbrirAddon}
+                      onContratar={onContratarAddon}
+                    />
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </Card>
@@ -302,11 +367,6 @@ export function ConfiguracoesClinicaView({
                           V2
                         </span>
                       )}
-                      {i.addon && (
-                        <span className="rounded bg-violet-50 px-1.5 py-0.5 text-[10px] font-medium text-violet-700 dark:bg-violet-950/40 dark:text-violet-300">
-                          Add-on
-                        </span>
-                      )}
                     </div>
                     <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                       {i.descricao}
@@ -316,50 +376,13 @@ export function ConfiguracoesClinicaView({
                         {i.modelo} · {i.versao}
                       </span>
                     )}
-                    {i.oauth && (
-                      <div className="mt-1.5">
-                        {i.ativa && i.conta ? (
-                          <>
-                            <p className="font-mono text-[11px] text-slate-600 dark:text-slate-300">
-                              {i.conta}
-                            </p>
-                            {i.detalhe && (
-                              <p className="mt-0.5 text-[11px] text-slate-400 dark:text-slate-500">
-                                {i.detalhe}
-                              </p>
-                            )}
-                          </>
-                        ) : (
-                          <p className="text-[11px] text-slate-400 dark:text-slate-500">
-                            Nenhuma conta conectada — nada é publicado.
-                          </p>
-                        )}
-                        <p className="mt-1 text-[11px] leading-relaxed text-slate-400 dark:text-slate-500">
-                          Não há credencial para digitar: o app no Meta é da Nymos, já revisado.
-                          Conectar abre o consentimento e você escolhe a conta.
-                        </p>
-                      </div>
-                    )}
                   </div>
-                  {i.oauth ? (
-                    <button
-                      onClick={() => onConectarIntegracao(i)}
-                      className={`shrink-0 rounded-lg px-2.5 py-1.5 text-xs font-medium ${
-                        i.ativa
-                          ? 'border border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800'
-                          : 'bg-teal-600 text-white hover:bg-teal-700'
-                      }`}
-                    >
-                      {i.ativa ? 'Desconectar' : 'Conectar'}
-                    </button>
-                  ) : (
-                    <Switch
-                      ativo={i.ativa}
-                      disabled={i.indisponivel}
-                      onToggle={() => onToggleIntegracao(i)}
-                      label={`Ativar ${i.nome}`}
-                    />
-                  )}
+                  <Switch
+                    ativo={i.ativa}
+                    disabled={i.indisponivel}
+                    onToggle={() => onToggleIntegracao(i)}
+                    label={`Ativar ${i.nome}`}
+                  />
                 </div>
               )
             })}
