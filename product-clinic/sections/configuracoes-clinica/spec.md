@@ -12,6 +12,20 @@ O painel de administração do workspace da clínica para o **Admin/Gestor**. Co
 ### Conferir plano e limites
 - Vê plano atual + uso de profissionais (X de maxProfessionals) com barra
 - "Gerenciar plano" abre fluxo de billing (mock toast)
+- **Add-ons** em bloco próprio no fim do card: nome, descrição e a **cota do mês** com barra
+  (`12/30`, vermelha quando esgotada) e a data de renovação. Hoje só **Marketing**, que destrava a
+  section `publicacoes`; o nome leva para ela. A cota mora aqui porque é preço, não é preferência —
+  a mesma que o header de Publicações mostra.
+
+### Conectar Instagram (add-on Marketing)
+- O card do Instagram **não tem toggle**: tem `@conta`, a validade da autorização, o consumo do dia
+  (`3 de 50`) e um botão **Conectar / Desconectar**. Ligar é consentimento na Meta, desligar revoga
+  token — switch não representa nenhum dos dois.
+- **Não há credencial para a clínica digitar.** O app no Meta é da Nymos, já passado por App Review;
+  o que a clínica faz é autorizar e escolher a conta. Exige conta **Business ou Creator** — conta
+  pessoal não publica por API.
+- Desconectar para de publicar: os posts agendados ficam na fila e o aviso aparece na section
+  Publicações.
 
 ### Ligar/desligar integrações
 - Cada integração é um card com toggle; alternar dispara toast
@@ -32,7 +46,7 @@ O painel de administração do workspace da clínica para o **Admin/Gestor**. Co
 - **Header**: "Configurações da clínica" + nome da clínica
 - **Dados da clínica**: logo placeholder + inputs (nome, CNPJ, endereço, telefone) + "Salvar"
 - **Plano & limites**: card com plano, uso de profissionais (barra X/max), "Gerenciar plano"
-- **Integrações**: grid de cards, cada um com ícone, nome, descrição, toggle (Memed, Escriba IA c/ modelo+versão, PIX, WhatsApp c/ atalho pro bot; IA no WhatsApp V2 desabilitada)
+- **Integrações**: grid de cards, cada um com ícone, nome, descrição, toggle (Memed, Escriba IA c/ modelo+versão, PIX, WhatsApp c/ atalho pro bot; IA no WhatsApp V2 desabilitada). **Instagram** é o caso fora do padrão: badge "Add-on", conta + validade + consumo do dia, e botão Conectar/Desconectar no lugar do switch
 - **Consentimentos (LGPD)**: lista com status (ativo), versão, data, "Ver termo"
 - **Audit log**: linhas com avatar + autor + papel + ação + alvo + tempo relativo, "Ver tudo"
 

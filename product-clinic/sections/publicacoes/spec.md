@@ -45,6 +45,32 @@ e qual trecho.
 - Vê o estado da **conta conectada** (@, publicados hoje / limite diário, quando o token expira) e
   reconecta quando pedido.
 
+## Onde ficam as configurações
+Divisão por frequência de uso, não por assunto:
+
+| Onde | O quê |
+|---|---|
+| **Configurações da clínica** → Integrações | Conectar/desconectar o Instagram, conta autorizada, validade da autorização. Feito uma vez |
+| **Configurações da clínica** → Plano & limites → Add-ons | A cota do mês do add-on Marketing e a renovação. É preço, não preferência |
+| **Esta section** | Reconectar quando a autorização vence (o aviso nasce aqui), pauta semanal, tom e formato por post |
+
+**Não existe credencial para digitar em lugar nenhum.** O app no Meta é da Nymos, com App Review
+feito uma vez; cada clínica só passa pelo OAuth e escolhe a conta. É o que faz o módulo escalar sem
+suporte manual por clínica.
+
+## Multi-tenant: a Nymos publica pelo mesmo módulo
+A fila é por **workspace**, e a Nymos é um workspace como qualquer outro — o mesmo módulo serve a
+área administrativa da plataforma e as clínicas, sem segunda implementação. O que muda por tenant:
+
+- **Conta conectada é uma por workspace** (`workspaceId + provider + contaExterna`), então o limite
+  de 50/dia da API nunca é disputado entre tenants.
+- **Cota é do add-on do workspace.** O workspace interno da Nymos não compra add-on: cota própria.
+- **O validador é por autor, não por tenant.** Post de clínica tem autor com conselho (CRN/CRM/…) e
+  cai no código de ética dele. Post da Nymos não tem conselho — cai em publicidade de produto de
+  saúde (e nas vedações da LGPD, que valem para todo mundo). Por isso a regra vem de
+  `autor.conselho`, e não de uma constante da tela: um `if tenant === 'nymos'` teria deixado o
+  back-office publicando sem validação nenhuma.
+
 ## Regras que a tela materializa
 - **Aprovação humana é obrigatória.** Não existe caminho de brief → publicado sem alguém abrir o
   preview. O status `publicando` é do robô; `revisar` é da pessoa.

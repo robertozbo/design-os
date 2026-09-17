@@ -34,6 +34,32 @@ export default function ConfiguracoesClinicaPreview() {
     pushToast(`${alvo.nome} ${alvo.ativa ? 'desativada' : 'ativada'} (mock)`)
   }
 
+  /**
+   * Conectar/desconectar OAuth. Desconectar para de publicar — por isso o toast diz
+   * isso, e não "integração desativada".
+   */
+  const conectarIntegracao = (alvo: Integracao) => {
+    setIntegracoes((prev) =>
+      prev.map((i) =>
+        i.id === alvo.id
+          ? {
+              ...i,
+              ativa: !i.ativa,
+              conta: i.ativa ? undefined : '@clinicavidaplena',
+              detalhe: i.ativa
+                ? undefined
+                : 'Autorização válida por 60 dias · 0 de 50 publicações hoje',
+            }
+          : i,
+      ),
+    )
+    pushToast(
+      alvo.ativa
+        ? `${alvo.nome} desconectada — nada mais é publicado até reconectar`
+        : `${alvo.nome} conectada como @clinicavidaplena (mock)`,
+    )
+  }
+
   return (
     <>
       <ConfiguracoesClinicaView
@@ -41,6 +67,8 @@ export default function ConfiguracoesClinicaPreview() {
         onSalvarDados={() => pushToast('Dados da clínica salvos (mock)')}
         onGerenciarPlano={() => pushToast('Gerenciar plano · fluxo de billing (mock)')}
         onToggleIntegracao={toggleIntegracao}
+        onConectarIntegracao={conectarIntegracao}
+        onAbrirAddon={(secao) => pushToast(`Abrir /clinic/sections/${secao} (mock)`)}
         onVerTermo={(c) => pushToast(`Termo "${c.titulo}" ${c.versao} (detalhe mock)`)}
         onVerAuditoria={() => pushToast('Audit log completo (mock)')}
       />

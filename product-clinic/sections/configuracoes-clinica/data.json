@@ -5,12 +5,15 @@
       "planoInfo": "Plano atual e limite de profissionais (X de max).",
       "integracao": "Integração externa com toggle (Memed, Escriba IA, PIX, WhatsApp).",
       "consentimento": "Template de consentimento LGPD com status, versão e data.",
-      "auditEvento": "Linha do audit log: ator, papel, ação, alvo, quando."
+      "auditEvento": "Linha do audit log: ator, papel, ação, alvo, quando.",
+      "addon": "Um módulo pago por fora do plano base, com cota própria por mês. Hoje só Marketing, que destrava a section Publicações."
     },
     "relationships": [
       "ConfiguracoesClinicaData agrega a administração do workspace (não-clínico, não-financeiro do dia a dia)",
       "plano.profissionais <= plano.maxProfissionais; igualdade => barra em amber (no limite)",
-      "integracao.indisponivel => card esmaecido e toggle bloqueado (V2)"
+      "integracao.indisponivel => card esmaecido e toggle bloqueado (V2)",
+      "Integracao com oauth = true não tem toggle: conectar é consentimento na Meta e desconectar revoga token. O App ID/secret é do app Meta da Nymos, não da clínica — não há credencial para digitar aqui",
+      "PlanoInfo tem muitos AddonContratado; a cota do add-on Marketing é a mesma que a section publicacoes mostra no header"
     ]
   },
   "clinica": {
@@ -25,7 +28,18 @@
     "descricao": "Prontuário, agenda, faturamento e IA para toda a equipe",
     "profissionais": 3,
     "maxProfissionais": 6,
-    "renovaEm": "2026-08-12"
+    "renovaEm": "2026-08-12",
+    "addons": [
+      {
+        "id": "marketing",
+        "nome": "Marketing",
+        "descricao": "Posts para Instagram com IA, ditado por voz e validação de publicidade",
+        "usados": 12,
+        "incluidos": 30,
+        "renovaEm": "2026-10-01",
+        "secao": "publicacoes"
+      }
+    ]
   },
   "integracoes": [
     {
@@ -54,6 +68,16 @@
       "descricao": "Lembretes e confirmação de consulta pelo WhatsApp",
       "ativa": false,
       "indisponivel": true
+    },
+    {
+      "id": "instagram",
+      "nome": "Instagram",
+      "descricao": "Publica os posts do módulo Marketing. Conta Business ou Creator — conta pessoal não publica por API.",
+      "ativa": true,
+      "oauth": true,
+      "addon": true,
+      "conta": "@clinicavidaplena",
+      "detalhe": "Autorização válida até 23/09 · 3 de 50 publicações hoje"
     }
   ],
   "consentimentos": [

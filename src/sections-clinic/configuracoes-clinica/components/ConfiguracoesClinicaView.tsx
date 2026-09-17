@@ -2,6 +2,8 @@ import {
   Building2,
   CreditCard,
   FileSignature,
+  Instagram,
+  Megaphone,
   MessageCircle,
   Save,
   ShieldCheck,
@@ -21,6 +23,7 @@ const INTEGRACAO_ICON: Record<IntegracaoId, typeof Stethoscope> = {
   escriba: Sparkles,
   pix: CreditCard,
   whatsapp: MessageCircle,
+  instagram: Instagram,
 }
 
 interface Props {
@@ -28,6 +31,16 @@ interface Props {
   onSalvarDados: () => void
   onGerenciarPlano: () => void
   onToggleIntegracao: (i: Integracao) => void
+  /**
+   * Conectar/desconectar uma integração OAuth (Instagram).
+   *
+   * Separada do toggle de propósito: ligar abre o consentimento na Meta e escolhe a
+   * conta; desligar revoga um token e para de publicar. Switch não representa nenhum
+   * dos dois.
+   */
+  onConectarIntegracao: (i: Integracao) => void
+  /** Abre o add-on — a section que ele destrava. */
+  onAbrirAddon: (id: string) => void
   onVerTermo: (c: Consentimento) => void
   onVerAuditoria: () => void
 }
@@ -115,6 +128,8 @@ export function ConfiguracoesClinicaView({
   onSalvarDados,
   onGerenciarPlano,
   onToggleIntegracao,
+  onConectarIntegracao,
+  onAbrirAddon,
   onVerTermo,
   onVerAuditoria,
 }: Props) {
@@ -207,6 +222,55 @@ export function ConfiguracoesClinicaView({
               </p>
             )}
           </div>
+
+          {/* Add-ons: cobrados por fora, cada um com cota própria */}
+          {plano.addons.length > 0 && (
+            <div className="mt-4 border-t border-slate-100 pt-3 dark:border-slate-800">
+              <p className="text-[11px] font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                Add-ons
+              </p>
+              {plano.addons.map((a) => {
+                const pct = Math.round((a.usados / a.incluidos) * 100)
+                const esgotado = a.usados >= a.incluidos
+                return (
+                  <div key={a.id} className="mt-2.5">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <button
+                          onClick={() => onAbrirAddon(a.secao)}
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-800 hover:underline dark:text-slate-200"
+                        >
+                          <Megaphone className="h-3.5 w-3.5" /> {a.nome}
+                        </button>
+                        <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                          {a.descricao}
+                        </p>
+                      </div>
+                      <span
+                        className={`shrink-0 text-xs font-medium tabular-nums ${
+                          esgotado
+                            ? 'text-red-600 dark:text-red-400'
+                            : 'text-slate-500 dark:text-slate-400'
+                        }`}
+                      >
+                        {a.usados}/{a.incluidos}
+                      </span>
+                    </div>
+                    <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+                      <div
+                        className={`h-full rounded-full ${esgotado ? 'bg-red-500' : 'bg-teal-500'}`}
+                        style={{ width: `${Math.min(pct, 100)}%` }}
+                      />
+                    </div>
+                    <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">
+                      Gerações do mês — post novo e refação contam igual. Renova em{' '}
+                      {dataCurta(a.renovaEm)}.
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </Card>
       </div>
 
@@ -238,6 +302,11 @@ export function ConfiguracoesClinicaView({
                           V2
                         </span>
                       )}
+                      {i.addon && (
+                        <span className="rounded bg-violet-50 px-1.5 py-0.5 text-[10px] font-medium text-violet-700 dark:bg-violet-950/40 dark:text-violet-300">
+                          Add-on
+                        </span>
+                      )}
                     </div>
                     <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                       {i.descricao}
@@ -247,13 +316,50 @@ export function ConfiguracoesClinicaView({
                         {i.modelo} · {i.versao}
                       </span>
                     )}
+                    {i.oauth && (
+                      <div className="mt-1.5">
+                        {i.ativa && i.conta ? (
+                          <>
+                            <p className="font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                              {i.conta}
+                            </p>
+                            {i.detalhe && (
+                              <p className="mt-0.5 text-[11px] text-slate-400 dark:text-slate-500">
+                                {i.detalhe}
+                              </p>
+                            )}
+                          </>
+                        ) : (
+                          <p className="text-[11px] text-slate-400 dark:text-slate-500">
+                            Nenhuma conta conectada — nada é publicado.
+                          </p>
+                        )}
+                        <p className="mt-1 text-[11px] leading-relaxed text-slate-400 dark:text-slate-500">
+                          Não há credencial para digitar: o app no Meta é da Nymos, já revisado.
+                          Conectar abre o consentimento e você escolhe a conta.
+                        </p>
+                      </div>
+                    )}
                   </div>
-                  <Switch
-                    ativo={i.ativa}
-                    disabled={i.indisponivel}
-                    onToggle={() => onToggleIntegracao(i)}
-                    label={`Ativar ${i.nome}`}
-                  />
+                  {i.oauth ? (
+                    <button
+                      onClick={() => onConectarIntegracao(i)}
+                      className={`shrink-0 rounded-lg px-2.5 py-1.5 text-xs font-medium ${
+                        i.ativa
+                          ? 'border border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800'
+                          : 'bg-teal-600 text-white hover:bg-teal-700'
+                      }`}
+                    >
+                      {i.ativa ? 'Desconectar' : 'Conectar'}
+                    </button>
+                  ) : (
+                    <Switch
+                      ativo={i.ativa}
+                      disabled={i.indisponivel}
+                      onToggle={() => onToggleIntegracao(i)}
+                      label={`Ativar ${i.nome}`}
+                    />
+                  )}
                 </div>
               )
             })}
