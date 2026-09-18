@@ -6,7 +6,7 @@ import { EmptyState } from '@/components/EmptyState'
 import { StepIndicator, type StepStatus } from '@/components/StepIndicator'
 import { NextPhaseButton } from '@/components/NextPhaseButton'
 import { loadProductData } from '@/lib/product-loader'
-import { ChevronRight, Layout } from 'lucide-react'
+import { ChevronRight, Layout, Palette } from 'lucide-react'
 
 // Map Tailwind color names to actual color values for preview
 const colorMap: Record<string, { light: string; base: string; dark: string }> = {
@@ -157,6 +157,29 @@ export function DesignPage() {
                     </div>
                   </div>
                 )}
+
+                {/* Brand manual link */}
+                <div className="pt-2 border-t border-stone-100 dark:border-stone-800">
+                  <Link
+                    to="/brand"
+                    className="flex items-center justify-between gap-4 py-2 hover:text-stone-900 dark:hover:text-stone-100 transition-colors group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-md bg-stone-200 dark:bg-stone-700 flex items-center justify-center">
+                        <Palette className="w-4 h-4 text-stone-600 dark:text-stone-300" strokeWidth={1.5} />
+                      </div>
+                      <div>
+                        <span className="font-medium text-stone-700 dark:text-stone-300 group-hover:text-stone-900 dark:group-hover:text-stone-100">
+                          Brand Manual
+                        </span>
+                        <p className="text-xs text-stone-500 dark:text-stone-400">
+                          Logo, colour, type, components and the rules behind them
+                        </p>
+                      </div>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-stone-400 dark:text-stone-500" strokeWidth={1.5} />
+                  </Link>
+                </div>
 
                 {/* Edit hint */}
                 <div className="bg-stone-100 dark:bg-stone-800 rounded-md px-4 py-2.5">
