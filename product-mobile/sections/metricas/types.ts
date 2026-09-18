@@ -5,7 +5,7 @@
 // O backend não envia esses campos — são computados no frontend a partir
 // do array de Metric e formatados pra exibição.
 
-import type { Metric, MetricTypeInfo } from '../../api-types'
+import type { Metric, MetricTypeInfo, CompositeFieldDefinition } from '../../api-types'
 
 export type Periodo = 'hoje' | '7d' | '30d' | '6m' | '1a'
 
@@ -94,3 +94,122 @@ export interface MetricasProps {
 // Backwards-compat alias for the old `Metrica` type used in components.
 // Antes era um tipo flat; agora é o view-model. O alias simplifica migração.
 export type Metrica = MetricaViewModel
+
+// ─────────────────────────────────────────────────────────────────────────
+// Tela de Detalhe da Métrica
+// ─────────────────────────────────────────────────────────────────────────
+
+/** Períodos do filtro na tela de detalhe (abre em 7d). */
+export type PeriodoDetalhe = '7d' | '30d' | '3m' | '6m' | '1a'
+
+export interface PeriodoDetalheOpcao {
+  id: PeriodoDetalhe
+  label: string
+}
+
+/** Ponto datado da série temporal exibida no gráfico/histórico. */
+export interface SeriePonto {
+  /** ISO date (ex: '2026-05-14') */
+  t: string
+  v: number
+  /** Rótulo curto pra eixo X / histórico (ex: '14 mai') */
+  rotulo: string
+  /** Fonte humanizada da leitura (ex: 'Apple Watch') */
+  fonte?: string
+}
+
+/** Estatísticas agregadas do período selecionado. */
+export interface MetricaDetalheStats {
+  min: number
+  max: number
+  media: number
+  unidade: string
+}
+
+/** Faixa normal de referência (sombreada no gráfico), quando houver. */
+export interface FaixaNormal {
+  min: number | null
+  max: number | null
+}
+
+export interface MetricaDetalheProps {
+  /** View-model da métrica (header: ícone, nome, valor atual, delta, fonte). */
+  metrica: MetricaViewModel
+  periodos: PeriodoDetalheOpcao[]
+  periodoSelecionado: PeriodoDetalhe
+  /** Série já filtrada pro período selecionado (mais antigo → mais recente). */
+  serie: SeriePonto[]
+  stats: MetricaDetalheStats
+  faixaNormal?: FaixaNormal
+  /** Adiciona espaço no topo pra notch quando renderizada full-frame (sem status bar da shell). */
+  safeTop?: boolean
+  onPeriodoChange?: (p: PeriodoDetalhe) => void
+  onVoltar?: () => void
+  onAdicionarClick?: () => void
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Cadastrar registro de métrica
+// ─────────────────────────────────────────────────────────────────────────
+
+/** Opção selecionável no picker de métrica do formulário de cadastro. */
+export interface MetricaOpcao {
+  id: string
+  label: string
+  unit: string
+  iconeNome: string
+  iconeCor: string
+  iconeBg: string
+  /** 'number' | 'composite' */
+  dataType: string
+  compositeFields: Record<string, CompositeFieldDefinition> | null
+}
+
+export interface AdicionarMetricaCategoria {
+  id: CategoriaMetrica
+  label: string
+  opcoes: MetricaOpcao[]
+}
+
+/** Campo de entrada de uma métrica derivada (ex: peso e altura pro IMC). */
+export interface DerivacaoCampo {
+  key: string
+  label: string
+  unit: string
+  placeholder?: string
+}
+
+/**
+ * Configuração de uma métrica **calculada** a partir de mais de uma entrada.
+ * Ex: IMC = peso / altura². A fórmula vive no preview (domínio), o componente
+ * só renderiza os campos e mostra o resultado.
+ */
+export interface DerivacaoConfig {
+  campos: DerivacaoCampo[]
+  unidade: string
+  /** Retorna o valor calculado, ou null se entradas insuficientes/ inválidas. */
+  calcular: (valores: Record<string, number>) => number | null
+}
+
+/** Payload emitido ao salvar um registro manual. */
+export interface NovoRegistro {
+  metricaId: string
+  /** Valor escalar (number) ou mapa de campos (composite/derivado calculado). */
+  valor: number | Record<string, number>
+  /** Entradas brutas quando o valor é calculado (ex: { peso, altura } pro IMC). */
+  entradas?: Record<string, number>
+  data: string
+  hora: string
+  nota?: string
+}
+
+export interface AdicionarMetricaProps {
+  categorias: AdicionarMetricaCategoria[]
+  /** Métrica pré-selecionada (ex: vindo do detalhe). */
+  selecionadaId?: string | null
+  /** Métricas calculadas (id → config). Ex: { bmi: { campos:[peso,altura], calcular } }. */
+  derivacoes?: Record<string, DerivacaoConfig>
+  safeTop?: boolean
+  onVoltar?: () => void
+  onSalvar?: (registro: NovoRegistro) => void
+}

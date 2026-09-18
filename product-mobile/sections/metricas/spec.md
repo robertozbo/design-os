@@ -61,13 +61,12 @@ Card horizontal `slate-900` border `slate-800` `rounded-2xl` p-3, full width:
   - Delta abaixo: `↑ +1,2%` ou `↓ -0,3 kg` em mono pequeno colorido
 - Tap → detalhe (sub-rota `/metricas/[id]`)
 
-### Detalhe (V2 — fora deste MVP de tela)
+### Telas relacionadas (seções dedicadas)
 
-- Gráfico grande SVG (line chart)
-- Histórico tabular
-- Range picker custom
-- Botão "Registrar manualmente"
-- Comparação com população (futuro)
+A lista navega pra duas telas full-screen (seções próprias, `shell: false`), via rota com query param:
+
+- **`metricas-detalhe`** — tocar numa métrica → `/mobile/sections/metricas-detalhe?m=[id]`. Gráfico grande interativo, filtro de período (7d→1a), stats e histórico. Ver spec da seção.
+- **`metricas-adicionar`** — "+" no header ou "Adicionar registro" no detalhe → `/mobile/sections/metricas-adicionar?m=[id]`. Formulário de cadastro manual. Ver spec da seção.
 
 ### Métricas inclusas (MVP)
 

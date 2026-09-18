@@ -1,0 +1,5 @@
+{
+  "_meta": {
+    "note": "As opções de métrica vêm do catálogo da seção `metricas` (product-mobile/sections/metricas/data.json), derivadas no preview via opcoesPorCategoria(). A métrica pré-selecionada vem do query param `?m=[id]`."
+  }
+}

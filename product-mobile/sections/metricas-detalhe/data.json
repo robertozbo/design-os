@@ -1,0 +1,5 @@
+{
+  "_meta": {
+    "note": "Esta tela reutiliza os dados da seção `metricas` (product-mobile/sections/metricas/data.json). A métrica exibida é selecionada via query param `?m=[id]`; a série temporal é derivada do sparkline no preview."
+  }
+}
