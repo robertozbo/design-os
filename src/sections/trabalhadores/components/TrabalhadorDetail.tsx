@@ -78,14 +78,19 @@ const PARTICIPACAO_TONE: Record<
   ParticipacaoCampanha,
   { label: string; pill: string; icon: React.ReactNode }
 > = {
-  concluida: {
-    label: 'Concluída',
+  elegivel: {
+    label: 'Elegível',
     pill: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 ring-emerald-200/60 dark:ring-emerald-900/50',
     icon: <CheckCircle2 className="w-3 h-3" strokeWidth={2} />,
   },
-  pulou: {
-    label: 'Pulou',
+  sem_canal: {
+    label: 'Sem canal de contato',
     pill: 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 ring-amber-200/60 dark:ring-amber-900/50',
+    icon: <AlertCircle className="w-3 h-3" strokeWidth={2} />,
+  },
+  opt_out: {
+    label: 'Opt-out do ciclo',
+    pill: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 ring-slate-200/60 dark:ring-slate-700',
     icon: <CircleDashed className="w-3 h-3" strokeWidth={2} />,
   },
   em_curso: {
@@ -140,6 +145,7 @@ export function TrabalhadorDetail({
   const hasAcess = trabalhador.acessibilidade.length > 0
   const semCanal = trabalhador.canalContato.status === 'sem_canal'
   const optOut = trabalhador.canalContato.status === 'opt_out_ciclo'
+  const semEmail = trabalhador.emailCorporativo === ''
 
   const modoAplicacao = semCanal
     ? { label: 'Não elegível para campanha', tone: 'amber', helper: 'Sem canal de contato individual — excluído de campanhas. Plataforma não usa canais de terceiros (anti-coerção).' }
