@@ -213,6 +213,16 @@ export function Glp1({
     setStats(calcularStats(novo, novosPontos, aplicacoes, stats, dosesRegistradas))
     setWizardOpen(false)
     onSalvarConfiguracao?.(payload)
+
+    // Primeiro acesso: o onboarding só termina quando a primeira dose entra.
+    // Emenda o modal de aplicação logo depois do wizard em vez de largar o
+    // paciente num painel sem nenhum registro.
+    const primeiraVez = !config && aplicacoes.length === 0
+    if (primeiraVez) {
+      mostrarToast('Agora registre sua primeira dose')
+      window.setTimeout(() => setDoseOpen(true), 260)
+      return
+    }
     mostrarToast('Acompanhamento configurado')
   }
 
@@ -349,7 +359,11 @@ export function Glp1({
         />
       </div>
 
-      <HistoricoAplicacoes aplicacoes={aplicacoes} onVerTodas={onVerHistoricoCompleto} />
+      <HistoricoAplicacoes
+        aplicacoes={aplicacoes}
+        onVerTodas={onVerHistoricoCompleto}
+        onRegistrarPrimeira={() => setDoseOpen(true)}
+      />
 
       <button
         onClick={onFalarComMedico}

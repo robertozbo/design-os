@@ -13,6 +13,8 @@ export default function Glp1SetupPreview() {
     configuracao: null,
     stats: null,
     aplicacoes: [],
+    // Paciente novo não tem histórico de peso: a curva nasce do peso do wizard.
+    evolucaoPeso: [],
   } satisfies Glp1Data
 
   return (

@@ -50,7 +50,44 @@ export function EvolucaoPesoChart({ pontos, meta, projecao, destaque = false }: 
     return [...reais.slice(-semanas), ...proj]
   }, [pontos, periodo])
 
-  if (visiveis.length < 2) return null
+  // Paciente recém-configurado: existe um peso só, não existe curva. Em vez de
+  // sumir com o bloco, mostra o ponto de partida e o que falta pra meta.
+  if (visiveis.length < 2) {
+    const partida = visiveis[0]?.pesoKg ?? null
+    return (
+      <div className="mx-4 mb-4 rounded-2xl bg-slate-900 border border-slate-800 px-4 py-4">
+        <div className="flex items-center gap-2">
+          <TrendingDown size={14} className="text-teal-300" />
+          <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500">
+            Evolução do peso
+          </span>
+        </div>
+        <div className="mt-3 flex items-end gap-6">
+          <div>
+            <div className="font-mono tabular-nums text-slate-50 text-[24px] font-bold leading-none">
+              {partida !== null ? partida.toFixed(1).replace('.', ',') : '--'}
+              <span className="text-slate-500 text-[12px] font-normal"> kg</span>
+            </div>
+            <div className="mt-1 text-slate-500 text-[11px]">hoje</div>
+          </div>
+          <div>
+            <div className="font-mono tabular-nums text-amber-300 text-[17px] font-semibold leading-none">
+              {meta.pesoAlvoKg.toFixed(1).replace('.', ',')}
+              <span className="text-amber-300/60 text-[11px] font-normal"> kg</span>
+            </div>
+            <div className="mt-1 flex items-center gap-1 text-slate-500 text-[11px]">
+              <Target size={10} className="text-amber-300/70" />
+              meta
+            </div>
+          </div>
+        </div>
+        <p className="mt-3 text-slate-400 text-[11.5px] leading-snug">
+          Registre o peso a cada aplicação. Na segunda pesagem a curva com projeção
+          até a meta aparece aqui.
+        </p>
+      </div>
+    )
+  }
 
   const valores = visiveis.map((p) => p.pesoKg)
   const min = Math.min(...valores, meta.pesoAlvoKg) - 1

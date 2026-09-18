@@ -1,4 +1,4 @@
-import { ChevronRight, MapPin } from 'lucide-react'
+import { ChevronRight, MapPin, Syringe } from 'lucide-react'
 import {
   SITIO_LABELS,
   type Glp1Aplicacao,
@@ -7,6 +7,8 @@ import {
 interface Props {
   aplicacoes: Glp1Aplicacao[]
   onVerTodas?: () => void
+  /** Onboarding recém-concluído: nenhuma aplicação ainda. */
+  onRegistrarPrimeira?: () => void
 }
 
 const DOR_COLOR = (n: number): string => {
@@ -26,8 +28,32 @@ function dia(iso: string): string {
   return `${d}/${m}`
 }
 
-export function HistoricoAplicacoes({ aplicacoes, onVerTodas }: Props) {
-  if (aplicacoes.length === 0) return null
+export function HistoricoAplicacoes({
+  aplicacoes,
+  onVerTodas,
+  onRegistrarPrimeira,
+}: Props) {
+  if (aplicacoes.length === 0) {
+    return (
+      <div className="mx-4 mb-4 rounded-2xl bg-slate-900 border border-dashed border-slate-700 px-4 py-5 text-center">
+        <div className="mx-auto w-9 h-9 rounded-xl bg-teal-500/15 flex items-center justify-center">
+          <Syringe size={16} strokeWidth={2.2} className="text-teal-300" />
+        </div>
+        <div className="mt-2.5 text-slate-100 text-[13.5px] font-semibold">
+          Nenhuma aplicação registrada
+        </div>
+        <p className="mt-1 text-slate-400 text-[11.5px] leading-snug">
+          Registre a primeira dose pra começar a acompanhar adesão, sítios e peso.
+        </p>
+        <button
+          onClick={onRegistrarPrimeira}
+          className="mt-3.5 w-full rounded-xl bg-teal-500 py-2.5 text-[13px] font-semibold text-slate-950 active:scale-[0.99] transition-transform"
+        >
+          Registrar primeira aplicação
+        </button>
+      </div>
+    )
+  }
 
   return (
     <div className="mx-4 mb-4 rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden">

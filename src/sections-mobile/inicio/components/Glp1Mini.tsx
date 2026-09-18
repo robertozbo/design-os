@@ -1,4 +1,4 @@
-import { ChevronRight, Syringe, TrendingDown, Clock, AlertTriangle } from 'lucide-react'
+import { Syringe, TrendingDown, Clock, AlertTriangle } from 'lucide-react'
 import type { Glp1Preview } from '@/../product-mobile/sections/inicio/types'
 
 interface Props {
@@ -27,7 +27,9 @@ export function Glp1Mini({ glp1, onClick }: Props) {
             Doses, local de aplicação e curva de peso
           </div>
         </div>
-        <ChevronRight size={15} className="text-slate-500 shrink-0" />
+        <span className="shrink-0 rounded-lg bg-teal-500 px-3 py-1.5 text-[12px] font-semibold text-slate-950">
+          Iniciar
+        </span>
       </button>
     )
   }

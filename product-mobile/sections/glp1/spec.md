@@ -19,7 +19,7 @@ Treinos). Dois estados:
 
 | Estado | Conteúdo |
 |---|---|
-| **Convite** (`configurado: false`) | Card tracejado "Usa GLP-1? Acompanhe aqui" → abre o wizard |
+| **Convite** (`configurado: false`) | Card tracejado "Usa GLP-1? Acompanhe aqui" + botão **Iniciar** `teal-500` → abre o wizard |
 | **Ativo** | Medicamento + dose, peso atual, kg perdidos, sparkline de 7 pesos, kg que faltam pra meta, próxima dose e botão **Nova dose** |
 
 O botão "Nova dose" do card pula direto pro formulário de aplicação — sem passar
@@ -27,7 +27,9 @@ pela section.
 
 ## User Flows
 
-- Paciente sem configuração → toca no card → **wizard de 6–7 passos** → painel pronto
+- Paciente sem configuração → toca em **Iniciar** → **wizard de 6–7 passos** → o modal de
+  aplicação abre emendado ("Agora registre sua primeira dose") → painel com a primeira dose
+  e o peso do dia já lançados
 - Paciente configurado → toca no card → painel com stats, gráfico e histórico
 - Paciente toca **Nova dose** → modal único (local, dose, medicamento, dor, observação,
   peso do dia) → **Salvar aplicação** → modal fecha, toast confirma e a tela rola até o
@@ -75,6 +77,11 @@ Ordem vertical:
    peso do dia, chip de dor colorido por faixa (0–2 emerald, 3–5 amber, 6–8 orange, 9–10 rose),
    observação em linha própria. Últimas 5 + "Ver todas".
 5. **Compartilhar com meu médico** + disclaimer.
+
+**Painel zerado (logo após o wizard).** Sem aplicação, o histórico vira card tracejado
+"Nenhuma aplicação registrada" com botão **Registrar primeira aplicação**. Com um único
+peso não há curva: o gráfico mostra peso de hoje, meta e a frase "na segunda pesagem a
+curva aparece aqui" — nunca some da tela.
 
 ### 3. Modal de nova dose (`NovaDoseModal`)
 
