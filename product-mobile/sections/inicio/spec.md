@@ -12,7 +12,7 @@ Tela de entrada do app. Painel diário **acionável**: responde "o que faço ago
 
 - Usuário abre o app → cai na Início (default tab) → em <1s vê: saudação + streak + status do dia + próxima ação esperada
 - Usuário com **plano do nutri ativo** vê card "Plano de Hoje" no topo e toca pra ver as 5 refeições prescritas
-- Usuário sem plano (free) vê anel de calorias + meta diária como CTA principal
+- Usuário sem plano (free) vê o card de Nutrição + meta diária como CTA principal
 - Usuário toca em **mini-stat de peso** → vai pra Minha Saúde / Métricas
 - Usuário toca em **mini-stat de sono** → vai pra Métricas filtrada em sono
 - Usuário toca em **quick action (Nutrição/Atividades/Treinos)** → vai registrar
@@ -30,8 +30,8 @@ Ordem dos blocos (sempre na mesma posição, alguns condicionais):
 
 1. **Hero contextual** (sempre)
 2. **Banner "Novidade"** (condicional)
-3. **Card "Plano de Hoje"** (se houver plano ativo) OU **Anel de calorias** (se não)
-4. **Anel de calorias** (sempre — quando há plano, vem abaixo do card de plano)
+3. **Card "Plano de Hoje"** (se houver plano ativo)
+4. **Card de Nutrição** (sempre — quando há plano, vem abaixo do card de plano)
 5. **Strip horizontal de mini-stats** (sempre)
 6. **Quick actions** (3 cards)
 
@@ -80,26 +80,46 @@ Card grande `teal-500/8` background, border `teal-500/20`, `rounded-2xl` p-5:
 - **Footer:** chevron + "Ver plano completo"
 - Tap em qualquer área → abre Plano Alimentar (sub-rota de Nutrição)
 
-**Estado vazio (free, sem plano):** este card **NÃO aparece**. Anel de calorias sobe pra posição 3.
+**Estado vazio (free, sem plano):** este card **NÃO aparece**. O card de Nutrição sobe pra posição 3.
 
-### 4. Anel de calorias
+### 4. Card de Nutrição
 
-Componente central. Anel circular SVG:
+Card `slate-900` `rounded-2xl` com quatro faixas. É onde o paciente **registra** —
+o anel sozinho só informava.
 
-- **Diâmetro:** 240px (reduzido de 280 pra dar espaço ao plano acima)
-- **Track:** `slate-800` 12px stroke
-- **Progress arc:** gradiente `teal-500 → sky-400`, 12px stroke, animado ao montar (1s ease-out)
-- **Centro:**
-  - Número grande mono 56px bold tabular-nums (kcal consumidas)
-  - "kcal consumidas" DM Sans 13px `slate-300`
-  - "meta diária / [Y]" DM Sans 12px `slate-500`
-- **Legenda abaixo do anel:**
-  - `●` `sky-400` "Consumidas X kcal"
-  - `●` `coral` (rose-400) "Gastas Y kcal"
-- **Estados:**
-  - Acima da meta: gradiente vira `amber-400 → rose-400`, centro mostra "+N kcal acima"
-  - Sem meta definida: anel vazio com CTA central "Definir meta"
-- Tap no anel → vai pra Nutrição com foco em macros do dia
+- **Header:** ícone garfo/faca `teal-300` + "Nutrição" 15px semibold + botão **`+`**
+  circular 36px (`slate-800`, borda `slate-700`, `Plus` teal) na ponta direita
+- **Anel:** arco aberto de 270° (abre na base), 168px, stroke 13px
+  - Track `slate-800`; progresso em gradiente `teal-500 → sky-400`, animado (1s)
+  - Centro: kcal restantes mono 32px bold · "kcal restantes" 11,5px · "X de Y" 10px `slate-600`
+  - Acima da meta: gradiente vira `amber-400 → rose-400` e o número vira `+N` rose
+  - Sem meta: centro vira CTA "Definir meta"
+- **Macros:** 3 colunas (Proteína · Carbo · Gordura) com barra de 5px na cor do macro
+  e `consumido/meta` mono abaixo. Os mesmos 3 da section Nutrição — dashboard e
+  detalhe não podem divergir
+- **Último registro do dia:** emoji + "Café da manhã · Meu cardápio" + "08:00 · 410 kcal".
+  Sem nada registrado hoje vira CTA "Nada registrado hoje · comece pela foto do prato",
+  que abre o mesmo sheet do `+`
+- **Rodapé:** "Ver cardápio completo ›" `teal-300`
+
+> A **próxima** refeição do cardápio fica no card "Plano de Hoje" (com os macros da
+> refeição). Aqui vai a **última registrada** — senão a mesma linha aparece duas vezes
+> em cards vizinhos.
+
+Tap no anel ou no último registro → Nutrição.
+
+#### Sheet do "+" (`RegistrarRefeicaoSheet`)
+
+Bottom sheet `rounded-t-3xl` `slate-900` com três caminhos, foto primeiro porque é o
+do dia a dia:
+
+| Opção | Peso visual | Texto |
+|---|---|---|
+| **Foto do prato** | Card `teal-500` cheio, ícone câmera | "A IA identifica os alimentos e estima calorias e macros" |
+| Buscar alimento | `slate-800/60`, ícone lupa `sky-300` | "Tabela TACO e marcas do mercado brasileiro" |
+| Do meu cardápio | `slate-800/60`, ícone prancheta `amber-300` | "Marque a refeição planejada como consumida" — **some** sem cardápio ativo |
+
+Escolha dispara `onRegistrarRefeicao(modo)` e fecha o sheet.
 
 ### 5. Strip horizontal de mini-stats
 
@@ -145,7 +165,7 @@ Grid 3-col, abaixo da strip de stats:
 
 ### Estados especiais
 
-- **Loading:** skeletons matchando layout (hero placeholder, anel cinza pulsante, strip com chips cinza)
+- **Loading:** skeletons matchando layout (hero placeholder, card de nutrição cinza pulsante, strip com chips cinza)
 - **Erro de sync:** banner topo `amber-500/20` com texto + "Tentar novamente"
 - **Onboarding (1º acesso):** todos os blocos viram CTAs convidativos: "Conecte um wearable", "Adicione seu primeiro registro", "Defina sua meta"
 

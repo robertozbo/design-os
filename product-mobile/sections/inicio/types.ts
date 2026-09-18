@@ -105,6 +105,53 @@ export interface AnelCalorias {
   semMeta: boolean
 }
 
+/**
+ * Macro em destaque no card de Nutrição — recorte de MacroResumo (section
+ * nutricao) com só o que a barra do dashboard precisa desenhar.
+ */
+export interface MacroPreview {
+  /** = NutritionGoal field ('protein', 'carbohydrates', 'fiber', 'fat') */
+  id: string
+  label: string
+  unidade: string
+  consumido: number
+  meta: number
+  /** Cor da barra — hex pra não depender de classe dinâmica do Tailwind. */
+  hex: string
+}
+
+/**
+ * Última refeição registrada hoje (MealLog mais recente). É o espelho do "+":
+ * mostra o que acabou de entrar. A PRÓXIMA refeição do cardápio vive no card
+ * "Plano de Hoje" — repetir aqui deixaria a mesma linha em dois cards vizinhos.
+ */
+export interface RefeicaoPreview {
+  /** Emoji do tipo de refeição — ☕ 🥗 🍽️ 🍎 */
+  emoji: string
+  /** "Meu cardápio" quando veio do plano, "Registro avulso" quando não. */
+  origem: string
+  /** "Café da manhã" */
+  refeicaoLabel: string
+  /** "08:00" */
+  horario: string
+  kcal: number
+}
+
+/**
+ * Card de Nutrição do dashboard: anel de calorias + macros + próxima refeição.
+ * O "+" do header registra uma refeição — por foto do prato, busca ou cardápio.
+ */
+export interface NutricaoResumo {
+  anel: AnelCalorias
+  /** 3 macros em destaque (proteína, carboidrato, fibra). */
+  macros: MacroPreview[]
+  /** null = nada registrado hoje; o bloco vira CTA de primeiro registro. */
+  ultimaRefeicao: RefeicaoPreview | null
+}
+
+/** Como o paciente quer registrar a refeição a partir do "+". */
+export type RegistroRefeicaoModo = 'foto' | 'busca' | 'cardapio'
+
 export type StatTendencia = 'up' | 'down' | 'stable'
 
 /**
@@ -217,7 +264,7 @@ export interface InicioData {
   /** Aparece SÓ se o paciente está vinculado a um médico Nymos Clínico com prescrição ativa. */
   medicacaoHoje: MedicacaoHojePreview | null
   plano: PlanoHoje
-  anelCalorias: AnelCalorias
+  nutricao: NutricaoResumo
   miniStats: MiniStat[]
   semanaAtiva: SemanaAtiva
   quickActions: QuickAction[]
@@ -231,7 +278,9 @@ export interface InicioProps {
   onNovidadeDismiss?: (id: string) => void
   onSaudeClick?: () => void
   onPlanoClick?: () => void
-  onAnelClick?: () => void
+  onNutricaoClick?: () => void
+  onRegistrarRefeicao?: (modo: RegistroRefeicaoModo) => void
+  onVerCardapio?: () => void
   onMiniStatClick?: (stat: MiniStat) => void
   onSemanaClick?: () => void
   onQuickActionClick?: (action: QuickAction) => void
