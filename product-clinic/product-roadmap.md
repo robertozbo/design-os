@@ -154,7 +154,7 @@ conjunto de regras é o conselho do **autor**, não a clínica.
 Publica pela Content Publishing API do Instagram (conta Business/Creator, container → publish, 50
 posts/dia por conta, token de ~60 dias com reconexão guiada). Sem vídeo: não existe Reels aqui.
 **O app mobile do profissional — ditar post do celular entre consultas — é ferramenta separada,
-produto próprio, não uma tela do app do paciente.** `id: publicacoes`.
+produto próprio, não uma tela do app do paciente.** Vive no grupo **Marketing** do nav do admin. `id: publicacoes`.
 
 ## V3+ (ou parceria SaMD)
 

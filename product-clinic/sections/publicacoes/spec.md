@@ -3,8 +3,10 @@
 ## Overview
 A fila de conteúdo da clínica para o Instagram: o profissional **dita ou escreve uma pauta**, a IA
 devolve um post pronto (legenda, hashtags e os cartões no template da marca), e alguém **revisa
-antes de agendar**. Nada sai sozinho. Rota própria (`/clinic/sections/publicacoes`), grupo
-**Operacional** do admin.
+antes de agendar**. Nada sai sozinho. Rota própria (`/clinic/sections/publicacoes`), no grupo
+**Marketing** do nav do admin — grupo próprio porque é add-on: clínica que não contrata não vê a
+seção inteira, em vez de um item sumindo do meio do Operacional. É onde entram as próximas telas do
+módulo.
 
 É a superfície do **add-on pago Marketing** — o único módulo da clínica com cota própria
 (`N posts/mês`) porque tem custo variável de IA e de publicação. A tela mostra a cota onde ela
@@ -165,7 +167,10 @@ máquina, e não precisa: o que interessa são cinco hexadecimais.
 
 ## Design Notes
 - Nymos (teal, DM Sans), light/dark, props-based. Datas e números em pt-BR.
-- Persona: **admin** (gestor da clínica). O nav do médico não recebe o link no V1 — quem opera o
+- Persona: **admin** (gestor da clínica), no grupo **Marketing** — mesmo nome do add-on em
+  *Plano & limites → Módulos*, para o que a clínica compra ser o que ela vê no menu. "Comercial"
+  foi descartado: numa clínica puxa para venda e convênio, que são do Financeiro. O nav do médico
+  não recebe o link no V1 — quem opera o
   marketing da clínica é a gestão; o profissional entra como **autor** do post, e é o conselho dele
   que define as regras aplicadas.
 - shell: true

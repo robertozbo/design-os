@@ -103,12 +103,19 @@ export const NAV_ADMIN: NavGroup[] = [
     items: [
       { label: 'Agenda', href: s('agenda'), icon: Calendar },
       { label: 'WhatsApp', href: s('agendamento-whatsapp'), icon: MessageCircle },
-      // Add-on pago Marketing. Fica no Operacional do admin porque quem opera o
-      // conteúdo da clínica é a gestão — o profissional entra como autor do post,
-      // e é o conselho dele que define as regras que o validador aplica.
-      { label: 'Publicações', href: s('publicacoes'), icon: Megaphone },
       { label: 'Configurações', href: s('configuracoes-clinica'), icon: SettingsIcon },
     ],
+  },
+  {
+    // Grupo próprio, com um item só — de propósito. Marketing é add-on vendido à
+    // parte, e o grupo é a fronteira dele: clínica que não contrata não vê a seção
+    // inteira, em vez de um item sumindo do meio do Operacional. É também onde entram
+    // as próximas telas do módulo (métricas de conteúdo, campanhas).
+    //
+    // "Marketing" e não "Comercial": é o nome do add-on em Plano & limites → Módulos,
+    // e comercial numa clínica puxa para venda e convênio, que são do Financeiro.
+    label: 'Marketing',
+    items: [{ label: 'Publicações', href: s('publicacoes'), icon: Megaphone }],
   },
 ]
 
