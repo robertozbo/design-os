@@ -53,7 +53,7 @@ export function MainNav({
         <button
           onClick={onCloseMobile}
           className="md:hidden p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-          aria-label="Close menu"
+          aria-label="Fechar menu"
         >
           <X className="w-4 h-4" />
         </button>
@@ -108,7 +108,7 @@ export function MainNav({
           dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200
           ${isCollapsed ? 'justify-center' : ''}
         `}
-        aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        aria-label={isCollapsed ? 'Expandir barra lateral' : 'Recolher barra lateral'}
       >
         {isCollapsed ? (
           <ChevronsRight className="w-4 h-4" />
