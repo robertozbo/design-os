@@ -188,8 +188,20 @@ export type AbaPublicacoes = 'fila' | 'configuracoes'
 export interface PadroesMarca {
   tom: string
   template: TemplateId
-  /** Cor de acento dos cartões — a mesma chave de `Midia.acento`. */
+  /**
+   * Cor de acento dos cartões.
+   *
+   * Ou uma chave da paleta da marca (`teal`), ou um hex vindo do logo da clínica
+   * (`#0f766e`) — e é por isso que é `string` e não uma união fechada.
+   */
   acento: string
+  /**
+   * As cores extraídas do logo, na ordem de dominância.
+   *
+   * Guardadas porque a extração acontece uma vez, no upload: sem isso, trocar de
+   * acento depois exigiria subir o logo de novo.
+   */
+  paletaImportada: string[]
   autorPadrao: Autor
   /** Fecho fixo colado no fim de toda legenda. Vazio = sem CTA. */
   ctaFixo: string
@@ -198,6 +210,36 @@ export interface PadroesMarca {
    * exigem identificação do responsável técnico na peça publicitária.
    */
   mostrarRegistro: boolean
+}
+
+/**
+ * O que o conteúdo da clínica está tentando conseguir.
+ *
+ * Um só, não vários: "captar e educar e fidelizar" é o mesmo que nenhum — o objetivo
+ * existe para decidir o fecho de cada post, e três objetivos não decidem nada.
+ */
+export type ObjetivoConteudo = 'captar' | 'educar' | 'fidelizar' | 'divulgar-servicos'
+
+/**
+ * O contexto de negócio que entra em toda geração.
+ *
+ * Não repete o cadastro: razão social, CNPJ e endereço moram em Configurações da
+ * clínica, e as especialidades saem da Equipe. Aqui fica só o que é decisão de
+ * comunicação — e que ninguém consegue inferir do CNPJ.
+ */
+export interface ContextoNegocio {
+  objetivo: ObjetivoConteudo
+  /** Quem é o paciente típico, em uma linha. */
+  publico: string
+  /** O que a clínica é e no que se diferencia. Vira contexto do prompt. */
+  descricao: string
+  /**
+   * Termos que a clínica não quer ver num post.
+   *
+   * Vira **aviso** no validador de publicidade — não bloqueio: é preferência da casa,
+   * não vedação de conselho, e misturar as duas coisas ensina a ignorar as duas.
+   */
+  evitar: string[]
 }
 
 export type QuemAprova = 'gestor' | 'gestor-e-autor' | 'qualquer'
@@ -217,6 +259,9 @@ export interface PublicacoesData {
   conta: ContaConectada
   quota: QuotaAddon
   pauta: PautaSemanal
+  contexto: ContextoNegocio
+  /** Só leitura aqui: vem do cadastro da clínica e da Equipe. */
+  clinica: { nome: string; especialidades: string[] }
   padroes: PadroesMarca
   regras: RegrasAprovacao
   publicacoes: Publicacao[]
@@ -256,4 +301,5 @@ export interface PublicacoesProps extends PublicacoesData {
   onDesconectarConta?: () => void
   onSalvarPadroes?: (p: PadroesMarca) => void
   onSalvarRegras?: (r: RegrasAprovacao) => void
+  onSalvarContexto?: (c: ContextoNegocio) => void
 }

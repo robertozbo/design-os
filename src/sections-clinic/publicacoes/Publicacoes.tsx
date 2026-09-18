@@ -2,6 +2,8 @@ import { useState } from 'react'
 import data from '@/../product-clinic/sections/publicacoes/data.json'
 import type {
   AbaPublicacoes,
+  ContextoNegocio,
+  ObjetivoConteudo,
   Slide,
   BriefValues,
   ContaConectada,
@@ -38,6 +40,7 @@ export default function PublicacoesPreview() {
   const [conta, setConta] = useState<ContaConectada>(base.conta)
   const [quota, setQuota] = useState<QuotaAddon>(base.quota)
   const [pauta, setPauta] = useState<PautaSemanal>(base.pauta)
+  const [contexto, setContexto] = useState<ContextoNegocio>(base.contexto)
   const [padroes, setPadroes] = useState<PadroesMarca>(base.padroes)
   const [regras, setRegras] = useState<RegrasAprovacao>(base.regras)
   const [aba, setAba] = useState<AbaPublicacoes>('fila')
@@ -95,14 +98,14 @@ export default function PublicacoesPreview() {
     // passa por `gerando` — é o estado em que a fila fica e que a tela precisa
     // saber desenhar.
     setTimeout(() => {
-      const legenda = redigir(brief.tema, brief.tom, padroes.ctaFixo)
+      const legenda = redigir(brief.tema, brief.tom, padroes.ctaFixo, contexto.objetivo)
       patch(id, {
         status: 'revisar',
         versoes: 1,
         legenda,
         hashtags: hashtagsDe(brief.tema),
         slides: slidesDe(brief.tema, brief.formato),
-        alertas: validarLegenda(legenda, AUTOR_PADRAO.conselho),
+        alertas: validarLegenda(legenda, AUTOR_PADRAO.conselho, contexto.evitar),
       })
       pushToast('Post gerado — falta você revisar')
     }, 1400)
@@ -121,7 +124,7 @@ export default function PublicacoesPreview() {
         legenda,
         aprovadoPor: null,
         agendadoPara: atual.status === 'agendado' ? null : atual.agendadoPara,
-        alertas: validarLegenda(legenda, atual.autor.conselho),
+        alertas: validarLegenda(legenda, atual.autor.conselho, contexto.evitar),
       })
       pushToast(`Reescrito · versão ${atual.versoes + 1}`)
     }, 1100)
@@ -130,7 +133,7 @@ export default function PublicacoesPreview() {
   const editarLegenda = (id: string, legenda: string) => {
     const atual = publicacoes.find((p) => p.id === id)
     if (!atual) return
-    const alertas = validarLegenda(legenda, atual.autor.conselho)
+    const alertas = validarLegenda(legenda, atual.autor.conselho, contexto.evitar)
     patch(id, {
       legenda,
       alertas,
@@ -217,6 +220,8 @@ export default function PublicacoesPreview() {
         conta={conta}
         quota={quota}
         pauta={pauta}
+        contexto={contexto}
+        clinica={base.clinica}
         padroes={padroes}
         regras={regras}
         publicacoes={publicacoes}
@@ -257,6 +262,10 @@ export default function PublicacoesPreview() {
           setRegras(r)
           pushToast('Regra de aprovação salva')
         }}
+        onSalvarContexto={(c) => {
+          setContexto(c)
+          pushToast('Contexto da clínica salvo — vale a partir da próxima geração')
+        }}
       />
 
       {modal && <BriefModal modo={modal} onGerar={gerar} onFechar={() => setModal(null)} />}
@@ -289,7 +298,26 @@ export default function PublicacoesPreview() {
  * julgada; a geração real é uma chamada com saída estruturada.
  * ------------------------------------------------------------------ */
 
-function redigir(tema: string, tom: string, ctaFixo: string): string {
+/** O fecho muda com o objetivo do conteúdo. É onde "captar" e "educar" divergem. */
+function fecho(objetivo: ObjetivoConteudo, ctaFixo: string): string {
+  switch (objetivo) {
+    case 'captar':
+      return ctaFixo || 'Agende sua avaliação pelo link da bio.'
+    case 'educar':
+      return 'Salve para consultar depois — e mande para quem precisa ler isso.'
+    case 'fidelizar':
+      return 'Se você já é nosso paciente, leve esta dúvida para a próxima consulta.'
+    case 'divulgar-servicos':
+      return ctaFixo || 'Consulte disponibilidade e convênios atendidos.'
+  }
+}
+
+function redigir(
+  tema: string,
+  tom: string,
+  ctaFixo: string,
+  objetivo: ObjetivoConteudo,
+): string {
   const abertura =
     tom === 'acolhedor'
       ? 'Cuidar da saúde não começa num diagnóstico — começa no prato de todos os dias.'
@@ -299,8 +327,7 @@ function redigir(tema: string, tom: string, ctaFixo: string): string {
           ? 'A evidência é consistente: hábito alimentar é fator modificável de risco.'
           : 'Uma conversa curta sobre o que a alimentação faz pelo seu corpo.'
   const corpo = `${abertura}\n\n${tema} — e é disso que a nossa equipe trata na consulta: do que cabe na sua rotina, não do plano perfeito que ninguém segue.`
-  // O fecho fixo vem dos padrões da marca. Vazio = sem CTA, e a legenda termina no corpo.
-  return ctaFixo ? `${corpo}\n\n${ctaFixo}` : corpo
+  return `${corpo}\n\n${fecho(objetivo, ctaFixo)}`
 }
 
 function reescrever(legenda: string, tema: string, instrucao: string): string {

@@ -13,6 +13,7 @@ import {
 import type {
   AbaPublicacoes,
   ContaConectada,
+  ContextoNegocio,
   FiltroPublicacao,
   PadroesMarca,
   PautaSemanal,
@@ -37,6 +38,8 @@ interface Props {
   conta: ContaConectada
   quota: QuotaAddon
   pauta: PautaSemanal
+  contexto: ContextoNegocio
+  clinica: { nome: string; especialidades: string[] }
   padroes: PadroesMarca
   regras: RegrasAprovacao
   publicacoes: Publicacao[]
@@ -56,6 +59,7 @@ interface Props {
   onDesconectarConta: () => void
   onSalvarPadroes: (p: PadroesMarca) => void
   onSalvarRegras: (r: RegrasAprovacao) => void
+  onSalvarContexto: (c: ContextoNegocio) => void
   onRefazer: (id: string, instrucao: string) => void
   onEditarLegenda: (id: string, legenda: string) => void
   onAbrirAgendar: (p: Publicacao) => void
@@ -77,6 +81,8 @@ export function PublicacoesView({
   conta,
   quota,
   pauta,
+  contexto,
+  clinica,
   padroes,
   regras,
   publicacoes,
@@ -95,6 +101,7 @@ export function PublicacoesView({
   onDesconectarConta,
   onSalvarPadroes,
   onSalvarRegras,
+  onSalvarContexto,
   ...acoes
 }: Props) {
   const lista = useMemo(() => filtrar(publicacoes, filtro), [publicacoes, filtro])
@@ -203,6 +210,8 @@ export function PublicacoesView({
           <ConfiguracoesPublicacoes
             conta={conta}
             pauta={pauta}
+            contexto={contexto}
+            clinica={clinica}
             padroes={padroes}
             regras={regras}
             onConectarConta={onConectarConta}
@@ -210,6 +219,7 @@ export function PublicacoesView({
             onAlternarPauta={onAlternarPauta}
             onSalvarPadroes={onSalvarPadroes}
             onSalvarRegras={onSalvarRegras}
+            onSalvarContexto={onSalvarContexto}
           />
         </div>
       )}

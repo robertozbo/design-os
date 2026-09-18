@@ -1,6 +1,7 @@
 import { Quote } from 'lucide-react'
 import type { Midia, Slide } from '@/../product-clinic/sections/publicacoes/types'
 import { acentoDe } from './helpers'
+import { precisaTextoEscuro } from './paleta'
 
 interface Props {
   slide: Slide | undefined
@@ -30,9 +31,26 @@ export function Arte({
   mostrarRegistro,
   mini = false,
 }: Props) {
-  const a = acentoDe(midia.acento)
   const t = midia.tipo === 'upload' ? 'foto' : midia.template
   const p = mini ? 'p-2.5' : 'p-6'
+
+  /*
+   * O acento é um token da paleta da marca ("teal") ou um hex extraído do logo
+   * ("#0f766e"). Token vira classe; hex vira `style`, porque o Tailwind lê o código
+   * fonte e `bg-[${cor}]` montado em runtime simplesmente não existe no CSS.
+   *
+   * Com hex, a cor do texto é decidida pela luminância: cor clara da marca com texto
+   * branco por cima é ilegível, e isso só aparece depois do post publicado.
+   */
+  const custom = midia.acento.startsWith('#')
+  const a = acentoDe(midia.acento)
+  const escuro = custom && precisaTextoEscuro(midia.acento)
+  const fundo = custom ? '' : a.fundo
+  const estiloFundo = custom ? { backgroundColor: midia.acento } : undefined
+  const txt = escuro ? 'text-slate-900' : 'text-white'
+  const txt2 = custom ? (escuro ? 'text-slate-900/70' : 'text-white/80') : a.texto
+  const txt3 = escuro ? 'text-slate-900/60' : 'text-white/70'
+  const barra = custom ? (escuro ? 'bg-slate-900/40' : 'bg-white/60') : a.barra
 
   const titulo = slide?.titulo ?? ''
   const texto = slide?.texto ?? ''
@@ -43,10 +61,8 @@ export function Arte({
 
   const rodape = !mini && (
     <div className="absolute inset-x-6 bottom-5 flex items-center justify-between">
-      <span className="text-[10px] font-medium uppercase tracking-wider text-white/70">
-        {usuario}
-      </span>
-      {temRegistro && <span className="text-[10px] text-white/60">{registro}</span>}
+      <span className={`text-[10px] font-medium uppercase tracking-wider ${txt3}`}>{usuario}</span>
+      {temRegistro && <span className={`text-[10px] ${txt3}`}>{registro}</span>}
     </div>
   )
 
@@ -54,9 +70,11 @@ export function Arte({
 
   if (t === 'lista') {
     return (
-      <div className={`${base} flex flex-col justify-center ${a.fundo}`}>
+      <div className={`${base} flex flex-col justify-center ${fundo}`} style={estiloFundo}>
         <span
-          className={`pointer-events-none absolute -right-2 top-0 font-semibold leading-none text-white/15 ${
+          className={`pointer-events-none absolute -right-2 top-0 font-semibold leading-none ${
+            escuro ? 'text-slate-900/15' : 'text-white/15'
+          } ${
             mini ? 'text-[64px]' : 'text-[180px]'
           }`}
         >
@@ -64,12 +82,12 @@ export function Arte({
         </span>
         <div className="relative">
           <p
-            className={`font-semibold leading-tight text-white ${mini ? 'text-[11px]' : 'text-2xl'}`}
+            className={`font-semibold leading-tight ${txt} ${mini ? 'text-[11px]' : 'text-2xl'}`}
           >
             {titulo}
           </p>
           {texto && (
-            <p className={`mt-2 leading-relaxed ${a.texto} ${mini ? 'text-[8px]' : 'text-sm'}`}>
+            <p className={`mt-2 leading-relaxed ${txt2} ${mini ? 'text-[8px]' : 'text-sm'}`}>
               {texto}
             </p>
           )}
@@ -81,19 +99,18 @@ export function Arte({
 
   if (t === 'estatistica') {
     return (
-      <div className={`${base} flex flex-col items-center justify-center text-center ${a.fundo}`}>
-        <p
-          className={`font-semibold leading-none text-white ${mini ? 'text-2xl' : 'text-[64px]'}`}
-        >
+      <div
+        className={`${base} flex flex-col items-center justify-center text-center ${fundo}`}
+        style={estiloFundo}
+      >
+        <p className={`font-semibold leading-none ${txt} ${mini ? 'text-2xl' : 'text-[64px]'}`}>
           {slide?.destaque ?? '—'}
         </p>
-        <p
-          className={`mt-3 font-medium leading-tight text-white ${mini ? 'text-[9px]' : 'text-lg'}`}
-        >
+        <p className={`mt-3 font-medium leading-tight ${txt} ${mini ? 'text-[9px]' : 'text-lg'}`}>
           {titulo}
         </p>
         {texto && (
-          <p className={`mt-2 leading-relaxed ${a.texto} ${mini ? 'text-[8px]' : 'text-xs'}`}>
+          <p className={`mt-2 leading-relaxed ${txt2} ${mini ? 'text-[8px]' : 'text-xs'}`}>
             {texto}
           </p>
         )}
@@ -104,20 +121,25 @@ export function Arte({
 
   if (t === 'convite') {
     return (
-      <div className={`${base} flex flex-col items-center justify-center text-center ${a.fundo}`}>
-        <div className={`h-1 rounded-full ${a.barra} ${mini ? 'w-5' : 'w-10'}`} />
+      <div
+        className={`${base} flex flex-col items-center justify-center text-center ${fundo}`}
+        style={estiloFundo}
+      >
+        <div className={`h-1 rounded-full ${barra} ${mini ? 'w-5' : 'w-10'}`} />
         <p
-          className={`mt-4 font-semibold leading-tight text-white ${mini ? 'text-[11px]' : 'text-2xl'}`}
+          className={`mt-4 font-semibold leading-tight ${txt} ${mini ? 'text-[11px]' : 'text-2xl'}`}
         >
           {titulo}
         </p>
         {texto && (
-          <p className={`mt-2 leading-relaxed ${a.texto} ${mini ? 'text-[8px]' : 'text-sm'}`}>
+          <p className={`mt-2 leading-relaxed ${txt2} ${mini ? 'text-[8px]' : 'text-sm'}`}>
             {texto}
           </p>
         )}
         <span
-          className={`mt-5 rounded-full bg-white/95 font-semibold text-slate-900 ${
+          className={`mt-5 rounded-full font-semibold ${
+            escuro ? 'bg-slate-900 text-white' : 'bg-white/95 text-slate-900'
+          } ${
             mini ? 'px-2 py-0.5 text-[7px]' : 'px-4 py-2 text-xs'
           }`}
         >
@@ -130,17 +152,19 @@ export function Arte({
 
   if (t === 'citacao') {
     return (
-      <div className={`${base} flex flex-col justify-center ${a.fundo}`}>
-        <Quote className={`${a.barra.replace('bg-', 'text-')} ${mini ? 'h-4 w-4' : 'h-10 w-10'}`} />
+      <div className={`${base} flex flex-col justify-center ${fundo}`} style={estiloFundo}>
+        <Quote
+          className={`${barra.replace('bg-', 'text-')} ${mini ? 'h-4 w-4' : 'h-10 w-10'}`}
+        />
         <p
-          className={`mt-3 font-medium italic leading-snug text-white ${
+          className={`mt-3 font-medium italic leading-snug ${txt} ${
             mini ? 'text-[10px]' : 'text-xl'
           }`}
         >
           {titulo}
         </p>
         {texto && (
-          <p className={`mt-3 leading-relaxed ${a.texto} ${mini ? 'text-[8px]' : 'text-sm'}`}>
+          <p className={`mt-3 leading-relaxed ${txt2} ${mini ? 'text-[8px]' : 'text-sm'}`}>
             — {texto}
           </p>
         )}
@@ -156,7 +180,10 @@ export function Arte({
         <div className="absolute inset-0 bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800" />
         <div className="absolute inset-x-0 bottom-0 top-1/3 bg-gradient-to-t from-black/80 to-transparent" />
         <div className={`absolute inset-x-0 bottom-0 ${mini ? 'p-2.5' : 'p-6'}`}>
-          <div className={`h-1 rounded-full ${a.barra} ${mini ? 'w-5' : 'w-10'}`} />
+          <div
+            className={`h-1 rounded-full ${custom ? '' : a.barra} ${mini ? 'w-5' : 'w-10'}`}
+            style={custom ? { backgroundColor: midia.acento } : undefined}
+          />
           <p
             className={`mt-2 font-semibold leading-tight text-white ${
               mini ? 'text-[11px]' : 'text-2xl'
@@ -184,22 +211,25 @@ export function Arte({
 
   // editorial — o padrão
   return (
-    <div className={`${base} flex flex-col items-start justify-center ${a.fundo}`}>
+    <div
+      className={`${base} flex flex-col items-start justify-center ${fundo}`}
+      style={estiloFundo}
+    >
       <div
-        className={`absolute h-1 rounded-full ${a.barra} ${
+        className={`absolute h-1 rounded-full ${barra} ${
           mini ? 'left-2.5 top-2.5 w-5' : 'left-6 top-6 w-10'
         }`}
       />
       <div>
         <p
-          className={`font-semibold leading-tight text-white ${
+          className={`font-semibold leading-tight ${txt} ${
             mini ? 'text-[11px]' : 'text-xl sm:text-2xl'
           }`}
         >
           {titulo}
         </p>
         {texto && (
-          <p className={`mt-2 leading-relaxed ${a.texto} ${mini ? 'text-[8px]' : 'text-xs sm:text-sm'}`}>
+          <p className={`mt-2 leading-relaxed ${txt2} ${mini ? 'text-[8px]' : 'text-xs sm:text-sm'}`}>
             {texto}
           </p>
         )}

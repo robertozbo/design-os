@@ -238,8 +238,26 @@ const PADROES: Padrao[] = [
  * Roda a cada edição e a cada refação de propósito: alerta que só é calculado na
  * geração deixa o post aprovado com o texto que a pessoa acabou de piorar à mão.
  */
-export function validarLegenda(legenda: string, conselho: Conselho): AlertaCompliance[] {
+export function validarLegenda(
+  legenda: string,
+  conselho: Conselho,
+  /** Termos que a clínica pediu para não usar. Viram aviso, nunca bloqueio. */
+  evitar: string[] = [],
+): AlertaCompliance[] {
   const achados: AlertaCompliance[] = []
+
+  const texto = legenda.toLowerCase()
+  for (const termo of evitar) {
+    if (!termo || !texto.includes(termo.toLowerCase())) continue
+    achados.push({
+      id: `evitar-${termo}`,
+      severidade: 'aviso',
+      regra: 'Palavra evitada pela clínica',
+      trecho: termo,
+      explicacao:
+        'Está na lista de palavras a evitar, em Configurações. Não impede agendar — é preferência da casa, não vedação de conselho.',
+    })
+  }
   PADROES.forEach((p, i) => {
     const m = legenda.match(p.teste)
     if (!m) return

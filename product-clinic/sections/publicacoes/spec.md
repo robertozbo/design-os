@@ -53,7 +53,7 @@ vê configuração de Instagram em lugar nenhum.
 | Aba | O quê |
 |---|---|
 | **Fila** | A fila de posts e o preview. A conta só aparece aqui quando há o que fazer: autorização vencendo, em faixa âmbar com **Reconectar**. Alerta, não configuração |
-| **Configurações** | Conta do Instagram (conectar/desconectar, validade, consumo do dia), pauta semanal, padrões da marca (tom, template, fecho fixo, registro no cartão) e aprovação (quem aprova, se aviso exige ciência) |
+| **Configurações** | Conta do Instagram (conectar/desconectar, validade, consumo do dia), pauta semanal, padrões da marca (tom, template, cor, fecho fixo, registro no cartão), aprovação e **Sobre a clínica** — o contexto de negócio que entra em toda geração |
 
 **Em Configurações da clínica fica só o que é cobrança:** o módulo aparece em *Plano & limites →
 Módulos* com preço, consumo do ciclo e um link **Configurar** que traz para cá. Preço e cota não
@@ -75,6 +75,34 @@ A fila é por **workspace**, e a Nymos é um workspace como qualquer outro — o
   saúde (e nas vedações da LGPD, que valem para todo mundo). Por isso a regra vem de
   `autor.conselho`, e não de uma constante da tela: um `if tenant === 'nymos'` teria deixado o
   back-office publicando sem validação nenhuma.
+
+## Sobre a clínica — o contexto que entra em toda geração
+Sem isso a IA escreve um post correto e genérico, que serviria para qualquer clínica do país — que
+é a mesma coisa que não servir para nenhuma.
+
+- **Objetivo do conteúdo** (um só): captar · educar · fidelizar · divulgar serviços. É o que decide
+  o fecho de cada post — "captar" termina em convite, "educar" termina em salve e compartilhe.
+  Três objetivos ao mesmo tempo não decidem nada, por isso é escolha única.
+- **Público** e **descrição/diferencial** são **obrigatórios**: são exatamente o que o modelo não
+  consegue inventar. Sem eles o botão de salvar fica desligado e a tela diz o que falta.
+- **Palavras a evitar** ("detox", "milagre", "projeto verão") viram **aviso** na revisão, nunca
+  bloqueio — é preferência da casa, não vedação de conselho, e misturar as duas ensina a ignorar
+  as duas.
+- **Não repete o cadastro.** Razão social vem de Configurações da clínica e as especialidades vêm
+  da Equipe; aparecem aqui em cinza, com a indicação de onde se mudam.
+
+## Identidade visual: a paleta sai do logo
+A clínica envia o logo (ou uma arte própria) e as cores dominantes são extraídas **no navegador** —
+canvas, pixels agrupados por balde de cor, os mais frequentes viram a paleta. O arquivo não sai da
+máquina, e não precisa: o que interessa são cinco hexadecimais.
+
+- As cores extraídas entram no mesmo leque das cores da marca e podem virar o acento com um toque.
+- Cinza, quase-branco e quase-preto são descartados (são o papel do logo, não a marca), e cor com
+  menos de 4% dos pixels também — abaixo disso é borda anti-serrilhada, uma cor que não existe no
+  logo.
+- Logo monocromático devolve zero cores e a tela diz isso, em vez de oferecer cinco cinzas.
+- O texto sobre a cor é decidido pela **luminância**: acento claro recebe tipografia escura. Cor
+  clara de marca com texto branco por cima é ilegível, e isso só aparece depois de publicado.
 
 ## Regras que a tela materializa
 - **Aprovação humana é obrigatória.** Não existe caminho de brief → publicado sem alguém abrir o
