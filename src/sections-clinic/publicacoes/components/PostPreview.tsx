@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { Bookmark, ChevronLeft, ChevronRight, Heart, ImageIcon, MessageCircle, Send } from 'lucide-react'
+import { Arte } from './Arte'
 import type { ContaConectada, Publicacao } from '@/../product-clinic/sections/publicacoes/types'
-import { acentoDe, truncarLegenda } from './helpers'
+import { truncarLegenda } from './helpers'
 
 interface Props {
   publicacao: Publicacao
   conta: ContaConectada
+  /** Padrão da marca: registro profissional no rodapé do cartão. */
+  mostrarRegistro?: boolean
 }
 
 /**
@@ -15,13 +18,12 @@ interface Props {
  * quem aprova um texto num campo de formulário largo não percebe que a primeira
  * linha — a única que a maioria lê — terminou no meio da frase.
  */
-export function PostPreview({ publicacao, conta }: Props) {
+export function PostPreview({ publicacao, conta, mostrarRegistro = true }: Props) {
   const [slide, setSlide] = useState(0)
   const [expandida, setExpandida] = useState(false)
   const total = publicacao.slides.length
 
   const atual = publicacao.slides[Math.min(slide, Math.max(total - 1, 0))]
-  const acento = acentoDe(publicacao.midia.acento)
   const story = publicacao.formato === 'story'
   const { visivel, cortou } = truncarLegenda(publicacao.legenda)
   const iniciais = conta.nome
@@ -52,33 +54,15 @@ export function PostPreview({ publicacao, conta }: Props) {
             <ImageIcon className="h-8 w-8" />
             <p className="text-[11px]">o cartão aparece quando a IA termina</p>
           </div>
-        ) : publicacao.midia.tipo === 'upload' ? (
-          <div className="flex h-full flex-col items-center justify-center gap-2 border border-dashed border-slate-300 text-slate-400 dark:border-slate-600 dark:text-slate-500">
-            <ImageIcon className="h-8 w-8" />
-            <p className="px-6 text-center text-[11px]">
-              Foto própria · <span className="font-medium">{publicacao.midia.template}</span>
-            </p>
-          </div>
         ) : (
-          <div className={`relative flex h-full flex-col items-start justify-center p-6 ${acento.fundo}`}>
-            <div className={`absolute left-6 top-6 h-1 w-10 rounded-full ${acento.barra}`} />
-            <div>
-              <p className="text-xl font-semibold leading-tight text-white sm:text-2xl">
-                {atual?.titulo}
-              </p>
-              {atual?.texto && (
-                <p className={`mt-2 text-xs leading-relaxed sm:text-sm ${acento.texto}`}>
-                  {atual.texto}
-                </p>
-              )}
-            </div>
-            <div className="absolute inset-x-6 bottom-5 flex items-center justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-wider text-white/70">
-                {conta.usuario}
-              </span>
-              <span className="text-[10px] text-white/60">{publicacao.autor.registro}</span>
-            </div>
-          </div>
+          <Arte
+            slide={atual}
+            midia={publicacao.midia}
+            indice={slide}
+            usuario={conta.usuario}
+            registro={publicacao.autor.registro}
+            mostrarRegistro={mostrarRegistro}
+          />
         )}
 
         {/* Navegação do carrossel */}

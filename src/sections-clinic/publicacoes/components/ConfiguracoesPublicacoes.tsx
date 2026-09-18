@@ -10,12 +10,20 @@ import {
 } from 'lucide-react'
 import type {
   ContaConectada,
+  TemplateId,
   PadroesMarca,
   PautaSemanal,
   QuemAprova,
   RegrasAprovacao,
 } from '@/../product-clinic/sections/publicacoes/types'
-import { DIA_SEMANA, diasAte, quando } from './helpers'
+import { Arte } from './Arte'
+import {
+  DIA_SEMANA,
+  TEMPLATE_DESCRICAO,
+  TEMPLATE_LABEL,
+  diasAte,
+  quando,
+} from './helpers'
 
 interface Props {
   conta: ContaConectada
@@ -30,7 +38,49 @@ interface Props {
 }
 
 const TONS = ['acolhedor', 'informativo', 'direto', 'técnico']
-const TEMPLATES = ['Dica clínica', 'Lista numerada', 'Estatística', 'Convite']
+
+const ACENTOS = [
+  { id: 'teal', nome: 'Teal (marca)', classe: 'bg-teal-600' },
+  { id: 'emerald', nome: 'Verde', classe: 'bg-emerald-600' },
+  { id: 'sky', nome: 'Azul', classe: 'bg-sky-600' },
+  { id: 'violet', nome: 'Violeta', classe: 'bg-violet-600' },
+  { id: 'amber', nome: 'Âmbar', classe: 'bg-amber-500' },
+  { id: 'stone', nome: 'Neutro', classe: 'bg-stone-600' },
+]
+const TEMPLATES: TemplateId[] = [
+  'editorial',
+  'lista',
+  'estatistica',
+  'convite',
+  'citacao',
+  'foto',
+]
+
+/**
+ * Uma palavra por template para a carta do leque.
+ *
+ * A vitrine da grade é larga e comporta a frase inteira; a carta do leque tem 72px e a
+ * mesma frase quebrava em três linhas até bater na barra de acento. A carta ali só
+ * precisa provar a cor.
+ */
+const AMOSTRA_CURTA: Record<TemplateId, string> = {
+  editorial: 'Dica',
+  lista: 'Passo',
+  estatistica: '',
+  convite: 'Agende',
+  citacao: 'Fala',
+  foto: 'Bastidor',
+}
+
+/** Conteúdo de vitrine da miniatura — cada layout mostrado com o que ele serve. */
+const AMOSTRA: Record<TemplateId, { titulo: string; texto: string; destaque?: string }> = {
+  editorial: { titulo: 'Nutrição em todas as idades', texto: 'Na infância constrói.' },
+  lista: { titulo: 'Proteína em toda refeição', texto: 'É o que sustenta a saciedade.' },
+  estatistica: { titulo: 'do sódio vem de industrializado', texto: '', destaque: '77%' },
+  convite: { titulo: 'Agenda aberta', texto: 'Avaliação com a equipe' },
+  citacao: { titulo: '“A sede engana no frio.”', texto: 'Marina Coelho' },
+  foto: { titulo: 'Bastidor da clínica', texto: 'Reunião de caso' },
+}
 
 const APROVA_LABEL: Record<QuemAprova, string> = {
   gestor: 'Só o gestor',
@@ -190,18 +240,98 @@ export function ConfiguracoesPublicacoes({
           </div>
         </Campo>
 
-        <Campo rotulo="Template">
-          <div className="flex flex-wrap gap-1.5">
+        <Campo rotulo="Template padrão">
+          <div className="grid grid-cols-3 gap-2">
             {TEMPLATES.map((t) => (
-              <Pilula
+              <button
                 key={t}
-                ativo={rascunho.template === t}
                 onClick={() => setRascunho({ ...rascunho, template: t })}
+                title={TEMPLATE_DESCRICAO[t]}
+                className={`overflow-hidden rounded-lg border text-left transition-colors ${
+                  rascunho.template === t
+                    ? 'border-teal-500 ring-1 ring-teal-500'
+                    : 'border-slate-200 hover:border-slate-300 dark:border-slate-700'
+                }`}
               >
-                {t}
-              </Pilula>
+                <div className="aspect-[4/5]">
+                  <Arte
+                    mini
+                    slide={{ ordem: 1, ...AMOSTRA[t] }}
+                    midia={{
+                      tipo: t === 'foto' ? 'upload' : 'template',
+                      template: t,
+                      acento: rascunho.acento,
+                    }}
+                    indice={1}
+                    usuario=""
+                    registro=""
+                    mostrarRegistro={false}
+                  />
+                </div>
+                <p className="truncate px-1.5 py-1 text-[10px] font-medium text-slate-600 dark:text-slate-300">
+                  {TEMPLATE_LABEL[t]}
+                </p>
+              </button>
             ))}
           </div>
+        </Campo>
+
+        <Campo rotulo="Cor de acento">
+          {/*
+            Leque em vez de bolinha de cor: cada carta é o template ESCOLHIDO naquela
+            cor, então a decisão é tomada olhando a peça, não uma amostra abstrata que
+            ainda precisa ser imaginada aplicada.
+          */}
+          <div className="flex items-end pt-1.5">
+            {ACENTOS.map((c, i) => {
+              const ativo = rascunho.acento === c.id
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setRascunho({ ...rascunho, acento: c.id })}
+                  aria-label={c.nome}
+                  aria-pressed={ativo}
+                  title={c.nome}
+                  style={{ marginLeft: i === 0 ? 0 : '-0.6rem', zIndex: ativo ? 20 : ACENTOS.length - i }}
+                  className={`relative shrink-0 overflow-hidden rounded-lg shadow-sm transition-all duration-150 hover:-translate-y-1 ${
+                    ativo
+                      ? 'w-20 -translate-y-1.5 ring-2 ring-slate-900 dark:ring-slate-100'
+                      : 'w-7 ring-1 ring-black/10 dark:ring-white/10'
+                  }`}
+                >
+                  <div className="aspect-[4/5]">
+                    {/*
+                      Só a carta da frente mostra o texto. Com todas escritas, a
+                      sobreposição empilhava seis títulos no mesmo lugar e não dava para
+                      ler nenhum — a de trás só precisa provar a cor.
+                    */}
+                    <Arte
+                      mini
+                      slide={{
+                        ordem: 1,
+                        titulo: ativo ? AMOSTRA_CURTA[rascunho.template] : '',
+                        texto: '',
+                        destaque: ativo ? AMOSTRA[rascunho.template].destaque : undefined,
+                      }}
+                      midia={{
+                        tipo: rascunho.template === 'foto' ? 'upload' : 'template',
+                        template: rascunho.template,
+                        acento: c.id,
+                      }}
+                      indice={1}
+                      usuario=""
+                      registro=""
+                      mostrarRegistro={false}
+                    />
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+          <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-500">
+            {ACENTOS.find((c) => c.id === rascunho.acento)?.nome} ·{' '}
+            {TEMPLATE_LABEL[rascunho.template]}
+          </p>
         </Campo>
 
         <Campo rotulo="Fecho fixo da legenda">

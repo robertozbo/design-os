@@ -1,5 +1,6 @@
 import type {
   AlertaCompliance,
+  TemplateId,
   Conselho,
   FiltroPublicacao,
   FormatoPublicacao,
@@ -252,3 +253,23 @@ export function validarLegenda(legenda: string, conselho: Conselho): AlertaCompl
   })
   return achados
 }
+
+export const TEMPLATE_LABEL: Record<TemplateId, string> = {
+  editorial: 'Editorial',
+  lista: 'Lista numerada',
+  estatistica: 'Estatística',
+  convite: 'Convite',
+  citacao: 'Citação',
+  foto: 'Foto + faixa',
+}
+
+/** O que cada layout serve — aparece sob a miniatura no seletor. */
+export const TEMPLATE_DESCRICAO: Record<TemplateId, string> = {
+  editorial: 'Manchete e apoio. O padrão para dica e explicação',
+  lista: 'Número grande ao fundo. Para carrossel de passos',
+  estatistica: 'O dado em corpo enorme. Exige o campo destaque',
+  convite: 'Centralizado, com chamada na base. Para agenda aberta',
+  citacao: 'Frase em aspas. Para fala do profissional',
+  foto: 'Fotografia com faixa de texto. Para foto própria',
+}
+

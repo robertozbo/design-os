@@ -76,11 +76,26 @@ export interface FalhaPublicacao {
   proximaTentativa: string | null
 }
 
+/**
+ * Os layouts de cartão da marca.
+ *
+ * São layouts de verdade, não a mesma caixa em seis cores: o que faz um post parecer
+ * template é a composição sempre igual, não a paleta.
+ */
+export type TemplateId = 'editorial' | 'lista' | 'estatistica' | 'convite' | 'citacao' | 'foto'
+
 /** Um cartão do carrossel. Feed/Story têm exatamente um. */
 export interface Slide {
   ordem: number
   titulo: string
   texto: string
+  /**
+   * O número que o template `estatistica` imprime grande ("77%", "1 em 4").
+   *
+   * Explícito, e não extraído do título por regex: título sem número renderizaria uma
+   * estatística vazia sem ninguém perceber até o post estar no ar.
+   */
+  destaque?: string
 }
 
 /**
@@ -92,8 +107,8 @@ export interface Slide {
  */
 export interface Midia {
   tipo: 'template' | 'upload'
-  /** Nome do template da marca ("Dica clínica", "Estatística", "Convite"). */
-  template: string
+  /** O layout do cartão. Com `tipo: 'upload'`, só `foto` faz sentido. */
+  template: TemplateId
   /** Utilitário Tailwind do acento do cartão — o preview desenha com ele. */
   acento: string
 }
@@ -172,7 +187,9 @@ export type AbaPublicacoes = 'fila' | 'configuracoes'
 /** O que a IA assume quando o brief não diz. Editável na aba Configurações. */
 export interface PadroesMarca {
   tom: string
-  template: string
+  template: TemplateId
+  /** Cor de acento dos cartões — a mesma chave de `Midia.acento`. */
+  acento: string
   autorPadrao: Autor
   /** Fecho fixo colado no fim de toda legenda. Vazio = sem CTA. */
   ctaFixo: string

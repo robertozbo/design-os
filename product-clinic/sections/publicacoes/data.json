@@ -6,7 +6,8 @@
       "pauta": "A recorrência semanal: dia, hora e a lista de temas de onde a IA tira o rascunho da semana. Gera sempre em 'revisar', nunca em 'agendado'.",
       "publicacao": "Um post: tema, formato, legenda, hashtags, os cartões, o autor (com o conselho que define as regras aplicadas), o status no pipeline, os alertas de publicidade e a falha do publish quando houve.",
       "padroes": "O que a IA assume quando o brief não diz: tom, template, autor padrão, CTA fixo e se o registro profissional vai no rodapé do cartão.",
-      "regras": "Quem pode aprovar e agendar, e se aviso de publicidade exige ciência antes de agendar."
+      "regras": "Quem pode aprovar e agendar, e se aviso de publicidade exige ciência antes de agendar.",
+      "slide": "Um cartão da arte: título, texto de apoio e, só no template estatistica, o destaque — o número impresso em corpo grande."
     },
     "relationships": [
       "PublicacoesData tem uma Conta, uma Quota, uma Pauta e muitas Publicacao",
@@ -16,7 +17,8 @@
       "Publicacao.falha só existe em status 'falhou'. Codigo 'token_expirado' não tem proximaTentativa: retry não resolve, só reconectar a conta",
       "Publicacao.permalink só existe depois de publicar — é o único dado que volta do Instagram nesta fatia",
       "Publicacao.versoes conta as reescritas da IA. Some com a cota: 12 usados no mês não é 12 posts, é 12 gerações",
-      "Padroes.autorPadrao define o conselho aplicado quando o post nasce da pauta semanal — é o que faz a recorrência ser validada pelas regras de alguém, e não por nenhuma"
+      "Padroes.autorPadrao define o conselho aplicado quando o post nasce da pauta semanal — é o que faz a recorrência ser validada pelas regras de alguém, e não por nenhuma",
+      "Midia.template escolhe o LAYOUT do cartão (editorial, lista, estatistica, convite, citacao, foto), não a cor — acento é que é a cor. Com tipo 'upload' o layout é sempre foto"
     ]
   },
   "conta": {
@@ -54,7 +56,8 @@
   },
   "padroes": {
     "tom": "acolhedor",
-    "template": "Dica clínica",
+    "template": "editorial",
+    "acento": "teal",
     "autorPadrao": {
       "nome": "Marina Coelho",
       "conselho": "CRN",
@@ -96,7 +99,7 @@
       ],
       "midia": {
         "tipo": "template",
-        "template": "Dica clínica",
+        "template": "editorial",
         "acento": "teal"
       },
       "briefOriginal": "Cria um post pra mim sobre como a nutrição favorece a saúde em todas as idades e uma melhor qualidade de vida. Tom acolhedor, pra publicar semana que vem.",
@@ -156,7 +159,7 @@
       ],
       "midia": {
         "tipo": "template",
-        "template": "Lista numerada",
+        "template": "lista",
         "acento": "emerald"
       },
       "briefOriginal": null,
@@ -195,7 +198,7 @@
       ],
       "midia": {
         "tipo": "upload",
-        "template": "Foto do paciente",
+        "template": "foto",
         "acento": "rose"
       },
       "briefOriginal": "Faz um post com o antes e depois da Marina, ela perdeu 12 quilos em três meses, coloca que o resultado é garantido.",
@@ -251,13 +254,14 @@
       "slides": [
         {
           "ordem": 1,
-          "titulo": "O sal que você não vê",
-          "texto": "77% do sódio vem de alimento industrializado, não do saleiro."
+          "titulo": "do sódio vem de industrializado",
+          "texto": "Não do saleiro da mesa.",
+          "destaque": "77%"
         }
       ],
       "midia": {
         "tipo": "template",
-        "template": "Estatística",
+        "template": "estatistica",
         "acento": "sky"
       },
       "briefOriginal": null,
@@ -296,7 +300,7 @@
       ],
       "midia": {
         "tipo": "template",
-        "template": "Convite",
+        "template": "convite",
         "acento": "violet"
       },
       "briefOriginal": null,
@@ -337,13 +341,14 @@
       "slides": [
         {
           "ordem": 1,
-          "titulo": "Metade não sabe",
-          "texto": "Diabetes tipo 2 é diagnóstico tardio na maioria dos casos."
+          "titulo": "não sabe que tem diabetes",
+          "texto": "O exame que descobre leva dez minutos.",
+          "destaque": "1 em 2"
         }
       ],
       "midia": {
         "tipo": "template",
-        "template": "Estatística",
+        "template": "estatistica",
         "acento": "amber"
       },
       "briefOriginal": null,
@@ -377,7 +382,7 @@
       "slides": [],
       "midia": {
         "tipo": "template",
-        "template": "Lista numerada",
+        "template": "lista",
         "acento": "teal"
       },
       "briefOriginal": "Post em carrossel sobre alimentação e sono, o que a pessoa janta e como isso muda a noite dela.",
@@ -406,7 +411,7 @@
       "slides": [],
       "midia": {
         "tipo": "template",
-        "template": "Lista numerada",
+        "template": "lista",
         "acento": "sky"
       },
       "briefOriginal": null,
@@ -428,7 +433,7 @@
       "autor": {
         "nome": "Roberto Dias",
         "conselho": "CRM",
-        "registro": "—"
+        "registro": ""
       },
       "legenda": "Toda quarta a equipe senta para discutir caso. Paciente nenhum aparece aqui: o que sai da sala é decisão, não nome.",
       "hashtags": [],
@@ -441,7 +446,7 @@
       ],
       "midia": {
         "tipo": "upload",
-        "template": "Foto da clínica",
+        "template": "foto",
         "acento": "stone"
       },
       "briefOriginal": null,
@@ -474,13 +479,13 @@
       "slides": [
         {
           "ordem": 1,
-          "titulo": "A sede engana no frio",
-          "texto": "Menos sede não é menos necessidade."
+          "titulo": "A sede engana no frio — menos sede não é menos necessidade.",
+          "texto": "Marina Coelho, nutricionista"
         }
       ],
       "midia": {
         "tipo": "template",
-        "template": "Dica clínica",
+        "template": "citacao",
         "acento": "sky"
       },
       "briefOriginal": null,

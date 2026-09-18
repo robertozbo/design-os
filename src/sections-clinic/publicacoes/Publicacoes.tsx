@@ -2,6 +2,7 @@ import { useState } from 'react'
 import data from '@/../product-clinic/sections/publicacoes/data.json'
 import type {
   AbaPublicacoes,
+  Slide,
   BriefValues,
   ContaConectada,
   PadroesMarca,
@@ -74,7 +75,7 @@ export default function PublicacoesPreview() {
       legenda: '',
       hashtags: [],
       slides: [],
-      midia: { tipo: 'template', template: 'Dica clínica', acento: 'teal' },
+      midia: { tipo: 'template', template: padroes.template, acento: padroes.acento },
       briefOriginal: brief.briefOriginal,
       versoes: 0,
       agendadoPara: brief.agendadoPara ? `${brief.agendadoPara}:00-03:00` : null,
@@ -94,7 +95,7 @@ export default function PublicacoesPreview() {
     // passa por `gerando` — é o estado em que a fila fica e que a tela precisa
     // saber desenhar.
     setTimeout(() => {
-      const legenda = redigir(brief.tema, brief.tom)
+      const legenda = redigir(brief.tema, brief.tom, padroes.ctaFixo)
       patch(id, {
         status: 'revisar',
         versoes: 1,
@@ -288,7 +289,7 @@ export default function PublicacoesPreview() {
  * julgada; a geração real é uma chamada com saída estruturada.
  * ------------------------------------------------------------------ */
 
-function redigir(tema: string, tom: string): string {
+function redigir(tema: string, tom: string, ctaFixo: string): string {
   const abertura =
     tom === 'acolhedor'
       ? 'Cuidar da saúde não começa num diagnóstico — começa no prato de todos os dias.'
@@ -297,7 +298,9 @@ function redigir(tema: string, tom: string): string {
         : tom === 'técnico'
           ? 'A evidência é consistente: hábito alimentar é fator modificável de risco.'
           : 'Uma conversa curta sobre o que a alimentação faz pelo seu corpo.'
-  return `${abertura}\n\n${tema} — e é disso que a nossa equipe trata na consulta: do que cabe na sua rotina, não do plano perfeito que ninguém segue.\n\nQuer conversar sobre o seu caso? A agenda está aberta.`
+  const corpo = `${abertura}\n\n${tema} — e é disso que a nossa equipe trata na consulta: do que cabe na sua rotina, não do plano perfeito que ninguém segue.`
+  // O fecho fixo vem dos padrões da marca. Vazio = sem CTA, e a legenda termina no corpo.
+  return ctaFixo ? `${corpo}\n\n${ctaFixo}` : corpo
 }
 
 function reescrever(legenda: string, tema: string, instrucao: string): string {
@@ -325,7 +328,7 @@ function hashtagsDe(tema: string): string[] {
   return base
 }
 
-function slidesDe(tema: string, formato: string) {
+function slidesDe(tema: string, formato: string): Slide[] {
   const titulo = tema.length > 42 ? `${tema.slice(0, 42).trimEnd()}…` : tema
   if (formato !== 'carrossel') {
     return [{ ordem: 1, titulo, texto: 'O que cabe na sua rotina, não o plano perfeito.' }]

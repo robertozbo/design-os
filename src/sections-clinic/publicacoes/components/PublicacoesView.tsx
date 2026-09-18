@@ -351,6 +351,7 @@ export function PublicacoesView({
                 publicacao={selecionada}
                 conta={conta}
                 quotaEsgotada={quotaEsgotada}
+                mostrarRegistro={padroes.mostrarRegistro}
                 onFechar={onFecharDrawer}
                 {...acoes}
               />

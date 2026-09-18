@@ -21,6 +21,8 @@ interface Props {
   conta: ContaConectada
   /** Cota do add-on no fim: gerar e refazer desligam, agendar e publicar continuam. */
   quotaEsgotada: boolean
+  /** Padrão da marca — registro profissional no rodapé do cartão. */
+  mostrarRegistro: boolean
   onRefazer: (id: string, instrucao: string) => void
   onEditarLegenda: (id: string, legenda: string) => void
   onAbrirAgendar: (p: Publicacao) => void
@@ -36,6 +38,7 @@ export function DetalhePublicacao({
   publicacao,
   conta,
   quotaEsgotada,
+  mostrarRegistro,
   onRefazer,
   onEditarLegenda,
   onAbrirAgendar,
@@ -114,7 +117,7 @@ export function DetalhePublicacao({
         </div>
       )}
 
-      <PostPreview publicacao={publicacao} conta={conta} />
+      <PostPreview publicacao={publicacao} conta={conta} mostrarRegistro={mostrarRegistro} />
 
       {/* Alertas de publicidade */}
       {bloqueios.length > 0 && (

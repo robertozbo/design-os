@@ -85,9 +85,15 @@ A fila é por **workspace**, e a Nymos é um workspace como qualquer outro — o
   `publicados hoje / 50` e não deixa agendar o 51º no mesmo dia.
 - **Cota do add-on é por mês e por clínica.** Refazer gasta. Esgotada, gerar e refazer desligam; a
   fila continua agendando e publicando o que já existe.
-- **Sem imagem generativa.** Os cartões saem de **template da marca** com o texto renderizado —
-  identidade visual consistente e texto legível, que é onde modelo de imagem falha. Upload de foto
-  própria é permitido.
+- **A tipografia é sempre nossa.** Seis layouts de marca — Editorial, Lista numerada, Estatística,
+  Convite, Citação e Foto + faixa — com o texto renderizado por cima, nunca gerado dentro do pixel.
+  Layouts de verdade, não a mesma caixa em seis cores: o que faz um post parecer template é a
+  composição sempre igual. Cada um tem cor de acento própria, escolhida num leque em que cada carta
+  é o layout escolhido naquela cor.
+- **O fundo é o que pode virar IA depois.** `Foto + faixa` já é a peça com fotografia e faixa de
+  texto na base — hoje foto própria da clínica, e é exatamente esse bloco que um modelo de imagem
+  substitui quando essa etapa entrar. A tipografia continua fora do pixel: erro de acento não
+  obriga a pagar outra geração, e a legenda segue editável.
 
 ## Fora de escopo (de propósito)
 - **Métricas de engajamento** (alcance, curtidas, seguidores). É outra tela e outro problema; aqui
@@ -115,7 +121,7 @@ A fila é por **workspace**, e a Nymos é um workspace como qualquer outro — o
 - Item da fila: tema · badge de formato (Feed/Carrossel/Story) · badge de status colorido ·
   quando vai ao ar (ou "sem data") · autor · ícone de origem (microfone = ditado). Item com
   bloqueio ganha borda âmbar.
-- Preview: moldura de post com cabeçalho da conta, cartão do template (4:5), legenda com "… mais",
+- Preview: moldura de post com cabeçalho da conta, cartão do template (4:5 no feed, 9:16 no story), legenda com "… mais",
   hashtags em bloco separado e esmaecido. Carrossel com pontos e navegação.
 - Painel de alertas acima das ações: bloqueio em vermelho com a regra citada, aviso em âmbar. Cada
   alerta mostra o **trecho** que o disparou.
@@ -123,7 +129,8 @@ A fila é por **workspace**, e a Nymos é um workspace como qualquer outro — o
   **Publicar agora**, **Excluir**. Desabilitadas com motivo no `title` quando não cabem.
 - Tab-rail de duas abas (Fila · Configurações) logo abaixo do header.
 - Aba Configurações em grade de quatro blocos: Conta do Instagram, Pauta semanal, Padrões da marca,
-  Aprovação. Padrões salvam em lote (botão habilita só quando há mudança); o resto salva no toque.
+  Aprovação. O template padrão é escolhido em grade de miniaturas com a arte real de cada layout,
+  e a cor num leque de cartas sobrepostas — só a da frente escreve, as de trás provam a cor. Padrões salvam em lote (botão habilita só quando há mudança); o resto salva no toque.
 - Estado vazio: fila sem nenhuma publicação → explica o caminho do ditado e oferece os dois botões.
 - Estado de cota esgotada: chip vermelho, Ditar/Novo/Refazer desabilitados com motivo; agendar e
   publicar continuam vivos.
