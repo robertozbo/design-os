@@ -55,6 +55,8 @@ interface Props {
   onDitar: () => void
   onNovo: () => void
   onAlternarPauta: (ativa: boolean) => void
+  /** A lista inteira de assuntos da pauta — ver `ConfiguracoesPublicacoes`. */
+  onAssuntosPauta: (assuntos: string[]) => void
   onConectarConta: () => void
   onDesconectarConta: () => void
   onSalvarPadroes: (p: PadroesMarca) => void
@@ -97,6 +99,7 @@ export function PublicacoesView({
   onDitar,
   onNovo,
   onAlternarPauta,
+  onAssuntosPauta,
   onConectarConta,
   onDesconectarConta,
   onSalvarPadroes,
@@ -217,6 +220,7 @@ export function PublicacoesView({
             onConectarConta={onConectarConta}
             onDesconectarConta={onDesconectarConta}
             onAlternarPauta={onAlternarPauta}
+            onAssuntosPauta={onAssuntosPauta}
             onSalvarPadroes={onSalvarPadroes}
             onSalvarRegras={onSalvarRegras}
             onSalvarContexto={onSalvarContexto}

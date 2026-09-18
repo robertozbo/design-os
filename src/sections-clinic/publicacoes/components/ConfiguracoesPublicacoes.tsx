@@ -42,6 +42,13 @@ interface Props {
   onConectarConta: () => void
   onDesconectarConta: () => void
   onAlternarPauta: (ativa: boolean) => void
+  /**
+   * Os assuntos que a pauta sorteia. Sai daqui como LISTA INTEIRA, e não como
+   * "adicionou X"/"removeu Y": é o mesmo contrato de `onSalvarContexto`, e evita
+   * que a tela e o dono do estado discordem sobre a ordem depois de duas
+   * edições seguidas.
+   */
+  onAssuntosPauta: (assuntos: string[]) => void
   onSalvarPadroes: (p: PadroesMarca) => void
   onSalvarRegras: (r: RegrasAprovacao) => void
   onSalvarContexto: (c: ContextoNegocio) => void
@@ -122,6 +129,7 @@ export function ConfiguracoesPublicacoes({
   onConectarConta,
   onDesconectarConta,
   onAlternarPauta,
+  onAssuntosPauta,
   onSalvarPadroes,
   onSalvarRegras,
   onSalvarContexto,
@@ -129,6 +137,27 @@ export function ConfiguracoesPublicacoes({
   const [rascunho, setRascunho] = useState<PadroesMarca>(padroes)
   const [extraindo, setExtraindo] = useState(false)
   const [erroPaleta, setErroPaleta] = useState<string | null>(null)
+  /** O que está sendo digitado no campo de assunto novo da pauta. */
+  const [assuntoNovo, setAssuntoNovo] = useState('')
+
+  /**
+   * Um assunto a mais na pauta.
+   *
+   * Recusa em silêncio o repetido e o vazio — a pauta sorteia um assunto por
+   * semana, e o mesmo item duas vezes na lista é o dobro de chance de sair sem
+   * que ninguém tenha pedido isso. Não normaliza caixa: "Sono" e "sono" são a
+   * mesma coisa para quem lê, então a comparação ignora caixa, mas o que entra na
+   * lista é o texto como a pessoa escreveu.
+   */
+  const adicionarAssunto = () => {
+    const novo = assuntoNovo.trim()
+    if (!novo || pauta.temas.some((t) => t.toLowerCase() === novo.toLowerCase())) {
+      setAssuntoNovo('')
+      return
+    }
+    onAssuntosPauta([...pauta.temas, novo])
+    setAssuntoNovo('')
+  }
   const inputLogo = useRef<HTMLInputElement>(null)
   const sujo = JSON.stringify(rascunho) !== JSON.stringify(padroes)
   const diasToken = diasAte(conta.tokenExpiraEm)
@@ -249,16 +278,57 @@ export function ConfiguracoesPublicacoes({
 
         {pauta.ativa && (
           <>
+            {/*
+              Os assuntos eram rótulos: davam para LER a pauta e não para mudá-la,
+              e a única saída era pedir para alguém editar o dado. Agora saem e
+              entram aqui, no mesmo gesto de "Palavras a evitar" — a tela já ensina
+              esse padrão uma vez, e um segundo jeito de editar lista na mesma
+              página seria inventar vocabulário.
+            */}
             <div className="mt-3 flex flex-wrap gap-1.5">
               {pauta.temas.map((t) => (
                 <span
                   key={t}
-                  className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-500 dark:bg-slate-800 dark:text-slate-300"
+                  className="inline-flex items-center gap-1 rounded-full bg-slate-100 py-0.5 pl-2 pr-1 text-[11px] text-slate-500 dark:bg-slate-800 dark:text-slate-300"
                 >
                   {t}
+                  <button
+                    onClick={() => onAssuntosPauta(pauta.temas.filter((x) => x !== t))}
+                    aria-label={`Remover ${t}`}
+                    className="rounded-full p-0.5 hover:bg-slate-200/70 dark:hover:bg-slate-700"
+                  >
+                    <X className="h-2.5 w-2.5" />
+                  </button>
                 </span>
               ))}
             </div>
+
+            <div className="mt-2 flex gap-1.5">
+              <input
+                value={assuntoNovo}
+                onChange={(e) => setAssuntoNovo(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') adicionarAssunto()
+                }}
+                placeholder="Sono na infância, vacinas do adulto…"
+                className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-700 outline-none placeholder:text-slate-400 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+              />
+              <button
+                onClick={adicionarAssunto}
+                className="shrink-0 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+              >
+                Adicionar
+              </button>
+            </div>
+
+            {pauta.temas.length === 0 && (
+              // Lista vazia é estado legítimo (a pessoa tirou todos), e a pauta
+              // continua ligada — quem gera precisa saber que não há de onde
+              // sortear antes de a semana virar.
+              <p className="mt-2 text-[11px] text-amber-600 dark:text-amber-400">
+                Sem assunto nenhum a pauta não tem o que gerar na próxima rodada.
+              </p>
+            )}
             {/*
               O texto vai num <span> único: com `flex` no <p>, cada nó filho — inclusive
               o <strong> e cada pedaço de texto ao redor dele — virava um flex item e a

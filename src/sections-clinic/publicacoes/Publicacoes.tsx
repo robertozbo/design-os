@@ -242,6 +242,10 @@ export default function PublicacoesPreview() {
           setPauta((p) => ({ ...p, ativa }))
           pushToast(ativa ? 'Pauta semanal ligada' : 'Pauta semanal desligada')
         }}
+        // Sem toast: adicionar e tirar assunto é edição de lista, e o próprio chip
+        // aparecendo (ou sumindo) já é o retorno. Um toast por clique viraria fila
+        // de avisos em quem está montando a pauta do zero.
+        onAssuntosPauta={(temas) => setPauta((p) => ({ ...p, temas }))}
         onRefazer={refazer}
         onEditarLegenda={editarLegenda}
         onAbrirAgendar={setAgendando}
