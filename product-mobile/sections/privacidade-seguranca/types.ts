@@ -5,6 +5,9 @@
 
 import type { Tema } from '../configuracoes/types'
 
+// Re-export para os componentes desta section tiparem o token de tema
+export type { Tema }
+
 export type VisibilidadePerfil = 'publico' | 'profissionais' | 'privado'
 
 export interface SegurancaPrefs {

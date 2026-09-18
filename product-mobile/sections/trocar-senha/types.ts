@@ -2,6 +2,9 @@
 
 import type { Tema } from '../configuracoes/types'
 
+// Re-export para os componentes desta section tiparem o token de tema
+export type { Tema }
+
 export type ForcaSenha = 'fraca' | 'media' | 'forte' | 'excelente'
 
 export interface TrocarSenhaData {

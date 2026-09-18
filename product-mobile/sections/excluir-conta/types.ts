@@ -4,6 +4,9 @@
 
 import type { Tema } from '../configuracoes/types'
 
+// Re-export para os componentes desta section tiparem o token de tema
+export type { Tema }
+
 export interface ExclusaoStatus {
   /** Conta já está em janela de exclusão (entrada secundária) */
   pendenteExclusao: boolean
