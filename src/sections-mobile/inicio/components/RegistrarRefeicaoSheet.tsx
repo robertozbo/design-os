@@ -3,8 +3,8 @@ import type { RegistroRefeicaoModo } from '@/../product-mobile/sections/inicio/t
 
 interface Props {
   open: boolean
-  /** Sem cardápio ativo, a opção "do meu cardápio" não faz sentido. */
-  temCardapio: boolean
+  /** Sem plano alimentar ativo, a opção "do meu plano alimentar" não faz sentido. */
+  temPlanoAlimentar: boolean
   onClose: () => void
   onEscolher: (modo: RegistroRefeicaoModo) => void
 }
@@ -14,7 +14,7 @@ interface Props {
  * destaque: é o caminho que o paciente usa no dia a dia — a IA estima porção e
  * macros, os outros dois são o fallback manual.
  */
-export function RegistrarRefeicaoSheet({ open, temCardapio, onClose, onEscolher }: Props) {
+export function RegistrarRefeicaoSheet({ open, temPlanoAlimentar, onClose, onEscolher }: Props) {
   if (!open) return null
 
   return (
@@ -66,12 +66,12 @@ export function RegistrarRefeicaoSheet({ open, temCardapio, onClose, onEscolher 
           onClick={() => onEscolher('busca')}
         />
 
-        {temCardapio && (
+        {temPlanoAlimentar && (
           <Opcao
             icone={<ClipboardList size={17} strokeWidth={2.2} className="text-amber-300" />}
-            titulo="Do meu cardápio"
+            titulo="Do meu plano alimentar"
             texto="Marque a refeição planejada como consumida"
-            onClick={() => onEscolher('cardapio')}
+            onClick={() => onEscolher('plano')}
           />
         )}
       </div>

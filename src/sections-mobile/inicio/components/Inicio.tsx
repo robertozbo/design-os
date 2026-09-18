@@ -3,7 +3,6 @@ import { Hero } from './Hero'
 import { HeroSaudeCard } from './HeroSaudeCard'
 import { MedicacaoHojeMini } from './MedicacaoHojeMini'
 import { NovidadeBanner } from './NovidadeBanner'
-import { PlanoHoje } from './PlanoHoje'
 import { NutricaoCard } from './NutricaoCard'
 import { MiniStatStrip } from './MiniStatStrip'
 import { SemanaAtivaCard } from './SemanaAtivaCard'
@@ -15,10 +14,9 @@ export function Inicio({
   onNovidadeClick,
   onNovidadeDismiss,
   onSaudeClick,
-  onPlanoClick,
   onNutricaoClick,
   onRegistrarRefeicao,
-  onVerCardapio,
+  onVerPlanoAlimentar,
   onMiniStatClick,
   onSemanaClick,
   onQuickActionClick,
@@ -52,14 +50,12 @@ export function Inicio({
         />
       )}
 
-      {data.plano.ativo && <PlanoHoje plano={data.plano} onClick={onPlanoClick} />}
-
       <NutricaoCard
         nutricao={data.nutricao}
-        temCardapio={data.plano.ativo}
+        plano={data.plano}
         onClick={onNutricaoClick}
         onRegistrar={onRegistrarRefeicao}
-        onVerCardapio={onVerCardapio}
+        onVerPlanoAlimentar={onVerPlanoAlimentar}
       />
 
       <MiniStatStrip stats={data.miniStats} onStatClick={onMiniStatClick} />

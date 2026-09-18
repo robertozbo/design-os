@@ -1,19 +1,24 @@
 import { useState } from 'react'
-import { ChevronRight, Plus, Utensils } from 'lucide-react'
+import { ChevronRight, Clock, Plus, Utensils } from 'lucide-react'
 import type {
   MacroPreview,
   NutricaoResumo,
+  PlanoHoje,
   RegistroRefeicaoModo,
 } from '@/../product-mobile/sections/inicio/types'
 import { RegistrarRefeicaoSheet } from './RegistrarRefeicaoSheet'
 
 interface Props {
   nutricao: NutricaoResumo
-  /** Há cardápio ativo — habilita "do meu cardápio" no sheet do "+". */
-  temCardapio?: boolean
+  /**
+   * Plano alimentar ativo. Entra como uma faixa dentro do card — o "Plano de
+   * Hoje" deixou de ser um card próprio pra não empilhar duas caixas de comida
+   * seguidas no dashboard.
+   */
+  plano?: PlanoHoje | null
   onClick?: () => void
   onRegistrar?: (modo: RegistroRefeicaoModo) => void
-  onVerCardapio?: () => void
+  onVerPlanoAlimentar?: () => void
 }
 
 // Arco aberto embaixo: 270° começando às 7h30 e fechando às 4h30.
@@ -27,13 +32,18 @@ const fmt = (n: number) => n.toLocaleString('pt-BR')
 
 export function NutricaoCard({
   nutricao,
-  temCardapio = false,
+  plano = null,
   onClick,
   onRegistrar,
-  onVerCardapio,
+  onVerPlanoAlimentar,
 }: Props) {
   const [sheetAberto, setSheetAberto] = useState(false)
   const { anel, macros, ultimaRefeicao } = nutricao
+  const planoAtivo = plano?.ativo && plano.diet ? plano : null
+  const proximaMeal = planoAtivo?.proximaRefeicao?.meal ?? null
+  const refeicoesPct = planoAtivo
+    ? Math.min(100, (planoAtivo.refeicoesRegistradas / planoAtivo.refeicoesTotal) * 100)
+    : 0
 
   // Saldo líquido do dia = meta - consumidas + gastas (mesma conta da Nutrição).
   const restantes = anel.meta - anel.consumidas + anel.gastas
@@ -134,6 +144,42 @@ export function NutricaoCard({
           </div>
         )}
 
+        {/* Plano alimentar — faixa, não card */}
+        {planoAtivo && (
+          <button
+            onClick={onVerPlanoAlimentar}
+            className="w-full border-t border-slate-800 px-4 py-3 text-left active:bg-slate-800/40"
+          >
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-[12px] truncate">
+                Plano {planoAtivo.diet!.name}
+                <span className="text-slate-500"> · {planoAtivo.profissionalNome}</span>
+              </span>
+              <span className="ml-auto shrink-0 font-mono tabular-nums text-teal-300 text-[11px]">
+                {planoAtivo.refeicoesRegistradas}/{planoAtivo.refeicoesTotal} refeições
+              </span>
+            </div>
+            <div className="mt-1.5 h-1 rounded-full bg-slate-800 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-teal-500 to-sky-400"
+                style={{ width: `${refeicoesPct}%`, transition: 'width 700ms ease-out' }}
+              />
+            </div>
+            {proximaMeal && (
+              <div className="mt-2 flex items-center gap-1.5">
+                <Clock size={12} className="text-teal-300 shrink-0" />
+                <span className="text-slate-300 text-[11.5px] truncate">
+                  Próximo: {proximaMeal.name.toLowerCase()} ·{' '}
+                  <span className="font-mono tabular-nums">{proximaMeal.scheduledTime}</span>
+                </span>
+                <span className="ml-auto shrink-0 font-mono tabular-nums text-slate-500 text-[10.5px]">
+                  {proximaMeal.protein}P · {proximaMeal.carbohydrates}C · {proximaMeal.fat}G
+                </span>
+              </div>
+            )}
+          </button>
+        )}
+
         {/* Último registro do dia — espelho do "+" */}
         <div className="border-t border-slate-800">
           {ultimaRefeicao ? (
@@ -172,10 +218,10 @@ export function NutricaoCard({
           )}
 
           <button
-            onClick={onVerCardapio}
+            onClick={onVerPlanoAlimentar}
             className="w-full flex items-center justify-center gap-1 border-t border-slate-800 py-2.5 text-[12.5px] font-medium text-teal-300 active:bg-slate-800/40"
           >
-            Ver cardápio completo
+            Ver plano alimentar completo
             <ChevronRight size={13} />
           </button>
         </div>
@@ -183,7 +229,7 @@ export function NutricaoCard({
 
       <RegistrarRefeicaoSheet
         open={sheetAberto}
-        temCardapio={temCardapio}
+        temPlanoAlimentar={planoAtivo !== null}
         onClose={() => setSheetAberto(false)}
         onEscolher={registrar}
       />

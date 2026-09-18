@@ -122,13 +122,13 @@ export interface MacroPreview {
 
 /**
  * Última refeição registrada hoje (MealLog mais recente). É o espelho do "+":
- * mostra o que acabou de entrar. A PRÓXIMA refeição do cardápio vive no card
+ * mostra o que acabou de entrar. A PRÓXIMA refeição do plano alimentar vive no card
  * "Plano de Hoje" — repetir aqui deixaria a mesma linha em dois cards vizinhos.
  */
 export interface RefeicaoPreview {
   /** Emoji do tipo de refeição — ☕ 🥗 🍽️ 🍎 */
   emoji: string
-  /** "Meu cardápio" quando veio do plano, "Registro avulso" quando não. */
+  /** "Plano alimentar" quando veio do plano, "Registro avulso" quando não. */
   origem: string
   /** "Café da manhã" */
   refeicaoLabel: string
@@ -139,7 +139,7 @@ export interface RefeicaoPreview {
 
 /**
  * Card de Nutrição do dashboard: anel de calorias + macros + próxima refeição.
- * O "+" do header registra uma refeição — por foto do prato, busca ou cardápio.
+ * O "+" do header registra uma refeição — por foto do prato, busca ou plano alimentar.
  */
 export interface NutricaoResumo {
   anel: AnelCalorias
@@ -150,7 +150,7 @@ export interface NutricaoResumo {
 }
 
 /** Como o paciente quer registrar a refeição a partir do "+". */
-export type RegistroRefeicaoModo = 'foto' | 'busca' | 'cardapio'
+export type RegistroRefeicaoModo = 'foto' | 'busca' | 'plano'
 
 export type StatTendencia = 'up' | 'down' | 'stable'
 
@@ -277,10 +277,9 @@ export interface InicioProps {
   onNovidadeClick?: (novidade: Novidade) => void
   onNovidadeDismiss?: (id: string) => void
   onSaudeClick?: () => void
-  onPlanoClick?: () => void
   onNutricaoClick?: () => void
   onRegistrarRefeicao?: (modo: RegistroRefeicaoModo) => void
-  onVerCardapio?: () => void
+  onVerPlanoAlimentar?: () => void
   onMiniStatClick?: (stat: MiniStat) => void
   onSemanaClick?: () => void
   onQuickActionClick?: (action: QuickAction) => void

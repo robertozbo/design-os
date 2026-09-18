@@ -29,12 +29,11 @@ export default function InicioPreview() {
           onSaudeClick={() => {
             window.location.href = '/mobile/sections/minha-saude'
           }}
-          onPlanoClick={() => console.log('Plano click')}
           onNutricaoClick={() => {
             window.location.href = '/mobile/sections/nutricao'
           }}
           onRegistrarRefeicao={(modo) => console.log('Registrar refeição:', modo)}
-          onVerCardapio={() => console.log('Ver cardápio completo')}
+          onVerPlanoAlimentar={() => console.log('Ver plano alimentar completo')}
           onMiniStatClick={(s: MiniStat) => console.log('Stat click:', s.id)}
           onSemanaClick={() => console.log('Semana click')}
           onQuickActionClick={(a: QuickAction) => console.log('Quick action:', a.id)}

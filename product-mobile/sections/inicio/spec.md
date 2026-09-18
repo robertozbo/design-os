@@ -30,10 +30,9 @@ Ordem dos blocos (sempre na mesma posição, alguns condicionais):
 
 1. **Hero contextual** (sempre)
 2. **Banner "Novidade"** (condicional)
-3. **Card "Plano de Hoje"** (se houver plano ativo)
-4. **Card de Nutrição** (sempre — quando há plano, vem abaixo do card de plano)
-5. **Strip horizontal de mini-stats** (sempre)
-6. **Quick actions** (3 cards)
+3. **Card de Nutrição** (sempre — o plano alimentar entra como faixa dentro dele)
+4. **Strip horizontal de mini-stats** (sempre)
+5. **Quick actions** (3 cards)
 
 ---
 
@@ -64,28 +63,11 @@ Aparece **só quando** há:
 - Tap → navega pra feature relevante
 - Dismissable (X discreto) — uma vez dispensado, não volta no mesmo dia
 
-### 3. Card "Plano de Hoje" (condicional, prioritário se ativo)
+### 3. Card de Nutrição
 
-**Aparece quando o paciente tem plano alimentar ativo do nutri.**
-
-Card grande `teal-500/8` background, border `teal-500/20`, `rounded-2xl` p-5:
-
-- **Header:**
-  - Ícone `Utensils` (lucide) 28×28 em fundo `teal-500/20` rounded-xl
-  - Label "Plano de Hoje" em DM Sans semibold 16px
-  - Subtítulo "por Dra. Ana · plano XP-12" `slate-400` 12px
-- **Body:**
-  - Progress horizontal: barra `slate-800` com fill `teal-400` proporcional + texto "3 de 5 refeições" mono medium 13px
-  - Próxima refeição em destaque: ícone hora + "Próximo: almoço · 13:30" + macros em mono pequeno (ex: `52g P · 80g C · 22g G`)
-- **Footer:** chevron + "Ver plano completo"
-- Tap em qualquer área → abre Plano Alimentar (sub-rota de Nutrição)
-
-**Estado vazio (free, sem plano):** este card **NÃO aparece**. O card de Nutrição sobe pra posição 3.
-
-### 4. Card de Nutrição
-
-Card `slate-900` `rounded-2xl` com quatro faixas. É onde o paciente **registra** —
-o anel sozinho só informava.
+Card `slate-900` `rounded-2xl`. É onde o paciente **registra** — o anel sozinho só
+informava. O antigo card "Plano de Hoje" foi absorvido aqui como faixa: dois cards de
+comida empilhados repetiam ícone, cor e metade da informação.
 
 - **Header:** ícone garfo/faca `teal-300` + "Nutrição" 15px semibold + botão **`+`**
   circular 36px (`slate-800`, borda `slate-700`, `Plus` teal) na ponta direita
@@ -97,14 +79,13 @@ o anel sozinho só informava.
 - **Macros:** 3 colunas (Proteína · Carbo · Gordura) com barra de 5px na cor do macro
   e `consumido/meta` mono abaixo. Os mesmos 3 da section Nutrição — dashboard e
   detalhe não podem divergir
-- **Último registro do dia:** emoji + "Café da manhã · Meu cardápio" + "08:00 · 410 kcal".
+- **Plano alimentar** (só com plano ativo): "Plano XP-12 · Dra. Ana Carolina" +
+  `3/5 refeições`, barra fina de progresso e a linha "Próximo: almoço · 13:30" com os
+  macros da refeição em mono `slate-500`. Tap → Plano Alimentar
+- **Último registro do dia:** emoji + "Café da manhã · Plano alimentar" + "08:00 · 410 kcal".
   Sem nada registrado hoje vira CTA "Nada registrado hoje · comece pela foto do prato",
   que abre o mesmo sheet do `+`
-- **Rodapé:** "Ver cardápio completo ›" `teal-300`
-
-> A **próxima** refeição do cardápio fica no card "Plano de Hoje" (com os macros da
-> refeição). Aqui vai a **última registrada** — senão a mesma linha aparece duas vezes
-> em cards vizinhos.
+- **Rodapé:** "Ver plano alimentar completo ›" `teal-300`
 
 Tap no anel ou no último registro → Nutrição.
 
@@ -117,11 +98,11 @@ do dia a dia:
 |---|---|---|
 | **Foto do prato** | Card `teal-500` cheio, ícone câmera | "A IA identifica os alimentos e estima calorias e macros" |
 | Buscar alimento | `slate-800/60`, ícone lupa `sky-300` | "Tabela TACO e marcas do mercado brasileiro" |
-| Do meu cardápio | `slate-800/60`, ícone prancheta `amber-300` | "Marque a refeição planejada como consumida" — **some** sem cardápio ativo |
+| Do meu plano alimentar | `slate-800/60`, ícone prancheta `amber-300` | "Marque a refeição planejada como consumida" — **some** sem plano alimentar ativo |
 
 Escolha dispara `onRegistrarRefeicao(modo)` e fecha o sheet.
 
-### 5. Strip horizontal de mini-stats
+### 4. Strip horizontal de mini-stats
 
 Substitui os cards grandes "Minha evolução" e "Horas de Sono" da versão atual. Carrossel horizontal com swipe:
 
@@ -145,7 +126,7 @@ Substitui os cards grandes "Minha evolução" e "Horas de Sono" da versão atual
 
 Tap em qualquer chip → vai pra Métricas filtrada nesse indicador (ou Minha Saúde no caso de peso/gordura).
 
-### 6. Quick actions (3 cards)
+### 5. Quick actions (3 cards)
 
 Grid 3-col, abaixo da strip de stats:
 
