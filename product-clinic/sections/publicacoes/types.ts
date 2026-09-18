@@ -256,6 +256,8 @@ export interface RegrasAprovacao {
 }
 
 export interface PublicacoesData {
+  /** Quem está logado e aprova neste workspace. */
+  aprovador: string
   conta: ContaConectada
   quota: QuotaAddon
   pauta: PautaSemanal

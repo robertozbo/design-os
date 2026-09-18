@@ -90,8 +90,15 @@ export function DetalhePublicacao({
             {publicacao.tema}
           </h2>
           <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-            {publicacao.autor.nome} · {publicacao.autor.registro}
-            {publicacao.agendadoPara && ` · ${quando(publicacao.agendadoPara)}`}
+            {/* Autor sem conselho (o tenant interno da Nymos) não tem registro — sem
+                isso a linha terminava num "·" solto. */}
+            {[
+              publicacao.autor.nome,
+              publicacao.autor.registro.trim(),
+              publicacao.agendadoPara ? quando(publicacao.agendadoPara) : '',
+            ]
+              .filter(Boolean)
+              .join(' · ')}
           </p>
         </div>
         {onFechar && (

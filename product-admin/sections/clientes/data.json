@@ -1,0 +1,214 @@
+{
+  "_meta": {
+    "models": {
+      "workspace": "Uma conta que usa a Nymos: clínica, profissional autônomo ou empresa (SST). Traz plano, uso, add-ons, MRR, situação de cobrança e último acesso.",
+      "resumo": "Os quatro números do header: ativos, MRR somado, em trial e inadimplentes."
+    },
+    "relationships": [
+      "ClientesData tem muitos Workspace e um Resumo",
+      "Workspace.addons é o que a conta contratou além do plano — o mesmo catálogo da section modulos, do lado de quem compra",
+      "Workspace.ultimoAcesso é o sinal de churn: conta paga e parada há 40 dias cancela no ciclo seguinte, e situacao='ativo' não conta isso",
+      "prazoEm só existe em trial (quando termina) e inadimplente (desde quando está vencida); nos outros é null porque não há prazo correndo",
+      "Nenhum campo clínico existe aqui, por construção: o back-office vê contrato e uso, nunca paciente"
+    ]
+  },
+  "resumo": {
+    "ativos": 6,
+    "mrr": 9035.0,
+    "emTrial": 2,
+    "inadimplentes": 1
+  },
+  "workspaces": [
+    {
+      "id": "wk-001",
+      "nome": "Clínica Vida Plena",
+      "tipo": "clinica",
+      "cidade": "São Paulo/SP",
+      "plano": "Clínica · até 6 médicos",
+      "profissionais": 3,
+      "maxProfissionais": 6,
+      "mrr": 1047.0,
+      "situacao": "ativo",
+      "prazoEm": null,
+      "addons": [
+        {
+          "id": "marketing",
+          "nome": "Marketing",
+          "usados": 12,
+          "incluidos": 30
+        }
+      ],
+      "criadoEm": "2026-02-14",
+      "ultimoAcesso": "2026-09-18T08:12:00-03:00"
+    },
+    {
+      "id": "wk-002",
+      "nome": "Instituto Corpo & Mente",
+      "tipo": "clinica",
+      "cidade": "Campinas/SP",
+      "plano": "Clínica · até 12 médicos",
+      "profissionais": 11,
+      "maxProfissionais": 12,
+      "mrr": 1896.0,
+      "situacao": "ativo",
+      "prazoEm": null,
+      "addons": [
+        {
+          "id": "marketing",
+          "nome": "Marketing",
+          "usados": 28,
+          "incluidos": 30
+        },
+        {
+          "id": "fiscal",
+          "nome": "Fiscal",
+          "usados": 140,
+          "incluidos": 300
+        }
+      ],
+      "criadoEm": "2025-11-03",
+      "ultimoAcesso": "2026-09-17T19:40:00-03:00"
+    },
+    {
+      "id": "wk-003",
+      "nome": "Marina Coelho · Nutrição",
+      "tipo": "profissional",
+      "cidade": "São Paulo/SP",
+      "plano": "Profissional",
+      "profissionais": 1,
+      "maxProfissionais": 1,
+      "mrr": 149.0,
+      "situacao": "ativo",
+      "prazoEm": null,
+      "addons": [],
+      "criadoEm": "2026-06-21",
+      "ultimoAcesso": "2026-09-18T07:05:00-03:00"
+    },
+    {
+      "id": "wk-004",
+      "nome": "Clínica Horizonte",
+      "tipo": "clinica",
+      "cidade": "Belo Horizonte/MG",
+      "plano": "Clínica · até 6 médicos",
+      "profissionais": 6,
+      "maxProfissionais": 6,
+      "mrr": 898.0,
+      "situacao": "ativo",
+      "prazoEm": null,
+      "addons": [],
+      "criadoEm": "2026-01-09",
+      "ultimoAcesso": "2026-09-16T14:22:00-03:00"
+    },
+    {
+      "id": "wk-005",
+      "nome": "Dr. Rafael Aoki",
+      "tipo": "profissional",
+      "cidade": "Curitiba/PR",
+      "plano": "Profissional",
+      "profissionais": 1,
+      "maxProfissionais": 1,
+      "mrr": 149.0,
+      "situacao": "trial",
+      "prazoEm": "2026-09-22",
+      "addons": [],
+      "criadoEm": "2026-09-08",
+      "ultimoAcesso": "2026-09-17T10:15:00-03:00"
+    },
+    {
+      "id": "wk-006",
+      "nome": "Metalúrgica Andrade",
+      "tipo": "empresa",
+      "cidade": "Joinville/SC",
+      "plano": "SST · NR-1 · até 300 colaboradores",
+      "profissionais": 4,
+      "maxProfissionais": 10,
+      "mrr": 2400.0,
+      "situacao": "ativo",
+      "prazoEm": null,
+      "addons": [],
+      "criadoEm": "2026-04-02",
+      "ultimoAcesso": "2026-09-18T09:01:00-03:00"
+    },
+    {
+      "id": "wk-007",
+      "nome": "Espaço Movimento",
+      "tipo": "clinica",
+      "cidade": "Porto Alegre/RS",
+      "plano": "Clínica · até 6 médicos",
+      "profissionais": 2,
+      "maxProfissionais": 6,
+      "mrr": 749.0,
+      "situacao": "inadimplente",
+      "prazoEm": "2026-09-06",
+      "addons": [
+        {
+          "id": "marketing",
+          "nome": "Marketing",
+          "usados": 4,
+          "incluidos": 30
+        }
+      ],
+      "criadoEm": "2025-08-19",
+      "ultimoAcesso": "2026-09-14T11:30:00-03:00"
+    },
+    {
+      "id": "wk-008",
+      "nome": "Clínica Bem Viver",
+      "tipo": "clinica",
+      "cidade": "Recife/PE",
+      "plano": "Clínica · até 12 médicos",
+      "profissionais": 8,
+      "maxProfissionais": 12,
+      "mrr": 1598.0,
+      "situacao": "ativo",
+      "prazoEm": null,
+      "addons": [
+        {
+          "id": "fiscal",
+          "nome": "Fiscal",
+          "usados": 212,
+          "incluidos": 300
+        }
+      ],
+      "criadoEm": "2025-05-30",
+      "ultimoAcesso": "2026-08-05T16:45:00-03:00"
+    },
+    {
+      "id": "wk-009",
+      "nome": "Psicologia Integrada",
+      "tipo": "clinica",
+      "cidade": "Niterói/RJ",
+      "plano": "Clínica · até 6 médicos",
+      "profissionais": 4,
+      "maxProfissionais": 6,
+      "mrr": 898.0,
+      "situacao": "cancelado",
+      "prazoEm": null,
+      "addons": [],
+      "criadoEm": "2025-03-11",
+      "ultimoAcesso": "2026-07-28T09:12:00-03:00"
+    },
+    {
+      "id": "wk-010",
+      "nome": "Studio Alta Performance",
+      "tipo": "profissional",
+      "cidade": "Florianópolis/SC",
+      "plano": "Profissional",
+      "profissionais": 1,
+      "maxProfissionais": 1,
+      "mrr": 149.0,
+      "situacao": "trial",
+      "prazoEm": "2026-09-19",
+      "addons": [
+        {
+          "id": "marketing",
+          "nome": "Marketing",
+          "usados": 3,
+          "incluidos": 30
+        }
+      ],
+      "criadoEm": "2026-09-05",
+      "ultimoAcesso": "2026-09-18T06:50:00-03:00"
+    }
+  ]
+}

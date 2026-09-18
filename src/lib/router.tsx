@@ -14,6 +14,7 @@ import { PersonalSectionsPage, PersonalSectionPage } from '@/components/Personal
 import { DoctorSectionsPage, DoctorSectionPage } from '@/components/DoctorPage'
 import { FisioSectionsPage, FisioSectionPage } from '@/components/FisioPage'
 import { ClinicSectionsPage, ClinicSectionPage } from '@/components/ClinicPage'
+import { AdminSectionsPage, AdminSectionPage } from '@/components/AdminPage'
 import DoctorShellPreview from '@/shell-doctor/ShellPreview'
 import ClinicShellPreview from '@/shell-clinic/ShellPreview'
 
@@ -109,6 +110,14 @@ export const router = createBrowserRouter([
   {
     path: '/clinic/sections/:sectionId',
     element: <ClinicSectionPage />,
+  },
+  {
+    path: '/admin',
+    element: <AdminSectionsPage />,
+  },
+  {
+    path: '/admin/sections/:sectionId',
+    element: <AdminSectionPage />,
   },
   {
     path: '/fisio',

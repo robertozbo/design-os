@@ -1,0 +1,301 @@
+{
+  "_meta": {
+    "models": {
+      "publicacao": "Mesma forma da section da clínica — ver product-clinic/sections/publicacoes/data.json. Aqui muda só o tenant: conta, cota, autor."
+    },
+    "relationships": [
+      "É o mesmo tipo PublicacoesData da clínica: este arquivo existe para provar que o módulo é multi-tenant por dados, não por código",
+      "autor sem conselho (a Nymos não tem CRN/CRM) faz o validador aplicar só publicidade de produto e LGPD — a regra vem de autor.conselho, nunca do nome do tenant"
+    ]
+  },
+  "aprovador": "Roberto Zboralski",
+  "conta": {
+    "rede": "instagram",
+    "usuario": "@nymos.saude",
+    "nome": "Nymos",
+    "conectada": true,
+    "tokenExpiraEm": "2026-11-04T00:00:00-03:00",
+    "publicadosHoje": 1,
+    "limiteDiario": 50
+  },
+  "quota": {
+    "addon": "Interno",
+    "postsUsados": 23,
+    "postsIncluidos": 120,
+    "renovaEm": "2026-10-01T00:00:00-03:00"
+  },
+  "pauta": {
+    "ativa": true,
+    "diaSemana": 2,
+    "hora": "10:00",
+    "temas": [
+      "Bastidor do produto",
+      "Caso de uso de clínica",
+      "NR-1 e saúde mental no trabalho",
+      "Integração com wearables",
+      "Vaga aberta"
+    ],
+    "proximaGeracao": "2026-09-22T10:00:00-03:00",
+    "autorPadrao": {
+      "nome": "Equipe Nymos",
+      "conselho": "CRM",
+      "registro": ""
+    }
+  },
+  "contexto": {
+    "objetivo": "educar",
+    "publico": "Gestores de clínica e profissionais de saúde autônomos no Brasil — nutri, médico, psicólogo, personal. Decidem software sozinhos e desconfiam de promessa",
+    "descricao": "Plataforma brasileira de gestão e acompanhamento em saúde. Integra wearables, exames e diário do paciente, e dá ao profissional o que acontece entre consultas. Conformidade com a LGPD desde o primeiro dia — não é selo, é o que decide o schema.",
+    "evitar": [
+      "revolucionário",
+      "disruptivo",
+      "solução completa",
+      "game changer"
+    ]
+  },
+  "clinica": {
+    "nome": "Nymos · workspace interno",
+    "especialidades": [
+      "Produto",
+      "Marketing",
+      "SST/NR-1"
+    ]
+  },
+  "padroes": {
+    "tom": "direto",
+    "template": "editorial",
+    "acento": "teal",
+    "paletaImportada": [],
+    "autorPadrao": {
+      "nome": "Equipe Nymos",
+      "conselho": "CRM",
+      "registro": ""
+    },
+    "ctaFixo": "Conheça em nymos.com.br",
+    "mostrarRegistro": false
+  },
+  "regras": {
+    "quemAprova": "gestor",
+    "exigirCienciaDeAviso": false
+  },
+  "publicacoes": [
+    {
+      "id": "nx-001",
+      "tema": "Como a clínica vê o paciente entre as consultas",
+      "formato": "carrossel",
+      "status": "revisar",
+      "origem": "voz",
+      "autor": {
+        "nome": "Equipe Nymos",
+        "conselho": "CRM",
+        "registro": ""
+      },
+      "legenda": "A consulta dura 40 minutos. O intervalo até a próxima dura 30 dias — e é lá que o tratamento acontece ou não.\n\nO Nymos mostra ao profissional o que o paciente registrou nesse intervalo: sono, peso, humor, refeição, exame novo. Não é vigilância: é o paciente escolhendo compartilhar, e o profissional chegando na consulta já sabendo o que perguntar.\n\nConheça em nymos.com.br",
+      "hashtags": [
+        "#saudedigital",
+        "#nutricao",
+        "#gestaodeclinica",
+        "#nymos"
+      ],
+      "slides": [
+        {
+          "ordem": 1,
+          "titulo": "A consulta dura 40 minutos",
+          "texto": "O intervalo dura 30 dias."
+        },
+        {
+          "ordem": 2,
+          "titulo": "1. O paciente registra",
+          "texto": "Sono, peso, humor, refeição — no app dele."
+        },
+        {
+          "ordem": 3,
+          "titulo": "2. Ele escolhe o que compartilhar",
+          "texto": "Consentimento por escopo, revogável."
+        },
+        {
+          "ordem": 4,
+          "titulo": "3. Você chega sabendo",
+          "texto": "A consulta começa na segunda pergunta."
+        }
+      ],
+      "midia": {
+        "tipo": "template",
+        "template": "lista",
+        "acento": "teal"
+      },
+      "briefOriginal": "Post carrossel sobre o que acontece entre as consultas e como a clínica enxerga isso no Nymos.",
+      "versoes": 2,
+      "agendadoPara": null,
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-17T11:20:00-03:00",
+      "aprovadoPor": null,
+      "alertas": [],
+      "falha": null
+    },
+    {
+      "id": "nx-002",
+      "tema": "NR-1: o que muda para a empresa em 2026",
+      "formato": "feed",
+      "status": "agendado",
+      "origem": "pauta",
+      "autor": {
+        "nome": "Equipe Nymos",
+        "conselho": "CRM",
+        "registro": ""
+      },
+      "legenda": "A NR-1 passou a exigir gestão de riscos psicossociais. Na prática: identificar, avaliar e registrar — com evidência, não com intenção.\n\nO painel do Nymos agrega o que a equipe respondeu sem identificar ninguém. A empresa vê o risco; o funcionário mantém o sigilo.\n\nConheça em nymos.com.br",
+      "hashtags": [
+        "#nr1",
+        "#saudeocupacional",
+        "#sst",
+        "#riscopsicossocial"
+      ],
+      "slides": [
+        {
+          "ordem": 1,
+          "titulo": "Risco psicossocial virou obrigação",
+          "texto": "Identificar, avaliar, registrar.",
+          "destaque": null
+        }
+      ],
+      "midia": {
+        "tipo": "template",
+        "template": "editorial",
+        "acento": "sky"
+      },
+      "briefOriginal": null,
+      "versoes": 1,
+      "agendadoPara": "2026-09-19T10:00:00-03:00",
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-16T10:00:00-03:00",
+      "aprovadoPor": "Roberto Zboralski",
+      "alertas": [],
+      "falha": null
+    },
+    {
+      "id": "nx-003",
+      "tema": "Somos a solução completa e revolucionária para clínicas",
+      "formato": "feed",
+      "status": "revisar",
+      "origem": "manual",
+      "autor": {
+        "nome": "Equipe Nymos",
+        "conselho": "CRM",
+        "registro": ""
+      },
+      "legenda": "O Nymos é a solução completa e revolucionária para a sua clínica. Uma plataforma disruptiva que resolve tudo: agenda, prontuário, financeiro, IA e muito mais.\n\nConheça em nymos.com.br",
+      "hashtags": [
+        "#software",
+        "#clinica"
+      ],
+      "slides": [
+        {
+          "ordem": 1,
+          "titulo": "A solução completa",
+          "texto": "Tudo em uma plataforma."
+        }
+      ],
+      "midia": {
+        "tipo": "template",
+        "template": "convite",
+        "acento": "violet"
+      },
+      "briefOriginal": null,
+      "versoes": 1,
+      "agendadoPara": null,
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-17T08:30:00-03:00",
+      "aprovadoPor": null,
+      "alertas": [
+        {
+          "id": "ev-1",
+          "severidade": "aviso",
+          "regra": "Palavra evitada pela clínica",
+          "trecho": "revolucionário",
+          "explicacao": "Está na lista de palavras a evitar, em Configurações. Não impede agendar — é preferência da casa, não vedação de conselho."
+        },
+        {
+          "id": "ev-2",
+          "severidade": "aviso",
+          "regra": "Palavra evitada pela clínica",
+          "trecho": "solução completa",
+          "explicacao": "Está na lista de palavras a evitar, em Configurações. Não impede agendar — é preferência da casa, não vedação de conselho."
+        }
+      ],
+      "falha": null
+    },
+    {
+      "id": "nx-004",
+      "tema": "1 em 4 adultos tem alteração metabólica sem saber",
+      "formato": "feed",
+      "status": "publicado",
+      "origem": "manual",
+      "autor": {
+        "nome": "Equipe Nymos",
+        "conselho": "CRM",
+        "registro": ""
+      },
+      "legenda": "Diagnóstico tardio não é falta de exame: é falta de acompanhamento entre um exame e o próximo.",
+      "hashtags": [
+        "#saude",
+        "#prevencao",
+        "#dadosdesaude"
+      ],
+      "slides": [
+        {
+          "ordem": 1,
+          "titulo": "tem alteração metabólica sem saber",
+          "texto": "E descobre tarde.",
+          "destaque": "1 em 4"
+        }
+      ],
+      "midia": {
+        "tipo": "template",
+        "template": "estatistica",
+        "acento": "amber"
+      },
+      "briefOriginal": null,
+      "versoes": 1,
+      "agendadoPara": "2026-09-16T10:00:00-03:00",
+      "publicadoEm": "2026-09-16T10:03:00-03:00",
+      "permalink": "https://www.instagram.com/p/C9nymosDemo/",
+      "criadoEm": "2026-09-12T15:00:00-03:00",
+      "aprovadoPor": "Roberto Zboralski",
+      "alertas": [],
+      "falha": null
+    },
+    {
+      "id": "nx-005",
+      "tema": "Bastidor: como decidimos o que entra no produto",
+      "formato": "story",
+      "status": "rascunho",
+      "origem": "manual",
+      "autor": {
+        "nome": "Equipe Nymos",
+        "conselho": "CRM",
+        "registro": ""
+      },
+      "legenda": "",
+      "hashtags": [],
+      "slides": [],
+      "midia": {
+        "tipo": "template",
+        "template": "foto",
+        "acento": "stone"
+      },
+      "briefOriginal": null,
+      "versoes": 0,
+      "agendadoPara": null,
+      "publicadoEm": null,
+      "permalink": null,
+      "criadoEm": "2026-09-18T07:40:00-03:00",
+      "aprovadoPor": null,
+      "alertas": [],
+      "falha": null
+    }
+  ]
+}

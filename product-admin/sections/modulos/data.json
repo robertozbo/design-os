@@ -1,0 +1,82 @@
+{
+  "_meta": {
+    "models": {
+      "modulo": "Um add-on do catálogo pelo lado de quem vende: preço, contratantes, elegíveis, quantos usaram nos últimos 30 dias e a section que ele destrava.",
+      "resumo": "MRR vindo de add-ons, workspaces com ao menos um, e o total da base."
+    },
+    "relationships": [
+      "ModulosData tem muitos Modulo e um Resumo",
+      "Modulo.contratantes/elegiveis é penetração (quantos compraram da base possível); ativos30d/contratantes é adoção (quantos usam de quem paga) — as duas juntas é que dizem se o módulo se sustenta",
+      "Modulo.secao aponta para a section que o cliente usa; null enquanto o módulo não tem tela no Design OS",
+      "Modulo 'planejado' tem contratantes 0 e ativos30d 0 — é ausência de dado, não adoção zero, e a tela não desenha barra nesse caso",
+      "É o espelho de PlanoInfo.addons em configuracoes-clinica: mesma entidade, lados opostos da transação"
+    ]
+  },
+  "resumo": {
+    "mrrAddons": 7865.0,
+    "workspacesComAddon": 27,
+    "totalWorkspaces": 42
+  },
+  "modulos": [
+    {
+      "id": "marketing",
+      "nome": "Marketing",
+      "descricao": "Posts para Instagram com IA, ditado por voz e validação de publicidade por conselho",
+      "status": "ativo",
+      "precoMensal": 149.0,
+      "contratantes": 18,
+      "elegiveis": 42,
+      "ativos30d": 13,
+      "secao": "publicacoes",
+      "previsto": null
+    },
+    {
+      "id": "fiscal",
+      "nome": "Fiscal",
+      "descricao": "Emissão de NFS-e, retenções e livro de serviços prestados",
+      "status": "ativo",
+      "precoMensal": 199.0,
+      "contratantes": 11,
+      "elegiveis": 42,
+      "ativos30d": 10,
+      "secao": null,
+      "previsto": null
+    },
+    {
+      "id": "sst",
+      "nome": "SST · NR-1",
+      "descricao": "Painel agregado de risco psicossocial e conformidade com a NR-1",
+      "status": "ativo",
+      "precoMensal": 600.0,
+      "contratantes": 4,
+      "elegiveis": 9,
+      "ativos30d": 4,
+      "secao": null,
+      "previsto": null
+    },
+    {
+      "id": "teleconsulta",
+      "nome": "Teleconsulta",
+      "descricao": "Vídeo com sala de espera, gravação e consentimento específico",
+      "status": "beta",
+      "precoMensal": 99.0,
+      "contratantes": 6,
+      "elegiveis": 42,
+      "ativos30d": 2,
+      "secao": null,
+      "previsto": null
+    },
+    {
+      "id": "bi",
+      "nome": "Relatórios avançados",
+      "descricao": "Coorte de pacientes, retenção e projeção de receita",
+      "status": "planejado",
+      "precoMensal": 249.0,
+      "contratantes": 0,
+      "elegiveis": 42,
+      "ativos30d": 0,
+      "secao": null,
+      "previsto": "2027-01"
+    }
+  ]
+}
