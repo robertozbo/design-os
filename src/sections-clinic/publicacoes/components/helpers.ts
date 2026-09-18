@@ -224,7 +224,9 @@ const PADROES: Padrao[] = [
       'Identificar paciente em rede social expõe dado de saúde e exige consentimento específico e por escrito, registrado para esta publicação.',
   },
   {
-    teste: /\bo melhor\b|\bo maior\b|\búnic[oa] (?:na|da) (?:regi[ãa]o|cidade)/i,
+    // `[oa]` e não `o`: o padrão masculino deixava passar "a melhor clínica da
+    // região", que é a forma mais provável numa clínica.
+    teste: /\b[oa] melhor\b|\b[oa] maior\b|\búnic[oa] (?:na|da) (?:regi[ãa]o|cidade)/i,
     severidade: 'aviso',
     regra: null,
     explicacao:
