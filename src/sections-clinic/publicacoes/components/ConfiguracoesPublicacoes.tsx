@@ -282,69 +282,19 @@ export function ConfiguracoesPublicacoes({
           O que a IA assume quando o brief não diz.
         </p>
 
-        <Campo rotulo="Cor de acento">
-          {/*
-            Leque em vez de bolinha de cor: cada carta é o template ESCOLHIDO naquela
-            cor, então a decisão é tomada olhando a peça, não uma amostra abstrata que
-            ainda precisa ser imaginada aplicada.
-          */}
-          <div className="flex items-end pt-1.5">
-            {cores.map((c, i) => {
-              const ativo = rascunho.acento === c.id
-              return (
-                <button
-                  key={c.id}
-                  onClick={() => setRascunho({ ...rascunho, acento: c.id })}
-                  aria-label={c.nome}
-                  aria-pressed={ativo}
-                  title={c.nome}
-                  style={{ marginLeft: i === 0 ? 0 : '-0.6rem', zIndex: ativo ? 20 : cores.length - i }}
-                  className={`relative shrink-0 overflow-hidden rounded-lg shadow-sm transition-all duration-150 hover:-translate-y-1 ${
-                    ativo
-                      ? 'w-20 -translate-y-1.5 ring-2 ring-slate-900 dark:ring-slate-100'
-                      : 'w-7 ring-1 ring-black/10 dark:ring-white/10'
-                  }`}
-                >
-                  <div className="aspect-[4/5]">
-                    {/*
-                      Só a carta da frente mostra o texto. Com todas escritas, a
-                      sobreposição empilhava seis títulos no mesmo lugar e não dava para
-                      ler nenhum — a de trás só precisa provar a cor.
-                    */}
-                    <Arte
-                      mini
-                      slide={{
-                        ordem: 1,
-                        titulo: ativo ? AMOSTRA_CURTA[rascunho.template] : '',
-                        texto: '',
-                        destaque: ativo ? AMOSTRA[rascunho.template].destaque : undefined,
-                      }}
-                      midia={{
-                        tipo: rascunho.template === 'foto' ? 'upload' : 'template',
-                        template: rascunho.template,
-                        acento: c.id,
-                      }}
-                      indice={1}
-                      usuario=""
-                      registro=""
-                      mostrarRegistro={false}
-                    />
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-          <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-500">
-            {cores.find((c) => c.id === rascunho.acento)?.nome ?? rascunho.acento} ·{' '}
-            {TEMPLATE_LABEL[rascunho.template]}
-          </p>
-
+        {/*
+          O LOGO VEM ANTES DA COR, e a ordem é o próprio fluxo: a paleta que ele
+          extrai ENTRA no leque de acento logo abaixo. Com o upload no fim do campo
+          de cor, a pessoa escolhia um acento a partir das seis cores de fábrica e
+          só depois descobria que podia ter escolhido a cor da própria marca.
+        */}
+        <Campo rotulo="Seu logo">
           {/*
             Extração no navegador: a imagem vai para um canvas e os pixels são agrupados
             por cor. O arquivo não sai da máquina — nem precisa, já que o que interessa
             são cinco hexadecimais.
           */}
-          <div className="mt-2.5 rounded-lg border border-dashed border-slate-200 p-2.5 dark:border-slate-700">
+          <div className="mt-1.5 rounded-lg border border-dashed border-slate-200 p-2.5 dark:border-slate-700">
             <input
               ref={inputLogo}
               type="file"
@@ -406,6 +356,65 @@ export function ConfiguracoesPublicacoes({
               <p className="mt-2 text-[11px] text-amber-600 dark:text-amber-400">{erroPaleta}</p>
             )}
           </div>
+        </Campo>
+
+        <Campo rotulo="Cor de acento">
+          {/*
+            Leque em vez de bolinha de cor: cada carta é o template ESCOLHIDO naquela
+            cor, então a decisão é tomada olhando a peça, não uma amostra abstrata que
+            ainda precisa ser imaginada aplicada.
+          */}
+          <div className="flex items-end pt-1.5">
+            {cores.map((c, i) => {
+              const ativo = rascunho.acento === c.id
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setRascunho({ ...rascunho, acento: c.id })}
+                  aria-label={c.nome}
+                  aria-pressed={ativo}
+                  title={c.nome}
+                  style={{ marginLeft: i === 0 ? 0 : '-0.6rem', zIndex: ativo ? 20 : cores.length - i }}
+                  className={`relative shrink-0 overflow-hidden rounded-lg shadow-sm transition-all duration-150 hover:-translate-y-1 ${
+                    ativo
+                      ? 'w-20 -translate-y-1.5 ring-2 ring-slate-900 dark:ring-slate-100'
+                      : 'w-7 ring-1 ring-black/10 dark:ring-white/10'
+                  }`}
+                >
+                  <div className="aspect-[4/5]">
+                    {/*
+                      Só a carta da frente mostra o texto. Com todas escritas, a
+                      sobreposição empilhava seis títulos no mesmo lugar e não dava para
+                      ler nenhum — a de trás só precisa provar a cor.
+                    */}
+                    <Arte
+                      mini
+                      slide={{
+                        ordem: 1,
+                        titulo: ativo ? AMOSTRA_CURTA[rascunho.template] : '',
+                        texto: '',
+                        destaque: ativo ? AMOSTRA[rascunho.template].destaque : undefined,
+                      }}
+                      midia={{
+                        tipo: rascunho.template === 'foto' ? 'upload' : 'template',
+                        template: rascunho.template,
+                        acento: c.id,
+                      }}
+                      indice={1}
+                      usuario=""
+                      registro=""
+                      mostrarRegistro={false}
+                    />
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+          <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-500">
+            {cores.find((c) => c.id === rascunho.acento)?.nome ?? rascunho.acento} ·{' '}
+            {TEMPLATE_LABEL[rascunho.template]}
+          </p>
+
         </Campo>
 
         <Campo rotulo="Template padrão">
@@ -493,7 +502,17 @@ export function ConfiguracoesPublicacoes({
         </button>
       </Bloco>
 
-      {/* Aprovação */}
+      <SobreAClinica
+        contexto={contexto}
+        clinica={clinica}
+        onSalvar={onSalvarContexto}
+      />
+
+      {/*
+        APROVAÇÃO POR ÚLTIMO, depois do contexto da clínica: as duas colunas fluem
+        na ordem do DOM, e quem chega nesta tela vem configurar o que a IA escreve —
+        quem assina vem depois de existir o que assinar.
+      */}
       <Bloco titulo="Aprovação" icone={ShieldCheck}>
         <Campo rotulo="Quem pode aprovar e agendar">
           <div className="space-y-1.5">
@@ -539,12 +558,6 @@ export function ConfiguracoesPublicacoes({
           />
         </div>
       </Bloco>
-
-      <SobreAClinica
-        contexto={contexto}
-        clinica={clinica}
-        onSalvar={onSalvarContexto}
-      />
     </div>
   )
 }
