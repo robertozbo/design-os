@@ -1,0 +1,331 @@
+{
+  "_meta": {
+    "models": {
+      "userProfile": "O paciente dono da conta — identidade mascarada (ex: DC.945), idade biológica, altura e peso. Alimenta o painel HUD 'PROFILE' com silhueta corporal e dados básicos.",
+      "vitalsSnapshot": "Foto dos sinais vitais mais recentes do User (frequência cardíaca, temperatura, oxigenação, último sono). Renderizados nos painéis HUD ao redor do avatar.",
+      "hudPanels": "Painéis angulares ao redor do avatar central, cada um focado num grupo de dados de saúde. Têm 3 estados visuais (idle escurecido, active com glow ciano, alert com borda âmbar) e acendem conforme o tópico atual da conversa.",
+      "currentSession": "Sessão de voz ativa no momento — invocada pelo User há poucos segundos. Mostra o estado atual do avatar (idle/listening/thinking/speaking), estado do microfone e os últimos 3-4 turnos visíveis na transcrição HUD.",
+      "utterances": "Cada turno da conversa entre User e Nymos. Tem autor, texto, timestamp, intent detectado (registro/consulta/conversa/comando) e — quando aplicável — referência à entity criada/consultada e link de drill-down pra section correspondente.",
+      "recentSessions": "Histórico das últimas sessões do User para a sub-rota /assistente-nymos/historico. Cada item mostra data, duração, n° de turnos, prévia do primeiro turno do User e tags do que foi feito (registro, consulta, drill-down).",
+      "memories": "Fatos e preferências que o Nymos aprendeu sobre o User ao longo das sessões. Cada memory tem categoria, conteúdo, origem (utterance que gerou) e flag de esquecimento. User pode pedir 'Nymos, esquece X' a qualquer momento.",
+      "proactiveSuggestion": "Sugestão proativa pendente (modo opt-in). Quando existe, o ícone flutuante do shell muda scanner pra âmbar e ganha badge. Ao abrir, o Nymos entra direto em 'speaking' com a sugestão."
+    },
+    "relationships": [
+      "Cada VoiceSession pertence a um User e contém múltiplas Utterances ordenadas cronologicamente",
+      "Cada Utterance opcionalmente referencia uma entity criada (Meal, Metric, MoodCheckIn, Activity, BodyComposition, JournalEntry) ou consultada — útil pra renderizar chips de drill-down",
+      "Cada AssistantMemory pertence a um User e opcionalmente aponta pra Utterance que originou ela",
+      "Os hudPanels são derivados do userProfile + vitalsSnapshot + últimos dados de saúde do User, não são entities persistidas — são visualizações que acendem conforme contexto da conversa",
+      "ProactiveSuggestion é gerada pelo backend quando detecta gap nos dados (ex: 3 dias sem registrar peso) e some quando o User aceita ou recusa"
+    ]
+  },
+
+  "userProfile": {
+    "id": "DC.945",
+    "displayName": "Roberto",
+    "ageYears": 42,
+    "biologicalAgeYears": 39,
+    "heightCm": 178,
+    "weightKg": 78.5,
+    "onlineSince": "2026-05-30T13:42:11Z"
+  },
+
+  "vitalsSnapshot": {
+    "heartRateBpm": 72,
+    "heartRateTrend7d": [68, 71, 74, 70, 72, 75, 72],
+    "bodyTempC": 36.7,
+    "oxygenationPct": 98,
+    "lastSleepHours": 6.5,
+    "sleepAvg7dHours": 6.2,
+    "sleepTrend7d": [6.8, 5.9, 6.4, 6.1, 6.5, 6.0, 6.5],
+    "weightTrend7d": [79.1, 79.0, 78.8, 78.6, 78.5, 78.4, 78.5],
+    "lastLdl": 142,
+    "lastLdlPrevious": 128,
+    "lastLdlUnit": "mg/dL",
+    "lastLdlMeasuredAt": "2026-05-12T09:30:00Z"
+  },
+
+  "hudPanels": [
+    {
+      "id": "panel-bio-diagnostic",
+      "label": "BIO DIAGNOSTIC",
+      "position": "top-left",
+      "type": "identity",
+      "status": "active",
+      "primary": "ONLINE",
+      "secondary": "DC.945"
+    },
+    {
+      "id": "panel-profile",
+      "label": "PROFILE",
+      "position": "top-right",
+      "type": "silhouette",
+      "status": "idle",
+      "ageYears": 42,
+      "heightCm": 178,
+      "weightKg": 78.5
+    },
+    {
+      "id": "panel-heart-rate",
+      "label": "HEART RATE",
+      "position": "mid-right",
+      "type": "metric-sparkline",
+      "status": "idle",
+      "value": 72,
+      "unit": "BPM",
+      "trend": [68, 71, 74, 70, 72, 75, 72]
+    },
+    {
+      "id": "panel-body-temp",
+      "label": "BODY TEMP",
+      "position": "bottom-right",
+      "type": "metric",
+      "status": "idle",
+      "value": 36.7,
+      "unit": "°C"
+    },
+    {
+      "id": "panel-oxygenation",
+      "label": "OXYGENATION",
+      "position": "bottom-right",
+      "type": "metric",
+      "status": "idle",
+      "value": 98,
+      "unit": "%"
+    },
+    {
+      "id": "panel-sleep",
+      "label": "SLEEP",
+      "position": "mid-left",
+      "type": "metric-sparkline",
+      "status": "active",
+      "value": 6.2,
+      "valueDeltaPct": -4.6,
+      "unit": "h avg 7d",
+      "trend": [6.8, 5.9, 6.4, 6.1, 6.5, 6.0, 6.5],
+      "drillTo": "/metrics/sleep"
+    },
+    {
+      "id": "panel-weight",
+      "label": "WEIGHT",
+      "position": "mid-left",
+      "type": "metric-sparkline",
+      "status": "idle",
+      "value": 78.5,
+      "unit": "kg",
+      "trend": [79.1, 79.0, 78.8, 78.6, 78.5, 78.4, 78.5],
+      "drillTo": "/body-composition"
+    },
+    {
+      "id": "panel-biomarkers",
+      "label": "BIOMARKERS",
+      "position": "bottom-left",
+      "type": "biomarker-alert",
+      "status": "alert",
+      "biomarker": "LDL",
+      "value": 142,
+      "previousValue": 128,
+      "deltaPct": 10.9,
+      "unit": "mg/dL",
+      "measuredAt": "2026-05-12T09:30:00Z",
+      "drillTo": "/exames-paciente"
+    }
+  ],
+
+  "currentSession": {
+    "id": "vs-2026-05-30-1345",
+    "startedAt": "2026-05-30T13:45:12Z",
+    "endedAt": null,
+    "durationSeconds": 5,
+    "device": "mobile",
+    "invocationMode": "icon",
+    "avatarState": "listening",
+    "micState": "listening",
+    "ttsMuted": false,
+    "currentIntent": "query",
+    "highlightedPanelIds": [],
+    "utterances": [
+      {
+        "id": "vu-001",
+        "author": "user",
+        "text": "como tá meu sono essa semana",
+        "timestamp": "2026-05-30T13:45:15Z",
+        "intent": "query",
+        "referencedEntity": null,
+        "drillTo": null
+      }
+    ]
+  },
+
+  "recentSessions": [
+    {
+      "id": "vs-2026-05-30-1212",
+      "startedAt": "2026-05-30T12:12:08Z",
+      "endedAt": "2026-05-30T12:13:44Z",
+      "durationSeconds": 96,
+      "device": "mobile",
+      "invocationMode": "wake-word",
+      "utteranceCount": 6,
+      "firstUserUtterance": "Nymos, registra meu almoço: 120g de arroz e 180g de frango grelhado",
+      "tags": ["registro", "alimentacao"],
+      "createdEntities": [{ "type": "Meal", "id": "meal-77231" }]
+    },
+    {
+      "id": "vs-2026-05-30-0832",
+      "startedAt": "2026-05-30T08:32:00Z",
+      "endedAt": "2026-05-30T08:32:48Z",
+      "durationSeconds": 48,
+      "device": "web",
+      "invocationMode": "icon",
+      "utteranceCount": 4,
+      "firstUserUtterance": "Dormi das 23h às 6h, sono ok",
+      "tags": ["registro", "sono"],
+      "createdEntities": [{ "type": "Metric", "id": "metric-sleep-9912" }]
+    },
+    {
+      "id": "vs-2026-05-29-2218",
+      "startedAt": "2026-05-29T22:18:14Z",
+      "endedAt": "2026-05-29T22:19:55Z",
+      "durationSeconds": 101,
+      "device": "mobile",
+      "invocationMode": "icon",
+      "utteranceCount": 5,
+      "firstUserUtterance": "Meu LDL piorou desde o último exame?",
+      "tags": ["consulta", "exame", "drill-down"],
+      "createdEntities": []
+    },
+    {
+      "id": "vs-2026-05-29-0701",
+      "startedAt": "2026-05-29T07:01:22Z",
+      "endedAt": "2026-05-29T07:02:12Z",
+      "durationSeconds": 50,
+      "device": "mobile",
+      "invocationMode": "proactive",
+      "utteranceCount": 4,
+      "firstUserUtterance": "Tô com 78,5kg hoje",
+      "tags": ["registro", "peso", "proativo"],
+      "createdEntities": [{ "type": "BodyComposition", "id": "body-22118" }]
+    },
+    {
+      "id": "vs-2026-05-28-1932",
+      "startedAt": "2026-05-28T19:32:10Z",
+      "endedAt": "2026-05-28T19:33:01Z",
+      "durationSeconds": 51,
+      "device": "web",
+      "invocationMode": "keyboard",
+      "utteranceCount": 3,
+      "firstUserUtterance": "Quando foi minha última consulta com Dr. Mauro?",
+      "tags": ["consulta", "agenda"],
+      "createdEntities": []
+    },
+    {
+      "id": "vs-2026-05-27-1801",
+      "startedAt": "2026-05-27T18:01:44Z",
+      "endedAt": "2026-05-27T18:02:09Z",
+      "durationSeconds": 25,
+      "device": "mobile",
+      "invocationMode": "icon",
+      "utteranceCount": 2,
+      "firstUserUtterance": "Tô com dor de cabeça leve do lado direito",
+      "tags": ["registro", "sintoma"],
+      "createdEntities": [{ "type": "JournalEntry", "id": "journal-5510" }]
+    },
+    {
+      "id": "vs-2026-05-26-2150",
+      "startedAt": "2026-05-26T21:50:02Z",
+      "endedAt": "2026-05-26T21:50:18Z",
+      "durationSeconds": 16,
+      "device": "mobile",
+      "invocationMode": "icon",
+      "utteranceCount": 1,
+      "firstUserUtterance": "",
+      "tags": ["cancelada"],
+      "createdEntities": []
+    }
+  ],
+
+  "memories": [
+    {
+      "id": "mem-001",
+      "category": "schedule",
+      "content": "Meu almoço é sempre às 12h30",
+      "sourceUtteranceId": "vu-archived-101",
+      "createdAt": "2026-05-12T13:02:00Z",
+      "isDeleted": false
+    },
+    {
+      "id": "mem-002",
+      "category": "restriction",
+      "content": "Não como glúten",
+      "sourceUtteranceId": "vu-archived-118",
+      "createdAt": "2026-05-13T19:45:00Z",
+      "isDeleted": false
+    },
+    {
+      "id": "mem-003",
+      "category": "goal",
+      "content": "Minha meta de peso é 75kg até dezembro",
+      "sourceUtteranceId": "vu-archived-204",
+      "createdAt": "2026-05-15T07:18:00Z",
+      "isDeleted": false
+    },
+    {
+      "id": "mem-004",
+      "category": "routine",
+      "content": "Treino 4x na semana (segunda, terça, quinta, sábado)",
+      "sourceUtteranceId": "vu-archived-307",
+      "createdAt": "2026-05-16T18:00:00Z",
+      "isDeleted": false
+    },
+    {
+      "id": "mem-005",
+      "category": "context",
+      "content": "Tenho ansiedade leve, em acompanhamento com Dra. Marina",
+      "sourceUtteranceId": "vu-archived-410",
+      "createdAt": "2026-05-18T20:11:00Z",
+      "isDeleted": false
+    },
+    {
+      "id": "mem-006",
+      "category": "preference",
+      "content": "Café da manhã às 7h, sem açúcar, com pão sem glúten",
+      "sourceUtteranceId": "vu-archived-501",
+      "createdAt": "2026-05-19T07:05:00Z",
+      "isDeleted": false
+    },
+    {
+      "id": "mem-007",
+      "category": "context",
+      "content": "Trabalho de casa, sentado a maior parte do dia. Tento levantar a cada 1h",
+      "sourceUtteranceId": "vu-archived-602",
+      "createdAt": "2026-05-20T10:23:00Z",
+      "isDeleted": false
+    },
+    {
+      "id": "mem-008",
+      "category": "schedule",
+      "content": "Acordo às 6h durante a semana",
+      "sourceUtteranceId": "vu-archived-703",
+      "createdAt": "2026-05-21T06:10:00Z",
+      "isDeleted": false
+    },
+    {
+      "id": "mem-009",
+      "category": "restriction",
+      "content": "Tenho lactose com moderação — pode causar inchaço",
+      "sourceUtteranceId": "vu-archived-810",
+      "createdAt": "2026-05-22T13:00:00Z",
+      "isDeleted": false
+    },
+    {
+      "id": "mem-archived-001",
+      "category": "preference",
+      "content": "Eu não gosto de salada de alface",
+      "sourceUtteranceId": "vu-archived-902",
+      "createdAt": "2026-05-24T19:30:00Z",
+      "isDeleted": true,
+      "deletedAt": "2026-05-28T21:05:00Z"
+    }
+  ],
+
+  "proactiveSuggestion": null
+}

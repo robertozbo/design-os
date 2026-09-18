@@ -92,6 +92,12 @@ Conexão paciente↔psicólogo vinculado. Layout em 2 tabs:
 
 Diário sempre disponível (offline-friendly). Instrumentos clínicos (PHQ-9, GAD-7) ficam pra V2.
 
+### 11. Assistente Nymos `[V2]`
+
+`/sections/assistente-nymos`
+
+Companion AI por voz com estética **HUD bio-diagnóstico sci-fi**. Invocado pelo FAB persistente (mini-mesh com scanner ativo) ou wake-word "Ei Nymos". Tela fullscreen dark (preto puro pra OLED) com **cabeça humana low-poly triangulada** dominando o centro, reagindo em tempo real à conversa (idle · listening · thinking · speaking). **Pull-up sheet** com painéis HUD (HEART RATE, BODY TEMP, OXYGENATION, PROFILE, WEIGHT, SLEEP, BIOMARKERS) em 3 posições (peek 24px · meio 40% · cheio 70%) — handle pulsa em âmbar quando há painel em alert. Sugestão proativa aparece como card flutuante âmbar no topo com auto-dismiss. Touch targets ampliados (mic 64px, controles 48px). Safe areas top/bottom respeitadas. Shake-to-invoke opt-in. Dois objetivos: estimular registro diário (alimentação, sono, peso, atividade, humor, sintomas, medicamentos) e responder consultas objetivas sobre histórico com chip de drill-down.
+
 ## Fora do MVP (V2+)
 
 Features que existem no app mas não entram nesta retematização inicial:
