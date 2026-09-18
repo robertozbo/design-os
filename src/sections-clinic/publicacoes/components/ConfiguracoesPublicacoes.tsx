@@ -282,56 +282,6 @@ export function ConfiguracoesPublicacoes({
           O que a IA assume quando o brief não diz.
         </p>
 
-        <Campo rotulo="Tom">
-          <div className="flex flex-wrap gap-1.5">
-            {TONS.map((t) => (
-              <Pilula
-                key={t}
-                ativo={rascunho.tom === t}
-                onClick={() => setRascunho({ ...rascunho, tom: t })}
-              >
-                {t}
-              </Pilula>
-            ))}
-          </div>
-        </Campo>
-
-        <Campo rotulo="Template padrão">
-          <div className="grid grid-cols-3 gap-2">
-            {TEMPLATES.map((t) => (
-              <button
-                key={t}
-                onClick={() => setRascunho({ ...rascunho, template: t })}
-                title={TEMPLATE_DESCRICAO[t]}
-                className={`overflow-hidden rounded-lg border text-left transition-colors ${
-                  rascunho.template === t
-                    ? 'border-teal-500 ring-1 ring-teal-500'
-                    : 'border-slate-200 hover:border-slate-300 dark:border-slate-700'
-                }`}
-              >
-                <div className="aspect-[4/5]">
-                  <Arte
-                    mini
-                    slide={{ ordem: 1, ...AMOSTRA[t] }}
-                    midia={{
-                      tipo: t === 'foto' ? 'upload' : 'template',
-                      template: t,
-                      acento: rascunho.acento,
-                    }}
-                    indice={1}
-                    usuario=""
-                    registro=""
-                    mostrarRegistro={false}
-                  />
-                </div>
-                <p className="truncate px-1.5 py-1 text-[10px] font-medium text-slate-600 dark:text-slate-300">
-                  {TEMPLATE_LABEL[t]}
-                </p>
-              </button>
-            ))}
-          </div>
-        </Campo>
-
         <Campo rotulo="Cor de acento">
           {/*
             Leque em vez de bolinha de cor: cada carta é o template ESCOLHIDO naquela
@@ -455,6 +405,56 @@ export function ConfiguracoesPublicacoes({
             {erroPaleta && (
               <p className="mt-2 text-[11px] text-amber-600 dark:text-amber-400">{erroPaleta}</p>
             )}
+          </div>
+        </Campo>
+
+        <Campo rotulo="Template padrão">
+          <div className="grid grid-cols-3 gap-2">
+            {TEMPLATES.map((t) => (
+              <button
+                key={t}
+                onClick={() => setRascunho({ ...rascunho, template: t })}
+                title={TEMPLATE_DESCRICAO[t]}
+                className={`overflow-hidden rounded-lg border text-left transition-colors ${
+                  rascunho.template === t
+                    ? 'border-teal-500 ring-1 ring-teal-500'
+                    : 'border-slate-200 hover:border-slate-300 dark:border-slate-700'
+                }`}
+              >
+                <div className="aspect-[4/5]">
+                  <Arte
+                    mini
+                    slide={{ ordem: 1, ...AMOSTRA[t] }}
+                    midia={{
+                      tipo: t === 'foto' ? 'upload' : 'template',
+                      template: t,
+                      acento: rascunho.acento,
+                    }}
+                    indice={1}
+                    usuario=""
+                    registro=""
+                    mostrarRegistro={false}
+                  />
+                </div>
+                <p className="truncate px-1.5 py-1 text-[10px] font-medium text-slate-600 dark:text-slate-300">
+                  {TEMPLATE_LABEL[t]}
+                </p>
+              </button>
+            ))}
+          </div>
+        </Campo>
+
+        <Campo rotulo="Tom">
+          <div className="flex flex-wrap gap-1.5">
+            {TONS.map((t) => (
+              <Pilula
+                key={t}
+                ativo={rascunho.tom === t}
+                onClick={() => setRascunho({ ...rascunho, tom: t })}
+              >
+                {t}
+              </Pilula>
+            ))}
           </div>
         </Campo>
 

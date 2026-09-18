@@ -53,7 +53,7 @@ vê configuração de Instagram em lugar nenhum.
 | Aba | O quê |
 |---|---|
 | **Fila** | A fila de posts e o preview. A conta só aparece aqui quando há o que fazer: autorização vencendo, em faixa âmbar com **Reconectar**. Alerta, não configuração |
-| **Configurações** | Conta do Instagram (conectar/desconectar, validade, consumo do dia), pauta semanal, padrões da marca (tom, template, cor, fecho fixo, registro no cartão), aprovação e **Sobre a clínica** — o contexto de negócio que entra em toda geração |
+| **Configurações** | Conta do Instagram (conectar/desconectar, validade, consumo do dia), pauta semanal, padrões da marca — na ordem em que a decisão acontece: cor de acento e logo, template, tom, fecho fixo, registro no cartão, aprovação e **Sobre a clínica** — o contexto de negócio que entra em toda geração |
 
 **Em Configurações da clínica fica só o que é cobrança:** o módulo aparece em *Plano & limites →
 Módulos* com preço, consumo do ciclo e um link **Configurar** que traz para cá. Preço e cota não
