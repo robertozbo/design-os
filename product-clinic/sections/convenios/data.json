@@ -1,0 +1,91 @@
+{
+  "_meta": {
+    "models": {
+      "convenio": "Uma operadora de saúde do catálogo da clínica: nome, registro ANS (opcional) e se está ativa para novos cadastros. Traz quantos pacientes do pool estão nela hoje.",
+      "resumo": "Os três números do header: convênios ativos, pacientes conveniados e pacientes particulares (sem convênio)."
+    },
+    "relationships": [
+      "ConveniosData tem muitos Convenio e um Resumo",
+      "Convenio.pacientes é a contagem de pacientes do pool naquele convênio — inclui os de convênio inativo, porque desativar não desvincula ninguém",
+      "Resumo.particulares são os pacientes com convenioId = null; particular não é uma linha da lista, é a ausência de convênio",
+      "Duplicata por grafia não é campo: a tela detecta na hora comparando os nomes normalizados (minúsculas, sem acento, espaços colapsados). Renomear faz o aviso sumir sozinho"
+    ]
+  },
+  "resumo": {
+    "ativos": 8,
+    "conveniados": 685,
+    "particulares": 214
+  },
+  "convenios": [
+    {
+      "id": "cv-001",
+      "nome": "Unimed Regional",
+      "codigoAns": "000340",
+      "ativo": true,
+      "pacientes": 312
+    },
+    {
+      "id": "cv-002",
+      "nome": "unimed regional",
+      "codigoAns": null,
+      "ativo": true,
+      "pacientes": 4
+    },
+    {
+      "id": "cv-003",
+      "nome": "Bradesco Saúde",
+      "codigoAns": "005711",
+      "ativo": true,
+      "pacientes": 128
+    },
+    {
+      "id": "cv-004",
+      "nome": "SulAmérica Saúde",
+      "codigoAns": "006246",
+      "ativo": true,
+      "pacientes": 96
+    },
+    {
+      "id": "cv-005",
+      "nome": "Amil Assistência Médica",
+      "codigoAns": "326305",
+      "ativo": true,
+      "pacientes": 74
+    },
+    {
+      "id": "cv-006",
+      "nome": "Porto Seguro Saúde",
+      "codigoAns": "416029",
+      "ativo": true,
+      "pacientes": 31
+    },
+    {
+      "id": "cv-007",
+      "nome": "NotreDame Intermédica",
+      "codigoAns": "359017",
+      "ativo": true,
+      "pacientes": 22
+    },
+    {
+      "id": "cv-008",
+      "nome": "Hapvida",
+      "codigoAns": "368253",
+      "ativo": false,
+      "pacientes": 18
+    },
+    {
+      "id": "cv-009",
+      "nome": "Cassi",
+      "codigoAns": "346659",
+      "ativo": true,
+      "pacientes": 0
+    },
+    {
+      "id": "cv-010",
+      "nome": "Golden Cross",
+      "codigoAns": "003140",
+      "ativo": false,
+      "pacientes": 0
+    }
+  ]
+}
