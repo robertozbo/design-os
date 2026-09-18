@@ -5,7 +5,8 @@
       "producaoMedico": "Produção do médico no período: atendimentos, teleconsultas, no-shows e receita gerada.",
       "ocupacaoSala": "Percentual de ocupação de uma sala/consultório no período.",
       "receitaEspecialidade": "Receita agregada por especialidade e sua fatia (%).",
-      "noShowMedico": "Quantidade e taxa de faltas por médico."
+      "noShowMedico": "Quantidade e taxa de faltas por médico.",
+      "intervaloDatas": "Janela de datas do relatório (ISO, inclusiva nas duas pontas)."
     },
     "relationships": [
       "RelatoriosData agrega indicadores operacionais do período (zero dado clínico)",
@@ -14,6 +15,10 @@
   },
   "clinica": "Clínica Nymos · Vila Mariana",
   "periodo": "mes",
+  "intervalo": {
+    "de": "2026-08-01",
+    "ate": "2026-08-31"
+  },
   "kpis": [
     {
       "id": "atend",

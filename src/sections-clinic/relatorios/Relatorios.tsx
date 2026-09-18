@@ -1,7 +1,18 @@
 import { useState } from 'react'
 import data from '@/../product-clinic/sections/relatorios/data.json'
-import type { Periodo, RelatoriosData } from '@/../product-clinic/sections/relatorios/types'
+import type {
+  IntervaloDatas,
+  Periodo,
+  RelatoriosData,
+} from '@/../product-clinic/sections/relatorios/types'
 import { RelatoriosView } from './components'
+import { intervaloLabel } from './components/helpers'
+
+/** Janela canônica de cada atalho de período (protótipo: ancorado em ago/2026). */
+const INTERVALO_POR_PERIODO: Record<'mes' | 'trimestre', IntervaloDatas> = {
+  mes: { de: '2026-08-01', ate: '2026-08-31' },
+  trimestre: { de: '2026-06-01', ate: '2026-08-31' },
+}
 
 interface Toast {
   id: number
@@ -12,6 +23,7 @@ let toastSeq = 0
 export default function RelatoriosPreview() {
   const base = data as unknown as RelatoriosData
   const [periodo, setPeriodo] = useState<Periodo>(base.periodo)
+  const [intervalo, setIntervalo] = useState<IntervaloDatas>(base.intervalo)
   const [toasts, setToasts] = useState<Toast[]>([])
 
   const pushToast = (texto: string) => {
@@ -23,10 +35,16 @@ export default function RelatoriosPreview() {
   return (
     <>
       <RelatoriosView
-        dados={{ ...base, periodo }}
+        dados={{ ...base, periodo, intervalo }}
         onPeriodo={(p) => {
           setPeriodo(p)
+          if (p !== 'personalizado') setIntervalo(INTERVALO_POR_PERIODO[p])
           if (p !== base.periodo) pushToast('Protótipo: dados de exemplo são do mês')
+        }}
+        onIntervalo={(de, ate) => {
+          setPeriodo('personalizado')
+          setIntervalo({ de, ate })
+          pushToast(`Período ${intervaloLabel(de, ate)} · protótipo: números seguem os do mês`)
         }}
         onExportar={() => pushToast('CSV do relatório gerado (mock) · pronto para a planilha')}
         onLinhaClick={(m) => pushToast(`${m.nome} · ${m.atendimentos} atend. · ${m.noShows} no-shows (resumo mock)`)}

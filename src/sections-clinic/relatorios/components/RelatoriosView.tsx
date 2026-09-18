@@ -4,16 +4,18 @@ import type {
   ProducaoMedico,
   RelatoriosData,
 } from '@/../product-clinic/sections/relatorios/types'
-import { AVATAR_COR, BADGE_COR, BAR_COR, brl, pct } from './helpers'
+import { AVATAR_COR, BADGE_COR, BAR_COR, brl, intervaloLabel, pct } from './helpers'
+import { IntervaloFiltro } from './IntervaloFiltro'
 
 interface Props {
   dados: RelatoriosData
   onPeriodo: (p: Periodo) => void
+  onIntervalo: (de: string, ate: string) => void
   onExportar: () => void
   onLinhaClick: (m: ProducaoMedico) => void
 }
 
-export function RelatoriosView({ dados, onPeriodo, onExportar, onLinhaClick }: Props) {
+export function RelatoriosView({ dados, onPeriodo, onIntervalo, onExportar, onLinhaClick }: Props) {
   const maxSala = Math.max(...dados.salas.map((s) => s.pct))
   const maxEsp = Math.max(...dados.porEspecialidade.map((e) => e.pct))
   const maxNoShow = Math.max(...dados.noShow.map((n) => n.quantidade))
@@ -31,10 +33,20 @@ export function RelatoriosView({ dados, onPeriodo, onExportar, onLinhaClick }: P
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-50">Relatórios</h1>
-          <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">{dados.clinica}</p>
+          <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+            {dados.clinica} · {intervaloLabel(dados.intervalo.de, dados.intervalo.ate)}
+          </p>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-0.5 rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800">
+        <div className="flex flex-wrap items-start gap-2">
+          {/* Datas primeiro: é a janela mais específica, e aplicá-la desliga mês/trimestre */}
+          <IntervaloFiltro
+            key={`${dados.intervalo.de}-${dados.intervalo.ate}`}
+            intervalo={dados.intervalo}
+            personalizado={dados.periodo === 'personalizado'}
+            onAplicar={onIntervalo}
+            onLimpar={() => onPeriodo('mes')}
+          />
+          <div className="flex h-[34px] items-center gap-0.5 rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800">
             {(['mes', 'trimestre'] as Periodo[]).map((p) => (
               <button
                 key={p}

@@ -38,6 +38,24 @@ export function brl(valor: number): string {
   })
 }
 
+/**
+ * "2026-08-01" → "01/08/2026".
+ * Fatia a string em vez de usar `new Date(iso)`: o construtor interpreta
+ * `yyyy-mm-dd` como UTC e, em BRT, devolveria o dia anterior.
+ */
+export function dataBR(iso: string): string {
+  const [a, m, d] = iso.split('-')
+  return a && m && d ? `${d}/${m}/${a}` : iso
+}
+
+/** "01/08 – 31/08/2026" — omite o ano da ponta esquerda quando é o mesmo. */
+export function intervaloLabel(de: string, ate: string): string {
+  const [anoDe] = de.split('-')
+  const [anoAte] = ate.split('-')
+  const esquerda = anoDe === anoAte ? dataBR(de).slice(0, 5) : dataBR(de)
+  return `${esquerda} – ${dataBR(ate)}`
+}
+
 /** 8,2 → "8,2%" (1 casa, sem casa quando inteiro). */
 export function pct(valor: number): string {
   const s = Number.isInteger(valor) ? String(valor) : valor.toFixed(1).replace('.', ',')

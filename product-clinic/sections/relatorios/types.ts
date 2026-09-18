@@ -1,5 +1,11 @@
 export type CorEspecialidade = 'teal' | 'rose' | 'violet' | 'slate' | 'sky' | 'amber'
-export type Periodo = 'mes' | 'trimestre'
+export type Periodo = 'mes' | 'trimestre' | 'personalizado'
+
+/** Janela de datas do relatório. Datas em ISO `yyyy-mm-dd`, ambas inclusivas. */
+export interface IntervaloDatas {
+  de: string
+  ate: string
+}
 
 export interface KpiRelatorio {
   id: string
@@ -81,6 +87,11 @@ export interface DespesaPorGrupo {
 export interface RelatoriosData {
   clinica: string
   periodo: Periodo
+  /**
+   * Janela efetivamente exibida. Mês/trimestre a derivam; `personalizado` vem
+   * do filtro de datas. É sempre a fonte da verdade do que os números cobrem.
+   */
+  intervalo: IntervaloDatas
   kpis: KpiRelatorio[]
   producao: ProducaoMedico[]
   salas: OcupacaoSala[]
