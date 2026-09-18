@@ -10,6 +10,7 @@ Centro de gestão dos exames recebidos pelos pacientes do médico — laudos lab
 - Filtros: paciente (autocomplete), tipo (laboratorial/imagem), status (a revisar / revisado), período (últimos 7d / 30d / customizado)
 - Cada item da lista: paciente · tipo · laboratório · data · destaque do principal valor alterado · badge "Novo" se ainda não revisado · click abre detalhe
 - Ordem default: a revisar primeiro, depois mais recentes
+- **Sem upload na lista (decisão de produto)**: exames entram pelo app do paciente; o upload manual de imagem existe apenas dentro da Consulta (tab Imagens), onde o paciente já está em contexto — elimina o risco de vincular exame ao paciente errado
 
 ### Detalhe do exame — abertura
 - Header sticky: paciente (avatar + nome + condições) · tipo + data + lab · ações (Voltar, Marcar como revisado, Compartilhar com paciente, Imprimir)
@@ -32,7 +33,7 @@ Centro de gestão dos exames recebidos pelos pacientes do médico — laudos lab
 - 4 cards empilhados:
   1. **Resumo do laudo** — 3 linhas com principal achado, contexto, sugestão de ação
   2. **Comparação histórica** — variação dos valores ao longo do tempo, % de mudança, tendência
-  3. **Cruzamento com queixa atual** — relação entre os achados e os sintomas relatados pelo paciente na anamnese pré-consulta
+  3. **Cruzamento com queixa atual** — relação entre os achados e os sintomas relatados pelo paciente na anamnese pré-consulta; **cadastro e análise são fluxos separados**: o form de upload é enxuto (arquivos + identificação, sem campos de IA) e ao salvar volta pra lista com o exame visível ("Novo · a revisar"); **a análise é do profissional** — botão "Analisar" em cada card de exame abre drawer com: miniatura/arquivos, queixas do paciente (chips de sintomas comuns com tooltip + texto livre), campo obrigatório **"Sua análise"** (registro oficial do profissional) e bloco **"Insights com IA"** — auxílio à interpretação, **nunca diagnóstico**: a IA gera uma sugestão (laudo + histórico + queixas) e o profissional decide se insere na própria análise (texto entra marcado como "[Insight IA — revisado pelo profissional]"); o insight só vai ao prontuário se inserido; "Salvar análise" exige o campo do profissional preenchido
   4. **Cruzamento com medicação em uso** — análise se a medicação atual pode explicar/influenciar resultado, sugestão de ajuste
 - Cada card pode ser expandido pra ver detalhes
 - Cada card mostra: modelo de IA usado, timestamp, fonte do contexto (anamnese de qual data, prescrição de qual data)

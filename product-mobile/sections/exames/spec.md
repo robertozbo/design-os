@@ -4,7 +4,7 @@
 
 Aba do paciente Nymos mobile — gerenciamento dos exames laboratoriais com upload, extração automática por IA e visualização de marcadores. Captura o ciclo completo: foto/PDF do laudo → extração de valores → comparação com faixas de referência → status (normal/warning/critical) → histórico longitudinal.
 
-**Esta section foi back-portada do live (`mobile/src/screens/exams/`) em 2026-05-25** — o protótipo ficou pra trás e esta spec reflete o que está em produção.
+**Esta section foi back-portada do live (`mobile/src/screens/exams/`) em 2026-05-25** — o protótipo ficou pra trás e esta spec reflete o que está em produção. **Reconciliada em 2026-06-23:** removido `ExamUploadScreen` (era dead code, não roteado) e documentado o gate de IA por plano.
 
 ## User Flows
 
@@ -12,10 +12,11 @@ Aba do paciente Nymos mobile — gerenciamento dos exames laboratoriais com uplo
 - Lista mostra exames agrupados por data (mais recente primeiro), com badge de status (normal/warning/critical)
 - Tap em exame → abre modal de detalhe com todos os marcadores + valores + faixas de referência
 - Tap no FAB / empty state CTA → fluxo de captura novo exame:
-  1. ExamTypeSelect (selecionar tipo)
+  1. ExamTypeSelect (selecionar tipo) — define `hasAI = tipoSuportaIA && useAiAccess().hasAccess`
   2. ExamCapture (câmera ou galeria)
-  3. ExamUpload (preview + confirma)
-  4. ExamResult (loading durante processamento IA, depois resultado)
+  3. Conforme `hasAI`:
+     - **Com IA (plano Plus):** `processImage` → ExamResult (loading durante processamento IA → resultado extraído)
+     - **Sem IA (free / store-only):** `uploadExam` direto → alert "Exame enviado" → volta pra lista (sem ExamResult, sem extração)
 - Tap em "Histórico" → tela ExamHistory com filtros (tipo, período)
 - Pull-to-refresh atualiza a lista
 - Exame em processamento → badge "Processando..." + spinner
@@ -53,10 +54,9 @@ Ver `types.ts`:
 
 ## Sub-screens (não cobertas neste protótipo, mas existem em live)
 
-- `ExamTypeSelectScreen` — seleção do tipo de exame antes da captura
-- `ExamCaptureScreen` — câmera/galeria pra foto do laudo
-- `ExamUploadScreen` — preview + confirma upload
-- `ExamResultScreen` — resultado pós-processamento IA
+- `ExamTypeSelectScreen` — seleção do tipo de exame antes da captura; gateia `hasAI` por plano
+- `ExamCaptureScreen` — câmera/galeria pra foto do laudo; ramifica IA (Plus) vs upload direto (free)
+- `ExamResultScreen` — resultado pós-processamento IA (só no caminho com IA)
 - `ExamHistoryScreen` — filtros por tipo/período
 - `ExamDetailScreen` / `ExamDetailModal` — detalhe completo dos marcadores
 - `LabExamResult` — view-only resultado com valores + faixas
@@ -66,3 +66,4 @@ Ver `types.ts`:
 - Live também tem `BioimpedanceResult`, `BodyPhotoResult`, `BodyEvolutionTab`, `BodyScoreCard`, `BodySilhouette` dentro da pasta `exams/`, mas estes pertencem conceitualmente a `body-evaluations/` (também back-port pendente). Comentário no live: "Body evaluations moved to /body-evaluations module".
 - A categoria atual é só `laboratorial`. Imagem (DICOM, ultrassom) está fora do escopo do MVP.
 - Pipeline de IA tem fases (`validating` → `extracting` → `done`). UI mostra spinner durante as duas primeiras.
+- **Monetização (gate de IA):** extração por OCR é recurso pago (plano Plus). Free faz upload store-only (armazena o laudo, sem extração). Enforcement client-side via `useAiAccess()` (plano ativo não-FREE) em `ExamTypeSelectScreen`; backend espelha via `hasAiAccess()`/`GuardFactory.requireAiAccess()` atrás da env `AI_PAYWALL_ENABLED` (default OFF). Ver memory `project_ia_premium_model`.
