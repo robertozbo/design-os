@@ -151,6 +151,35 @@ export function SetupWizard({
     }
   })()
 
+  /** Diz o que trava o Continuar — só nos passos com mais de um campo. */
+  const faltaLabel = (() => {
+    if (podeAvancar) return null
+    switch (step) {
+      case 'agenda': {
+        const falta = [
+          frequencia !== 'diaria' && !diaSemana ? 'o dia da semana' : null,
+          !horario ? 'o horário' : null,
+        ].filter(Boolean)
+        return falta.length ? `Escolha ${falta.join(' e ')}` : null
+      }
+      case 'perfil': {
+        const falta = [
+          alturaNum > 0 ? null : 'a altura',
+          pesoAtualNum > 0 ? null : 'o peso atual',
+        ].filter(Boolean)
+        return falta.length ? `Preencha ${falta.join(' e ')}` : null
+      }
+      case 'meta': {
+        if (!(pesoAlvoNum > 0)) return 'Informe o peso alvo'
+        if (!(perderKg > 0)) return 'O peso alvo precisa ser menor que o atual'
+        if (!(diffDias(HOJE, dataAlvo) > 6)) return 'A data alvo precisa ser pelo menos uma semana à frente'
+        return null
+      }
+      default:
+        return null
+    }
+  })()
+
   if (!open) return null
 
   const avancar = () => {
@@ -403,7 +432,7 @@ export function SetupWizard({
                 />
               </Campo>
 
-              <Campo label="Altura" origem={prefill.origem.altura}>
+              <Campo label="Altura" origem={prefill.origem.altura} obrigatorio>
                 <div className="flex items-baseline gap-2">
                   <input
                     inputMode="numeric"
@@ -419,6 +448,7 @@ export function SetupWizard({
               <Campo
                 label="Peso atual"
                 origem={prefill.origem.peso}
+                obrigatorio
                 hint={
                   prefill.pesoAtualizadoEm
                     ? `medido em ${formatData(prefill.pesoAtualizadoEm)}`
@@ -586,6 +616,9 @@ export function SetupWizard({
         >
           {step === 'resumo' ? 'Começar acompanhamento' : 'Continuar'}
         </button>
+        {faltaLabel && (
+          <p className="mt-2 text-center text-[11.5px] text-amber-300/90">{faltaLabel}</p>
+        )}
       </div>
     </div>
   )
@@ -656,11 +689,14 @@ function Campo({
   label,
   origem,
   hint,
+  obrigatorio = false,
   children,
 }: {
   label: string
   origem?: 'perfil' | 'manual' | 'ausente'
   hint?: string
+  /** Trava o Continuar enquanto vazio — marcado com asterisco no label. */
+  obrigatorio?: boolean
   children: React.ReactNode
 }) {
   return (
@@ -668,6 +704,13 @@ function Campo({
       <div className="flex items-center justify-between mb-1">
         <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500">
           {label}
+          {obrigatorio ? (
+            <span className="text-amber-300"> *</span>
+          ) : (
+            <span className="ml-1.5 normal-case tracking-normal font-normal text-slate-600">
+              opcional
+            </span>
+          )}
         </span>
         {origem === 'perfil' && (
           <span className="flex items-center gap-1 text-[10px] text-emerald-300">
