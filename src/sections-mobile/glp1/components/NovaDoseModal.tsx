@@ -4,7 +4,10 @@ import {
   PRINCIPIO_LABEL,
   type Glp1Configuracao,
   type MedicamentoCatalogo,
+  SINTOMA_LABELS,
+  SINTOMAS_ORDEM,
   type NovaAplicacaoPayload,
+  type SintomaId,
   type SitioAplicacao,
 } from '@/../product-mobile/sections/glp1/types'
 import { MapaSitios } from './MapaSitios'
@@ -51,6 +54,8 @@ export function NovaDoseModal({
   const [doseCustom, setDoseCustom] = useState('')
   const [sitio, setSitio] = useState<SitioAplicacao | null>(null)
   const [dor, setDor] = useState(2)
+  const [sintomas, setSintomas] = useState<SintomaId[]>([])
+  const [semSintoma, setSemSintoma] = useState(false)
   const [observacao, setObservacao] = useState('')
   const [quando, setQuando] = useState(AGORA_ISO)
   const [peso, setPeso] = useState('')
@@ -72,6 +77,7 @@ export function NovaDoseModal({
       dose: doseFinal,
       sitio,
       dor,
+      sintomas,
       observacao: observacao.trim() || null,
       aplicadaEm: `${quando}:00-03:00`,
       pesoKg: peso ? Number(peso.replace(',', '.')) : null,
@@ -271,8 +277,53 @@ export function NovaDoseModal({
             )}
           </Bloco>
 
-          {/* 5. Observação */}
-          <Bloco numero={5} titulo="Observação" opcional>
+          {/* 5. Efeitos colaterais */}
+          <Bloco numero={5} titulo="Efeitos colaterais" opcional>
+            <div className="flex flex-wrap gap-1.5">
+              {SINTOMAS_ORDEM.map((id) => {
+                const ativo = sintomas.includes(id)
+                return (
+                  <button
+                    key={id}
+                    onClick={() => {
+                      setSemSintoma(false)
+                      setSintomas(
+                        ativo ? sintomas.filter((s) => s !== id) : [...sintomas, id],
+                      )
+                    }}
+                    className={`rounded-lg border px-2.5 py-1.5 text-[12px] transition-colors ${
+                      ativo
+                        ? 'border-amber-400/60 bg-amber-500/15 text-amber-200 font-medium'
+                        : 'border-slate-800 bg-slate-900 text-slate-400 active:bg-slate-800'
+                    }`}
+                  >
+                    {SINTOMA_LABELS[id]}
+                  </button>
+                )
+              })}
+              <button
+                onClick={() => {
+                  setSintomas([])
+                  setSemSintoma(!semSintoma)
+                }}
+                className={`rounded-lg border px-2.5 py-1.5 text-[12px] transition-colors ${
+                  semSintoma
+                    ? 'border-emerald-400/60 bg-emerald-500/15 text-emerald-200 font-medium'
+                    : 'border-slate-800 bg-slate-900 text-slate-400 active:bg-slate-800'
+                }`}
+              >
+                Nenhum
+              </button>
+            </div>
+            <p className="mt-2 text-slate-500 text-[11px] leading-snug">
+              {sintomas.length > 0
+                ? 'Seu médico vê isso junto da dose — é o que mostra se o efeito acompanha a titulação.'
+                : 'Marque o que sentiu nos dias depois da última dose.'}
+            </p>
+          </Bloco>
+
+          {/* 6. Observação */}
+          <Bloco numero={6} titulo="Observação" opcional>
             <textarea
               value={observacao}
               onChange={(e) => setObservacao(e.target.value)}
@@ -286,8 +337,8 @@ export function NovaDoseModal({
             </div>
           </Bloco>
 
-          {/* 6. Quando + peso do dia */}
-          <Bloco numero={6} titulo="Quando" opcional>
+          {/* 7. Quando + peso do dia */}
+          <Bloco numero={7} titulo="Quando" opcional>
             <div className="rounded-xl bg-slate-900 border border-slate-800 px-4 py-3 space-y-3">
               <div className="flex items-center justify-between gap-3">
                 <span className="text-slate-400 text-[12.5px] shrink-0">

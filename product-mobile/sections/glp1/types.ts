@@ -122,6 +122,56 @@ export const SITIO_LABELS: Record<SitioAplicacao, string> = {
 }
 
 // ============================================================================
+// Efeitos colaterais
+// ============================================================================
+
+/** Reações mais frequentes de análogo de GLP-1, nesta ordem de prevalência. */
+export type SintomaId =
+  | 'nausea'
+  | 'vomito'
+  | 'diarreia'
+  | 'constipacao'
+  | 'azia'
+  | 'dor_abdominal'
+  | 'cefaleia'
+  | 'fadiga'
+  | 'tontura'
+  | 'sem_apetite'
+  | 'arroto'
+  | 'reacao_local'
+
+export const SINTOMA_LABELS: Record<SintomaId, string> = {
+  nausea: 'Náusea',
+  vomito: 'Vômito',
+  diarreia: 'Diarreia',
+  constipacao: 'Constipação',
+  azia: 'Azia / refluxo',
+  dor_abdominal: 'Dor abdominal',
+  cefaleia: 'Dor de cabeça',
+  fadiga: 'Cansaço',
+  tontura: 'Tontura',
+  sem_apetite: 'Sem apetite',
+  arroto: 'Arrotos',
+  reacao_local: 'Reação no local',
+}
+
+/** Ordem em que os chips aparecem no modal de aplicação. */
+export const SINTOMAS_ORDEM: SintomaId[] = [
+  'nausea',
+  'vomito',
+  'diarreia',
+  'constipacao',
+  'azia',
+  'dor_abdominal',
+  'cefaleia',
+  'fadiga',
+  'tontura',
+  'sem_apetite',
+  'arroto',
+  'reacao_local',
+]
+
+// ============================================================================
 // Perfil corporal (prefill vindo do app)
 // ============================================================================
 
@@ -196,6 +246,8 @@ export interface Glp1Aplicacao {
   sitio: SitioAplicacao
   /** 0–10. */
   dor: number
+  /** Efeitos colaterais marcados no registro — vazio = nenhum relatado. */
+  sintomas: SintomaId[]
   observacao: string | null
   /** Peso registrado no dia da aplicação, quando houver. */
   pesoNoDiaKg: number | null
@@ -266,6 +318,7 @@ export interface NovaAplicacaoPayload {
   dose: string
   sitio: SitioAplicacao
   dor: number
+  sintomas: SintomaId[]
   observacao: string | null
   /** ISO datetime. */
   aplicadaEm: string

@@ -95,8 +95,12 @@ botão fixo no rodapé. Seis blocos numerados:
    alerta rose "alterne de zona" (lipodistrofia)
 4. **Nível de dor** — slider 0–10, número 34px mono colorido por faixa + label. Em ≥7,
    abre bloco âmbar com as 4 dicas de aplicação
-5. **Observação** (opcional) — textarea 280 chars com contador
-6. **Quando** (opcional) — datetime-local default "agora" + campo "Peso de hoje"
+5. **Efeitos colaterais** (opcional) — 12 chips multi-select das reações mais frequentes
+   (náusea, vômito, diarreia, constipação, azia, dor abdominal, dor de cabeça, cansaço,
+   tontura, sem apetite, arrotos, reação no local) + chip **Nenhum**, que é exclusivo.
+   Marcado vira âmbar; o histórico mostra os chips abaixo da linha da aplicação
+6. **Observação** (opcional) — textarea 280 chars com contador
+7. **Quando** (opcional) — datetime-local default "agora" + campo "Peso de hoje"
 
 Botão **Salvar aplicação** desabilitado até ter dose e local; a legenda abaixo diz
 qual dos dois falta.
@@ -128,8 +132,9 @@ Screen designs:
 Backend esperado: `glp1_protocols` (configuração), `glp1_applications` (aplicações),
 reuso de `metrics` (weight/height) e `users` (birthDate, sex) para o prefill.
 
-Fora do escopo: titulação sugerida por IA, leitura de caneta por foto, log de sintomas
-(vive em Medicação), integração com farmácia.
+Fora do escopo: titulação sugerida por IA, leitura de caneta por foto, integração com
+farmácia. O log de sintomas por dia continua em Medicação — aqui só entra o que o
+paciente marca no registro da aplicação.
 
 ## Configuration
 

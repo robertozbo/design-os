@@ -1,5 +1,6 @@
 import { ChevronRight, MapPin, Syringe } from 'lucide-react'
 import {
+  SINTOMA_LABELS,
   SITIO_LABELS,
   type Glp1Aplicacao,
 } from '@/../product-mobile/sections/glp1/types'
@@ -105,6 +106,18 @@ export function HistoricoAplicacoes({
                 </span>
               </div>
             </div>
+            {a.sintomas.length > 0 && (
+              <div className="mt-1.5 ml-[52px] flex flex-wrap gap-1">
+                {a.sintomas.map((id) => (
+                  <span
+                    key={id}
+                    className="rounded-md bg-amber-500/10 px-1.5 py-0.5 text-amber-200/90 text-[10.5px]"
+                  >
+                    {SINTOMA_LABELS[id]}
+                  </span>
+                ))}
+              </div>
+            )}
             {a.observacao && (
               <p className="mt-1.5 ml-[52px] text-slate-400 text-[11.5px] leading-snug">
                 {a.observacao}

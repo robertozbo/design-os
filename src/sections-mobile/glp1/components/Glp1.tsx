@@ -237,6 +237,7 @@ export function Glp1({
       dose: payload.dose,
       sitio: payload.sitio,
       dor: payload.dor,
+      sintomas: payload.sintomas,
       observacao: payload.observacao,
       pesoNoDiaKg: payload.pesoKg,
     }
