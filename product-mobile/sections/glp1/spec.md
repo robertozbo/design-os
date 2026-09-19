@@ -22,8 +22,13 @@ Treinos). Dois estados:
 | **Convite** (`configurado: false`) | Card tracejado "Usa GLP-1? Acompanhe aqui" + botão **Iniciar** `teal-500` → abre o wizard |
 | **Ativo** | Medicamento + dose, peso atual, kg perdidos, sparkline de 7 pesos, kg que faltam pra meta, próxima dose e botão **Nova dose** |
 
-O botão "Nova dose" do card pula direto pro formulário de aplicação — sem passar
-pela section.
+O botão do rodapé é **Nova dose** e faz deep link — `/mobile/sections/glp1?dose=nova`
+entra na section com o modal de aplicação já aberto (prop `abrirNovaDose`). O corpo do
+card continua levando ao painel.
+
+**O onboarding roda uma vez.** Depois de configurado, o card nunca mais mostra "Iniciar":
+o wizard só reabre quando o paciente toca na engrenagem do card de protocolo, dentro da
+section, e aí vem pré-preenchido.
 
 ## User Flows
 
@@ -31,9 +36,10 @@ pela section.
   aplicação abre emendado ("Agora registre sua primeira dose") → painel com a primeira dose
   e o peso do dia já lançados
 - Paciente configurado → toca no card → painel com stats, gráfico e histórico
-- Paciente toca **Nova dose** → modal único (local, dose, medicamento, dor, observação,
-  peso do dia) → **Salvar aplicação** → modal fecha, toast confirma e a tela rola até o
-  **gráfico de evolução**, que pulsa por ~3s
+- Paciente toca **Nova dose** no card da Início → cai na section com o modal já aberto
+- Paciente toca **Nova dose** → modal único (local, dose, medicamento, dor, efeitos
+  colaterais, observação, peso do dia) → **Salvar aplicação** → modal fecha, toast confirma
+  e a tela rola até o **gráfico de evolução**, que pulsa por ~3s
 - Paciente toca na engrenagem do card de protocolo → reabre o wizard **pré-preenchido**
   (trocou de medicamento, subiu a dose, mudou a meta)
 - Paciente toca "Compartilhar com meu médico" → handoff pro módulo de profissionais
@@ -53,9 +59,19 @@ desabilitado, `teal-500` quando libera).
 | 2 | Dose atual | Escala de titulação **do fármaco escolhido** + "Dose personalizada" (input mg) + "Ainda não sei" |
 | 3 | Frequência | Diariamente · Semanalmente · A cada duas semanas · Mensalmente · Outro · Ainda não sei. Subtítulo: "Para enviarmos lembretes no dia certo" |
 | 4 | Agenda | Dia da semana (some quando frequência é diária) + chips de horário + toggle de lembrete. **Passo condicional**: não aparece em "Outro"/"Ainda não sei" |
-| 5 | Dados | Data de nascimento, altura, peso atual — **pré-preenchidos** do perfil/métricas, com badge `✓ do seu perfil` e banner verde "Achamos parte dos seus dados". Campo sem dado ganha label âmbar "falta preencher". Mostra IMC calculado ao vivo |
+| 5 | Dados | Data de nascimento (opcional), altura e peso atual (**obrigatórios**, asterisco âmbar no label) — **pré-preenchidos** do perfil/métricas, com badge `✓ do seu perfil` e banner verde "Achamos parte dos seus dados". Campo sem dado ganha label âmbar "falta preencher". Mostra IMC calculado ao vivo |
 | 6 | Meta | Peso alvo (28px mono) + data alvo. Feedback ao vivo: "Perder 9,6 kg em 14 semanas · 0,71 kg/semana". Acima de **1% do peso/semana** o bloco vira âmbar e sugere esticar o prazo |
 | 7 | Resumo | Todas as escolhas em linhas label/valor + disclaimer clínico. Botão "Começar acompanhamento" |
+
+Campo obrigatório leva `*` âmbar; o resto é marcado `opcional` em cinza. Quando o
+**Continuar** está travado, uma legenda âmbar abaixo dele diz o que falta — nos três
+passos em que a causa não é óbvia:
+
+| Passo | Legenda |
+|---|---|
+| Agenda | "Escolha o dia da semana e o horário" (só o que faltar) |
+| Dados | "Preencha a altura e o peso atual" (só o que faltar) |
+| Meta | "Informe o peso alvo" · "O peso alvo precisa ser menor que o atual" · "A data alvo precisa ser pelo menos uma semana à frente" |
 
 O wizard é reaproveitado para **reconfigurar** — recebe `inicial` com os valores atuais.
 
@@ -75,13 +91,22 @@ Ordem vertical:
    pontinhos `sky-400` no eixo marcando aplicações, ponto atual com halo. Toggle 30D · 90D · TUDO.
 4. **Histórico de aplicações** — data/hora, medicamento + dose, sítio com ícone de pin,
    peso do dia, chip de dor colorido por faixa (0–2 emerald, 3–5 amber, 6–8 orange, 9–10 rose),
-   observação em linha própria. Últimas 5 + "Ver todas".
+   chips âmbar de efeito colateral e observação em linhas próprias. Últimas 5 + "Ver todas".
 5. **Compartilhar com meu médico** + disclaimer.
 
 **Painel zerado (logo após o wizard).** Sem aplicação, o histórico vira card tracejado
-"Nenhuma aplicação registrada" com botão **Registrar primeira aplicação**. Com um único
-peso não há curva: o gráfico mostra peso de hoje, meta e a frase "na segunda pesagem a
-curva aparece aqui" — nunca some da tela.
+"Nenhuma aplicação registrada" com botão **Registrar primeira aplicação**.
+
+**Painel com uma pesagem só.** O gráfico já nasce completo: quando não vem projeção do
+backend, a curva é traçada do peso de hoje até a meta na data alvo, em passos semanais —
+mesmo desenho de sempre (área em gradiente, linha de meta âmbar, ticks), com a área a 60%
+de opacidade porque é projeção, não histórico. Nesse estado o header troca o delta por
+`ponto de partida` e o chip de projeção dá lugar à nota: "A tracejada é o ritmo necessário
+pra bater a meta. Registre o peso a cada aplicação — na segunda pesagem a curva passa a
+seguir o seu ritmo real."
+
+> Um ponto não fecha polígono: a área tem que cobrir o trecho projetado aqui, senão o card
+> fica com a tracejada solta no escuro e perde justamente o destaque da queda.
 
 ### 3. Modal de nova dose (`NovaDoseModal`)
 
@@ -126,11 +151,16 @@ recalculam (perdido, falta, ritmo, adesão, próxima dose).
 no histórico e 27 pontos de peso (13 reais + 14 projetados).
 
 Screen designs:
-- `Glp1.tsx` — painel de quem já configurou
+- `Glp1.tsx` — painel de quem já configurou. Aceita `?dose=nova` na URL pra entrar com o
+  modal de aplicação aberto (é onde o botão do card da Início cai)
 - `Glp1Setup.tsx` — primeiro acesso (`configuracao: null`) com o wizard
+- `Glp1PrimeiraDose.tsx` — semana 1: uma aplicação, uma pesagem. Estado em que a curva é
+  só projeção, sem ter que passar pelo wizard a cada verificação
+- Na section **Início**, `InicioGlp1Convite.tsx` mostra o card no estado não-configurado
 
 Backend esperado: `glp1_protocols` (configuração), `glp1_applications` (aplicações),
 reuso de `metrics` (weight/height) e `users` (birthDate, sex) para o prefill.
+`glp1_applications.sintomas` guarda os efeitos colaterais marcados (array de `SintomaId`).
 
 Fora do escopo: titulação sugerida por IA, leitura de caneta por foto, integração com
 farmácia. O log de sintomas por dia continua em Medicação — aqui só entra o que o
