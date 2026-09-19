@@ -511,6 +511,7 @@
     "proximaDoseEmDias": 0,
     "atrasada": false,
     "pesoAtualKg": 87.6,
+    "pesoAlvoKg": 78,
     "perdidoKg": 8.8,
     "perdidoPct": 9.1,
     "faltaKg": 9.6,

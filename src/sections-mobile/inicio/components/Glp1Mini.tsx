@@ -1,4 +1,4 @@
-import { Syringe, TrendingDown, Clock, AlertTriangle } from 'lucide-react'
+import { Syringe, TrendingDown, Clock, AlertTriangle, ArrowRight } from 'lucide-react'
 import type { Glp1Preview } from '@/../product-mobile/sections/inicio/types'
 
 interface Props {
@@ -101,10 +101,15 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
           />
         </svg>
         <div className="shrink-0 text-right ml-auto">
-          <div className="font-mono tabular-nums text-amber-300 text-[12px] font-medium">
-            {n1(glp1.faltaKg)} kg
+          <div className="flex items-baseline justify-end gap-1 font-mono tabular-nums text-[12px]">
+            <span className="text-slate-200 font-medium">{n1(glp1.pesoAtualKg)}</span>
+            <ArrowRight size={9} strokeWidth={2.6} className="text-slate-600 self-center" />
+            <span className="text-amber-300 font-medium">{n1(glp1.pesoAlvoKg)}</span>
+            <span className="text-slate-500 text-[10px]">kg</span>
           </div>
-          <div className="text-slate-500 text-[10px]">pra meta</div>
+          <div className="text-slate-500 text-[10px]">
+            faltam <span className="font-mono tabular-nums">{n1(glp1.faltaKg)}</span> kg
+          </div>
         </div>
       </div>
 

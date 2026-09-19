@@ -246,6 +246,8 @@ export interface Glp1Preview {
   proximaDoseEmDias: number
   atrasada: boolean
   pesoAtualKg: number
+  /** Peso alvo do protocolo — o card mostra atual → meta. */
+  pesoAlvoKg: number
   perdidoKg: number
   perdidoPct: number
   faltaKg: number
