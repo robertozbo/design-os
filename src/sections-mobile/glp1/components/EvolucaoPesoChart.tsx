@@ -34,6 +34,31 @@ const PROJECAO_COLOR: Record<Props['projecao'], string> = {
   atrasado: 'text-amber-300',
 }
 
+const SEMANA_MS = 7 * 24 * 60 * 60 * 1000
+
+/**
+ * Paciente recém-configurado tem uma pesagem só e nenhuma projeção vinda do
+ * backend. Traça a reta do último peso real até a meta, em passos semanais,
+ * pra curva já nascer na primeira aplicação em vez de esperar a segunda.
+ */
+function projetarAteMeta(ultimo: PontoPeso | undefined, meta: Glp1Meta): PontoPeso[] {
+  if (!ultimo) return []
+  const inicio = new Date(`${ultimo.data}T00:00:00`).getTime()
+  const totalMs = new Date(`${meta.dataAlvo}T00:00:00`).getTime() - inicio
+  if (!Number.isFinite(totalMs) || totalMs <= 0) return []
+  const passos = Math.max(2, Math.min(26, Math.round(totalMs / SEMANA_MS)))
+  const delta = meta.pesoAlvoKg - ultimo.pesoKg
+  return Array.from({ length: passos }, (_, k) => {
+    const f = (k + 1) / passos
+    return {
+      data: new Date(inicio + totalMs * f).toISOString().slice(0, 10),
+      pesoKg: Math.round((ultimo.pesoKg + delta * f) * 10) / 10,
+      projetado: true,
+      aplicacao: false,
+    }
+  })
+}
+
 function tick(iso: string): string {
   const [, m, d] = iso.split('-')
   return `${d}/${Number(m)}`
@@ -44,11 +69,12 @@ export function EvolucaoPesoChart({ pontos, meta, projecao, destaque = false }: 
 
   const visiveis = useMemo(() => {
     const reais = pontos.filter((p) => !p.projetado)
-    const proj = pontos.filter((p) => p.projetado)
+    const doBackend = pontos.filter((p) => p.projetado)
+    const proj = doBackend.length > 0 ? doBackend : projetarAteMeta(reais.at(-1), meta)
     if (periodo === 'TUDO') return [...reais, ...proj]
     const semanas = periodo === '30D' ? 5 : 13
     return [...reais.slice(-semanas), ...proj]
-  }, [pontos, periodo])
+  }, [pontos, periodo, meta])
 
   // Paciente recém-configurado: existe um peso só, não existe curva. Em vez de
   // sumir com o bloco, mostra o ponto de partida e o que falta pra meta.
@@ -123,6 +149,8 @@ export function EvolucaoPesoChart({ pontos, meta, projecao, destaque = false }: 
   const atual = visiveis[ultimoRealIdx]
   const primeiro = visiveis[0]
   const yAlvo = y(meta.pesoAlvoKg)
+  /** Uma pesagem só: existe projeção, mas ainda não existe ritmo real. */
+  const semRitmoReal = ultimoRealIdx < 1
 
   const tickIdx = [0, Math.round(ultimoRealIdx / 2), ultimoRealIdx, n - 1].filter(
     (v, i, arr) => v >= 0 && arr.indexOf(v) === i,
@@ -145,10 +173,14 @@ export function EvolucaoPesoChart({ pontos, meta, projecao, destaque = false }: 
               {atual.pesoKg.toFixed(1).replace('.', ',')}
             </span>
             <span className="font-mono text-slate-400 text-[13px]">kg</span>
-            <span className="ml-1 flex items-center gap-0.5 text-emerald-300 text-[12px] font-medium">
-              <TrendingDown size={12} strokeWidth={2.4} />
-              {(primeiro.pesoKg - atual.pesoKg).toFixed(1).replace('.', ',')} kg
-            </span>
+            {semRitmoReal ? (
+              <span className="ml-1 text-slate-500 text-[12px]">ponto de partida</span>
+            ) : (
+              <span className="ml-1 flex items-center gap-0.5 text-emerald-300 text-[12px] font-medium">
+                <TrendingDown size={12} strokeWidth={2.4} />
+                {(primeiro.pesoKg - atual.pesoKg).toFixed(1).replace('.', ',')} kg
+              </span>
+            )}
           </div>
         </div>
         <div className="flex gap-1">
@@ -263,11 +295,20 @@ export function EvolucaoPesoChart({ pontos, meta, projecao, destaque = false }: 
             dose
           </span>
         </div>
-        <span className={`flex items-center gap-1 font-medium ${PROJECAO_COLOR[projecao]}`}>
-          <Target size={11} strokeWidth={2.4} />
-          {PROJECAO_LABEL[projecao]}
-        </span>
+        {!semRitmoReal && (
+          <span className={`flex items-center gap-1 font-medium ${PROJECAO_COLOR[projecao]}`}>
+            <Target size={11} strokeWidth={2.4} />
+            {PROJECAO_LABEL[projecao]}
+          </span>
+        )}
       </div>
+
+      {semRitmoReal && (
+        <p className="mt-2 text-slate-400 text-[11px] leading-snug">
+          A tracejada é o ritmo necessário pra bater a meta. Registre o peso a cada
+          aplicação — na segunda pesagem a curva passa a seguir o seu ritmo real.
+        </p>
+      )}
     </div>
   )
 }
