@@ -1,5 +1,5 @@
 import data from '@/../product-mobile/sections/inicio/data.json'
-import type { InicioData, MiniStat, Novidade, QuickAction } from '@/../product-mobile/sections/inicio/types'
+import type { InicioData, MiniStat, Novidade } from '@/../product-mobile/sections/inicio/types'
 import { Inicio as InicioComponent } from './components/Inicio'
 
 /**
@@ -14,6 +14,8 @@ export default function InicioGlp1ConvitePreview() {
       configurado: false,
       medicamentoNome: '',
       dose: null,
+      pesoInicialKg: 0,
+      pesoAlvoKg: 0,
       proximaDoseLabel: '',
       proximaDoseEmDias: 0,
       atrasada: false,
@@ -58,7 +60,12 @@ export default function InicioGlp1ConvitePreview() {
           onVerPlanoAlimentar={() => console.log('Ver plano alimentar completo')}
           onMiniStatClick={(s: MiniStat) => console.log('Stat click:', s.id)}
           onSemanaClick={() => console.log('Semana click')}
-          onQuickActionClick={(a: QuickAction) => console.log('Quick action:', a.id)}
+          onTreinoClick={() => {
+            window.location.href = '/mobile/sections/treinos'
+          }}
+          onIniciarTreino={() => {
+            window.location.href = '/mobile/sections/treinos?sessao=hoje'
+          }}
           onStreakClick={() => console.log('Streak click')}
           onMedicacaoClick={() => {
             window.location.href = '/mobile/sections/medicacao'

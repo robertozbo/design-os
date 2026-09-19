@@ -191,15 +191,6 @@ export interface SemanaAtiva {
   meta: number
 }
 
-export type QuickActionId = 'nutricao' | 'atividades' | 'treinos'
-
-export interface QuickAction {
-  id: QuickActionId
-  label: string
-  iconeNome: string
-  rota: string
-}
-
 /** Preview do score de saúde — links pra Minha Saúde */
 export interface HeroSaudePreview {
   scoreAtual: number
@@ -236,6 +227,37 @@ export interface MedicacaoHojePreview {
  * Preview do módulo GLP-1 — só aparece pra quem usa análogo de GLP-1.
  * Junta medicação (próxima dose) e evolução de peso num card só.
  */
+export interface TreinoDiaPreview {
+  /** "Seg", "Ter", … */
+  diaCurto: string
+  /** Letra da sessão (A–G); null = descanso. */
+  letra: string | null
+  hoje: boolean
+  concluido: boolean
+}
+
+export interface TreinoPreview {
+  /** false = sem plano ativo → card-convite pro diretório de personal. */
+  temPlano: boolean
+  /** Sessão de hoje; null = dia de descanso. */
+  letra: string | null
+  /** "Peito", "Costas", "Cardio"… */
+  nome: string
+  /** "Hoje · Quarta" */
+  diaLabel: string
+  exercicios: number
+  duracaoMin: number
+  caloriasKcal: number
+  /** A sessão de hoje já foi executada. */
+  concluido: boolean
+  /** Agenda da semana, 7 posições. */
+  semana: TreinoDiaPreview[]
+  /** Treinos concluídos no mês. */
+  totalMes: number
+  /** Personal que montou o plano; null = treino próprio. */
+  personalNome: string | null
+}
+
 export interface Glp1Preview {
   /** false = elegível mas ainda não configurou → card-convite. */
   configurado: boolean
@@ -271,8 +293,8 @@ export interface InicioData {
   nutricao: NutricaoResumo
   miniStats: MiniStat[]
   semanaAtiva: SemanaAtiva
-  quickActions: QuickAction[]
   /** Aparece SÓ pra quem usa GLP-1 (ou é elegível e ainda não configurou). */
+  treino: TreinoPreview | null
   glp1: Glp1Preview | null
 }
 
@@ -286,10 +308,12 @@ export interface InicioProps {
   onVerPlanoAlimentar?: () => void
   onMiniStatClick?: (stat: MiniStat) => void
   onSemanaClick?: () => void
-  onQuickActionClick?: (action: QuickAction) => void
   onStreakClick?: () => void
   onMedicacaoClick?: () => void
   onMarcarDose?: (doseId: string) => void
+  onTreinoClick?: () => void
+  /** Botão do card de treino: abre a sessão de hoje direto. */
+  onIniciarTreino?: () => void
   onGlp1Click?: () => void
   /** Botão do rodapé do card: pula direto pro registro de aplicação. */
   onGlp1NovaDose?: () => void

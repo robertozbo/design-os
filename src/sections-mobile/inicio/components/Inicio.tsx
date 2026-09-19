@@ -6,7 +6,7 @@ import { NovidadeBanner } from './NovidadeBanner'
 import { NutricaoCard } from './NutricaoCard'
 import { MiniStatStrip } from './MiniStatStrip'
 import { SemanaAtivaCard } from './SemanaAtivaCard'
-import { QuickActions } from './QuickActions'
+import { TreinosCard } from './TreinosCard'
 import { Glp1Mini } from './Glp1Mini'
 
 export function Inicio({
@@ -19,7 +19,8 @@ export function Inicio({
   onVerPlanoAlimentar,
   onMiniStatClick,
   onSemanaClick,
-  onQuickActionClick,
+  onTreinoClick,
+  onIniciarTreino,
   onStreakClick,
   onMedicacaoClick,
   onMarcarDose,
@@ -63,7 +64,13 @@ export function Inicio({
 
       <SemanaAtivaCard data={data.semanaAtiva} onClick={onSemanaClick} />
 
-      <QuickActions actions={data.quickActions} onActionClick={onQuickActionClick} />
+      {data.treino && (
+        <TreinosCard
+          treino={data.treino}
+          onClick={onTreinoClick}
+          onIniciar={onIniciarTreino}
+        />
+      )}
 
       {data.glp1 && (
         <Glp1Mini glp1={data.glp1} onClick={onGlp1Click} onNovaDose={onGlp1NovaDose} />

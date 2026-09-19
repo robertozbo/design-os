@@ -483,26 +483,62 @@
       }
     ]
   },
-  "quickActions": [
-    {
-      "id": "nutricao",
-      "label": "Nutrição",
-      "iconeNome": "Apple",
-      "rota": "/nutricao"
-    },
-    {
-      "id": "atividades",
-      "label": "Atividades",
-      "iconeNome": "Flame",
-      "rota": "/atividades"
-    },
-    {
-      "id": "treinos",
-      "label": "Treinos",
-      "iconeNome": "Dumbbell",
-      "rota": "/treinos"
-    }
-  ],
+  "treino": {
+    "temPlano": true,
+    "letra": "A",
+    "nome": "Peito",
+    "diaLabel": "Hoje · Quarta",
+    "exercicios": 6,
+    "duracaoMin": 48,
+    "caloriasKcal": 320,
+    "concluido": false,
+    "semana": [
+      {
+        "diaCurto": "Seg",
+        "letra": "A",
+        "hoje": false,
+        "concluido": true
+      },
+      {
+        "diaCurto": "Ter",
+        "letra": "B",
+        "hoje": false,
+        "concluido": true
+      },
+      {
+        "diaCurto": "Qua",
+        "letra": "A",
+        "hoje": true,
+        "concluido": false
+      },
+      {
+        "diaCurto": "Qui",
+        "letra": "B",
+        "hoje": false,
+        "concluido": false
+      },
+      {
+        "diaCurto": "Sex",
+        "letra": "C",
+        "hoje": false,
+        "concluido": false
+      },
+      {
+        "diaCurto": "Sáb",
+        "letra": null,
+        "hoje": false,
+        "concluido": false
+      },
+      {
+        "diaCurto": "Dom",
+        "letra": null,
+        "hoje": false,
+        "concluido": false
+      }
+    ],
+    "totalMes": 6,
+    "personalNome": "Rafael Nunes"
+  },
   "glp1": {
     "configurado": true,
     "medicamentoNome": "Mounjaro®",

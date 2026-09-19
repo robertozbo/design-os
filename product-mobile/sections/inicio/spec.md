@@ -15,7 +15,7 @@ Tela de entrada do app. Painel diário **acionável**: responde "o que faço ago
 - Usuário sem plano (free) vê o card de Nutrição + meta diária como CTA principal
 - Usuário toca em **mini-stat de peso** → vai pra Minha Saúde / Métricas
 - Usuário toca em **mini-stat de sono** → vai pra Métricas filtrada em sono
-- Usuário toca em **quick action (Nutrição/Atividades/Treinos)** → vai registrar
+- Usuário toca no **card de Treinos** → sessão de hoje · **Iniciar treino** abre direto pra executar
 - Usuário recebe **análise IA nova** → banner aparece com CTA → toca → vai pra Análise de Saúde
 - Usuário recebe **mensagem/plano novo do nutri** → banner aparece → toca → vai pro Plano
 - Usuário arrasta de cima pra baixo → pull-to-refresh sincroniza HealthKit + servidor
@@ -32,7 +32,7 @@ Ordem dos blocos (sempre na mesma posição, alguns condicionais):
 2. **Banner "Novidade"** (condicional)
 3. **Card de Nutrição** (sempre — o plano alimentar entra como faixa dentro dele)
 4. **Strip horizontal de mini-stats** (sempre)
-5. **Quick actions** (3 cards)
+5. **Card de Treinos** (condicional — só com plano ou convite)
 
 ---
 
@@ -126,21 +126,31 @@ Substitui os cards grandes "Minha evolução" e "Horas de Sono" da versão atual
 
 Tap em qualquer chip → vai pra Métricas filtrada nesse indicador (ou Minha Saúde no caso de peso/gordura).
 
-### 5. Quick actions (3 cards)
+### 5. Card de Treinos (`TreinosCard`)
 
-Grid 3-col, abaixo da strip de stats:
+> Substituiu a faixa de três quick actions (Nutrição · Atividades · Treinos). Nutrição já
+> tem card próprio e Atividades vive no card "Esta semana" — os dois atalhos só repetiam
+> destino. Treinos era o único sem card, e um atalho não cabia o que a tela precisa dizer:
+> qual sessão é hoje e se ela já foi feita.
 
-| Card | Ícone | Label | Ação |
-|------|-------|-------|------|
-| Nutrição | `Apple` | Nutrição | abre diário do dia |
-| Atividades | `Flame` | Atividades | abre lista do dia |
-| Treinos | `Dumbbell` | Treinos | abre treino de hoje |
+Mesmo formato dos outros mini-cards (Medicação, GLP-1), em três faixas:
 
-**Visual:**
-- Aspect-ratio 1:1.1, `rounded-2xl`, fundo `slate-900` border `slate-800`
-- Ícone 32×32 `teal-400`
-- Label DM Sans medium 13px `slate-400`
-- Tap: scale 0.98 + highlight `teal-500/10`
+| Faixa | Conteúdo |
+|---|---|
+| Header (tappable → section) | Ícone `Dumbbell`, "Treinos", `HOJE · QUARTA` em mono; abaixo, `A · Peito`. À direita, duração e kcal estimados |
+| Agenda da semana | 7 quadrados 28×28: letra da sessão, `–` em dia de descanso. Concluído = preenchido `teal-500` com check; hoje = contorno `teal-400`; futuro = contorno `slate-700` |
+| Rodapé | `ESTE MÊS` + "6 treinos · Rafael Nunes" à esquerda; botão **Iniciar treino** `teal-500` à direita |
+
+**Estados:**
+
+| Estado | Card |
+|---|---|
+| Sem plano (`temPlano: false`) | Convite tracejado "Monte seu plano de treino / Com um personal ou por conta própria" + botão **Começar** |
+| Dia de descanso (`letra: null`) | Header diz "Dia de descanso"; some a duração, as kcal e o botão. A agenda fica |
+| Sessão já feita (`concluido`) | Botão vira **Feito hoje**, cinza e desabilitado |
+
+O botão **Iniciar treino** faz deep link (`/mobile/sections/treinos?sessao=hoje`); o corpo
+do card leva à section.
 
 ---
 
