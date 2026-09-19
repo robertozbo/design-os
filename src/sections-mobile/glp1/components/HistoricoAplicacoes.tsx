@@ -111,7 +111,7 @@ export function HistoricoAplicacoes({
                 {a.sintomas.map((id) => (
                   <span
                     key={id}
-                    className="rounded-md bg-amber-500/10 px-1.5 py-0.5 text-amber-200/90 text-[10.5px]"
+                    className="rounded-md border border-amber-400/30 bg-amber-400/20 px-1.5 py-0.5 font-medium text-amber-200 text-[10.5px]"
                   >
                     {SINTOMA_LABELS[id]}
                   </span>
