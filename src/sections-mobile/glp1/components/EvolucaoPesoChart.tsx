@@ -152,6 +152,16 @@ export function EvolucaoPesoChart({ pontos, meta, projecao, destaque = false }: 
   /** Uma pesagem só: existe projeção, mas ainda não existe ritmo real. */
   const semRitmoReal = ultimoRealIdx < 1
 
+  // Um ponto não fecha polígono, então a área sob o trecho real não existe
+  // enquanto houver uma pesagem só. Preenche sob a projeção pra curva ter o
+  // mesmo corpo do gráfico com histórico — é o gradiente que mostra a queda.
+  const areaFinal = semRitmoReal
+    ? `M${x(0)},${y(visiveis[0].pesoKg)} ${visiveis
+        .slice(1)
+        .map((p, k) => `L${x(k + 1)},${y(p.pesoKg)}`)
+        .join(' ')} L${x(n - 1)},${PAD.top + PLOT_H} L${x(0)},${PAD.top + PLOT_H} Z`
+    : area
+
   const tickIdx = [0, Math.round(ultimoRealIdx / 2), ultimoRealIdx, n - 1].filter(
     (v, i, arr) => v >= 0 && arr.indexOf(v) === i,
   )
@@ -174,7 +184,9 @@ export function EvolucaoPesoChart({ pontos, meta, projecao, destaque = false }: 
             </span>
             <span className="font-mono text-slate-400 text-[13px]">kg</span>
             {semRitmoReal ? (
-              <span className="ml-1 text-slate-500 text-[12px]">ponto de partida</span>
+              <span className="ml-1 shrink-0 whitespace-nowrap text-slate-500 text-[12px]">
+                ponto de partida
+              </span>
             ) : (
               <span className="ml-1 flex items-center gap-0.5 text-emerald-300 text-[12px] font-medium">
                 <TrendingDown size={12} strokeWidth={2.4} />
@@ -230,7 +242,9 @@ export function EvolucaoPesoChart({ pontos, meta, projecao, destaque = false }: 
           {meta.pesoAlvoKg.toFixed(0)}
         </text>
 
-        {area && <path d={area} fill="url(#glp1-area)" />}
+        {areaFinal && (
+          <path d={areaFinal} fill="url(#glp1-area)" opacity={semRitmoReal ? 0.6 : 1} />
+        )}
         {solido && (
           <path d={solido} fill="none" stroke="#2dd4bf" strokeWidth="2.2" strokeLinejoin="round" />
         )}
