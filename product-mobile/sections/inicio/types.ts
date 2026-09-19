@@ -287,5 +287,7 @@ export interface InicioProps {
   onMedicacaoClick?: () => void
   onMarcarDose?: (doseId: string) => void
   onGlp1Click?: () => void
+  /** Botão do rodapé do card: pula direto pro registro de aplicação. */
+  onGlp1NovaDose?: () => void
   onRefresh?: () => Promise<void>
 }

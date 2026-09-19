@@ -167,6 +167,7 @@ function calcularStats(
 
 export function Glp1({
   data,
+  abrirNovaDose = false,
   onSalvarConfiguracao,
   onSalvarAplicacao,
   onVerHistoricoCompleto,
@@ -178,7 +179,8 @@ export function Glp1({
   const [stats, setStats] = useState<Glp1Stats | null>(data.stats)
 
   const [wizardOpen, setWizardOpen] = useState(false)
-  const [doseOpen, setDoseOpen] = useState(false)
+  // Deep link do card da Início: já entra no registro de aplicação.
+  const [doseOpen, setDoseOpen] = useState(abrirNovaDose && !!data.configuracao)
   const [toast, setToast] = useState<string | null>(null)
   const [destaqueGrafico, setDestaqueGrafico] = useState(false)
   /** Doses registradas nesta sessão — soma ao total que veio do backend. */

@@ -4,11 +4,13 @@ import type { Glp1Preview } from '@/../product-mobile/sections/inicio/types'
 interface Props {
   glp1: Glp1Preview
   onClick?: () => void
+  /** Rodapé do card configurado — abre o registro de aplicação direto. */
+  onNovaDose?: () => void
 }
 
 const n1 = (v: number) => v.toFixed(1).replace('.', ',')
 
-export function Glp1Mini({ glp1, onClick }: Props) {
+export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
   // Convite: paciente elegível que ainda não configurou o módulo.
   if (!glp1.configurado) {
     return (
@@ -130,10 +132,11 @@ export function Glp1Mini({ glp1, onClick }: Props) {
           </span>
         </div>
         <button
-          onClick={onClick}
-          className="shrink-0 rounded-lg bg-teal-500 px-3 py-1.5 text-[12px] font-semibold text-slate-950 active:scale-[0.97] transition-transform"
+          onClick={onNovaDose ?? onClick}
+          className="shrink-0 flex items-center gap-1 rounded-lg bg-teal-500 px-3 py-1.5 text-[12px] font-semibold text-slate-950 active:scale-[0.97] transition-transform"
         >
-          {glp1.dosesAplicadas === 0 ? 'Iniciar' : 'Acompanhar'}
+          <Syringe size={12} strokeWidth={2.4} />
+          Nova dose
         </button>
       </div>
     </div>

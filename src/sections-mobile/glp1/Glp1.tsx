@@ -5,6 +5,8 @@ import { Glp1 as Glp1Component } from './components/Glp1'
 /** Painel do paciente que já configurou o acompanhamento. */
 export default function Glp1Preview() {
   const baseData = data as unknown as Glp1Data
+  const abrirNovaDose =
+    new URLSearchParams(window.location.search).get('dose') === 'nova'
 
   return (
     <>
@@ -25,6 +27,7 @@ export default function Glp1Preview() {
       <div data-nymos-mobile="true">
         <Glp1Component
           data={baseData}
+          abrirNovaDose={abrirNovaDose}
           onSalvarConfiguracao={(p) => console.log('Configuração GLP-1:', p)}
           onSalvarAplicacao={(p) => console.log('Nova aplicação:', p)}
           onVerHistoricoCompleto={() => console.log('Ver histórico completo')}

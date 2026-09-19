@@ -361,6 +361,8 @@ export interface Glp1Data {
 
 export interface Glp1Props {
   data: Glp1Data
+  /** Deep link vindo do card da Início: entra com o modal de aplicação aberto. */
+  abrirNovaDose?: boolean
   onSalvarConfiguracao?: (payload: ConfiguracaoPayload) => void
   onSalvarAplicacao?: (payload: NovaAplicacaoPayload) => void
   onVerHistoricoCompleto?: () => void
