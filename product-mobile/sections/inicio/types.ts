@@ -245,8 +245,10 @@ export interface Glp1Preview {
   proximaDoseLabel: string
   proximaDoseEmDias: number
   atrasada: boolean
+  /** Peso no dia em que o protocolo começou. */
+  pesoInicialKg: number
   pesoAtualKg: number
-  /** Peso alvo do protocolo — o card mostra atual → meta. */
+  /** Peso alvo do protocolo — o card mostra inicial · atual · meta. */
   pesoAlvoKg: number
   perdidoKg: number
   perdidoPct: number

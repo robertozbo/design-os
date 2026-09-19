@@ -1,4 +1,4 @@
-import { Syringe, TrendingDown, Clock, AlertTriangle, ArrowRight } from 'lucide-react'
+import { Syringe, TrendingDown, Clock, AlertTriangle } from 'lucide-react'
 import type { Glp1Preview } from '@/../product-mobile/sections/inicio/types'
 
 interface Props {
@@ -77,7 +77,7 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
         </div>
       </button>
 
-      {/* Sparkline de peso + falta pra meta */}
+      {/* Sparkline de peso + inicial · atual · meta */}
       <div className="px-4 pb-3 flex items-center gap-3">
         <svg viewBox="0 0 120 28" className="h-8 flex-1 max-w-[170px]" preserveAspectRatio="none">
           <polyline
@@ -100,16 +100,10 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
             fill="#2dd4bf"
           />
         </svg>
-        <div className="shrink-0 text-right ml-auto">
-          <div className="flex items-baseline justify-end gap-1 font-mono tabular-nums text-[12px]">
-            <span className="text-slate-200 font-medium">{n1(glp1.pesoAtualKg)}</span>
-            <ArrowRight size={9} strokeWidth={2.6} className="text-slate-600 self-center" />
-            <span className="text-amber-300 font-medium">{n1(glp1.pesoAlvoKg)}</span>
-            <span className="text-slate-500 text-[10px]">kg</span>
-          </div>
-          <div className="text-slate-500 text-[10px]">
-            faltam <span className="font-mono tabular-nums">{n1(glp1.faltaKg)}</span> kg
-          </div>
+        <div className="shrink-0 ml-auto flex items-start gap-3">
+          <Peso label="Inicial" valor={glp1.pesoInicialKg} tom="text-slate-400" />
+          <Peso label="Atual" valor={glp1.pesoAtualKg} tom="text-slate-100" />
+          <Peso label="Meta" valor={glp1.pesoAlvoKg} tom="text-amber-300" />
         </div>
       </div>
 
@@ -148,6 +142,20 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
           <Syringe size={12} strokeWidth={2.4} />
           Nova dose
         </button>
+      </div>
+    </div>
+  )
+}
+
+/** Coluna de peso do card: rótulo em cima, valor em mono embaixo. */
+function Peso({ label, valor, tom }: { label: string; valor: number; tom: string }) {
+  return (
+    <div className="text-right">
+      <div className="text-[8.5px] uppercase tracking-wider font-semibold text-slate-500">
+        {label}
+      </div>
+      <div className={`font-mono tabular-nums text-[12px] font-medium ${tom}`}>
+        {n1(valor)}
       </div>
     </div>
   )

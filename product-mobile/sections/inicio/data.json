@@ -510,6 +510,7 @@
     "proximaDoseLabel": "Hoje, 16/09 · 20:00",
     "proximaDoseEmDias": 0,
     "atrasada": false,
+    "pesoInicialKg": 96.4,
     "pesoAtualKg": 87.6,
     "pesoAlvoKg": 78,
     "perdidoKg": 8.8,
