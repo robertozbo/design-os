@@ -110,26 +110,31 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
 
       {/* Próxima dose + CTA */}
       <div className="border-t border-slate-800 px-3 py-2.5 flex items-center gap-2">
-        <div className="flex-1 min-w-0 flex items-center gap-1.5 pl-1">
-          {glp1.atrasada ? (
-            <AlertTriangle size={12} className="text-rose-300 shrink-0" />
-          ) : (
-            <Clock
-              size={12}
-              className={hoje ? 'text-teal-300 shrink-0' : 'text-slate-500 shrink-0'}
-            />
-          )}
-          <span
-            className={`text-[11.5px] truncate ${
-              glp1.atrasada ? 'text-rose-200' : hoje ? 'text-teal-200' : 'text-slate-400'
+        <div className="flex-1 min-w-0 pl-1">
+          <div
+            className={`text-[9.5px] uppercase tracking-wider font-semibold ${
+              glp1.atrasada ? 'text-rose-300' : 'text-slate-500'
             }`}
           >
-            {glp1.dosesAplicadas === 0
-              ? 'Registre sua primeira aplicação'
-              : glp1.atrasada
-                ? 'Dose atrasada'
-                : glp1.proximaDoseLabel}
-          </span>
+            {glp1.atrasada ? 'Dose atrasada' : 'Próxima dose'}
+          </div>
+          <div className="mt-0.5 flex items-center gap-1.5">
+            {glp1.atrasada ? (
+              <AlertTriangle size={12} className="text-rose-300 shrink-0" />
+            ) : (
+              <Clock
+                size={12}
+                className={hoje ? 'text-teal-300 shrink-0' : 'text-slate-500 shrink-0'}
+              />
+            )}
+            <span
+              className={`text-[12px] truncate ${
+                glp1.atrasada ? 'text-rose-200' : hoje ? 'text-teal-200' : 'text-slate-300'
+              }`}
+            >
+              {glp1.proximaDoseLabel}
+            </span>
+          </div>
         </div>
         <button
           onClick={onNovaDose ?? onClick}

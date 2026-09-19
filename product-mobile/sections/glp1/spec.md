@@ -20,7 +20,7 @@ Treinos). Dois estados:
 | Estado | Conteúdo |
 |---|---|
 | **Convite** (`configurado: false`) | Card tracejado "Usa GLP-1? Acompanhe aqui" + botão **Iniciar** `teal-500` → abre o wizard |
-| **Ativo** | Medicamento + dose, peso atual, kg perdidos, sparkline de 7 pesos, kg que faltam pra meta, próxima dose e botão **Nova dose** |
+| **Ativo** | Medicamento + dose, peso atual, kg perdidos, sparkline de 7 pesos, kg que faltam pra meta e, no rodapé, a linha **PRÓXIMA DOSE** (label 9,5px uppercase + data e hora com ícone de relógio) ao lado do botão **Nova dose**. Atrasada: o label vira **DOSE ATRASADA** em rose, com ícone de alerta, e a data continua visível |
 
 O botão do rodapé é **Nova dose** e faz deep link — `/mobile/sections/glp1?dose=nova`
 entra na section com o modal de aplicação já aberto (prop `abrirNovaDose`). O corpo do
