@@ -63,6 +63,10 @@ const SUB_PAGE_CONFIG: Record<string, SubPageConfig> = {
     title: 'Profissionais',
     subtitle: 'Vinculados e convites',
   },
+  consultas: {
+    title: 'Consultas',
+    subtitle: 'Marcadas pelos seus profissionais',
+  },
   'saude-mental': {
     title: 'Saúde Mental',
     subtitle: 'Chat e diário emocional',
@@ -201,7 +205,7 @@ const GRUPOS: Grupo[] = [
     label: 'Mais',
     emoji: '⚙',
     hint: 'Conta, perfil, configurações',
-    sectionIds: ['mais', 'perfil', 'profissionais', 'saude-mental', 'medicacao', 'configuracoes', 'dispositivos'],
+    sectionIds: ['mais', 'perfil', 'profissionais', 'consultas', 'saude-mental', 'medicacao', 'configuracoes', 'dispositivos'],
   },
   {
     label: 'Plano',
@@ -365,6 +369,7 @@ export function MobileSectionPage() {
     glp1: 'inicio',
     perfil: 'mais',
     profissionais: 'mais',
+    consultas: 'mais',
     plano: 'mais',
     upgrade: 'mais',
     'plano-expirado': 'mais',

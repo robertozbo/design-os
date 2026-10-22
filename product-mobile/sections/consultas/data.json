@@ -1,0 +1,214 @@
+{
+  "hoje": "2026-10-22",
+  "agora": "14:20",
+  "codigoDeChegadaExemplo": {
+    "codigo": "482917",
+    "expiraEm": "2026-10-22T14:25:00-03:00"
+  },
+  "consultas": [
+    {
+      "id": "c-hoje-1",
+      "data": "2026-10-22",
+      "hora": "15:00",
+      "duracaoMin": 50,
+      "status": "confirmed",
+      "modalidade": "presencial",
+      "profissional": {
+        "id": "p-aline",
+        "nome": "Aline Ferraz",
+        "tipo": "nutricionista",
+        "especialidade": "Nutrição clínica",
+        "avatarUrl": null
+      },
+      "servico": "Retorno nutricional",
+      "local": {
+        "clinicaNome": "Clínica Pluri",
+        "sala": "Sala 3",
+        "endereco": "Av. Paulista, 1000 · 4º andar"
+      },
+      "meetLink": null,
+      "orientacao": "Traga o diário alimentar da última semana.",
+      "checkedInAt": null,
+      "cancelamentoPedido": false,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "c-prox-1",
+      "data": "2026-10-27",
+      "hora": "09:30",
+      "duracaoMin": 30,
+      "status": "scheduled",
+      "modalidade": "teleconsulta",
+      "profissional": {
+        "id": "p-rafael",
+        "nome": "Dr. Rafael Monteiro",
+        "tipo": "medico",
+        "especialidade": "Endocrinologia",
+        "avatarUrl": null
+      },
+      "servico": "Acompanhamento GLP-1",
+      "local": null,
+      "meetLink": "https://meet.google.com/abc-defg-hij",
+      "orientacao": "Tenha em mãos o peso da semana e as doses aplicadas.",
+      "checkedInAt": null,
+      "cancelamentoPedido": false,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "c-prox-2",
+      "data": "2026-10-30",
+      "hora": "18:00",
+      "duracaoMin": 50,
+      "status": "confirmed",
+      "modalidade": "teleconsulta",
+      "profissional": {
+        "id": "p-camila",
+        "nome": "Camila Torres",
+        "tipo": "psicologo",
+        "especialidade": "Terapia cognitivo-comportamental",
+        "avatarUrl": null
+      },
+      "servico": "Sessão de psicoterapia",
+      "local": null,
+      "meetLink": null,
+      "orientacao": null,
+      "checkedInAt": null,
+      "cancelamentoPedido": false,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "c-prox-3",
+      "data": "2026-11-05",
+      "hora": "07:00",
+      "duracaoMin": 60,
+      "status": "scheduled",
+      "modalidade": "presencial",
+      "profissional": {
+        "id": "p-bruno",
+        "nome": "Bruno Lima",
+        "tipo": "personal",
+        "especialidade": "Treino de força",
+        "avatarUrl": null
+      },
+      "servico": "Avaliação física",
+      "local": {
+        "clinicaNome": "Clínica Pluri",
+        "sala": "Estúdio",
+        "endereco": "Av. Paulista, 1000 · 4º andar"
+      },
+      "meetLink": null,
+      "orientacao": "Venha com roupa de treino. Evite treinar no dia anterior.",
+      "checkedInAt": null,
+      "cancelamentoPedido": true,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "c-prox-4",
+      "data": "2026-11-19",
+      "hora": "15:00",
+      "duracaoMin": 50,
+      "status": "scheduled",
+      "modalidade": "presencial",
+      "profissional": {
+        "id": "p-aline",
+        "nome": "Aline Ferraz",
+        "tipo": "nutricionista",
+        "especialidade": "Nutrição clínica",
+        "avatarUrl": null
+      },
+      "servico": "Retorno nutricional",
+      "local": {
+        "clinicaNome": "Clínica Pluri",
+        "sala": null,
+        "endereco": "Av. Paulista, 1000 · 4º andar"
+      },
+      "meetLink": null,
+      "orientacao": null,
+      "checkedInAt": null,
+      "cancelamentoPedido": false,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "c-ant-1",
+      "data": "2026-10-08",
+      "hora": "15:00",
+      "duracaoMin": 50,
+      "status": "completed",
+      "modalidade": "presencial",
+      "profissional": {
+        "id": "p-aline",
+        "nome": "Aline Ferraz",
+        "tipo": "nutricionista",
+        "especialidade": "Nutrição clínica",
+        "avatarUrl": null
+      },
+      "servico": "Primeira consulta",
+      "local": {
+        "clinicaNome": "Clínica Pluri",
+        "sala": "Sala 3",
+        "endereco": "Av. Paulista, 1000 · 4º andar"
+      },
+      "meetLink": null,
+      "orientacao": null,
+      "checkedInAt": "2026-10-08T14:52:00-03:00",
+      "cancelamentoPedido": false,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    },
+    {
+      "id": "c-ant-2",
+      "data": "2026-10-01",
+      "hora": "09:30",
+      "duracaoMin": 30,
+      "status": "cancelled",
+      "modalidade": "teleconsulta",
+      "profissional": {
+        "id": "p-rafael",
+        "nome": "Dr. Rafael Monteiro",
+        "tipo": "medico",
+        "especialidade": "Endocrinologia",
+        "avatarUrl": null
+      },
+      "servico": "Acompanhamento GLP-1",
+      "local": null,
+      "meetLink": null,
+      "orientacao": null,
+      "checkedInAt": null,
+      "cancelamentoPedido": false,
+      "canceladaPor": "professional",
+      "motivoCancelamento": "Remarcada para o dia 27/10 por agenda do médico."
+    },
+    {
+      "id": "c-ant-3",
+      "data": "2026-09-24",
+      "hora": "07:00",
+      "duracaoMin": 60,
+      "status": "no_show",
+      "modalidade": "presencial",
+      "profissional": {
+        "id": "p-bruno",
+        "nome": "Bruno Lima",
+        "tipo": "personal",
+        "especialidade": "Treino de força",
+        "avatarUrl": null
+      },
+      "servico": "Treino acompanhado",
+      "local": {
+        "clinicaNome": "Clínica Pluri",
+        "sala": "Estúdio",
+        "endereco": "Av. Paulista, 1000 · 4º andar"
+      },
+      "meetLink": null,
+      "orientacao": null,
+      "checkedInAt": null,
+      "cancelamentoPedido": false,
+      "canceladaPor": null,
+      "motivoCancelamento": null
+    }
+  ]
+}
