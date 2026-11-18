@@ -164,13 +164,17 @@ export function MobileFrame({
                   <Watch size={16} />
                 </button>
               )}
-              <button className={`relative w-9 h-9 rounded-full ${isPersonal ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
+              <button
+                onClick={isPersonal ? () => navigate('/mobile/sections/personal-notificacoes') : undefined}
+                className={`relative w-9 h-9 rounded-full ${isPersonal ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
                 <Bell size={16} />
                 {notificacoesNaoLidas > 0 && (
                   <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500" />
                 )}
               </button>
-              <button className={`w-9 h-9 rounded-full ${isPersonal ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
+              <button
+                onClick={isPersonal ? () => navigate('/mobile/sections/personal-configuracoes') : undefined}
+                className={`w-9 h-9 rounded-full ${isPersonal ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
                 <Settings size={16} />
               </button>
             </div>
@@ -185,7 +189,7 @@ export function MobileFrame({
                 <button
                   onClick={() => navigate(-1)}
                   aria-label="Voltar"
-                  className="w-10 h-10 rounded-xl bg-slate-800/60 flex items-center justify-center text-slate-200 hover:text-white active:scale-95 transition shrink-0"
+                  className={`w-10 h-10 rounded-xl ${isPersonal ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-200 hover:text-white active:scale-95 transition shrink-0`}
                 >
                   <ChevronLeft size={20} strokeWidth={2.2} />
                 </button>
@@ -293,6 +297,7 @@ export function MobileFrame({
                 return (
                   <button
                     key={id}
+                    onClick={isPersonal ? () => navigate(`/mobile/sections/personal-${id}`) : undefined}
                     className={`flex flex-col items-center justify-center gap-1 ${color}`}
                   >
                     <Icon size={22} strokeWidth={active ? 2.4 : 2} />

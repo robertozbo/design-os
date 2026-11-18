@@ -1,0 +1,1 @@
+export { PersonalTreinos } from './PersonalTreinos'

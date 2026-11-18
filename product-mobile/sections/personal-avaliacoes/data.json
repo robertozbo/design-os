@@ -1,0 +1,12 @@
+{
+  "reavaliacoes": [
+    { "alunoId": "a2", "aluno": "Carla Mendes", "inicial": "C", "ultima": "28/08", "prazo": "atrasada 22 dias", "atrasada": true },
+    { "alunoId": "a7", "aluno": "Bruno Tavares", "inicial": "B", "ultima": "12/09", "prazo": "atrasada 7 dias", "atrasada": true },
+    { "alunoId": "a3", "aluno": "Marcos Ribeiro", "inicial": "M", "ultima": "25/09", "prazo": "vence em 6 dias", "atrasada": false }
+  ],
+  "recentes": [
+    { "id": "av9", "aluno": "Ana Paula Souza", "inicial": "A", "data": "12/11", "tipo": "Bioimpedância", "destaques": ["Gordura 24,1% (−1,8)", "Massa magra 47,2 kg"] },
+    { "id": "av8", "aluno": "Lucas Martins", "inicial": "L", "data": "06/11", "tipo": "Teste de 1RM", "destaques": ["Agachamento 120 kg (+10)", "Supino 92 kg (+5)"] },
+    { "id": "av7", "aluno": "Juliana Costa", "inicial": "J", "data": "30/10", "tipo": "Antropometria", "destaques": ["Quadril 98 cm", "Cintura 68 cm (−2)"] }
+  ]
+}

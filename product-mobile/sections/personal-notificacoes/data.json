@@ -1,0 +1,12 @@
+{
+  "hoje": [
+    { "id": "n1", "tipo": "dor", "titulo": "Renata Lima relatou dor", "texto": "Joelho direito, nível 4, no agachamento livre", "quando": "18:42", "lida": false },
+    { "id": "n2", "tipo": "agendamento", "titulo": "Nova solicitação", "texto": "Pedro Almeida quer primeira consulta sex 07:00", "quando": "16:10", "lida": false },
+    { "id": "n3", "tipo": "treino", "titulo": "Lucas Martins concluiu o treino", "texto": "Full body · 5/7 exercícios · RPE 6", "quando": "12:40", "lida": false },
+    { "id": "n4", "tipo": "treino", "titulo": "Ana Paula bateu recorde", "texto": "Supino 32 kg (+2 kg)", "quando": "08:05", "lida": true }
+  ],
+  "anteriores": [
+    { "id": "n5", "tipo": "avaliacao", "titulo": "Reavaliação atrasada", "texto": "Carla Mendes — última em 28/08", "quando": "ontem", "lida": true },
+    { "id": "n6", "tipo": "convite", "titulo": "Convite aceito", "texto": "Lucas Martins entrou no app", "quando": "há 3 semanas", "lida": true }
+  ]
+}

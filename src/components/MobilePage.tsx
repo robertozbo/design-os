@@ -149,10 +149,24 @@ const SUB_PAGE_CONFIG: Record<string, SubPageConfig> = {
     // Mostra a seta de voltar à esquerda do título (volta pra home),
     // mesmo sendo aba — pedido de UX.
   },
-  'personal-mais': {
-    title: 'Mais',
-    isTabPage: true,
-  },
+  'personal-mais': { title: 'Mais', isTabPage: true },
+  'personal-alunos': { title: 'Alunos', subtitle: '21 alunos · 3 precisam de atenção', isTabPage: true },
+  'personal-agenda': { title: 'Agenda', subtitle: 'Semana de 16 a 22 de novembro', isTabPage: true },
+  'personal-treinos': { title: 'Treinos', subtitle: 'Templates e treinos por aluno', isTabPage: true },
+  'personal-aluno-ficha': { title: 'Ficha do aluno', subtitle: 'Renata Lima' },
+  'personal-solicitacoes': { title: 'Solicitações', subtitle: 'Pedidos de agendamento' },
+  'personal-treino-detalhe': { title: 'Template', subtitle: 'Editar e aplicar' },
+  'personal-exercicios': { title: 'Exercícios', subtitle: 'Biblioteca' },
+  'personal-programas': { title: 'Programas', subtitle: 'Periodização por aluno' },
+  'personal-avaliacoes': { title: 'Avaliações', subtitle: 'Reavaliações e recentes' },
+  'personal-avaliacao-nova': { title: 'Nova avaliação', subtitle: 'Hoje · 18/11' },
+  'personal-mensagens': { title: 'Mensagens', subtitle: '4 não lidas' },
+  'personal-conversa': { title: 'Renata Lima', subtitle: 'Conversa' },
+  'personal-convidar': { title: 'Convidar aluno', subtitle: 'Código e link' },
+  'personal-perfil': { title: 'Perfil profissional' },
+  'personal-plano': { title: 'Plano', subtitle: 'Assinatura' },
+  'personal-notificacoes': { title: 'Notificações' },
+  'personal-configuracoes': { title: 'Configurações' },
   objetivos: {
     title: 'Objetivos',
     subtitle: 'Onde você quer chegar',
@@ -214,8 +228,35 @@ const GRUPOS: Grupo[] = [
   {
     label: 'Personal',
     emoji: '🏋',
-    hint: 'App do profissional (perfil Personal)',
-    sectionIds: ['personal-inicio', 'personal-mais'],
+    hint: 'App do profissional · abas e treino',
+    sectionIds: [
+      'personal-inicio',
+      'personal-alunos',
+      'personal-aluno-ficha',
+      'personal-agenda',
+      'personal-solicitacoes',
+      'personal-treinos',
+      'personal-treino-detalhe',
+      'personal-exercicios',
+      'personal-programas',
+    ],
+  },
+  {
+    label: 'Personal · Mais',
+    emoji: '🏋',
+    hint: 'App do profissional · atendimento e conta',
+    sectionIds: [
+      'personal-mais',
+      'personal-avaliacoes',
+      'personal-avaliacao-nova',
+      'personal-mensagens',
+      'personal-conversa',
+      'personal-convidar',
+      'personal-perfil',
+      'personal-plano',
+      'personal-notificacoes',
+      'personal-configuracoes',
+    ],
   },
   {
     label: 'Plano',
@@ -257,7 +298,7 @@ export function MobileSectionsPage() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-9 gap-2 items-start">
+        <div className="grid grid-cols-10 gap-2 items-start">
           {GRUPOS.map((grupo) => {
             const ids = grupo.sectionIds.filter((id) => allIdsSet.has(id))
             if (ids.length === 0) return null
@@ -393,7 +434,17 @@ export function MobileSectionPage() {
   }
   const activeTab = tabMap[sectionId] ?? 'inicio'
   const isPersonal = sectionId.startsWith('personal-')
-  const personalTab = sectionId === 'personal-mais' ? 'mais' : 'inicio'
+  const PERSONAL_TAB: Record<string, 'inicio' | 'alunos' | 'agenda' | 'treinos' | 'mais'> = {
+    'personal-alunos': 'alunos',
+    'personal-aluno-ficha': 'alunos',
+    'personal-agenda': 'agenda',
+    'personal-solicitacoes': 'agenda',
+    'personal-treinos': 'treinos',
+    'personal-treino-detalhe': 'treinos',
+    'personal-exercicios': 'treinos',
+    'personal-programas': 'treinos',
+  }
+  const personalTab = PERSONAL_TAB[sectionId] ?? (sectionId === 'personal-inicio' ? 'inicio' : 'mais')
 
   const subPageConfig = SUB_PAGE_CONFIG[sectionId]
   let subPageRightAction: ReactNode = null

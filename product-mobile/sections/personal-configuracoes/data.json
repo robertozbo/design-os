@@ -1,0 +1,22 @@
+{
+  "versao": "Nymos 3.8.0 (412)",
+  "grupos": [
+    { "id": "avisos", "label": "Avisos", "itens": [
+      { "id": "push-dor", "label": "Relato de dor", "descricao": "Sempre imediato", "tipo": "toggle", "ligado": true },
+      { "id": "push-treino", "label": "Treino concluído", "descricao": "Resumo às 21:00", "tipo": "toggle", "ligado": true },
+      { "id": "push-agenda", "label": "Lembrete 30 min antes da sessão", "tipo": "toggle", "ligado": true },
+      { "id": "push-msg", "label": "Mensagens", "tipo": "toggle", "ligado": true }
+    ]},
+    { "id": "atendimento", "label": "Atendimento", "itens": [
+      { "id": "disponibilidade", "label": "Horários de atendimento", "tipo": "link", "valor": "Seg–Sáb" },
+      { "id": "duracao", "label": "Duração padrão da sessão", "tipo": "link", "valor": "60 min" },
+      { "id": "reavaliacao", "label": "Lembrar reavaliação a cada", "tipo": "link", "valor": "60 dias" },
+      { "id": "agendamento-publico", "label": "Aceitar pedidos pela página pública", "tipo": "toggle", "ligado": true }
+    ]},
+    { "id": "app", "label": "App", "itens": [
+      { "id": "idioma", "label": "Idioma", "tipo": "link", "valor": "Português (BR)" },
+      { "id": "biometria", "label": "Entrar com Face ID", "tipo": "toggle", "ligado": true },
+      { "id": "privacidade", "label": "Privacidade e dados (LGPD)", "tipo": "link" }
+    ]}
+  ]
+}

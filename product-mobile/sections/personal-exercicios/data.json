@@ -1,0 +1,14 @@
+{
+  "total": 214,
+  "grupos": ["Todos", "Peito", "Costas", "Pernas", "Ombro", "Braços", "Core", "Cardio"],
+  "exercicios": [
+    { "id": "x1", "nome": "Agachamento livre", "grupo": "Pernas", "equipamento": "Barra", "temVideo": true },
+    { "id": "x2", "nome": "Supino reto com barra", "grupo": "Peito", "equipamento": "Barra", "temVideo": true },
+    { "id": "x3", "nome": "Remada curvada", "grupo": "Costas", "equipamento": "Barra", "temVideo": true },
+    { "id": "x4", "nome": "Afundo búlgaro", "grupo": "Pernas", "equipamento": "Halteres", "temVideo": true },
+    { "id": "x5", "nome": "Elevação lateral", "grupo": "Ombro", "equipamento": "Halteres", "temVideo": true },
+    { "id": "x6", "nome": "Prancha com toque no ombro", "grupo": "Core", "equipamento": "Peso corporal", "temVideo": false, "personalizado": true },
+    { "id": "x7", "nome": "Tríceps corda", "grupo": "Braços", "equipamento": "Polia", "temVideo": true },
+    { "id": "x8", "nome": "Bike intervalada 30/30", "grupo": "Cardio", "equipamento": "Bike", "temVideo": false, "personalizado": true }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "programas": [
+    { "id": "pg1", "nome": "Meia maratona — março", "aluno": "Pedro Almeida", "inicial": "P", "inicio": "23/11", "fim": "15/03", "progresso": 2, "fases": [
+      { "nome": "Base", "semanas": "1–6", "foco": "Volume aeróbico + força geral", "status": "atual" },
+      { "nome": "Construção", "semanas": "7–12", "foco": "Limiar e força específica", "status": "proxima" },
+      { "nome": "Polimento", "semanas": "13–16", "foco": "Redução de volume", "status": "proxima" }
+    ]},
+    { "id": "pg2", "nome": "Hipertrofia 16 semanas", "aluno": "Marcos Ribeiro", "inicial": "M", "inicio": "21/09", "fim": "10/01", "progresso": 60, "fases": [
+      { "nome": "Adaptação", "semanas": "1–4", "foco": "Técnica e RPE 6–7", "status": "concluida" },
+      { "nome": "Acumulação", "semanas": "5–10", "foco": "Volume alto, RPE 8", "status": "atual" },
+      { "nome": "Intensificação", "semanas": "11–16", "foco": "Carga alta, menos volume", "status": "proxima" }
+    ]}
+  ]
+}

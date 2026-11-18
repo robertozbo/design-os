@@ -1,0 +1,1 @@
+export { PersonalTreinoDetalhe } from './PersonalTreinoDetalhe'

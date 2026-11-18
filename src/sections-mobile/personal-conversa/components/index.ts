@@ -1,0 +1,1 @@
+export { PersonalConversa } from './PersonalConversa'

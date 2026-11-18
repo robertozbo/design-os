@@ -1,0 +1,1 @@
+export { PersonalNotificacoes } from './PersonalNotificacoes'

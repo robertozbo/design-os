@@ -1,0 +1,27 @@
+{
+  "template": { "id": "t1", "nome": "Hipertrofia ABC", "divisao": "ABC", "nivel": "Intermediário", "semanas": 8, "objetivo": "Hipertrofia" },
+  "dias": [
+    { "id": "A", "nome": "Treino A", "foco": "Peito, ombro e tríceps", "exercicios": [
+      { "id": "e1", "nome": "Supino reto com barra", "grupo": "Peito", "series": 4, "reps": "8–10", "carga": "70% 1RM", "descanso": "90 s", "rpe": "8" },
+      { "id": "e2", "nome": "Supino inclinado halteres", "grupo": "Peito", "series": 3, "reps": "10–12", "carga": "—", "descanso": "75 s", "rpe": "8" },
+      { "id": "e3", "nome": "Desenvolvimento militar", "grupo": "Ombro", "series": 3, "reps": "8–10", "carga": "—", "descanso": "90 s" },
+      { "id": "e4", "nome": "Elevação lateral", "grupo": "Ombro", "series": 3, "reps": "12–15", "carga": "—", "descanso": "60 s", "obs": "Drop set na última série" },
+      { "id": "e5", "nome": "Tríceps corda", "grupo": "Tríceps", "series": 3, "reps": "12", "carga": "—", "descanso": "60 s" }
+    ]},
+    { "id": "B", "nome": "Treino B", "foco": "Costas e bíceps", "exercicios": [
+      { "id": "e6", "nome": "Barra fixa", "grupo": "Costas", "series": 4, "reps": "máx", "carga": "peso corporal", "descanso": "120 s" },
+      { "id": "e7", "nome": "Remada curvada", "grupo": "Costas", "series": 4, "reps": "8–10", "carga": "—", "descanso": "90 s", "rpe": "8" },
+      { "id": "e8", "nome": "Rosca direta", "grupo": "Bíceps", "series": 3, "reps": "10–12", "carga": "—", "descanso": "60 s" }
+    ]},
+    { "id": "C", "nome": "Treino C", "foco": "Pernas", "exercicios": [
+      { "id": "e9", "nome": "Agachamento livre", "grupo": "Quadríceps", "series": 4, "reps": "6–8", "carga": "75% 1RM", "descanso": "120 s", "rpe": "8" },
+      { "id": "e10", "nome": "Leg press 45°", "grupo": "Quadríceps", "series": 3, "reps": "10–12", "carga": "—", "descanso": "90 s" },
+      { "id": "e11", "nome": "Mesa flexora", "grupo": "Posterior", "series": 3, "reps": "12", "carga": "—", "descanso": "60 s" }
+    ]}
+  ],
+  "alunosSugeridos": [
+    { "id": "a7", "nome": "Bruno Tavares", "inicial": "B" },
+    { "id": "a9", "nome": "Lucas Martins", "inicial": "L" },
+    { "id": "a5", "nome": "Pedro Almeida", "inicial": "P" }
+  ]
+}

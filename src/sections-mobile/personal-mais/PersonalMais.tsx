@@ -22,8 +22,12 @@ export default function PersonalMaisPreview() {
       <div data-nymos-mobile="true" className="min-h-full">
         <Component
           data={data as unknown as PersonalMaisData}
-          onPerfilClick={() => console.log('Perfil')}
-          onItemClick={(i) => console.log('Item:', i.id)}
+          onPerfilClick={() => {
+            window.location.href = '/mobile/sections/personal-perfil'
+          }}
+          onItemClick={(i) => {
+            window.location.href = `/mobile/sections/personal-${i.id}`
+          }}
           onTrocarPerfil={() => {
             window.location.href = '/mobile/sections/inicio'
           }}

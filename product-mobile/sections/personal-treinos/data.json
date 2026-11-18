@@ -1,0 +1,15 @@
+{
+  "bibliotecaTotal": 214,
+  "templates": [
+    { "id": "t1", "nome": "Hipertrofia ABC", "divisao": "ABC", "nivel": "Intermediário", "objetivo": "Hipertrofia", "semanas": 8, "alunosUsando": 5, "atualizado": "há 3 dias" },
+    { "id": "t2", "nome": "Recomposição Full body", "divisao": "Full body", "nivel": "Iniciante", "objetivo": "Perda de gordura", "semanas": 4, "alunosUsando": 4, "atualizado": "há 1 semana" },
+    { "id": "t3", "nome": "Força 5x5", "divisao": "AB", "nivel": "Avançado", "objetivo": "Força", "semanas": 8, "alunosUsando": 2, "atualizado": "há 2 semanas" },
+    { "id": "t4", "nome": "Mobilidade 60+", "divisao": "Full body", "nivel": "Iniciante", "objetivo": "Saúde e mobilidade", "semanas": 6, "alunosUsando": 1, "atualizado": "há 1 mês" }
+  ],
+  "porAluno": [
+    { "id": "pa1", "aluno": "Bruno Tavares", "inicial": "B", "treino": "ABCD", "semana": "8/8", "revisao": "venceu há 3 dias", "vencido": true },
+    { "id": "pa2", "aluno": "Lucas Martins", "inicial": "L", "treino": "Full body", "semana": "7/8", "revisao": "em 6 dias" },
+    { "id": "pa3", "aluno": "Marcos Ribeiro", "inicial": "M", "treino": "Hipertrofia ABC", "semana": "5/8", "revisao": "em 3 semanas" },
+    { "id": "pa4", "aluno": "Renata Lima", "inicial": "R", "treino": "Recomposição Full body", "semana": "2/4", "revisao": "em 2 semanas" }
+  ]
+}

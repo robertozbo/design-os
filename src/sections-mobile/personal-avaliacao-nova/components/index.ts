@@ -1,0 +1,1 @@
+export { PersonalAvaliacaoNova } from './PersonalAvaliacaoNova'

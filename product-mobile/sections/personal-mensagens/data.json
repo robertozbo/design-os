@@ -1,0 +1,9 @@
+{
+  "conversas": [
+    { "id": "c1", "aluno": "Renata Lima", "inicial": "R", "ultima": "O joelho ainda incomoda quando desço no agachamento", "hora": "18:42", "naoLidas": 2, "daAluno": true },
+    { "id": "c2", "aluno": "Juliana Costa", "inicial": "J", "ultima": "Posso trocar o treino de hoje para amanhã?", "hora": "14:10", "naoLidas": 1, "daAluno": true },
+    { "id": "c3", "aluno": "Lucas Martins", "inicial": "L", "ultima": "Vídeo do agachamento", "hora": "12:51", "naoLidas": 1, "daAluno": true, "anexo": "video" },
+    { "id": "c4", "aluno": "Ana Paula Souza", "inicial": "A", "ultima": "Você: Boa! Subimos 2 kg no supino semana que vem", "hora": "08:20", "naoLidas": 0, "daAluno": false },
+    { "id": "c5", "aluno": "Marcos Ribeiro", "inicial": "M", "ultima": "Você: Treino B atualizado", "hora": "ontem", "naoLidas": 0, "daAluno": false, "anexo": "treino" }
+  ]
+}

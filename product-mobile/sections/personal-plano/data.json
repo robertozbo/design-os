@@ -1,0 +1,13 @@
+{
+  "renovacao": "Renova em 02/12/2026",
+  "uso": [
+    { "label": "Alunos vinculados ao app", "usado": 18, "limite": 30 },
+    { "label": "Templates de treino", "usado": 12, "limite": null },
+    { "label": "Análises com IA no mês", "usado": 0, "limite": 0 }
+  ],
+  "planos": [
+    { "id": "free", "nome": "Free", "preco": "R$ 0", "recursos": ["Gestão básica de alunos", "Biblioteca de exercícios", "Agenda"] },
+    { "id": "plus", "nome": "Plus", "preco": "R$ 49,90/mês", "recursos": ["Tudo do Free", "Aluno no app com treino do dia", "Carga e RPE registrados pelo aluno", "Mensagens"], "atual": true },
+    { "id": "pro", "nome": "Pro", "preco": "R$ 99,90/mês", "recursos": ["Tudo do Plus", "IA sugere progressão de carga", "Análises avançadas de adesão"], "destaque": true }
+  ]
+}

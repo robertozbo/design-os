@@ -1,0 +1,20 @@
+{
+  "aluno": { "nome": "Carla Mendes", "inicial": "C", "ultima": "28/08/2026" },
+  "tipos": [
+    { "id": "antropometria", "label": "Antropometria", "icone": "Ruler" },
+    { "id": "dobras", "label": "Dobras", "icone": "Pinch" },
+    { "id": "bioimpedancia", "label": "Bioimpedância", "icone": "Scale" },
+    { "id": "forca", "label": "Força / 1RM", "icone": "Dumbbell" },
+    { "id": "mobilidade", "label": "Mobilidade", "icone": "Move" },
+    { "id": "cardio", "label": "Cardio", "icone": "HeartPulse" }
+  ],
+  "tipoSelecionado": "antropometria",
+  "campos": [
+    { "id": "peso", "label": "Peso", "unidade": "kg", "valor": "71,2", "anterior": "72,8" },
+    { "id": "altura", "label": "Altura", "unidade": "cm", "valor": "165", "anterior": "165" },
+    { "id": "cintura", "label": "Cintura", "unidade": "cm", "valor": "", "anterior": "78" },
+    { "id": "quadril", "label": "Quadril", "unidade": "cm", "valor": "", "anterior": "101" },
+    { "id": "braco", "label": "Braço D (contraído)", "unidade": "cm", "valor": "", "anterior": "29,5" },
+    { "id": "coxa", "label": "Coxa D", "unidade": "cm", "valor": "", "anterior": "57" }
+  ]
+}

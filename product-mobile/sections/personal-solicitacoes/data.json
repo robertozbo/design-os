@@ -1,0 +1,9 @@
+{
+  "pendentes": [
+    { "id": "r1", "aluno": "Pedro Almeida", "inicial": "P", "novo": true, "pedido": "Primeira consulta", "horario": "Sex 20/11 · 07:00", "mensagem": "Quero começar a treinar para uma corrida de 10 km em março.", "recebida": "há 2 h" },
+    { "id": "r2", "aluno": "Juliana Costa", "inicial": "J", "novo": false, "pedido": "Remarcar Treino C", "horario": "Qui 19/11 · 18:00 (era Qua 17:30)", "recebida": "há 40 min" }
+  ],
+  "respondidas": [
+    { "id": "r0", "aluno": "Lucas Martins", "inicial": "L", "novo": false, "pedido": "Sessão extra", "horario": "Sáb 21/11 · 09:00", "recebida": "ontem", "resposta": "aceita" }
+  ]
+}

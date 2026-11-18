@@ -1,0 +1,12 @@
+{
+  "aluno": { "nome": "Renata Lima", "inicial": "R", "status": "Treinou ontem · Treino A" },
+  "dia": "Hoje",
+  "mensagens": [
+    { "id": "m1", "autor": "aluno", "texto": "Oi Eli! Fiz o treino A ontem mas o joelho direito doeu no agachamento", "hora": "18:40" },
+    { "id": "m2", "autor": "aluno", "texto": "O joelho ainda incomoda quando desço no agachamento", "hora": "18:42" },
+    { "id": "m3", "autor": "personal", "texto": "Obrigada por avisar! Dor de 0 a 10, quanto?", "hora": "19:05" },
+    { "id": "m4", "autor": "aluno", "texto": "Uns 4. Passa depois de um tempo", "hora": "19:07" },
+    { "id": "m5", "autor": "personal", "texto": "Troquei o agachamento livre por box squat com amplitude controlada até a gente avaliar na sexta.", "hora": "19:12", "anexo": { "tipo": "treino", "titulo": "Treino A atualizado", "detalhe": "Box squat 4 × 10 · substitui agachamento livre" } }
+  ],
+  "respostasRapidas": ["Ótimo treino!", "Me manda um vídeo da execução", "Vamos ajustar a carga"]
+}

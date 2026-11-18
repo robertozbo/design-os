@@ -1,0 +1,1 @@
+export { PersonalConfiguracoes } from './PersonalConfiguracoes'

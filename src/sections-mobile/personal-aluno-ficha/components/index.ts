@@ -1,0 +1,1 @@
+export { PersonalAlunoFicha } from './PersonalAlunoFicha'

@@ -1,0 +1,40 @@
+{
+  "aluno": { "id": "a6", "nome": "Renata Lima", "inicial": "R", "idade": 34, "objetivo": "Condicionamento e perda de gordura", "desde": "mar 2026", "modalidade": "Presencial · 3x/semana", "telefone": "(48) 99999-1234" },
+  "metricas": [
+    { "label": "Adesão 30d", "valor": "70%", "delta": "-12 pp", "positivo": false },
+    { "label": "Peso", "valor": "68,4", "delta": "-3,1 kg", "positivo": true },
+    { "label": "% gordura", "valor": "27,2", "delta": "-2,4 pp", "positivo": true }
+  ],
+  "alerta": "Relatou dor no joelho direito no agachamento (ontem, 18:40)",
+  "programa": { "nome": "Full body — Recomposição", "semana": "Semana 2 de 4", "progresso": 45, "proximaRevisao": "02/12" },
+  "treinos": [
+    { "id": "A", "nome": "Treino A", "foco": "Inferiores + core", "exercicios": [
+      { "nome": "Agachamento livre", "series": "4 × 10", "carga": "30 kg" },
+      { "nome": "Stiff com halteres", "series": "3 × 12", "carga": "2 × 12 kg" },
+      { "nome": "Afundo búlgaro", "series": "3 × 10", "carga": "2 × 6 kg" },
+      { "nome": "Prancha", "series": "3 × 40 s", "carga": "—" }
+    ]},
+    { "id": "B", "nome": "Treino B", "foco": "Superiores + cardio", "exercicios": [
+      { "nome": "Supino com halteres", "series": "4 × 10", "carga": "2 × 10 kg" },
+      { "nome": "Remada baixa", "series": "4 × 12", "carga": "35 kg" },
+      { "nome": "Desenvolvimento", "series": "3 × 10", "carga": "2 × 6 kg" },
+      { "nome": "Bike intervalada", "series": "8 × 30 s", "carga": "—" }
+    ]}
+  ],
+  "execucoes": [
+    { "data": "Ter 17/11", "treino": "Treino A", "concluido": "3/4", "rpe": 8, "nota": "Dor no joelho no agachamento" },
+    { "data": "Sex 13/11", "treino": "Treino B", "concluido": "4/4", "rpe": 7 },
+    { "data": "Qua 11/11", "treino": "Treino A", "concluido": "0/4", "rpe": null, "pulou": true },
+    { "data": "Seg 09/11", "treino": "Treino B", "concluido": "4/4", "rpe": 7 }
+  ],
+  "avaliacoes": [
+    { "id": "av2", "data": "05/10/2026", "tipo": "Antropometria + bioimpedância", "destaques": ["Gordura 27,2%", "Cintura 74 cm", "Massa magra 49,8 kg"] },
+    { "id": "av1", "data": "08/03/2026", "tipo": "Avaliação inicial", "destaques": ["Gordura 29,6%", "Cintura 79 cm", "VO2 est. 31"] }
+  ],
+  "anamnese": [
+    { "pergunta": "Lesões ou dores", "resposta": "Condromalácia patelar leve no joelho direito (2023)", "atencao": true },
+    { "pergunta": "Medicamentos", "resposta": "Nenhum" },
+    { "pergunta": "Experiência com treino", "resposta": "Iniciante — 6 meses de academia em 2024" },
+    { "pergunta": "Disponibilidade", "resposta": "Seg, Qua, Sex — manhã" }
+  ]
+}

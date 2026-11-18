@@ -1,0 +1,22 @@
+{
+  "mes": "Novembro 2026",
+  "semana": [
+    { "id": "16", "sigla": "Seg", "numero": 16, "sessoes": 6 },
+    { "id": "17", "sigla": "Ter", "numero": 17, "sessoes": 4 },
+    { "id": "18", "sigla": "Qua", "numero": 18, "sessoes": 5, "hoje": true },
+    { "id": "19", "sigla": "Qui", "numero": 19, "sessoes": 4 },
+    { "id": "20", "sigla": "Sex", "numero": 20, "sessoes": 6 },
+    { "id": "21", "sigla": "Sáb", "numero": 21, "sessoes": 2 },
+    { "id": "22", "sigla": "Dom", "numero": 22, "sessoes": 0 }
+  ],
+  "diaSelecionado": "18",
+  "solicitacoesPendentes": 2,
+  "slots": [
+    { "id": "s1", "hora": "07:00", "fim": "08:00", "status": "realizada", "aluno": "Ana Paula Souza", "inicial": "A", "tipo": "Treino A", "modalidade": "presencial", "local": "Academia Fit Center" },
+    { "id": "s2", "hora": "09:30", "fim": "10:30", "status": "faltou", "aluno": "Carla Mendes", "inicial": "C", "tipo": "Avaliação física", "modalidade": "presencial", "local": "Estúdio" },
+    { "id": "l1", "hora": "11:00", "fim": "12:00", "status": "livre" },
+    { "id": "s3", "hora": "15:00", "fim": "16:00", "status": "confirmada", "aluno": "Marcos Ribeiro", "inicial": "M", "tipo": "Treino B", "modalidade": "presencial", "local": "Academia Fit Center" },
+    { "id": "s4", "hora": "17:30", "fim": "18:15", "status": "agendada", "aluno": "Juliana Costa", "inicial": "J", "tipo": "Treino C", "modalidade": "online" },
+    { "id": "s5", "hora": "19:00", "fim": "20:00", "status": "agendada", "aluno": "Pedro Almeida", "inicial": "P", "tipo": "Primeira consulta", "modalidade": "presencial", "local": "Estúdio" }
+  ]
+}

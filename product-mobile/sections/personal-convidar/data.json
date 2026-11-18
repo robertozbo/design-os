@@ -1,0 +1,11 @@
+{
+  "codigo": "ELIZA-7K2",
+  "link": "nymos.app/c/ELIZA-7K2",
+  "mensagemPadrao": "Oi! Vou acompanhar seus treinos pelo Nymos. Baixa o app e entra com o meu código ELIZA-7K2 — lá você vê o treino do dia e registra a carga.",
+  "aceitosNoMes": 3,
+  "convites": [
+    { "id": "cv1", "nome": "Pedro Almeida", "contato": "(48) 98888-1111", "enviado": "há 2 dias", "status": "enviado" },
+    { "id": "cv2", "nome": "Sofia Ramos", "contato": "sofia@email.com", "enviado": "há 9 dias", "status": "expirado" },
+    { "id": "cv3", "nome": "Lucas Martins", "contato": "(48) 97777-2222", "enviado": "há 3 semanas", "status": "aceito" }
+  ]
+}

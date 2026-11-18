@@ -1,0 +1,14 @@
+{
+  "total": 21,
+  "alunos": [
+    { "id": "a3", "nome": "Marcos Ribeiro", "inicial": "M", "objetivo": "Hipertrofia", "status": "ativo", "adesao": 92, "ultimoTreino": "ontem", "treinoAtual": "ABC · semana 5/8", "plano": "presencial" },
+    { "id": "a1", "nome": "Ana Paula Souza", "inicial": "A", "objetivo": "Emagrecimento", "status": "ativo", "adesao": 88, "ultimoTreino": "hoje", "treinoAtual": "AB · semana 3/6", "plano": "hibrido" },
+    { "id": "a6", "nome": "Renata Lima", "inicial": "R", "objetivo": "Condicionamento", "status": "risco", "adesao": 70, "ultimoTreino": "há 2 dias", "treinoAtual": "Full body · semana 2/4", "alerta": "Relatou dor no joelho", "plano": "presencial" },
+    { "id": "a7", "nome": "Bruno Tavares", "inicial": "B", "objetivo": "Hipertrofia", "status": "risco", "adesao": 38, "ultimoTreino": "há 9 dias", "treinoAtual": "ABCD · semana 6/8", "alerta": "9 dias sem treinar", "plano": "online" },
+    { "id": "a8", "nome": "Fernanda Rocha", "inicial": "F", "objetivo": "Saúde e mobilidade", "status": "risco", "adesao": 45, "ultimoTreino": "há 4 dias", "treinoAtual": "AB · semana 1/6", "alerta": "Adesão baixa", "plano": "online" },
+    { "id": "a4", "nome": "Juliana Costa", "inicial": "J", "objetivo": "Glúteos e posterior", "status": "ativo", "adesao": 81, "ultimoTreino": "ontem", "treinoAtual": "ABC · semana 4/8", "plano": "online" },
+    { "id": "a9", "nome": "Lucas Martins", "inicial": "L", "objetivo": "Força", "status": "ativo", "adesao": 76, "ultimoTreino": "hoje", "treinoAtual": "Full body · semana 7/8", "plano": "presencial" },
+    { "id": "a10", "nome": "Patrícia Nunes", "inicial": "P", "objetivo": "Pós-parto", "status": "pausado", "adesao": 0, "ultimoTreino": "há 32 dias", "treinoAtual": null, "plano": "presencial" },
+    { "id": "a5", "nome": "Pedro Almeida", "inicial": "P", "objetivo": "A definir", "status": "convidado", "adesao": 0, "ultimoTreino": "—", "treinoAtual": null, "plano": "presencial" }
+  ]
+}

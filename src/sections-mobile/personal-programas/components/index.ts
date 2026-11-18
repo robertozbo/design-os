@@ -1,0 +1,1 @@
+export { PersonalProgramas } from './PersonalProgramas'

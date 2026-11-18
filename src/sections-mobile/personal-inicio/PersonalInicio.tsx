@@ -23,9 +23,21 @@ export default function PersonalInicioPreview() {
         <Component
           data={data as unknown as PersonalInicioData}
           onCheckin={(s) => console.log('Check-in:', s.id)}
-          onAbrirAluno={(id) => console.log('Abrir aluno:', id)}
-          onVerAgenda={() => console.log('Ver agenda')}
-          onAtalho={(id) => console.log('Atalho:', id)}
+          onAbrirAluno={() => {
+            window.location.href = '/mobile/sections/personal-aluno-ficha'
+          }}
+          onVerAgenda={() => {
+            window.location.href = '/mobile/sections/personal-agenda'
+          }}
+          onAtalho={(id) => {
+            const destino = {
+              'nova-avaliacao': 'personal-avaliacao-nova',
+              'aplicar-treino': 'personal-treinos',
+              convidar: 'personal-convidar',
+              mensagens: 'personal-mensagens',
+            }[id]
+            window.location.href = `/mobile/sections/${destino}`
+          }}
         />
       </div>
     </>

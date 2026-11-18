@@ -1,0 +1,1 @@
+export { PersonalAvaliacoes } from './PersonalAvaliacoes'
