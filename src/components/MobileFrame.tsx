@@ -93,7 +93,7 @@ export function MobileFrame({
     <div className="flex justify-center bg-stone-100 dark:bg-stone-900 py-6">
       <div style={{ width: 390 * scale, height: 844 * scale }}>
         <div
-          className="relative bg-slate-950 rounded-[44px] shadow-2xl overflow-hidden border-[10px] border-slate-900"
+          className={`relative ${isPersonal ? 'bg-[#0A0E0D]' : 'bg-slate-950'} rounded-[44px] shadow-2xl overflow-hidden border-[10px] border-slate-900`}
           style={{
             width: 390,
             height: 844,
@@ -124,15 +124,15 @@ export function MobileFrame({
                   className="relative w-12 h-11 shrink-0 text-left"
                 >
                   <div
-                    className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white font-semibold text-base ${
-                      isPersonal ? 'bg-teal-600' : 'bg-sky-600'
+                    className={`w-10 h-10 rounded-2xl flex items-center justify-center font-semibold text-base ${
+                      isPersonal ? 'bg-emerald-500 text-[#0E1A17]' : 'bg-teal-600 text-white'
                     }`}
                   >
                     {avatarInicial}
                   </div>
                   <div
-                    className={`absolute -bottom-0.5 right-0 w-6 h-6 rounded-lg border-2 border-slate-950 flex items-center justify-center ${
-                      isPersonal ? 'bg-sky-600 text-white' : 'bg-teal-600 text-white'
+                    className={`absolute -bottom-0.5 right-0 w-6 h-6 rounded-lg border-2 border-[#0A0E0D] flex items-center justify-center ${
+                      isPersonal ? 'bg-teal-600 text-white' : 'bg-emerald-500 text-[#0E1A17]'
                     }`}
                   >
                     {isPersonal ? <HeartPulse size={12} /> : <Dumbbell size={12} />}
@@ -164,13 +164,13 @@ export function MobileFrame({
                   <Watch size={16} />
                 </button>
               )}
-              <button className="relative w-9 h-9 rounded-full bg-slate-800/60 flex items-center justify-center text-slate-300 hover:text-white">
+              <button className={`relative w-9 h-9 rounded-full ${isPersonal ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
                 <Bell size={16} />
                 {notificacoesNaoLidas > 0 && (
                   <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500" />
                 )}
               </button>
-              <button className="w-9 h-9 rounded-full bg-slate-800/60 flex items-center justify-center text-slate-300 hover:text-white">
+              <button className={`w-9 h-9 rounded-full ${isPersonal ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
                 <Settings size={16} />
               </button>
             </div>
@@ -231,12 +231,12 @@ export function MobileFrame({
         {/* Profile switcher sheet (dual-profile accounts) */}
         {switcherOpen && (
           <div className="absolute inset-0 z-50 flex items-end bg-black/60" onClick={() => setSwitcherOpen(false)}>
-            <div className="w-full rounded-t-3xl bg-slate-900 border-t border-slate-800 px-4 pt-3 pb-8" onClick={(e) => e.stopPropagation()}>
-              <div className="mx-auto w-10 h-1 rounded-full bg-slate-700" />
+            <div className="w-full rounded-t-3xl bg-[#111615] border-t border-[#2A3130] px-4 pt-3 pb-8" onClick={(e) => e.stopPropagation()}>
+              <div className="mx-auto w-10 h-1 rounded-full bg-[#2A3130]" />
               <div className="mt-4 mb-3 text-white font-semibold text-[17px]">Escolha o perfil</div>
               {([
-                { id: 'personal', titulo: 'Personal', sub: 'Alunos, agenda e treinos', Icon: Dumbbell, cor: 'bg-teal-600', rota: '/mobile/sections/personal-inicio' },
-                { id: 'aluno', titulo: 'Aluna', sub: 'Seu treino e suas métricas', Icon: HeartPulse, cor: 'bg-sky-600', rota: '/mobile/sections/inicio' },
+                { id: 'personal', titulo: 'Personal', sub: 'Alunos, agenda e treinos', Icon: Dumbbell, cor: 'bg-emerald-500 text-[#0E1A17]', rota: '/mobile/sections/personal-inicio' },
+                { id: 'aluno', titulo: 'Aluna', sub: 'Seu treino e suas métricas', Icon: HeartPulse, cor: 'bg-teal-600 text-white', rota: '/mobile/sections/inicio' },
               ] as const).map((p) => {
                 const ativo = (p.id === 'personal') === isPersonal
                 return (
@@ -247,10 +247,10 @@ export function MobileFrame({
                       if (!ativo) navigate(p.rota)
                     }}
                     className={`w-full flex items-center gap-3 rounded-2xl px-3 py-3 mb-2 text-left ${
-                      ativo ? 'bg-slate-800' : 'hover:bg-slate-800/60'
+                      ativo ? 'bg-[#1B2120]' : 'hover:bg-[#1B2120]/60'
                     }`}
                   >
-                    <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-white ${p.cor}`}>
+                    <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${p.cor}`}>
                       <p.Icon size={20} />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -259,7 +259,7 @@ export function MobileFrame({
                       </div>
                       <div className="text-slate-400 text-[12.5px]">{p.sub}</div>
                     </div>
-                    {ativo && <Check size={18} className="text-teal-400" />}
+                    {ativo && <Check size={18} className="text-emerald-400" />}
                   </button>
                 )
               })}
@@ -274,12 +274,16 @@ export function MobileFrame({
 
         {/* Bottom tab bar */}
         {showTabBar && (
-          <div className="absolute bottom-0 inset-x-0 h-[84px] z-20 bg-slate-900 border-t border-slate-800 flex items-end pb-5">
+          <div className={`absolute bottom-0 inset-x-0 h-[84px] z-20 flex items-end pb-5 border-t ${isPersonal ? 'bg-[#0A0E0D] border-[#2A3130]' : 'bg-slate-900 border-slate-800'}`}>
             <div className="grid grid-cols-5 w-full">
               {(tabSet === 'personal' ? PERSONAL_TABS : TABS).map(({ id, label, Icon }) => {
                 const active = activeTab === id
                 const isAI = id === 'ia'
-                const color = active
+                const color = isPersonal
+                  ? active
+                    ? 'text-emerald-400'
+                    : 'text-slate-500'
+                  : active
                   ? isAI
                     ? 'text-sky-400'
                     : 'text-teal-400'
