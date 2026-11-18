@@ -1,1 +1,0 @@
-export { PerfilSeletor } from './PerfilSeletor'

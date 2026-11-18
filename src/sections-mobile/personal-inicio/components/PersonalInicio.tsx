@@ -1,5 +1,4 @@
 import {
-  ArrowLeftRight,
   MapPin,
   Video,
   ChevronRight,
@@ -66,24 +65,13 @@ function Card({ titulo, acao, onAcao, children }: { titulo: string; acao?: strin
   )
 }
 
-export function PersonalInicio({ data, onTrocarPerfil, onCheckin, onAbrirAluno, onVerAgenda, onAtalho }: PersonalInicioProps) {
+export function PersonalInicio({ data, onCheckin, onAbrirAluno, onVerAgenda, onAtalho }: PersonalInicioProps) {
   const prox = data.proximaSessao
   const restantes = data.agenda.filter((s) => s.status !== 'realizada' && s.status !== 'faltou').length
 
   return (
     <div className="min-h-full bg-slate-950 pb-8">
-      <div className="px-4 pt-1 flex items-center justify-between">
-        <span className="text-slate-400 text-[13px]">{data.dataExtenso}</span>
-        {data.usuario.temPerfilAluno && (
-          <button
-            onClick={onTrocarPerfil}
-            className="inline-flex items-center gap-1.5 rounded-full border border-teal-500/40 bg-teal-500/10 px-2.5 py-1 text-teal-300 text-[12px] font-medium"
-          >
-            Personal
-            <ArrowLeftRight size={12} />
-          </button>
-        )}
-      </div>
+      <div className="px-4 pt-1 text-slate-400 text-[13px]">{data.dataExtenso}</div>
 
       {/* Próxima sessão */}
       <section className="mx-4 mt-3 rounded-3xl bg-gradient-to-br from-teal-600 to-teal-800 p-4 text-white">

@@ -59,7 +59,6 @@ export type AtalhoId = 'nova-avaliacao' | 'aplicar-treino' | 'convidar' | 'mensa
 
 export interface PersonalInicioProps {
   data: PersonalInicioData
-  onTrocarPerfil?: () => void
   onCheckin?: (sessao: Sessao) => void
   onAbrirAluno?: (alunoId: string) => void
   onVerAgenda?: () => void

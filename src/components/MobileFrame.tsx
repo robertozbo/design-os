@@ -1,6 +1,6 @@
-import { type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Wifi, Signal, BatteryFull, Bell, Settings, Watch, Activity, Target, Home, Camera, LayoutGrid, ChevronLeft, Users, CalendarDays, Dumbbell } from 'lucide-react'
+import { Wifi, Signal, BatteryFull, Bell, Settings, Watch, Activity, Target, Home, Camera, LayoutGrid, ChevronLeft, Users, CalendarDays, Dumbbell, HeartPulse, Check } from 'lucide-react'
 import { ShellInvocationIcon } from '@/sections/assistente-nymos/components/ShellInvocationIcon'
 
 interface MobileFrameProps {
@@ -15,6 +15,8 @@ interface MobileFrameProps {
   activeTab?: 'metricas' | 'objetivos' | 'inicio' | 'ia' | 'mais' | 'alunos' | 'agenda' | 'treinos'
   /** Which app's tab bar to render: patient (default) or personal trainer */
   tabSet?: 'aluno' | 'personal'
+  /** Account has both profiles (professional + patient): header avatar becomes a profile switcher */
+  dualProfile?: boolean
   /** First name shown in greeting */
   primeiroNome?: string
   /** Avatar initial (typically first letter of name) */
@@ -68,6 +70,7 @@ export function MobileFrame({
   showTabBar = true,
   activeTab = 'inicio',
   tabSet = 'aluno',
+  dualProfile = false,
   primeiroNome = 'Roberto',
   avatarInicial = 'R',
   fotoUrl = null,
@@ -84,6 +87,8 @@ export function MobileFrame({
   const isSubPage = !!subPageTitle
   const scale = 0.75
   const navigate = useNavigate()
+  const [switcherOpen, setSwitcherOpen] = useState(false)
+  const isPersonal = tabSet === 'personal'
   return (
     <div className="flex justify-center bg-stone-100 dark:bg-stone-900 py-6">
       <div style={{ width: 390 * scale, height: 844 * scale }}>
@@ -112,7 +117,28 @@ export function MobileFrame({
         {showHeader && !isSubPage && (
           <div className="absolute top-12 inset-x-0 h-[68px] z-20 flex items-center justify-between px-4">
             <div className="flex items-center gap-3 min-w-0">
-              {fotoUrl ? (
+              {dualProfile ? (
+                <button
+                  onClick={() => setSwitcherOpen(true)}
+                  aria-label="Trocar perfil"
+                  className="relative w-12 h-11 shrink-0 text-left"
+                >
+                  <div
+                    className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white font-semibold text-base ${
+                      isPersonal ? 'bg-teal-600' : 'bg-sky-600'
+                    }`}
+                  >
+                    {avatarInicial}
+                  </div>
+                  <div
+                    className={`absolute -bottom-0.5 right-0 w-6 h-6 rounded-lg border-2 border-slate-950 flex items-center justify-center ${
+                      isPersonal ? 'bg-sky-600 text-white' : 'bg-teal-600 text-white'
+                    }`}
+                  >
+                    {isPersonal ? <HeartPulse size={12} /> : <Dumbbell size={12} />}
+                  </div>
+                </button>
+              ) : fotoUrl ? (
                 <img
                   src={fotoUrl}
                   alt={primeiroNome}
@@ -127,11 +153,13 @@ export function MobileFrame({
                 <div className="text-white font-semibold text-[17px] leading-tight truncate">
                   Olá, {primeiroNome}
                 </div>
-                <div className="text-slate-400 text-[12px] leading-tight">Bom dia</div>
+                <div className="text-slate-400 text-[12px] leading-tight">
+                  {dualProfile ? (isPersonal ? 'Perfil Personal' : 'Perfil Aluna') : 'Bom dia'}
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-1.5">
-              {wearableConectado && (
+              {wearableConectado && !isPersonal && (
                 <button className="w-9 h-9 rounded-full bg-slate-800/60 flex items-center justify-center text-slate-300 hover:text-white">
                   <Watch size={16} />
                 </button>
@@ -197,6 +225,45 @@ export function MobileFrame({
               hasProactiveSuggestion={nymosHasProactive}
               size={50}
             />
+          </div>
+        )}
+
+        {/* Profile switcher sheet (dual-profile accounts) */}
+        {switcherOpen && (
+          <div className="absolute inset-0 z-50 flex items-end bg-black/60" onClick={() => setSwitcherOpen(false)}>
+            <div className="w-full rounded-t-3xl bg-slate-900 border-t border-slate-800 px-4 pt-3 pb-8" onClick={(e) => e.stopPropagation()}>
+              <div className="mx-auto w-10 h-1 rounded-full bg-slate-700" />
+              <div className="mt-4 mb-3 text-white font-semibold text-[17px]">Escolha o perfil</div>
+              {([
+                { id: 'personal', titulo: 'Personal', sub: 'Alunos, agenda e treinos', Icon: Dumbbell, cor: 'bg-teal-600', rota: '/mobile/sections/personal-inicio' },
+                { id: 'aluno', titulo: 'Aluna', sub: 'Seu treino e suas métricas', Icon: HeartPulse, cor: 'bg-sky-600', rota: '/mobile/sections/inicio' },
+              ] as const).map((p) => {
+                const ativo = (p.id === 'personal') === isPersonal
+                return (
+                  <button
+                    key={p.id}
+                    onClick={() => {
+                      setSwitcherOpen(false)
+                      if (!ativo) navigate(p.rota)
+                    }}
+                    className={`w-full flex items-center gap-3 rounded-2xl px-3 py-3 mb-2 text-left ${
+                      ativo ? 'bg-slate-800' : 'hover:bg-slate-800/60'
+                    }`}
+                  >
+                    <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-white ${p.cor}`}>
+                      <p.Icon size={20} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-white text-[15px] font-medium">
+                        {primeiroNome} · {p.titulo}
+                      </div>
+                      <div className="text-slate-400 text-[12.5px]">{p.sub}</div>
+                    </div>
+                    {ativo && <Check size={18} className="text-teal-400" />}
+                  </button>
+                )
+              })}
+            </div>
           </div>
         )}
 

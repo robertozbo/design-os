@@ -215,7 +215,7 @@ const GRUPOS: Grupo[] = [
     label: 'Personal',
     emoji: '🏋',
     hint: 'App do profissional (perfil Personal)',
-    sectionIds: ['perfil-seletor', 'personal-inicio', 'personal-mais'],
+    sectionIds: ['personal-inicio', 'personal-mais'],
   },
   {
     label: 'Plano',
@@ -444,6 +444,7 @@ export function MobileSectionPage() {
       <MobileFrame
         activeTab={isPersonal ? personalTab : activeTab}
         tabSet={isPersonal ? 'personal' : 'aluno'}
+        dualProfile={isPersonal}
         primeiroNome={(data.data?.usuario as { primeiroNome?: string } | undefined)?.primeiroNome ?? 'Roberto'}
         avatarInicial={(data.data?.usuario as { avatarInicial?: string } | undefined)?.avatarInicial ?? 'R'}
         fotoUrl={(data.data?.usuario as { fotoUrl?: string | null } | undefined)?.fotoUrl ?? null}

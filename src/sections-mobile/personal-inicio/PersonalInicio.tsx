@@ -22,9 +22,6 @@ export default function PersonalInicioPreview() {
       <div data-nymos-mobile="true" className="min-h-full">
         <Component
           data={data as unknown as PersonalInicioData}
-          onTrocarPerfil={() => {
-            window.location.href = '/mobile/sections/perfil-seletor'
-          }}
           onCheckin={(s) => console.log('Check-in:', s.id)}
           onAbrirAluno={(id) => console.log('Abrir aluno:', id)}
           onVerAgenda={() => console.log('Ver agenda')}
