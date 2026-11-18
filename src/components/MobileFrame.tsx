@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Wifi, Signal, BatteryFull, Bell, Settings, Watch, Activity, Target, Home, Camera, LayoutGrid, ChevronLeft } from 'lucide-react'
+import { Wifi, Signal, BatteryFull, Bell, Settings, Watch, Activity, Target, Home, Camera, LayoutGrid, ChevronLeft, Users, CalendarDays, Dumbbell } from 'lucide-react'
 import { ShellInvocationIcon } from '@/sections/assistente-nymos/components/ShellInvocationIcon'
 
 interface MobileFrameProps {
@@ -12,7 +12,9 @@ interface MobileFrameProps {
   /** Show bottom tab bar */
   showTabBar?: boolean
   /** Active tab id */
-  activeTab?: 'metricas' | 'objetivos' | 'inicio' | 'ia' | 'mais'
+  activeTab?: 'metricas' | 'objetivos' | 'inicio' | 'ia' | 'mais' | 'alunos' | 'agenda' | 'treinos'
+  /** Which app's tab bar to render: patient (default) or personal trainer */
+  tabSet?: 'aluno' | 'personal'
   /** First name shown in greeting */
   primeiroNome?: string
   /** Avatar initial (typically first letter of name) */
@@ -51,12 +53,21 @@ const TABS: Array<{
   { id: 'mais', label: 'Mais', Icon: LayoutGrid },
 ]
 
+const PERSONAL_TABS: typeof TABS = [
+  { id: 'inicio', label: 'Início', Icon: Home },
+  { id: 'alunos', label: 'Alunos', Icon: Users },
+  { id: 'agenda', label: 'Agenda', Icon: CalendarDays },
+  { id: 'treinos', label: 'Treinos', Icon: Dumbbell },
+  { id: 'mais', label: 'Mais', Icon: LayoutGrid },
+]
+
 export function MobileFrame({
   children,
   showStatusBar = true,
   showHeader = true,
   showTabBar = true,
   activeTab = 'inicio',
+  tabSet = 'aluno',
   primeiroNome = 'Roberto',
   avatarInicial = 'R',
   fotoUrl = null,
@@ -180,7 +191,7 @@ export function MobileFrame({
         </div>
 
         {/* Nymos voice assistant FAB — floats above the tab bar (skipped when the assistant itself is in fullscreen mode) */}
-        {showNymosFab && showTabBar && (
+        {showNymosFab && showTabBar && tabSet === 'aluno' && (
           <div className="absolute right-3 z-30" style={{ bottom: 96 }}>
             <ShellInvocationIcon
               hasProactiveSuggestion={nymosHasProactive}
@@ -198,7 +209,7 @@ export function MobileFrame({
         {showTabBar && (
           <div className="absolute bottom-0 inset-x-0 h-[84px] z-20 bg-slate-900 border-t border-slate-800 flex items-end pb-5">
             <div className="grid grid-cols-5 w-full">
-              {TABS.map(({ id, label, Icon }) => {
+              {(tabSet === 'personal' ? PERSONAL_TABS : TABS).map(({ id, label, Icon }) => {
                 const active = activeTab === id
                 const isAI = id === 'ia'
                 const color = active

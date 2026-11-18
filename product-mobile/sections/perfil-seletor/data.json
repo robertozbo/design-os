@@ -1,0 +1,21 @@
+{
+  "usuario": { "primeiroNome": "Elizabete", "avatarInicial": "E", "registro": "CREF 012345-G/SC" },
+  "ultimoPerfil": "personal",
+  "lembrarEscolha": true,
+  "opcoes": [
+    {
+      "id": "personal",
+      "titulo": "Sou Personal",
+      "descricao": "Gerencie alunos, agenda, treinos e avaliações.",
+      "icone": "Dumbbell",
+      "contexto": ["18 alunos ativos", "5 sessões hoje"]
+    },
+    {
+      "id": "aluno",
+      "titulo": "Sou Aluna",
+      "descricao": "Seu treino, suas métricas e sua evolução.",
+      "icone": "HeartPulse",
+      "contexto": ["Treino B hoje", "Sequência de 12 dias"]
+    }
+  ]
+}

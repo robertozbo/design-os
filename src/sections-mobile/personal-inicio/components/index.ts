@@ -1,0 +1,1 @@
+export { PersonalInicio } from './PersonalInicio'

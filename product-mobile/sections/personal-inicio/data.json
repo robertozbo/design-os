@@ -1,0 +1,32 @@
+{
+  "usuario": { "primeiroNome": "Elizabete", "avatarInicial": "E", "notificacoesNaoLidas": 3, "temPerfilAluno": true },
+  "dataExtenso": "Quarta, 18 de novembro",
+  "proximaSessao": {
+    "id": "s3", "hora": "15:00", "alunoId": "a3", "aluno": "Marcos Ribeiro", "inicial": "M",
+    "tipo": "Treino B · Inferiores", "modalidade": "presencial", "local": "Academia Fit Center",
+    "status": "confirmada", "emMinutos": 43
+  },
+  "agenda": [
+    { "id": "s1", "hora": "07:00", "alunoId": "a1", "aluno": "Ana Paula Souza", "inicial": "A", "tipo": "Treino A", "modalidade": "presencial", "status": "realizada" },
+    { "id": "s2", "hora": "09:30", "alunoId": "a2", "aluno": "Carla Mendes", "inicial": "C", "tipo": "Avaliação física", "modalidade": "presencial", "status": "faltou" },
+    { "id": "s3", "hora": "15:00", "alunoId": "a3", "aluno": "Marcos Ribeiro", "inicial": "M", "tipo": "Treino B", "modalidade": "presencial", "status": "confirmada" },
+    { "id": "s4", "hora": "17:30", "alunoId": "a4", "aluno": "Juliana Costa", "inicial": "J", "tipo": "Treino C", "modalidade": "online", "status": "agendada" },
+    { "id": "s5", "hora": "19:00", "alunoId": "a5", "aluno": "Pedro Almeida", "inicial": "P", "tipo": "Primeira consulta", "modalidade": "presencial", "status": "agendada" }
+  ],
+  "atencao": [
+    { "alunoId": "a6", "aluno": "Renata Lima", "inicial": "R", "motivo": "dor", "detalhe": "Relatou dor no joelho no agachamento" },
+    { "alunoId": "a7", "aluno": "Bruno Tavares", "inicial": "B", "motivo": "sem-treino", "detalhe": "9 dias sem treinar" },
+    { "alunoId": "a8", "aluno": "Fernanda Rocha", "inicial": "F", "motivo": "adesao", "detalhe": "Adesão de 45% na semana" },
+    { "alunoId": "a2", "aluno": "Carla Mendes", "inicial": "C", "motivo": "reavaliacao", "detalhe": "Reavaliação atrasada 22 dias" }
+  ],
+  "execucoesHoje": [
+    { "alunoId": "a1", "aluno": "Ana Paula Souza", "inicial": "A", "treino": "Treino A · Superiores", "resumo": "6/6 exercícios · supino 32 kg (+2)", "rpe": 8, "hora": "08:05" },
+    { "alunoId": "a9", "aluno": "Lucas Martins", "inicial": "L", "treino": "Treino C · Full body", "resumo": "5/7 exercícios · pulou 2", "rpe": 6, "hora": "12:40" }
+  ],
+  "mensagensNaoLidas": 4,
+  "kpis": [
+    { "id": "ativos", "label": "Alunos ativos", "valor": "18", "delta": "+2", "positivo": true },
+    { "id": "sessoes", "label": "Sessões no mês", "valor": "64", "delta": "de 80" },
+    { "id": "adesao", "label": "Adesão média", "valor": "78%", "delta": "-3 pp", "positivo": false }
+  ]
+}

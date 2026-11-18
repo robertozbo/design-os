@@ -1,0 +1,25 @@
+{
+  "usuario": {
+    "primeiroNome": "Elizabete", "nome": "Elizabete Moraes", "avatarInicial": "E",
+    "registro": "CREF 012345-G/SC", "plano": "Plus", "temPerfilAluno": true
+  },
+  "grupos": [
+    { "id": "atendimento", "label": "Atendimento", "itens": [
+      { "id": "avaliacoes", "label": "Avaliações físicas", "icone": "ClipboardList" },
+      { "id": "mensagens", "label": "Mensagens", "icone": "MessageSquare", "badge": 4 },
+      { "id": "solicitacoes", "label": "Solicitações de agendamento", "icone": "CalendarPlus", "badge": 2 }
+    ]},
+    { "id": "biblioteca", "label": "Biblioteca", "itens": [
+      { "id": "exercicios", "label": "Exercícios", "icone": "Dumbbell" },
+      { "id": "programas", "label": "Programas", "icone": "Layers" }
+    ]},
+    { "id": "crescimento", "label": "Crescimento", "itens": [
+      { "id": "convidar", "label": "Convidar aluno", "icone": "UserPlus" }
+    ]},
+    { "id": "conta", "label": "Conta", "itens": [
+      { "id": "plano", "label": "Plano e assinatura", "icone": "CreditCard" },
+      { "id": "notificacoes", "label": "Notificações", "icone": "Bell" },
+      { "id": "configuracoes", "label": "Configurações", "icone": "Settings" }
+    ]}
+  ]
+}

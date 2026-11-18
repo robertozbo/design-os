@@ -149,6 +149,10 @@ const SUB_PAGE_CONFIG: Record<string, SubPageConfig> = {
     // Mostra a seta de voltar à esquerda do título (volta pra home),
     // mesmo sendo aba — pedido de UX.
   },
+  'personal-mais': {
+    title: 'Mais',
+    isTabPage: true,
+  },
   objetivos: {
     title: 'Objetivos',
     subtitle: 'Onde você quer chegar',
@@ -208,6 +212,12 @@ const GRUPOS: Grupo[] = [
     sectionIds: ['mais', 'perfil', 'profissionais', 'consultas', 'saude-mental', 'medicacao', 'configuracoes', 'dispositivos'],
   },
   {
+    label: 'Personal',
+    emoji: '🏋',
+    hint: 'App do profissional (perfil Personal)',
+    sectionIds: ['perfil-seletor', 'personal-inicio', 'personal-mais'],
+  },
+  {
     label: 'Plano',
     emoji: '💳',
     hint: 'Assinatura, upgrade e bloqueios',
@@ -247,7 +257,7 @@ export function MobileSectionsPage() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-8 gap-2 items-start">
+        <div className="grid grid-cols-9 gap-2 items-start">
           {GRUPOS.map((grupo) => {
             const ids = grupo.sectionIds.filter((id) => allIdsSet.has(id))
             if (ids.length === 0) return null
@@ -382,6 +392,8 @@ export function MobileSectionPage() {
     'recuperar-senha': 'inicio',
   }
   const activeTab = tabMap[sectionId] ?? 'inicio'
+  const isPersonal = sectionId.startsWith('personal-')
+  const personalTab = sectionId === 'personal-mais' ? 'mais' : 'inicio'
 
   const subPageConfig = SUB_PAGE_CONFIG[sectionId]
   let subPageRightAction: ReactNode = null
@@ -430,7 +442,8 @@ export function MobileSectionPage() {
       </div>
 
       <MobileFrame
-        activeTab={activeTab}
+        activeTab={isPersonal ? personalTab : activeTab}
+        tabSet={isPersonal ? 'personal' : 'aluno'}
         primeiroNome={(data.data?.usuario as { primeiroNome?: string } | undefined)?.primeiroNome ?? 'Roberto'}
         avatarInicial={(data.data?.usuario as { avatarInicial?: string } | undefined)?.avatarInicial ?? 'R'}
         fotoUrl={(data.data?.usuario as { fotoUrl?: string | null } | undefined)?.fotoUrl ?? null}
