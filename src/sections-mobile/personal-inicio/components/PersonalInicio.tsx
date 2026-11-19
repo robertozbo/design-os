@@ -73,6 +73,25 @@ export function PersonalInicio({ data, onCheckin, onAbrirAluno, onVerAgenda, onA
     <div className="min-h-full bg-[#0A0E0D] pb-8">
       <div className="px-4 pt-1 text-slate-400 text-[13px]">{data.dataExtenso}</div>
 
+      {/* KPIs */}
+      <div className="mx-4 mt-3 grid grid-cols-3 gap-2">
+        {data.kpis.map((k) => (
+          <div key={k.id} className="rounded-2xl bg-[#0A0E0D] border border-[#2A3130] p-3">
+            <div className="text-slate-400 text-[11px] leading-tight">{k.label}</div>
+            <div className="mt-1 text-white text-[20px] font-mono tabular-nums font-semibold">{k.valor}</div>
+            {k.delta && (
+              <div
+                className={`text-[11px] font-mono ${
+                  k.positivo === undefined ? 'text-slate-500' : k.positivo ? 'text-emerald-400' : 'text-rose-400'
+                }`}
+              >
+                {k.delta}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
       {/* Próxima sessão */}
       <section className="mx-4 mt-3 rounded-3xl bg-[#0E1A17] border border-emerald-500/40 p-4 text-white">
         <div className="flex items-center justify-between">
@@ -215,24 +234,6 @@ export function PersonalInicio({ data, onCheckin, onAbrirAluno, onVerAgenda, onA
         ))}
       </div>
 
-      {/* KPIs */}
-      <div className="mx-4 mt-4 grid grid-cols-3 gap-2">
-        {data.kpis.map((k) => (
-          <div key={k.id} className="rounded-2xl bg-[#0A0E0D] border border-[#2A3130] p-3">
-            <div className="text-slate-400 text-[11px] leading-tight">{k.label}</div>
-            <div className="mt-1 text-white text-[20px] font-mono tabular-nums font-semibold">{k.valor}</div>
-            {k.delta && (
-              <div
-                className={`text-[11px] font-mono ${
-                  k.positivo === undefined ? 'text-slate-500' : k.positivo ? 'text-emerald-400' : 'text-rose-400'
-                }`}
-              >
-                {k.delta}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
     </div>
   )
 }
