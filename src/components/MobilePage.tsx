@@ -434,6 +434,16 @@ export function MobileSectionPage() {
   }
   const activeTab = tabMap[sectionId] ?? 'inicio'
   const isPersonal = sectionId.startsWith('personal-')
+  // Dual-profile account (aluno + personal): once the personal profile is entered, the
+  // header switcher stays visible on aluno screens too, so the user can switch back.
+  // A pure aluno (never entered personal-*) does not see it.
+  let dualProfile = isPersonal
+  try {
+    if (isPersonal) sessionStorage.setItem('nymos-dual-profile', '1')
+    else dualProfile = sessionStorage.getItem('nymos-dual-profile') === '1'
+  } catch {
+    /* storage unavailable: switcher only on personal screens */
+  }
   const PERSONAL_TAB: Record<string, 'inicio' | 'alunos' | 'agenda' | 'treinos' | 'mais'> = {
     'personal-alunos': 'alunos',
     'personal-aluno-ficha': 'alunos',
@@ -495,7 +505,7 @@ export function MobileSectionPage() {
       <MobileFrame
         activeTab={isPersonal ? personalTab : activeTab}
         tabSet={isPersonal ? 'personal' : 'aluno'}
-        dualProfile={isPersonal}
+        dualProfile={dualProfile}
         primeiroNome={(data.data?.usuario as { primeiroNome?: string } | undefined)?.primeiroNome ?? 'Roberto'}
         avatarInicial={(data.data?.usuario as { avatarInicial?: string } | undefined)?.avatarInicial ?? 'R'}
         fotoUrl={(data.data?.usuario as { fotoUrl?: string | null } | undefined)?.fotoUrl ?? null}
