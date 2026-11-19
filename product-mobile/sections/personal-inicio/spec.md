@@ -6,7 +6,7 @@ Primeira tela do app quando o perfil ativo é **Personal**. Versão de bolso do 
 ## Qual perfil abre (sem tela de escolha)
 - `role = USER` → app do Aluno.
 - `role = PROFESSIONAL` + `professionalType = personal_trainer` → **entra direto no app do Personal**.
-- Conta com os dois perfis (personal que também é aluna): abre no **último perfil usado**; no primeiro login, Personal. Último perfil salvo no aparelho (SecureStore). Em Configurações → "Abrir o app no perfil" a pessoa pode fixar um perfil (Último usado · Personal · Aluna); o fixo vence o último usado.
+- Conta com os dois perfis (personal que também é aluna): abre **sempre como Personal** — é o uso principal. Em Configurações → "Abrir o app no perfil" a pessoa pode mudar para Aluna ou "Último usado" (salvo no aparelho, SecureStore). A troca pelo avatar no topo não muda essa preferência.
 - Troca estilo Nubank (pessoa/empresa): avatar do header mostra o perfil ativo + mini-ícone do outro perfil no canto. Toque → sheet "Escolha o perfil" com os dois perfis e check no ativo. Troca o navigator raiz sem novo login.
 - Profissional de outro tipo → app do Aluno por ora.
 

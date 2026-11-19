@@ -14,7 +14,7 @@
       { "id": "agendamento-publico", "label": "Aceitar pedidos pela página pública", "tipo": "toggle", "ligado": true }
     ]},
     { "id": "app", "label": "App", "itens": [
-      { "id": "perfil-inicial", "label": "Abrir o app no perfil", "descricao": "Vale para este aparelho", "tipo": "link", "valor": "Último usado" },
+      { "id": "perfil-inicial", "label": "Abrir o app no perfil", "descricao": "Vale para este aparelho", "tipo": "link", "valor": "Personal" },
       { "id": "idioma", "label": "Idioma", "tipo": "link", "valor": "Português (BR)" },
       { "id": "biometria", "label": "Entrar com Face ID", "tipo": "toggle", "ligado": true },
       { "id": "privacidade", "label": "Privacidade e dados (LGPD)", "tipo": "link" }
