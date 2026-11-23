@@ -182,6 +182,9 @@ interface Grupo {
   sectionIds: string[]
 }
 
+/** Student sections already recolored to the updated palette (the personal prototype's). The frame follows. */
+const SECOES_PALETA_ATUAL = new Set(['inicio'])
+
 const GRUPOS: Grupo[] = [
   {
     label: 'Auth',
@@ -505,6 +508,7 @@ export function MobileSectionPage() {
       <MobileFrame
         activeTab={isPersonal ? personalTab : activeTab}
         tabSet={isPersonal ? 'personal' : 'aluno'}
+        paletaAtual={SECOES_PALETA_ATUAL.has(sectionId)}
         dualProfile={dualProfile}
         primeiroNome={(data.data?.usuario as { primeiroNome?: string } | undefined)?.primeiroNome ?? 'Roberto'}
         avatarInicial={(data.data?.usuario as { avatarInicial?: string } | undefined)?.avatarInicial ?? 'R'}

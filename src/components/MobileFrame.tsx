@@ -15,6 +15,8 @@ interface MobileFrameProps {
   activeTab?: 'metricas' | 'objetivos' | 'inicio' | 'ia' | 'mais' | 'alunos' | 'agenda' | 'treinos'
   /** Which app's tab bar to render: patient (default) or personal trainer */
   tabSet?: 'aluno' | 'personal'
+  /** Chrome in the updated palette (near-black green, emerald accent). Personal always uses it; student sections opt in as they are recolored. */
+  paletaAtual?: boolean
   /** Account has both profiles (professional + patient): header avatar becomes a profile switcher */
   dualProfile?: boolean
   /** First name shown in greeting */
@@ -70,6 +72,7 @@ export function MobileFrame({
   showTabBar = true,
   activeTab = 'inicio',
   tabSet = 'aluno',
+  paletaAtual = false,
   dualProfile = false,
   primeiroNome = 'Roberto',
   avatarInicial = 'R',
@@ -89,11 +92,12 @@ export function MobileFrame({
   const navigate = useNavigate()
   const [switcherOpen, setSwitcherOpen] = useState(false)
   const isPersonal = tabSet === 'personal'
+  const atual = isPersonal || paletaAtual
   return (
     <div className="flex justify-center bg-stone-100 dark:bg-stone-900 py-6">
       <div style={{ width: 390 * scale, height: 844 * scale }}>
         <div
-          className={`relative ${isPersonal ? 'bg-[#0A0E0D]' : 'bg-slate-950'} rounded-[44px] shadow-2xl overflow-hidden border-[10px] border-slate-900`}
+          className={`relative ${atual ? 'bg-[#0A0E0D]' : 'bg-slate-950'} rounded-[44px] shadow-2xl overflow-hidden border-[10px] border-slate-900`}
           style={{
             width: 390,
             height: 844,
@@ -160,13 +164,13 @@ export function MobileFrame({
             </div>
             <div className="flex items-center gap-1.5">
               {wearableConectado && !isPersonal && (
-                <button className="w-9 h-9 rounded-full bg-slate-800/60 flex items-center justify-center text-slate-300 hover:text-white">
+                <button className={`w-9 h-9 rounded-full ${atual ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
                   <Watch size={16} />
                 </button>
               )}
               <button
                 onClick={isPersonal ? () => navigate('/mobile/sections/personal-notificacoes') : undefined}
-                className={`relative w-9 h-9 rounded-full ${isPersonal ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
+                className={`relative w-9 h-9 rounded-full ${atual ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
                 <Bell size={16} />
                 {notificacoesNaoLidas > 0 && (
                   <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500" />
@@ -174,7 +178,7 @@ export function MobileFrame({
               </button>
               <button
                 onClick={isPersonal ? () => navigate('/mobile/sections/personal-configuracoes') : undefined}
-                className={`w-9 h-9 rounded-full ${isPersonal ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
+                className={`w-9 h-9 rounded-full ${atual ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-300 hover:text-white`}>
                 <Settings size={16} />
               </button>
             </div>
@@ -189,7 +193,7 @@ export function MobileFrame({
                 <button
                   onClick={() => navigate(-1)}
                   aria-label="Voltar"
-                  className={`w-10 h-10 rounded-xl ${isPersonal ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-200 hover:text-white active:scale-95 transition shrink-0`}
+                  className={`w-10 h-10 rounded-xl ${atual ? 'bg-[#1B2120]' : 'bg-slate-800/60'} flex items-center justify-center text-slate-200 hover:text-white active:scale-95 transition shrink-0`}
                 >
                   <ChevronLeft size={20} strokeWidth={2.2} />
                 </button>
@@ -278,12 +282,12 @@ export function MobileFrame({
 
         {/* Bottom tab bar */}
         {showTabBar && (
-          <div className={`absolute bottom-0 inset-x-0 h-[84px] z-20 flex items-end pb-5 border-t ${isPersonal ? 'bg-[#0A0E0D] border-[#2A3130]' : 'bg-slate-900 border-slate-800'}`}>
+          <div className={`absolute bottom-0 inset-x-0 h-[84px] z-20 flex items-end pb-5 border-t ${atual ? 'bg-[#0A0E0D] border-[#2A3130]' : 'bg-slate-900 border-slate-800'}`}>
             <div className="grid grid-cols-5 w-full">
               {(tabSet === 'personal' ? PERSONAL_TABS : TABS).map(({ id, label, Icon }) => {
                 const active = activeTab === id
                 const isAI = id === 'ia'
-                const color = isPersonal
+                const color = atual
                   ? active
                     ? 'text-emerald-400'
                     : 'text-slate-500'

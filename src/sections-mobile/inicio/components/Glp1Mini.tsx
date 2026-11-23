@@ -16,10 +16,10 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
     return (
       <button
         onClick={onClick}
-        className="mx-4 mb-6 w-[calc(100%-2rem)] flex items-center gap-3 rounded-2xl bg-slate-900 border border-dashed border-slate-700 px-4 py-3.5 text-left active:scale-[0.99] transition-transform"
+        className="mx-4 mb-6 w-[calc(100%-2rem)] flex items-center gap-3 rounded-2xl bg-[#0A0E0D] border border-dashed border-[#2A3130] px-4 py-3.5 text-left active:scale-[0.99] transition-transform"
       >
-        <div className="w-9 h-9 rounded-xl bg-teal-500/15 flex items-center justify-center shrink-0">
-          <Syringe size={16} strokeWidth={2.2} className="text-teal-300" />
+        <div className="w-9 h-9 rounded-xl bg-emerald-500/15 flex items-center justify-center shrink-0">
+          <Syringe size={16} strokeWidth={2.2} className="text-emerald-300" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="text-slate-100 text-[13.5px] font-semibold">
@@ -29,7 +29,7 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
             Doses, local de aplicação e curva de peso
           </div>
         </div>
-        <span className="shrink-0 rounded-lg bg-teal-500 px-3 py-1.5 text-[12px] font-semibold text-slate-950">
+        <span className="shrink-0 rounded-lg bg-emerald-500 px-3 py-1.5 text-[12px] font-semibold text-[#0E1A17]">
           Iniciar
         </span>
       </button>
@@ -43,13 +43,13 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
   const span = Math.max(0.1, max - min)
 
   return (
-    <div className="mx-4 mb-6 rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden">
+    <div className="mx-4 mb-6 rounded-2xl bg-[#0A0E0D] border border-[#2A3130] overflow-hidden">
       <button
         onClick={onClick}
-        className="w-full flex items-center gap-3 px-4 pt-4 pb-3 text-left active:bg-slate-800/40"
+        className="w-full flex items-center gap-3 px-4 pt-4 pb-3 text-left active:bg-[#1B2120]/40"
       >
-        <div className="w-9 h-9 rounded-xl bg-teal-500/15 flex items-center justify-center shrink-0">
-          <Syringe size={16} strokeWidth={2.2} className="text-teal-300" />
+        <div className="w-9 h-9 rounded-xl bg-emerald-500/15 flex items-center justify-center shrink-0">
+          <Syringe size={16} strokeWidth={2.2} className="text-emerald-300" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
@@ -89,7 +89,7 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
               })
               .join(' ')}
             fill="none"
-            stroke="#2dd4bf"
+            stroke="#34d399"
             strokeWidth="1.8"
             strokeLinejoin="round"
           />
@@ -97,7 +97,7 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
             cx={120}
             cy={24 - ((spark[spark.length - 1] - min) / span) * 20}
             r="2.4"
-            fill="#2dd4bf"
+            fill="#34d399"
           />
         </svg>
         <div className="shrink-0 ml-auto flex items-start gap-3">
@@ -108,7 +108,7 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
       </div>
 
       {/* Próxima dose + CTA */}
-      <div className="border-t border-slate-800 px-3 py-2.5 flex items-center gap-2">
+      <div className="border-t border-[#2A3130] px-3 py-2.5 flex items-center gap-2">
         <div className="flex-1 min-w-0 pl-1">
           <div
             className={`text-[9.5px] uppercase tracking-wider font-semibold ${
@@ -123,12 +123,12 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
             ) : (
               <Clock
                 size={12}
-                className={hoje ? 'text-teal-300 shrink-0' : 'text-slate-500 shrink-0'}
+                className={hoje ? 'text-emerald-300 shrink-0' : 'text-slate-500 shrink-0'}
               />
             )}
             <span
               className={`text-[12px] truncate ${
-                glp1.atrasada ? 'text-rose-200' : hoje ? 'text-teal-200' : 'text-slate-300'
+                glp1.atrasada ? 'text-rose-200' : hoje ? 'text-emerald-200' : 'text-slate-300'
               }`}
             >
               {glp1.proximaDoseLabel}
@@ -137,7 +137,7 @@ export function Glp1Mini({ glp1, onClick, onNovaDose }: Props) {
         </div>
         <button
           onClick={onNovaDose ?? onClick}
-          className="shrink-0 flex items-center gap-1 rounded-lg bg-teal-500 px-3 py-1.5 text-[12px] font-semibold text-slate-950 active:scale-[0.97] transition-transform"
+          className="shrink-0 flex items-center gap-1 rounded-lg bg-emerald-500 px-3 py-1.5 text-[12px] font-semibold text-[#0E1A17] active:scale-[0.97] transition-transform"
         >
           <Syringe size={12} strokeWidth={2.4} />
           Nova dose

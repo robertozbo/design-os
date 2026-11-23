@@ -57,17 +57,17 @@ export function NutricaoCard({
 
   return (
     <>
-      <div className="mx-4 mb-4 rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden">
+      <div className="mx-4 mb-4 rounded-2xl bg-[#0A0E0D] border border-[#2A3130] overflow-hidden">
         {/* Header */}
         <div className="flex items-center gap-2.5 px-4 pt-4">
-          <Utensils size={16} strokeWidth={2.2} className="text-teal-300" />
+          <Utensils size={16} strokeWidth={2.2} className="text-emerald-300" />
           <span className="flex-1 text-slate-100 text-[15px] font-semibold">Nutrição</span>
           <button
             onClick={() => setSheetAberto(true)}
             aria-label="Registrar refeição"
-            className="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center active:scale-[0.94] transition-transform"
+            className="w-9 h-9 rounded-full bg-[#1B2120] border border-[#2A3130] flex items-center justify-center active:scale-[0.94] transition-transform"
           >
-            <Plus size={18} strokeWidth={2.4} className="text-teal-300" />
+            <Plus size={18} strokeWidth={2.4} className="text-emerald-300" />
           </button>
         </div>
 
@@ -78,18 +78,12 @@ export function NutricaoCard({
         >
           <div className="relative" style={{ width: SIZE, height: SIZE }}>
             <svg width={SIZE} height={SIZE} style={{ transform: 'rotate(135deg)' }}>
-              <defs>
-                <linearGradient id="nutriArc" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor={acima ? '#fbbf24' : '#14b8a6'} />
-                  <stop offset="100%" stopColor={acima ? '#f43f5e' : '#38bdf8'} />
-                </linearGradient>
-              </defs>
               <circle
                 cx={SIZE / 2}
                 cy={SIZE / 2}
                 r={R}
                 fill="none"
-                stroke="#1e293b"
+                stroke="#1B2120"
                 strokeWidth={STROKE}
                 strokeLinecap="round"
                 strokeDasharray={`${CIRC * ARCO} ${CIRC}`}
@@ -99,7 +93,7 @@ export function NutricaoCard({
                 cy={SIZE / 2}
                 r={R}
                 fill="none"
-                stroke="url(#nutriArc)"
+                stroke={acima ? '#f43f5e' : '#10b981'}
                 strokeWidth={STROKE}
                 strokeLinecap="round"
                 strokeDasharray={`${CIRC * ARCO * pct} ${CIRC}`}
@@ -148,26 +142,26 @@ export function NutricaoCard({
         {planoAtivo && (
           <button
             onClick={onVerPlanoAlimentar}
-            className="w-full border-t border-slate-800 px-4 py-3 text-left active:bg-slate-800/40"
+            className="w-full border-t border-[#2A3130] px-4 py-3 text-left active:bg-[#1B2120]/40"
           >
             <div className="flex items-center gap-2">
               <span className="text-slate-300 text-[12px] truncate">
                 Plano {planoAtivo.diet!.name}
                 <span className="text-slate-500"> · {planoAtivo.profissionalNome}</span>
               </span>
-              <span className="ml-auto shrink-0 font-mono tabular-nums text-teal-300 text-[11px]">
+              <span className="ml-auto shrink-0 font-mono tabular-nums text-emerald-300 text-[11px]">
                 {planoAtivo.refeicoesRegistradas}/{planoAtivo.refeicoesTotal} refeições
               </span>
             </div>
-            <div className="mt-1.5 h-1 rounded-full bg-slate-800 overflow-hidden">
+            <div className="mt-1.5 h-1 rounded-full bg-[#1B2120] overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-teal-500 to-sky-400"
+                className="h-full rounded-full bg-emerald-500"
                 style={{ width: `${refeicoesPct}%`, transition: 'width 700ms ease-out' }}
               />
             </div>
             {proximaMeal && (
               <div className="mt-2 flex items-center gap-1.5">
-                <Clock size={12} className="text-teal-300 shrink-0" />
+                <Clock size={12} className="text-emerald-300 shrink-0" />
                 <span className="text-slate-300 text-[11.5px] truncate">
                   Próximo: {proximaMeal.name.toLowerCase()} ·{' '}
                   <span className="font-mono tabular-nums">{proximaMeal.scheduledTime}</span>
@@ -181,11 +175,11 @@ export function NutricaoCard({
         )}
 
         {/* Último registro do dia — espelho do "+" */}
-        <div className="border-t border-slate-800">
+        <div className="border-t border-[#2A3130]">
           {ultimaRefeicao ? (
             <button
               onClick={onClick}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left active:bg-slate-800/40"
+              className="w-full flex items-center gap-3 px-4 py-3 text-left active:bg-[#1B2120]/40"
             >
               <span className="text-[22px] leading-none shrink-0">{ultimaRefeicao.emoji}</span>
               <div className="flex-1 min-w-0">
@@ -202,7 +196,7 @@ export function NutricaoCard({
           ) : (
             <button
               onClick={() => setSheetAberto(true)}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left active:bg-slate-800/40"
+              className="w-full flex items-center gap-3 px-4 py-3 text-left active:bg-[#1B2120]/40"
             >
               <span className="text-[22px] leading-none shrink-0">🍽️</span>
               <div className="flex-1 min-w-0">
@@ -219,7 +213,7 @@ export function NutricaoCard({
 
           <button
             onClick={onVerPlanoAlimentar}
-            className="w-full flex items-center justify-center gap-1 border-t border-slate-800 py-2.5 text-[12.5px] font-medium text-teal-300 active:bg-slate-800/40"
+            className="w-full flex items-center justify-center gap-1 border-t border-[#2A3130] py-2.5 text-[12.5px] font-medium text-emerald-300 active:bg-[#1B2120]/40"
           >
             Ver plano alimentar completo
             <ChevronRight size={13} />
@@ -244,7 +238,7 @@ function MacroBar({ macro }: { macro: MacroPreview }) {
   return (
     <div>
       <div className="text-slate-400 text-[11px] text-center">{macro.label}</div>
-      <div className="mt-1.5 h-[5px] rounded-full bg-slate-800 overflow-hidden">
+      <div className="mt-1.5 h-[5px] rounded-full bg-[#1B2120] overflow-hidden">
         <div
           className="h-full rounded-full"
           style={{

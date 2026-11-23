@@ -22,10 +22,10 @@ export function RegistrarRefeicaoSheet({ open, temPlanoAlimentar, onClose, onEsc
       <button
         aria-label="Fechar"
         onClick={onClose}
-        className="absolute inset-0 bg-slate-950/70"
+        className="absolute inset-0 bg-black/70"
       />
 
-      <div className="relative w-full rounded-t-3xl bg-slate-900 border-t border-slate-800 pb-8">
+      <div className="relative w-full rounded-t-3xl bg-[#0A0E0D] border-t border-[#2A3130] pb-8">
         <div className="flex items-center px-4 pt-3.5 pb-3">
           <div className="flex-1">
             <div className="text-slate-50 text-[16px] font-semibold">Registrar refeição</div>
@@ -36,7 +36,7 @@ export function RegistrarRefeicaoSheet({ open, temPlanoAlimentar, onClose, onEsc
           <button
             onClick={onClose}
             aria-label="Fechar"
-            className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center active:scale-[0.94] transition-transform"
+            className="w-8 h-8 rounded-full bg-[#1B2120] flex items-center justify-center active:scale-[0.94] transition-transform"
           >
             <X size={15} className="text-slate-400" />
           </button>
@@ -45,18 +45,18 @@ export function RegistrarRefeicaoSheet({ open, temPlanoAlimentar, onClose, onEsc
         {/* Foto do prato — caminho principal */}
         <button
           onClick={() => onEscolher('foto')}
-          className="mx-4 mb-2.5 w-[calc(100%-2rem)] flex items-center gap-3 rounded-2xl bg-teal-500 px-4 py-3.5 text-left active:scale-[0.99] transition-transform"
+          className="mx-4 mb-2.5 w-[calc(100%-2rem)] flex items-center gap-3 rounded-2xl bg-emerald-500 px-4 py-3.5 text-left active:scale-[0.99] transition-transform"
         >
-          <div className="w-10 h-10 rounded-xl bg-slate-950/15 flex items-center justify-center shrink-0">
-            <Camera size={19} strokeWidth={2.2} className="text-slate-950" />
+          <div className="w-10 h-10 rounded-xl bg-black/15 flex items-center justify-center shrink-0">
+            <Camera size={19} strokeWidth={2.2} className="text-[#0E1A17]" />
           </div>
           <div className="flex-1 min-w-0">
-            <div className="text-slate-950 text-[14px] font-semibold">Foto do prato</div>
-            <div className="text-slate-950/70 text-[11.5px] mt-0.5 leading-snug">
+            <div className="text-[#0E1A17] text-[14px] font-semibold">Foto do prato</div>
+            <div className="text-[#0E1A17]/70 text-[11.5px] mt-0.5 leading-snug">
               A IA identifica os alimentos e estima calorias e macros
             </div>
           </div>
-          <ChevronRight size={16} className="text-slate-950/60 shrink-0" />
+          <ChevronRight size={16} className="text-[#0E1A17]/60 shrink-0" />
         </button>
 
         <Opcao
@@ -93,9 +93,9 @@ function Opcao({
   return (
     <button
       onClick={onClick}
-      className="mx-4 mb-2.5 w-[calc(100%-2rem)] flex items-center gap-3 rounded-2xl bg-slate-800/60 border border-slate-800 px-4 py-3 text-left active:scale-[0.99] transition-transform"
+      className="mx-4 mb-2.5 w-[calc(100%-2rem)] flex items-center gap-3 rounded-2xl bg-[#1B2120]/60 border border-[#2A3130] px-4 py-3 text-left active:scale-[0.99] transition-transform"
     >
-      <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shrink-0">
+      <div className="w-10 h-10 rounded-xl bg-[#0A0E0D] flex items-center justify-center shrink-0">
         {icone}
       </div>
       <div className="flex-1 min-w-0">

@@ -13,14 +13,14 @@ export function MedicacaoHojeMini({ medicacao, onClick, onMarcarDose }: Props) {
   const proximaPendente = proximasDoses.find((d) => d.status === 'pendente')
 
   return (
-    <div className="mx-4 mb-4 rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden">
+    <div className="mx-4 mb-4 rounded-2xl bg-[#0A0E0D] border border-[#2A3130] overflow-hidden">
       {/* Header tappable */}
       <button
         onClick={onClick}
-        className="w-full flex items-center gap-3 px-4 pt-4 pb-3 text-left active:bg-slate-800/40"
+        className="w-full flex items-center gap-3 px-4 pt-4 pb-3 text-left active:bg-[#1B2120]/40"
       >
-        <div className="w-9 h-9 rounded-xl bg-teal-500/15 flex items-center justify-center shrink-0">
-          <Pill size={16} strokeWidth={2.2} className="text-teal-300" />
+        <div className="w-9 h-9 rounded-xl bg-emerald-500/15 flex items-center justify-center shrink-0">
+          <Pill size={16} strokeWidth={2.2} className="text-emerald-300" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
@@ -54,7 +54,7 @@ export function MedicacaoHojeMini({ medicacao, onClick, onMarcarDose }: Props) {
       </button>
 
       {/* Lista compacta de doses */}
-      <div className="border-t border-slate-800 px-3 py-2 space-y-0.5">
+      <div className="border-t border-[#2A3130] px-3 py-2 space-y-0.5">
         {proximasDoses.map((d) => {
           const cumprido = d.status === 'cumprido'
           const pendente = d.status === 'pendente'
@@ -70,7 +70,7 @@ export function MedicacaoHojeMini({ medicacao, onClick, onMarcarDose }: Props) {
               disabled={!pendente}
               className={`
                 w-full flex items-center gap-3 px-2 py-1.5 rounded-md text-left
-                ${pendente ? 'active:bg-slate-800/60 hover:bg-slate-800/30' : ''}
+                ${pendente ? 'active:bg-[#1B2120]/60 hover:bg-[#1B2120]/30' : ''}
                 transition
               `}
             >
@@ -125,7 +125,7 @@ export function MedicacaoHojeMini({ medicacao, onClick, onMarcarDose }: Props) {
       {/* Footer */}
       <button
         onClick={onClick}
-        className="w-full flex items-center justify-between gap-2 px-4 py-2.5 border-t border-slate-800 text-teal-300 hover:text-teal-200 active:bg-slate-800/40 transition-colors"
+        className="w-full flex items-center justify-between gap-2 px-4 py-2.5 border-t border-[#2A3130] text-emerald-300 hover:text-emerald-200 active:bg-[#1B2120]/40 transition-colors"
       >
         <span className="text-[11px] text-slate-500 truncate">{medicoNome}</span>
         <span className="text-[12.5px] font-medium flex items-center gap-0.5 shrink-0">

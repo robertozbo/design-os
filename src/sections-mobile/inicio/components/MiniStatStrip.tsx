@@ -7,7 +7,9 @@ interface MiniStatStripProps {
 }
 
 const ICONE_BG: Record<string, string> = {
-  'teal-400': 'bg-teal-400/15 text-teal-300',
+  // The data still says 'teal-400'; it renders in the updated accent.
+  'teal-400': 'bg-emerald-400/15 text-emerald-300',
+  'emerald-400': 'bg-emerald-400/15 text-emerald-300',
   'violet-400': 'bg-violet-400/15 text-violet-300',
   'sky-400': 'bg-sky-400/15 text-sky-300',
   'cyan-400': 'bg-cyan-400/15 text-cyan-300',
@@ -27,7 +29,7 @@ export function MiniStatStrip({ stats, onStatClick }: MiniStatStripProps) {
       <div className="flex gap-2.5 overflow-x-auto no-scrollbar -mx-4 px-4 pb-1">
         {stats.map((s) => {
           const Icon = getIcon(s.iconeNome)
-          const iconBg = ICONE_BG[s.iconeCor] ?? 'bg-slate-700/40 text-slate-300'
+          const iconBg = ICONE_BG[s.iconeCor] ?? 'bg-[#2A3130]/40 text-slate-300'
           // Heuristic: peso/gordura ↓ é positivo (verde); passos ↑ é positivo (verde); resto neutro
           let deltaTone = 'text-slate-400'
           if (s.tendencia === 'down' && (s.id === 'peso' || s.id === 'gordura')) {
@@ -41,7 +43,7 @@ export function MiniStatStrip({ stats, onStatClick }: MiniStatStripProps) {
             <button
               key={s.id}
               onClick={() => onStatClick?.(s)}
-              className="shrink-0 w-[112px] h-[104px] rounded-2xl bg-slate-900 border border-slate-800 px-3 py-2.5 text-left active:scale-[0.97] transition-transform"
+              className="shrink-0 w-[112px] h-[104px] rounded-2xl bg-[#0A0E0D] border border-[#2A3130] px-3 py-2.5 text-left active:scale-[0.97] transition-transform"
             >
               <div className="flex items-center gap-1.5 mb-1.5">
                 <span className={`w-5 h-5 rounded-md flex items-center justify-center ${iconBg}`}>

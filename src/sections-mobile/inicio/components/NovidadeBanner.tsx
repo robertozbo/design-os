@@ -28,7 +28,7 @@ export function NovidadeBanner({ novidade, onClick, onDismiss }: NovidadeBannerP
         </button>
         <button
           onClick={() => onDismiss?.(novidade.id)}
-          className="w-7 h-7 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-300 hover:bg-slate-800/60 shrink-0"
+          className="w-7 h-7 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-300 hover:bg-[#1B2120]/60 shrink-0"
           aria-label="Dispensar"
         >
           <X size={14} />

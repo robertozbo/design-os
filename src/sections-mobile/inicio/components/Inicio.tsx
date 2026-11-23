@@ -30,7 +30,7 @@ export function Inicio({
   const novidadesAtivas = data.novidades.filter((n) => !n.dispensada)
 
   return (
-    <div className="min-h-full bg-slate-950 pb-6">
+    <div className="min-h-full bg-[#0A0E0D] pb-6">
       <Hero usuario={data.usuario} onStreakClick={onStreakClick} />
 
       {data.heroSaude && <HeroSaudeCard hero={data.heroSaude} onClick={onSaudeClick} />}

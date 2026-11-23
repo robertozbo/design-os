@@ -8,12 +8,12 @@ interface SemanaAtivaCardProps {
 
 export function SemanaAtivaCard({ data, onClick }: SemanaAtivaCardProps) {
   const bateuMeta = data.diasAtivos >= data.meta
-  const accent = bateuMeta ? 'emerald' : 'teal'
+  const accent = 'emerald'
 
   return (
     <button
       onClick={onClick}
-      className="mx-4 mb-4 block w-[calc(100%-32px)] text-left rounded-2xl bg-slate-900 border border-slate-800 p-4 active:scale-[0.99] transition-transform"
+      className="mx-4 mb-4 block w-[calc(100%-32px)] text-left rounded-2xl bg-[#0A0E0D] border border-[#2A3130] p-4 active:scale-[0.99] transition-transform"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-3 mb-4">
@@ -36,10 +36,10 @@ export function SemanaAtivaCard({ data, onClick }: SemanaAtivaCardProps) {
         {data.dias.map((d) => {
           const ativoClasses = bateuMeta
             ? 'bg-emerald-500 border-emerald-500 text-white'
-            : 'bg-teal-500 border-teal-500 text-white'
+            : 'bg-emerald-500 border-emerald-500 text-white'
           const inativoClasses = d.hoje
-            ? 'border-slate-500 text-slate-300 ring-2 ring-slate-700/60 ring-offset-2 ring-offset-slate-900'
-            : 'border-slate-700 text-slate-600'
+            ? 'border-slate-500 text-slate-300 ring-2 ring-[#2A3130] ring-offset-2 ring-offset-[#0A0E0D]'
+            : 'border-[#2A3130] text-slate-600'
           return (
             <div key={d.dia} className="flex flex-col items-center gap-1.5">
               <div
@@ -67,14 +67,14 @@ export function SemanaAtivaCard({ data, onClick }: SemanaAtivaCardProps) {
 
       {/* Footer note */}
       {bateuMeta ? (
-        <div className="mt-3 pt-3 border-t border-slate-800 flex items-center gap-1.5">
+        <div className="mt-3 pt-3 border-t border-[#2A3130] flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           <span className="text-emerald-300 text-[11.5px] font-medium">
             Meta semanal batida
           </span>
         </div>
       ) : (
-        <div className="mt-3 pt-3 border-t border-slate-800 flex items-center gap-1.5">
+        <div className="mt-3 pt-3 border-t border-[#2A3130] flex items-center gap-1.5">
           <span className="text-slate-400 text-[11.5px]">
             Faltam <span className="text-slate-200 font-mono tabular-nums">{data.meta - data.diasAtivos}</span> {data.meta - data.diasAtivos === 1 ? 'dia' : 'dias'} pra bater a meta
           </span>

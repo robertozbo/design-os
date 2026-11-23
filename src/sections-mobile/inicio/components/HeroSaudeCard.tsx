@@ -8,7 +8,7 @@ interface HeroSaudeCardProps {
 
 const STATUS_DOT: Record<HeroSaudePreview['microStatus'][number]['status'], string> = {
   otimo: 'bg-emerald-400',
-  bom: 'bg-teal-400',
+  bom: 'bg-emerald-400',
   atencao: 'bg-amber-400',
   risco: 'bg-rose-400',
   sem_dados: 'bg-slate-600',
@@ -16,7 +16,7 @@ const STATUS_DOT: Record<HeroSaudePreview['microStatus'][number]['status'], stri
 
 function statusFromScore(score: number): { text: string; bg: string; label: string } {
   if (score >= 85) return { text: 'text-emerald-300', bg: 'bg-emerald-500/15', label: 'Ótimo' }
-  if (score >= 70) return { text: 'text-teal-300', bg: 'bg-teal-500/15', label: 'Bom' }
+  if (score >= 70) return { text: 'text-emerald-300', bg: 'bg-emerald-500/15', label: 'Bom' }
   if (score >= 50) return { text: 'text-amber-300', bg: 'bg-amber-500/15', label: 'Atenção' }
   return { text: 'text-rose-300', bg: 'bg-rose-500/15', label: 'Risco' }
 }
@@ -46,7 +46,7 @@ export function HeroSaudeCard({ hero, onClick }: HeroSaudeCardProps) {
   return (
     <button
       onClick={onClick}
-      className="mx-4 mt-3 mb-2 w-[calc(100%-32px)] rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-teal-500/10 border border-slate-800 hover:border-teal-500/40 px-4 py-3.5 text-left transition-colors"
+      className="mx-4 mt-3 mb-2 w-[calc(100%-32px)] rounded-2xl bg-[#0A0E0D] border border-[#2A3130] hover:border-emerald-500/40 px-4 py-3.5 text-left transition-colors"
     >
       <div className="flex items-center gap-3">
         <div className={`w-12 h-12 rounded-xl ${visual.bg} flex items-center justify-center ${visual.text} shrink-0 relative`}>
@@ -87,7 +87,7 @@ export function HeroSaudeCard({ hero, onClick }: HeroSaudeCardProps) {
         {hero.microStatus.map((m) => (
           <span
             key={m.label}
-            className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10.5px] text-slate-300"
+            className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-[#0A0E0D] border border-[#2A3130] text-[10.5px] text-slate-300"
           >
             <span className={`w-1.5 h-1.5 rounded-full ${STATUS_DOT[m.status]}`} />
             {m.label}
