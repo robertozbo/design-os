@@ -18,7 +18,7 @@ Tab do paciente Nymos Clínico — espelho da prescrição emitida pelo médico 
 
 ### Estrutura geral
 - Dark mode default (`bg-slate-950`)
-- Wrapper `data-nymos-mobile` com DM Sans (body) e IBM Plex Mono (números/horários)
+- Wrapper `data-nymos-mobile` com Geist (body) e Geist Mono (números/horários)
 - Padding lateral 16px (mx-4)
 - Bottom-nav existente do app (fora deste componente)
 

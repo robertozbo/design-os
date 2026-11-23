@@ -27,8 +27,8 @@ Chrome persistente do app: **status bar do sistema + header + bottom tab bar + F
 
 ### Estrutura
 
-- **Esquerda:** avatar quadrado `rounded-2xl` 44×44 com inicial do usuário OU logo Nymos "N" — fundo `teal-600`, letra `white` em DM Sans semibold
-- **Centro-esquerda:** saudação contextual ("Olá, [PrimeiroNome]") em DM Sans semibold 22px + subtítulo opcional em `slate-400` 13px (ex: data atual ou status)
+- **Esquerda:** avatar quadrado `rounded-2xl` 44×44 com inicial do usuário OU logo Nymos "N" — fundo `teal-600`, letra `white` em Geist semibold
+- **Centro-esquerda:** saudação contextual ("Olá, [PrimeiroNome]") em Geist semibold 22px + subtítulo opcional em `slate-400` 13px (ex: data atual ou status)
 - **Direita:** três ações em ícones circulares 40×40:
   - ⌚ Wearable (atalho rápido sync HealthKit) — só aparece se conectado
   - 🔔 Notificações (badge contador no canto superior direito quando >0)

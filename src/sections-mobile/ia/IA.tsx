@@ -34,15 +34,15 @@ export default function IAPreview() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');
         [data-nymos-mobile],
         [data-nymos-mobile] * {
-          font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+          font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
           -webkit-font-smoothing: antialiased;
         }
         [data-nymos-mobile] .font-mono,
         [data-nymos-mobile] .tabular-nums {
-          font-family: 'IBM Plex Mono', ui-monospace, monospace;
+          font-family: 'Geist Mono', ui-monospace, monospace;
         }
         [data-nymos-mobile] .no-scrollbar::-webkit-scrollbar { display: none; }
         [data-nymos-mobile] .no-scrollbar { scrollbar-width: none; }

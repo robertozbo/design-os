@@ -83,7 +83,7 @@ Quando usuário toca search/+:
 - Cards: `slate-900` border `slate-800`
 - Macros: P=`emerald-400`, C=`amber-400`, G=`rose-400`, Fibra=`teal-400`, Sódio=`sky-400`
 - Tabular-nums em todos números (kcal, g, %)
-- DM Sans + IBM Plex Mono
+- Geist + Geist Mono
 
 ## Configuration
 

@@ -57,7 +57,7 @@ Cada item é um card horizontal `slate-900` border `slate-800` `rounded-2xl`:
   - Esportes: `sky-500/15` icon `sky-300`
   - Outros: `slate-700/40` icon `slate-300`
 - **Centro:**
-  - Linha 1: `activityType.name` em DM Sans semibold 14px (ex: "Corrida", "Caminhada", "Yoga")
+  - Linha 1: `activityType.name` em Geist semibold 14px (ex: "Corrida", "Caminhada", "Yoga")
   - Linha 2: badge de origem inline + duração + horário em mono 11px
     - Badge auto: `cyan-500/15` text `cyan-300` "🔄 auto · Apple Watch"
     - Badge manual: `slate-700/60` text `slate-400` "✍ manual"
@@ -93,7 +93,7 @@ Quando user toca `+` no header:
 - Fundo: `slate-950`
 - Cards: `slate-900` border `slate-800`
 - Tabular-nums em todos os números (kcal, min, pts)
-- DM Sans + IBM Plex Mono
+- Geist + Geist Mono
 - Padding lateral: 16px
 - Espaçamento entre items: 8-10px
 

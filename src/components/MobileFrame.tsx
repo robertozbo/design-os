@@ -95,6 +95,7 @@ export function MobileFrame({
   const atual = isPersonal || paletaAtual
   return (
     <div className="flex justify-center bg-stone-100 dark:bg-stone-900 py-6">
+      <style>{"@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');"}</style>
       <div style={{ width: 390 * scale, height: 844 * scale }}>
         <div
           className={`relative ${atual ? 'bg-[#0A0E0D]' : 'bg-slate-950'} rounded-[44px] shadow-2xl overflow-hidden border-[10px] border-slate-900`}
@@ -103,6 +104,9 @@ export function MobileFrame({
             height: 844,
             transform: `scale(${scale})`,
             transformOrigin: 'top left',
+            // Brand manual: Geist for text. The sections load the family; the frame's own
+            // chrome (greeting, tab labels) follows it instead of the tool's DM Sans.
+            fontFamily: "'Geist', system-ui, sans-serif",
           }}
         >
         {/* Status bar */}

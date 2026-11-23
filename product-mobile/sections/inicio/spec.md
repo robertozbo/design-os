@@ -40,11 +40,11 @@ Ordem dos blocos (sempre na mesma posição, alguns condicionais):
 
 Logo abaixo do header do shell. Sem card próprio — texto + chips inline.
 
-- **Linha 1:** saudação + nome em DM Sans semibold 16px `slate-100`
+- **Linha 1:** saudação + nome em Geist semibold 16px `slate-100`
   *"Bom dia, Roberto"*
-- **Linha 2:** frase IA contextual em DM Sans regular 13px `slate-400` + streak chip à direita
+- **Linha 2:** frase IA contextual em Geist regular 13px `slate-400` + streak chip à direita
   *"Você dormiu 8h, ótimo dia pra treino"* `🔥 12 dias`
-- Streak chip: `amber-500/15` background, `amber-400` texto, IBM Plex Mono medium 12px, tap → modal com histórico de streak
+- Streak chip: `amber-500/15` background, `amber-400` texto, Geist Mono medium 12px, tap → modal com histórico de streak
 - Frase IA é **sempre 1 linha** (truncate com ellipsis se passar) — quem quer mais profundidade vai pro chat IA
 
 ### 2. Banner "Novidade" (condicional)
@@ -58,7 +58,7 @@ Aparece **só quando** há:
 **Visual:**
 - Card horizontal `sky-400/10` background com border-left 3px `sky-400`
 - Ícone à esquerda (Sparkles, Heart, Camera, etc.) em `sky-400`
-- Texto em DM Sans medium 14px `slate-100`: título + subtítulo
+- Texto em Geist medium 14px `slate-100`: título + subtítulo
 - Chevron `>` à direita
 - Tap → navega pra feature relevante
 - Dismissable (X discreto) — uma vez dispensado, não volta no mesmo dia
@@ -109,7 +109,7 @@ Substitui os cards grandes "Minha evolução" e "Horas de Sono" da versão atual
 - Container scroll-x sem scrollbar, `gap-3`, padding-x 16px
 - Cada chip 100×96 `rounded-2xl`, fundo `slate-900` border `slate-800`
 - **Conteúdo de cada chip:**
-  - Topo: ícone 18×18 + label DM Sans medium 11px `slate-400`
+  - Topo: ícone 18×18 + label Geist medium 11px `slate-400`
   - Centro: valor grande mono 24px bold tabular-nums + unidade mono 12px
   - Rodapé: delta colorido (`emerald-400` ↑ / `rose-400` ↓ / `slate-500` —) mono 11px
 

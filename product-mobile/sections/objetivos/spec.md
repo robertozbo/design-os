@@ -81,7 +81,7 @@ Quando user toca `+`:
 - Fundo: `slate-950`
 - Cards: `slate-900` border `slate-800`
 - Tabular-nums em todos os números (kg, %, passos, dias, %)
-- DM Sans + IBM Plex Mono
+- Geist + Geist Mono
 - Padding lateral: 16px
 
 ## Configuration

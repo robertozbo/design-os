@@ -31,7 +31,7 @@ Fonte no backend: `professional_appointments` onde `user_id` é o paciente. Hoje
 ## UI Requirements
 - Header sub-page "Consultas", subtítulo "Marcadas pelos seus profissionais".
 - Mesma linguagem visual de Profissionais: fundo slate-950, cards slate-900 com borda slate-800 e selos de tipo (Nutri, Personal, Médico, Psicólogo, Fisio).
-- Hora e datas em IBM Plex Mono com `tabular-nums`.
+- Hora e datas em Geist Mono com `tabular-nums`.
 - Teal para ação principal, sky para teleconsulta, amber para "Cancelamento pedido", rose só para cancelada ou falta.
 - O código de chegada só nasce por toque deliberado, nunca vem junto da lista. Não é credencial, é ponteiro de vida curta.
 - Teleconsulta não tem check-in.

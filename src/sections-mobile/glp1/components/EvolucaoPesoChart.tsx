@@ -237,7 +237,7 @@ export function EvolucaoPesoChart({ pontos, meta, projecao, destaque = false }: 
           y={yAlvo + 3.5}
           fill="#fbbf24"
           fontSize="9"
-          fontFamily="IBM Plex Mono, monospace"
+          fontFamily="Geist Mono, monospace"
         >
           {meta.pesoAlvoKg.toFixed(0)}
         </text>
@@ -285,7 +285,7 @@ export function EvolucaoPesoChart({ pontos, meta, projecao, destaque = false }: 
             y={H - 6}
             fill="#64748b"
             fontSize="8.5"
-            fontFamily="IBM Plex Mono, monospace"
+            fontFamily="Geist Mono, monospace"
             textAnchor={i === 0 ? 'start' : i === n - 1 ? 'end' : 'middle'}
           >
             {tick(visiveis[i].data)}

@@ -32,9 +32,9 @@ Espelha os tokens do `design-os/` (web nutri) para manter **identidade Nymos uni
 
 | Função | Fonte |
 |--------|-------|
-| Heading | DM Sans 600/700 |
-| Body | DM Sans 400/500 |
-| Mono (números, timestamps, kcal, kg, %) | IBM Plex Mono 400/500 |
+| Heading | Geist 600/700 |
+| Body | Geist 400/500 |
+| Mono (números, timestamps, kcal, kg, %) | Geist Mono 400/500 |
 
 Tabular-nums em todos os valores numéricos para alinhamento em colunas.
 

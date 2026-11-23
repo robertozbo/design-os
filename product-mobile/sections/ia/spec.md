@@ -25,7 +25,7 @@ Tab "IA" — hub central de inteligência artificial do app. Combina **upload + 
 
 - Card grande gradient suave `slate-900 → teal-950/40` com:
   - Ícone Bot/Sparkles 36×36 em fundo sky-500/15
-  - Título "Como posso te ajudar?" DM Sans semibold 18px
+  - Título "Como posso te ajudar?" Geist semibold 18px
   - Subtítulo curto "Tire uma foto ou pergunte" `slate-400` 12.5px
   - CTA "Conversar com a IA" pill teal embaixo
 
@@ -44,7 +44,7 @@ Tab "IA" — hub central de inteligência artificial do app. Combina **upload + 
 Cada card:
 - Quadrado `aspect-square`, `rounded-2xl`, fundo `slate-900` border `slate-800`
 - Ícone 24×24 colorido em fundo `*-500/15` rounded-xl
-- Label DM Sans semibold 13px
+- Label Geist semibold 13px
 - Subtítulo descrição em `slate-400` 11px
 - Tap: scale 0.98 + highlight da cor
 
@@ -66,7 +66,7 @@ Empty: "Nenhuma análise ainda · Comece pelo grid acima"
 - Cards: `slate-900` border `slate-800`
 - Hero gradient: `from-slate-900 to-teal-950/40`
 - Quick actions: cores temáticas por tipo (teal/sky/emerald/amber/rose/violet)
-- DM Sans + IBM Plex Mono
+- Geist + Geist Mono
 - Padding lateral: 16px
 
 ## Configuration

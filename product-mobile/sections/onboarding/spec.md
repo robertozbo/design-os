@@ -245,7 +245,7 @@ Cor é aplicada como `bg-{cor}-500/15 text-{cor}-300` (leve, no dark theme).
 ## UI Requirements
 - Fullscreen, sem tab bar, sem shell
 - Background `slate-950` (dark fixo, splash mood)
-- Fonte DM Sans pra texto, IBM Plex Mono pra números tabulares
+- Fonte Geist pra texto, Geist Mono pra números tabulares
 - Touch targets mínimo 44px (chips h-9 ainda OK pois padding aumenta área)
 - Auto-scroll respeitando reduced motion (smooth → instant se preferência)
 - Status do device (notch/dynamic island) respeitado via safe area

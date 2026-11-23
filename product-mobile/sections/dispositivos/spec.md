@@ -59,7 +59,7 @@ Cada device é um card vertical `slate-900` border `slate-800` com:
     - Balança: bg `amber-500/15` icon `amber-400`
     - HealthKit/Apple Saúde: bg `pink-500/15` icon `pink-400`
     - Google Fit / Health Connect: bg `green-500/15` icon `green-400`
-  - Nome do dispositivo (ex: "Apple Watch Series 9") em DM Sans semibold
+  - Nome do dispositivo (ex: "Apple Watch Series 9") em Geist semibold
   - Subtítulo: marca · modelo / app
   - **Indicador de status** (canto direito): círculo 8px `emerald-400` (conectado), `slate-500` (desconectado), animação spin `teal-400` (sincronizando)
   - Menu `...` com ações: Sincronizar agora, Configurar, Desconectar
@@ -78,7 +78,7 @@ Cada device é um card vertical `slate-900` border `slate-800` com:
 Quando nenhum device cadastrado (lista vazia):
 
 - Ilustração leve (ícone `Watch` grande em `slate-700`, 64×64)
-- Título: "Nenhum dispositivo conectado" em DM Sans semibold 18px `slate-100`
+- Título: "Nenhum dispositivo conectado" em Geist semibold 18px `slate-100`
 - Descrição: "Conecte seu primeiro dispositivo para sincronizar dados de saúde automaticamente" em `slate-400` 14px
 - CTA primário grande: "Adicionar Dispositivo" `teal-500` rounded-full
 
@@ -109,7 +109,7 @@ Bottom sheet que sobe da parte inferior:
 - Primário: `teal-500/600` (CTAs, links)
 - Status: `emerald-500` (conectado), `slate-500` (desconectado), `teal-400` (sincronizando — animado)
 - Tabular-nums em todos os números (contagem, tempo)
-- Tipografia: DM Sans + IBM Plex Mono
+- Tipografia: Geist + Geist Mono
 
 ### Estados especiais
 

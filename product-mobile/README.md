@@ -5,7 +5,7 @@ Estrutura paralela ao `design-os/` (web nutricionista) para **redesenhar visualm
 ## Objetivo
 
 - Não refazer arquitetura, navegação ou lógica do app RN existente
-- **Aplicar tema novo** (paleta unificada + DM Sans + IBM Plex Mono) nas features atuais
+- **Aplicar tema novo** (paleta unificada + Geist + Geist Mono) nas features atuais
 - Gerar specs portáteis (`spec.md`, `data.json`, `types.ts`, screenshots) que servem de **referência visual** pra retematizar o RN
 
 ## App de origem

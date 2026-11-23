@@ -33,7 +33,7 @@ export function NymosMark({
         width: size,
         height: size,
         borderRadius: size * 0.28,
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'Geist', sans-serif",
         fontSize: size * 0.62,
         letterSpacing: '-0.04em',
       }}
@@ -54,7 +54,7 @@ export function NymosMark({
           'text-slate-50 font-bold tracking-tight lowercase'
         }
         style={{
-          fontFamily: "'DM Sans', sans-serif",
+          fontFamily: "'Geist', sans-serif",
           fontSize: size * 0.72,
           letterSpacing: '-0.04em',
         }}

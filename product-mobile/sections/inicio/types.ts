@@ -32,7 +32,7 @@ export interface UsuarioContexto {
   fotoUrl: string | null
   /** Período do dia (computado da hora local) */
   periodo: Periodo
-  /** "Bom dia, Roberto" — DM Sans semibold */
+  /** "Bom dia, Roberto" — Geist semibold */
   saudacao: string
   /** Frase IA contextual (vem de ai-insights ou hardcoded por hora) */
   fraseIA: string

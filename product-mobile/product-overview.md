@@ -30,7 +30,7 @@ Repo: `/Users/roberto.zbo/Desktop/Projetos/Nymos/mobile`
 
 - ~85 telas em 20 features
 - Paleta azul/indigo (não unificada com o design-os web)
-- Tipografia padrão sistema (não DM Sans / IBM Plex Mono)
+- Tipografia padrão sistema (não Geist / Geist Mono)
 - Componentes próprios em `pageshell-native`
 
 ## Estratégia design-os-mobile
@@ -38,7 +38,7 @@ Repo: `/Users/roberto.zbo/Desktop/Projetos/Nymos/mobile`
 **Não refazer arquitetura.** Apenas:
 
 1. Especificar visualmente cada feature MVP (`spec.md`, `data.json`, `types.ts`)
-2. Redesenhar com **tokens unificados** + **DM Sans** + paleta consistente
+2. Redesenhar com **tokens unificados** + **Geist** + paleta consistente
 3. Capturar screenshots como referência visual
 4. RN reconstrói a tematização gradualmente em cima das telas existentes
 
@@ -53,7 +53,7 @@ Ver `product-roadmap.md` para detalhes. Resumo:
 
 ## Design system alvo
 
-- **Tipografia:** DM Sans (heading + body) + IBM Plex Mono (números, timestamps, códigos)
+- **Tipografia:** Geist (heading + body) + Geist Mono (números, timestamps, códigos)
 - **Paleta:** a definir — provável teal/slate alinhado ao design-os web, com semânticos para status (emerald/amber/rose/sky)
 - **Modo:** dark-first (o app atual já é dark)
 - **Viewport alvo:** 375×812 (iPhone padrão) e 414×896

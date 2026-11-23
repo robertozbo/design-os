@@ -20,7 +20,7 @@ Tab principal "Métricas" — lista granular de **todas as medidas individuais**
 ### Header (sub-page interno da tab — sem back arrow)
 
 - Tab "Métricas" — header normal do shell + título da seção como primeiro elemento de scroll
-- Título "Métricas" em DM Sans semibold 22px + subtítulo "Suas medidas no detalhe" `slate-400` 13px
+- Título "Métricas" em Geist semibold 22px + subtítulo "Suas medidas no detalhe" `slate-400` 13px
 - Ação direita: ícones search + "+" pra adicionar manualmente
 
 ### Period selector
@@ -54,7 +54,7 @@ Card horizontal `slate-900` border `slate-800` `rounded-2xl` p-3, full width:
   - Atividade: `sky-500/15` icon `sky-300`
   - Hidratação: `cyan-500/15` icon `cyan-300`
   - Outros: `slate-700/40` icon `slate-300`
-- **Centro-esquerda:** nome em DM Sans semibold 14px + fonte do dado (`Apple Watch · há 3 min`) em `slate-500` mono 11px
+- **Centro-esquerda:** nome em Geist semibold 14px + fonte do dado (`Apple Watch · há 3 min`) em `slate-500` mono 11px
 - **Centro:** valor mono 24px tabular-nums + unidade mono 11px
 - **Direita:**
   - Sparkline SVG 64×24 com gradient (cor categoria) — últimos N pontos
@@ -106,7 +106,7 @@ A lista navega pra duas telas full-screen (seções próprias, `shell: false`), 
 - Fundo: `slate-950`
 - Cards: `slate-900` border `slate-800`
 - Tabular-nums em todos os números, valores e deltas
-- DM Sans + IBM Plex Mono
+- Geist + Geist Mono
 - Sparkline: gradient suave da cor da categoria, 1.5px stroke, sem fill (apenas line)
 - Padding lateral: 16px
 - Espaçamento entre categorias: 20px
